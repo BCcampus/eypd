@@ -7,7 +7,7 @@ add_action( 'admin_enqueue_scripts', 'eypd_admin_scripts');
 // include an updated version of googlemaps
 function eypd_load_scripts() {
     $template_dir = get_stylesheet_directory_uri();
-    wp_enqueue_script('google-maps-api', 'https://maps.google.com/maps/api/js?sensor=false', array('jquery'), '1.0', false);
+    wp_enqueue_script('google-maps-api', 'https://maps.google.com/maps/api/js?sensor=false&key=AIzaSyAcrySln689UFXKf796qanIiflurKxLRCw', array('jquery'), '1.0', false);
     wp_enqueue_script( 'gmap3', $template_dir . '/js/gmap3.min.js', array( 'jquery' ), '1.0', false );
     wp_enqueue_script( 'jquery-ui-core' );
     wp_enqueue_script( 'jquery-ui-draggable' );
