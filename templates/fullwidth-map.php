@@ -59,7 +59,7 @@ $loc_id = eypd_get_unique_location_id();
                             marker.setAnimation(google.maps.Animation.DROP);
                             marker.setIcon('<?php echo get_stylesheet_directory_uri(); ?>/images/blue-marker.png');
                             $(this).gmap3("get").panTo(marker.position);
-                            $.fn.et_simple_slider.external_move_to(marker_order);
+                            $(this).et_slider_move_to(marker_order);
                         },
                         mouseover: function(marker){
                             $('#' + marker_id).css({ 'display' : 'block', 'opacity' : 0 }).stop(true, true).animate({ bottom : '15px', opacity : 1 }, 500);
@@ -82,6 +82,43 @@ $loc_id = eypd_get_unique_location_id();
                     }
                 }
             });
+        }
+        function et_slider_move_to( direction ) {
+            var $active_slide = $('.et-slide').eq( et_active_slide ),
+                $next_slide;
+
+            if ( direction == 'next' || direction == 'previous' ){
+
+                if ( direction == 'next' )
+                    et_active_slide = ( et_active_slide + 1 ) < et_slides_number ? et_active_slide + 1 : 0;
+                else
+                    et_active_slide = ( et_active_slide - 1 ) >= 0 ? et_active_slide - 1 : et_slides_number - 1;
+
+            } else {
+
+                if ( et_active_slide == direction ) return;
+
+                et_active_slide = direction;
+
+            }
+
+            $next_slide	= $et_slide.eq( et_active_slide );
+
+            if ( settings.use_controls && et_slides_number > 1 )
+                $et_slider_controls.removeClass( settings.control_active_class ).eq( et_active_slide ).addClass( settings.control_active_class );
+
+            if ( settings.on_slide_changing )
+                settings.on_slide_changing( $next_slide );
+
+            $active_slide.animate( { opacity : 0 }, et_fade_speed, function(){
+                $(this).css('display', 'none');
+
+                $next_slide.css( { 'display' : 'block', opacity : 0 } ).animate( { opacity : 1 }, et_fade_speed, function(){
+                    if ( settings.on_slide_change_end )
+                        settings.on_slide_change_end( $next_slide );
+                } );
+            } );
+
         }
 
         <?php
