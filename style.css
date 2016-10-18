@@ -90,11 +90,11 @@ body.home-page .top-wrap.row {
     width: 28px;
 }
 #et-slider-wrapper .et-arrow-prev {
-    background-image: url("images/et-left-arrow.png");
+    background-image: url("assets/images/et-left-arrow.png");
     left: 60px;
 }
 #et-slider-wrapper .et-arrow-next {
-    background-image: url("images/et-right-arrow.png");
+    background-image: url("assets/images/et-right-arrow.png");
     right: 60px;
 }
 #et-slider-wrapper:hover .et-slider-arrows a {
@@ -177,12 +177,12 @@ div.thumbnail {
 
 #et-slider-wrapper .et-arrow-prev {
     left: 60px;
-    background-image: url(images/et-left-arrow.png);
+    background-image: url("assets/images/et-left-arrow.png");
 }
 
 #et-slider-wrapper .et-arrow-next {
     right: 60px;
-    background-image: url(images/et-right-arrow.png);
+    background-image: url("assets/images/et-right-arrow.png");
 }
 
 #et-slider-wrapper:hover .et-slider-arrows a {
