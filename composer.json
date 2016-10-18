@@ -1,0 +1,5 @@
+{
+    "require": {
+        "egeloen/google-map": "^1.4"
+    }
+}

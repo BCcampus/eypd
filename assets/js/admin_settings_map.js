@@ -30,7 +30,7 @@
 				id : 'et_admin_marker',
 				latLng : [marker_lat, marker_lng],
 				options: {
-					icon : et_map_admin_settings.theme_dir + "/images/red-marker.png",
+					icon : et_map_admin_settings.theme_dir + "/assets/images/red-marker.png",
 					draggable : true
 				},
 				events:{

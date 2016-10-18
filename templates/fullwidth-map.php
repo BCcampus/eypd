@@ -47,17 +47,17 @@ $loc_id = eypd_get_unique_location_id();
                     id : marker_id,
                     latLng : [marker_lat, marker_lng],
                     options: {
-                        icon : "<?php echo get_stylesheet_directory_uri(); ?>/images/red-marker.png"
+                        icon : "<?php echo get_stylesheet_directory_uri(); ?>/assets/images/red-marker.png"
                     },
                     events : {
                         click: function(marker){
                             if (et_active_marker){
                                 et_active_marker.setAnimation(null);
-                                et_active_marker.setIcon('<?php echo get_stylesheet_directory_uri(); ?>/images/red-marker.png');
+                                et_active_marker.setIcon('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/red-marker.png');
                             }
                             et_active_marker = marker;
                             marker.setAnimation(google.maps.Animation.DROP);
-                            marker.setIcon('<?php echo get_stylesheet_directory_uri(); ?>/images/blue-marker.png');
+                            marker.setIcon('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/blue-marker.png');
                             $(this).gmap3("get").panTo(marker.position);
                             $(this).et_slider_move_to(marker_order);
                         },

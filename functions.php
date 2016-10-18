@@ -1,9 +1,30 @@
 <?php
+/*
+|--------------------------------------------------------------------------
+| Parent theme
+|--------------------------------------------------------------------------
+|
+| enqueue parent and child theme
+|
+|
+*/
+add_action( 'wp_enqueue_scripts', 'cbox_parent_theme_css' );
+function cbox_parent_theme_css() {
+	wp_enqueue_style( 'cbox-theme', get_template_directory_uri() . '/style.css' );
+	wp_enqueue_style( 'early-years', get_stylesheet_uri(), array( 'cbox-theme' ) );
+}
 
+/*
+|--------------------------------------------------------------------------
+| Place our scripts in the queue
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
 
 add_action( 'wp_enqueue_scripts', 'eypd_load_scripts' );
-add_action( 'admin_enqueue_scripts', 'eypd_admin_scripts');
-
 // include an updated version of googlemaps
 function eypd_load_scripts() {
     $template_dir = get_stylesheet_directory_uri();
@@ -15,7 +36,7 @@ function eypd_load_scripts() {
     wp_enqueue_script( 'tinyscrollbar', $template_dir . '/assets/js/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
 }
 
-
+add_action( 'admin_enqueue_scripts', 'eypd_admin_scripts');
 // include an updated version of googlemaps
 function eypd_admin_scripts( $hook ) {
     // defense

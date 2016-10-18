@@ -1,0 +1,35 @@
+/*
+|--------------------------------------------------------------------------
+| Global Classes
+|--------------------------------------------------------------------------
+|
+| Common elements with a bit of class
+|
+|
+*/
+
+html, body.home-page {
+  height: 100%;
+}
+
+body.home-page .top-wrap.row {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+#wpadminbar {
+  background-color: #c13832;
+}
+
+#wrapper {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+#header {
+  height: 70px;
+  padding-top: 10px;
+  padding-top: 10px;
+}
