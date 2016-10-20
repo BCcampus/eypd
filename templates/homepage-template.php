@@ -14,6 +14,8 @@ infinity_get_header();
 
 <?php
 infinity_load_template('templates/fullwidth-map.php');
+//infinity_load_template( 'templates/google-map.php' );
+
 ?>
 
 <div id="filter-bar">

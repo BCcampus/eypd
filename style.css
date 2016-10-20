@@ -57,7 +57,7 @@ body.home-page .top-wrap.row {
 |
 |
 */
-#et_main_map {
+#et_main_map, #map_ca {
   height: 550px; }
 
 #et_main_map img, #et-single-map img {
