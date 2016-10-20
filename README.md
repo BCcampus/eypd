@@ -4,7 +4,7 @@
 The Early Years Website is intended to support access and coordination of professional development opportunities for those whoe work in the early years sector in British Columbia.
 It is a development project led by BCcampus and sponsored by the Ministry of Advanced Education and the Provincial Office for the Early Years in the Ministry of Children and Family Development.
 
-#### Installation #### 
+#### Installation ####
 This is a child theme of [CBox Theme](https://github.com/cuny-academic-commons/cbox-theme) which is the default theme for the plugin [Commons in a Box](https://github.com/cuny-academic-commons/commons-in-a-box) which is "a 
 suite of WordPress and BuddyPress plugins and themes for community communication and collaboration, put into a single package that  is easy to install, customize and maintain."
 
@@ -18,7 +18,7 @@ The main purpose of the child theme is to tie the locations of events generated 
 Map functions include displaying location pins, clustering, searching, and filtering.  
 A secondary purpose is to contain all customizations in the child theme and still benefit from parent theme updates. 
 
-#### Licence #### 
+#### Licence ####
 Early Years Child Theme is released under a GPLv3. 
 
 
