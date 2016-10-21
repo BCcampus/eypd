@@ -1,4 +1,9 @@
 (function ($) {
+    /**
+     *
+     * @param options
+     * @returns {*}
+     */
     $.fn.et_simple_slider = function (options) {
         var settings = $.extend({
             slide: '.et-slide',				 	        // slide class

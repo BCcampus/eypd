@@ -1,7 +1,7 @@
 ### Early Years Professional Development Child Theme ###
 
 #### About ####
-The Early Years Website is intended to support access and coordination of professional development opportunities for those whoe work in the early years sector in British Columbia.
+The Early Years Website is intended to support access and coordination of professional development opportunities for those who work in the early years sector in British Columbia.
 It is a development project led by BCcampus and sponsored by the Ministry of Advanced Education and the Provincial Office for the Early Years in the Ministry of Children and Family Development.
 
 #### Installation ####
