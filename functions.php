@@ -68,6 +68,10 @@ function eypd_is_event_page() {
 //}
 //add_action( 'pre_get_posts', 'eypd_home_posts_query', 10 );
 
+/**
+ *
+ * @return array
+ */
 function eypd_get_unique_location_id() {
     $loc_id = array();
     $loc_post_id = array();
@@ -111,4 +115,3 @@ function eypd_get_unique_location_id() {
 
 add_theme_support( 'post-thumbnails' );
 set_post_thumbnail_size( 100, 100 );
-

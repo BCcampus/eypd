@@ -11,6 +11,50 @@
 */
 /*
 |--------------------------------------------------------------------------
+| Mixins
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+@font-face {
+  font-family: "Roboto";
+  src: url("assets/fonts/Roboto-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal; }
+@font-face {
+  font-family: "Roboto Condensed";
+  src: url("assets/fonts/RobotoCondensed-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+@font-face {
+  font-family: "Roboto Condensed";
+  src: url("assets/fonts/RobotoCondensed-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal; }
+@font-face {
+  font-family: "Roboto Condensed";
+  src: url("assets/fonts/RobotoCondensed-BoldItalic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic; }
+@font-face {
+  font-family: "Roboto Condensed";
+  src: url("assets/fonts/RobotoCondensed-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic; }
+@font-face {
+  font-family: "Roboto Condensed";
+  src: url("assets/fonts/RobotoCondensed-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal; }
+@font-face {
+  font-family: "Roboto Condensed";
+  src: url("assets/fonts/RobotoCondensed-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic; }
+/*
+|--------------------------------------------------------------------------
 | Global
 |--------------------------------------------------------------------------
 |
@@ -18,6 +62,13 @@
 |
 |
 */
+h1, h2, h3, h4, h5, h6 {
+  font-family: Roboto Condensed;
+  color: #333333; }
+
+body, body.theme-option {
+  background: none no-repeat; }
+
 /*
 |--------------------------------------------------------------------------
 | Global Classes
@@ -36,17 +87,12 @@ body.home-page .top-wrap.row {
   padding: 0;
   margin: 0; }
 
-#wpadminbar {
-  background-color: #c13832; }
-
 #wrapper {
   padding-top: 0px;
   padding-bottom: 0px; }
 
-#header {
-  height: 70px;
-  padding-top: 10px;
-  padding-top: 10px; }
+h2.page-title, h2.post-title, h1.page-title, h1.post-title {
+  color: #333333; }
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +103,7 @@ body.home-page .top-wrap.row {
 |
 |
 */
-#et_main_map, #map_ca {
+#et_main_map, #map_canvas {
   height: 550px; }
 
 #et_main_map img, #et-single-map img {
@@ -87,7 +133,7 @@ body.home-page .top-wrap.row {
   border-bottom: none; }
 
 .location-title h2 {
-  color: #2a2a2a;
+  color: #333333;
   text-shadow: 1px 1px 0 #ffffff;
   border-bottom: 1px solid #e6f4fb;
   padding: 19px 35px; }
@@ -303,6 +349,80 @@ div.thumbnail {
 
 /*
 |--------------------------------------------------------------------------
+| Lists
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+#sidebar ul {
+  list-style: none; }
+
+/*
+|--------------------------------------------------------------------------
+| Buttons
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+/*
+|--------------------------------------------------------------------------
+| Header
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+#wpadminbar {
+  background-color: #222222; }
+
+#header {
+  min-height: 70px;
+  padding-top: 10px;
+  padding-top: 10px;
+  background: #ffffff; }
+
+/*
+|--------------------------------------------------------------------------
+| Nav
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+.base-menu ul li.current-cat a,
+.base-menu ul li.current_page_item a,
+.base-menu ul li.current-menu-item a {
+  background: none; }
+
+.top-menu,
+.top-wrap .sub-menu,
+.item-list-tabs,
+thead:first-child tr th,
+thead:first-child tr td,
+.base-menu ul ul,
+.sidebar-activity-tabs ul li.current,
+.sidebar-activity-tabs ul li.selected,
+.docs .toggle-switch,
+.post-title:before,
+.doc-content-wrapper .toggle-switch,
+.mobile-menu-container,
+.info-box h3,
+#bbpress-forums li.bbp-header {
+  background: #337ab7;
+  border: none;
+  box-shadow: none; }
+
+.top-wrap .base-menu.sub-menu {
+  border-radius: 4px; }
+
+/*
+|--------------------------------------------------------------------------
 | Footer
 |--------------------------------------------------------------------------
 |
@@ -310,6 +430,31 @@ div.thumbnail {
 |
 |
 */
+.footer-wrap {
+  background: #ffffff;
+  border: none;
+  box-shadow: none;
+  padding-top: 2rem; }
+
+#powered-by {
+  border-top: 1px solid #777777;
+  background-color: #ffffff;
+  color: inherit;
+  font-weight: normal; }
+
+#footer .widget h4 {
+  color: inherit;
+  text-shadow: none;
+  border-bottom: 1 px solid #777777; }
+#footer .footer-widget {
+  color: inherit;
+  text-shadow: none; }
+#footer ul {
+  list-style: none;
+  padding-left: 0; }
+  #footer ul li ul {
+    margin-left: 20px; }
+
 #filter-bar {
   background-color: #ffffff;
   background-origin: padding-box;

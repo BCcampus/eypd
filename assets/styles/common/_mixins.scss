@@ -1,0 +1,21 @@
+/*
+|--------------------------------------------------------------------------
+| Mixins
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+@mixin font-face($name, $font-files, $format, $weight: false, $style: false) {
+  @font-face {
+    font-family: quote($name);
+    src: $font-files format($format);
+    @if $weight {
+      font-weight: $weight;
+    }
+    @if $style {
+      font-style: $style;
+    }
+  }
+}

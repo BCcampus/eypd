@@ -7,6 +7,38 @@
 |
 |
 */
+.footer-wrap {
+  background: $color-white;
+  border: none;
+  box-shadow: none;
+  padding-top: 2rem;
+}
+
+#powered-by{
+  border-top: 1px solid $color-gray-boulder;
+  background-color:$color-white;
+  color: inherit;
+  font-weight: normal;
+}
+
+#footer {
+  .widget h4 {
+    color: inherit;
+    text-shadow: none;
+    border-bottom: 1 px solid $color-gray-boulder;
+  }
+  .footer-widget {
+    color: inherit;
+    text-shadow: none;
+  }
+  ul {
+    list-style: none;
+    padding-left: 0;
+    li ul {
+      margin-left: 20px;
+    }
+  }
+}
 
 #filter-bar {
   background-color: #ffffff;
@@ -35,3 +67,4 @@
   text-align: left;
   width: 750px;
 }
+

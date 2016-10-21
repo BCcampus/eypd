@@ -1,0 +1,38 @@
+/*
+|--------------------------------------------------------------------------
+| Nav
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+
+.base-menu ul li.current-cat a,
+.base-menu ul li.current_page_item a,
+.base-menu ul li.current-menu-item a {
+  background: none;
+}
+
+.top-menu,
+.top-wrap .sub-menu,
+.item-list-tabs,
+thead:first-child tr th,
+thead:first-child tr td,
+.base-menu ul ul,
+.sidebar-activity-tabs ul li.current,
+.sidebar-activity-tabs ul li.selected,
+.docs .toggle-switch,
+.post-title:before,
+.doc-content-wrapper .toggle-switch,
+.mobile-menu-container,
+.info-box h3,
+#bbpress-forums li.bbp-header {
+  background: $color-blue-astral;
+  border: none;
+  box-shadow: none;
+}
+
+.top-wrap .base-menu.sub-menu{
+  border-radius: 4px;
+}

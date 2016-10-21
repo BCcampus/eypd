@@ -9,14 +9,16 @@
  Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
  Text Domain:  early-years
 */
-
-@import "common/fonts";
-@import "common/colors";
-@import "common/global";
+@import 'common/mixins';
+@import 'common/fonts';
+@import 'common/colors';
+@import 'common/global';
 @import 'common/global-classes';
 
 @import 'components/grid';
 @import 'components/map';
+@import 'components/lists';
+@import 'components/buttons';
 
 @import 'layouts/header';
 @import 'layouts/nav';
