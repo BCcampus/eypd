@@ -424,7 +424,7 @@
             else
                 new_listing_height = $('.et-normal-listings').height() - 81;
 
-            $('.et-normal-listings #et-listings, .et-normal-listings .viewport').height(new_listing_height);
+            // $('.et-normal-listings #et-listings, .et-normal-listings .viewport').height(new_listing_height);
 
             $('.et-normal-listings #et-listings').tinyscrollbar_update();
         }

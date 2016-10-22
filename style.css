@@ -347,6 +347,9 @@ div.thumbnail {
   top: 160px;
   left: 60px; }
 
+#et_listings {
+  height: auto !important; }
+
 /*
 |--------------------------------------------------------------------------
 | Lists

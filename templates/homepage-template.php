@@ -11,22 +11,27 @@
 infinity_get_header();
 
 ?>
+<div class="grid_24" role="main">
 
-<?php
-infinity_load_template('templates/fullwidth-map.php');
-//infinity_load_template( 'templates/google-map.php' );
+	<?php
+	do_action( 'open_content' );
+	do_action( 'open_page' );
 
-?>
+	infinity_load_template( 'templates/fullwidth-map.php' );
+	//infinity_load_template( 'templates/google-map.php' );
 
-<div id="filter-bar">
-    <div class="container">
-        <?php echo do_shortcode('[events_search]'); ?>
-    </div>
+	?>
+
+	<div id="filter-bar">
+		<div class="container">
+			<?php echo do_shortcode( '[events_search]' ); ?>
+		</div>
+	</div>
+	<?php
+	do_action( 'close_page' );
+	do_action( 'close_content' );
+	?>
 </div>
 <?php
-do_action('close_body');
-wp_footer();
+infinity_get_footer();
 ?>
-
-</body>
-</html>

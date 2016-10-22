@@ -188,7 +188,7 @@ $loc_id = eypd_get_unique_location_id();
 	Lists events
 *****************************************-->
 <div id="et-list-view" class="et-normal-listings">
-	<h2 id="listing-results"><?php esc_html_e( 'Upcoming Events', 'Explorable' ); ?></h2>
+	<h2 id="listing-results"><?php esc_html_e( 'Upcoming Events', 'early-years' ); ?></h2>
 
 	<div id="et-listings">
 		<div class="scrollbar">
@@ -199,10 +199,6 @@ $loc_id = eypd_get_unique_location_id();
 			</div>
 		</div>
 		<div class="viewport">
-
-<!--****************************************
-	Lists events
-*****************************************-->
 			<div class="overview">
 				<ul>
 					<?php
