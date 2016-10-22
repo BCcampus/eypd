@@ -194,7 +194,6 @@
         });
 
         if ($('#et-list-view.et-normal-listings').length) {
-            $('#et-list-view.et-normal-listings').append('<a href="#" class="et-date">' + et_custom.toggle_text + '</a>');
 
             $et_list_view = $('#et-list-view.et-normal-listings');
 
@@ -411,6 +410,10 @@
         }
     });
 
+    /**
+     * resizes height on smaller screen resolutions
+     *
+     */
     function et_listing_make_fluid() {
         var $et_main_map = $('#et_main_map'),
             new_listing_height;

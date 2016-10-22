@@ -76,7 +76,7 @@ $loc_id = eypd_get_unique_location_id();
 							marker.setAnimation(google.maps.Animation.DROP);
 							marker.setIcon('<?php echo get_stylesheet_directory_uri(); ?>/assets/images/blue-marker.png');
 							$(this).gmap3("get").panTo(marker.position);
-							$(this).et_slider_move_to(marker_order);
+							//$(this).et_slider_move_to(marker_order);
 						},
 						mouseover: function (marker) {
 							$('#' + marker_id).css({
@@ -102,49 +102,6 @@ $loc_id = eypd_get_unique_location_id();
 					}
 				}
 			});
-		}
-
-		/**
-		 * Adds previous/next functionality to a panel/slide that displays location information.
-		 * Changes display information and drops the pin on the map, on click
-		 * @param direction
-		 */
-		function et_slider_move_to(direction) {
-			var $active_slide = $('.et-slide').eq(et_active_slide),
-				$next_slide;
-
-			if (direction == 'next' || direction == 'previous') {
-
-				if (direction == 'next')
-					et_active_slide = ( et_active_slide + 1 ) < et_slides_number ? et_active_slide + 1 : 0;
-				else
-					et_active_slide = ( et_active_slide - 1 ) >= 0 ? et_active_slide - 1 : et_slides_number - 1;
-
-			} else {
-
-				if (et_active_slide == direction) return;
-
-				et_active_slide = direction;
-
-			}
-
-			$next_slide = $et_slide.eq(et_active_slide);
-
-			if (settings.use_controls && et_slides_number > 1)
-				$et_slider_controls.removeClass(settings.control_active_class).eq(et_active_slide).addClass(settings.control_active_class);
-
-			if (settings.on_slide_changing)
-				settings.on_slide_changing($next_slide);
-
-			$active_slide.animate({opacity: 0}, et_fade_speed, function () {
-				$(this).css('display', 'none');
-
-				$next_slide.css({'display': 'block', opacity: 0}).animate({opacity: 1}, et_fade_speed, function () {
-					if (settings.on_slide_change_end)
-						settings.on_slide_change_end($next_slide);
-				});
-			});
-
 		}
 
 		<?php
@@ -230,62 +187,66 @@ $loc_id = eypd_get_unique_location_id();
 <!--****************************************
 	Lists events
 *****************************************-->
-<!--<div id="et-list-view" class="et-normal-listings">-->
-<!--	<h2 id="listing-results">--><?php //esc_html_e( 'Upcoming Events', 'Explorable' ); ?><!--</h2>-->
-<!---->
-<!--	<div id="et-listings">-->
-<!--		<div class="scrollbar">-->
-<!--			<div class="track">-->
-<!--				<div class="thumb">-->
-<!--					<div class="end"></div>-->
-<!--				</div>-->
-<!--			</div>-->
-<!--		</div>-->
-<!--		<div class="viewport">-->
-<!--			<div class="overview">-->
-<!--				<ul>-->
-<!--					--><?php
-//					$i = 1;
-//					// set up to get all location longitude, latitude
-//					$args_ev = array(
-//						'post_type'     => 'event',
-//						'post_status'   => 'publish',
-//						'cache_results' => true,
-//					);
-//
-//					$q_ev = new WP_Query( $args_ev );
-//					while ( $q_ev->have_posts() ) : $q_ev->the_post();
-//						$thumb = false;
-//						if ( has_post_thumbnail( get_the_ID() ) ) {
-//							$et_fullpath = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), array(
-//								60,
-//								60
-//							) );
-//							$thumb       = true;
-//						}
-//						?>
-<!--						<li class="--><?php //if ( 1 == $i ) {
-//							echo esc_attr( 'et-active-listing ' );
-//						} ?><!--clearfix">-->
-<!--							<div class="listing-image">-->
-<!--								--><?php //if ( $thumb ) { ?>
-<!--									<img src="--><?php //// echo $et_fullpath[0] ;?><!--"/>-->
-<!--								--><?php //} ?>
-<!--							</div> <!-- .listing-image -->-->
-<!--							<div class="listing-text">-->
-<!--								<h3>--><?php //the_title(); ?><!--</h3>-->
-<!--								<p>--><?php //echo wp_strip_all_tags( get_the_term_list( get_the_ID(), 'event-categories', '', ', ' ) ); ?><!--</p>-->
-<!---->
-<!--							</div> <!-- .listing-text -->-->
-<!--							<a href="--><?php //the_permalink(); ?><!--"-->
-<!--							   class="et-mobile-link">--><?php //esc_html_e( 'Read more', 'Explorable' ); ?><!--</a>-->
-<!--						</li>-->
-<!--						--><?php
-//						$i ++;
-//					endwhile;
-//					?>
-<!--				</ul>-->
-<!--			</div> <!-- .overview -->-->
-<!--		</div> <!-- .viewport -->-->
-<!--	</div> <!-- #et-listings -->-->
-<!--</div> <!-- #et-list-view -->-->
+<div id="et-list-view" class="et-normal-listings">
+	<h2 id="listing-results"><?php esc_html_e( 'Upcoming Events', 'Explorable' ); ?></h2>
+
+	<div id="et-listings">
+		<div class="scrollbar">
+			<div class="track">
+				<div class="thumb">
+					<div class="end"></div>
+				</div>
+			</div>
+		</div>
+		<div class="viewport">
+
+<!--****************************************
+	Lists events
+*****************************************-->
+			<div class="overview">
+				<ul>
+					<?php
+					$i = 1;
+					// set up to get all location longitude, latitude
+					$args_ev = array(
+						'post_type'     => 'event',
+						'post_status'   => 'publish',
+						'cache_results' => true,
+					);
+
+					$q_ev = new WP_Query( $args_ev );
+					while ( $q_ev->have_posts() ) : $q_ev->the_post();
+						$thumb = false;
+						if ( has_post_thumbnail( get_the_ID() ) ) {
+							$et_fullpath = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), array(
+								60,
+								60
+							) );
+							$thumb       = true;
+						}
+						?>
+						<li class="<?php if ( 1 == $i ) {
+							echo esc_attr( 'et-active-listing ' );
+						} ?>clearfix">
+							<div class="listing-image">
+								<?php if ( $thumb ) { ?>
+									<img src="<?php // echo $et_fullpath[0] ;?>"/>
+								<?php } ?>
+							</div> <!-- .listing-image -->
+							<div class="listing-text">
+								<h3><?php the_title(); ?></h3>
+								<p><?php echo wp_strip_all_tags( get_the_term_list( get_the_ID(), 'event-categories', '', ', ' ) ); ?></p>
+
+							</div> <!-- .listing-text -->
+							<a href="<?php the_permalink(); ?>"
+							   class="et-mobile-link"><?php esc_html_e( 'Read more', 'Explorable' ); ?></a>
+						</li>
+						<?php
+						$i ++;
+					endwhile;
+					?>
+				</ul>
+			</div> <!-- .overview -->
+		</div> <!-- .viewport -->
+	</div> <!-- #et-listings -->
+</div> <!-- #et-list-view -->
