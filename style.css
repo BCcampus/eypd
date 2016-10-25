@@ -94,6 +94,9 @@ body.home-page .top-wrap.row {
 h2.page-title, h2.post-title, h1.page-title, h1.post-title {
   color: #333333; }
 
+.author-box, .category-box, .tag-box, .info-box, #sidebar, .activity-inner, div.activity-comments form.ac-form, .postthumb img, span.activity, h1#site-title, div#site-title, #inner-sidebar, .sidebar-activity-tabs ul li, div#subnav.item-list-tabs, #top-homepage, .fluid-width-video-wrapper, #bbpress-forums .bbp-breadcrumb, #bbpress-forums li.bbp-footer, .bbp-reply-header {
+  text-shadow: none; }
+
 /*
 |--------------------------------------------------------------------------
 | Map
@@ -370,6 +373,30 @@ div.thumbnail {
 */
 /*
 |--------------------------------------------------------------------------
+| Forms
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+.field-visibility-settings-notoggle {
+  display: none; }
+
+/*
+|--------------------------------------------------------------------------
+| Tables
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+table.em-calendar thead {
+  font-weight: normal; }
+
+/*
+|--------------------------------------------------------------------------
 | Header
 |--------------------------------------------------------------------------
 |
@@ -395,10 +422,16 @@ div.thumbnail {
 |
 |
 */
+.main-menu ul a {
+  color: #4183C4; }
+  .main-menu ul a:hover {
+    background: none; }
+
 .base-menu ul li.current-cat a,
 .base-menu ul li.current_page_item a,
 .base-menu ul li.current-menu-item a {
-  background: none; }
+  background: none;
+  font-weight: normal; }
 
 .top-menu,
 .top-wrap .sub-menu,
@@ -420,6 +453,10 @@ thead:first-child tr td,
 
 .top-wrap .base-menu.sub-menu {
   border-radius: 4px; }
+
+.base-menu ul a, div.item-list-tabs ul li a, div.item-list-tabs ul li span, #footer-menu ul li a {
+  text-shadow: none;
+  font-weight: normal; }
 
 /*
 |--------------------------------------------------------------------------
