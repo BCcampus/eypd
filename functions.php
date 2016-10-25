@@ -113,7 +113,7 @@ function eypd_get_unique_location_id( $sets = array( 'loc_post_id' ) ) {
 		$output['loc_id'] = $loc_id;
 	}
 	if ( in_array( 'event_post_id', $sets ) ) {
-		$output['event_post_id'] = $loc_post_id;
+		$output['event_post_id'] = $event_post_id;
 	}
 
 	return $output;
