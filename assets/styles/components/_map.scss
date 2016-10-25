@@ -16,7 +16,7 @@
   max-width: none;
 }
 
-/* marker on homepage */
+/* single marker on homepage */
 
 .et_marker_info {
   opacity: 0;
@@ -26,6 +26,15 @@
   display: none;
   background-color: $color-white;
 }
+
+/* group marker on homepage */
+.et_marker_group_info {
+  opacity: 0;
+  bottom: 50px;
+  position: absolute;
+  z-index: 3;
+  display: none;
+  background-color: #ffffff; }
 
 .location-description {
   width: 240px;
@@ -48,6 +57,10 @@
   text-shadow: 1px 1px 0 $color-white;
   border-bottom: 1px solid $color-white-ice;
   padding: 19px 35px;
+}
+
+.group .location-title h2 {
+  padding: 19px 15px;
 }
 
 .listing-info {
