@@ -112,7 +112,7 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
 #et_main_map img, #et-single-map img {
   max-width: none; }
 
-/* marker on homepage */
+/* single marker on homepage */
 .et_marker_info {
   opacity: 0;
   bottom: 50px;
@@ -120,6 +120,16 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
   z-index: 3;
   display: none;
   background-color: #ffffff; }
+
+/* group marker on homepage */
+.et_marker_group_info {
+  opacity: 0;
+  bottom: 50px;
+  position: absolute;
+  z-index: 3;
+  display: none;
+  background-color: #ffffff; }
+
 
 .location-description {
   width: 240px;
@@ -140,6 +150,9 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
   text-shadow: 1px 1px 0 #ffffff;
   border-bottom: 1px solid #e6f4fb;
   padding: 19px 35px; }
+
+.group .location-title h2 {
+  padding: 19px 15px; }
 
 .listing-info {
   margin-bottom: -22px;
