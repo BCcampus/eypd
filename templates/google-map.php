@@ -1,18 +1,20 @@
-<div id="et_main_map"></div>
 <?php
+/**
+ * @see http://wp-events-plugin.com/documentation/shortcodes/
+ *
+ * Further configuration, like showing all events at a particular location
+ * is available in Events -> Settings -> Formatting -> Maps
+ *
+ * All Location Related Placeholders can be entered to modify the format and
+ * content of text appearing in the balloon describing the location.
+ *
+ * For instance, entering #_LOCATIONNEXTEVENTS
+ * Will show a list of all future events at this location.
+ *
+ * More documentation on Location Related Placeholders
+ * can be found in the admin menu Events -> Settings -> Help
+ */
 
-require get_stylesheet_directory() .'/vendor/autoload.php';
+$location = '[locations_map width=100% height=450]';
 
-use Ivory\GoogleMap\Base\Coordinate;
-use Ivory\GoogleMap\Map;
-
-$map = new Map();
-
-// Disable the auto zoom flag (disabled by default)
-$map->setAutoZoom(false);
-// Sets the center
-$map->setCenter(new Coordinate(0, 0));
-// Sets the zoom
-$map->setMapOption('zoom', 3);
-$map->setHtmlContainerId( 'et_main_map' );
-
+echo do_shortcode( $location );

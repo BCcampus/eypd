@@ -17,8 +17,8 @@ infinity_get_header();
 	do_action( 'open_content' );
 	do_action( 'open_page' );
 
-	infinity_load_template( 'templates/fullwidth-map.php' );
-	//infinity_load_template( 'templates/google-map.php' );
+	//infinity_load_template( 'templates/fullwidth-map.php' );
+	infinity_load_template( 'templates/google-map.php' );
 
 	?>
 
