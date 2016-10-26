@@ -10,12 +10,30 @@
  * )
  *
  */
-$loc_id = eypd_get_unique_location_id();
+
+$input			= eypd_get_unique_location_id(array('loc_post_id', 'loc_id', 'event_post_id'));
+
+$event_post_id	= $input['event_post_id'];
+$loc_id			= $input['loc_id'];
+$loc_post_id	= $input['loc_post_id'];
+
+print "<!-- ".__LINE__."\n";
+print "event_post_id \n".print_r($event_post_id, TRUE)."\n";
+print "loc_id \n".print_r($loc_id, TRUE)."\n";
+print "loc_post_id \n".print_r($loc_post_id, TRUE)."\n";
+
+foreach ($loc_post_id as $id) {
+	print print_r(eypd_event_output($id), TRUE);
+}
+
+print "-->";
 
 ?>
-<!--***************************************
+<!--
+***************************************
 	Required element for map display
-****************************************-->
+****************************************
+-->
 
 <div id="et_main_map"></div>
 
@@ -28,17 +46,25 @@ $loc_id = eypd_get_unique_location_id();
 				options: {
 					<?php
 					// first loop is to center the map on one location (just need one)
-					foreach ( $loc_id as $id ) {
-						$et_location_lat = get_post_meta( $id, '_location_latitude', true );
-						$et_location_lng = get_post_meta( $id, '_location_longitude', true );
 
-						if ( '' != $et_location_lat && '' != $et_location_lng ) {
-							printf( 'center: [%s, %s],', $et_location_lat, $et_location_lng );
-						}
-						break;
+					$et_var_lat = array();
+					$et_var_lng = array();
+
+					foreach ( $loc_post_id as $id ) {
+						$et_var_lat[$id] = get_post_meta( $id, '_location_latitude', true );
+						$et_var_lng[$id] = get_post_meta( $id, '_location_longitude', true );
 					}
+
+					list($et_center_lat, $et_center_lng) = eypd_center($et_var_lat, $et_var_lng);
+
+					if ( '' != $et_center_lat && '' != $et_center_lng ) {
+						printf( 'center: [%s, %s],', $et_center_lat, $et_center_lng );
+						}	
+
+					$zoom = max(1, (6 - round(( max($et_var_lat) - min($et_var_lat)) / 36)));
+					printf( "\n\t\t\t\tzoom: %d,\n", $zoom );
+
 					?>
-					zoom: 5,
 					mapTypeId: google.maps.MapTypeId.TERRAIN,
 					mapTypeControl: true,
 					mapTypeControlOptions: {
@@ -105,23 +131,89 @@ $loc_id = eypd_get_unique_location_id();
 		}
 
 		<?php
+
 		// this drops all the pins on the map
 		$i = 0;
-		foreach ( $loc_id as $id ) {
+		$closeness = 5; // 5km
 
-		$et_location_lat = get_post_meta( $id, '_location_latitude', true );
-		$et_location_lng = get_post_meta( $id, '_location_longitude', true );
+		$et_grp_id = array();
+		$et_grp_lat = array();
+		$et_grp_lng = array();
 
-		if ( '' != $et_location_lat && '' != $et_location_lng ) {
-		?>
-		et_add_marker(<?php
-			printf( '%1$d, %2$s, %3$s, \'<div id="et_marker_%1$d" class="et_marker_info"><div class="location-description"> <div class="location-title"> <h2>%4$s</h2> <div class="listing-info"></div> </div> </div> <!-- .location-description --> </div> <!-- .et_marker_info -->\'', $i, esc_html( $et_location_lat ), esc_html( $et_location_lng ), get_post( $id )->post_title
-			);
-			?>);
-		<?php
+		foreach ( $loc_post_id as $id ) {
+			// get and prep the list
+
+			// fetch higher in the script
+			$et_location_lat = $et_var_lat[$id];
+			$et_location_lng = $et_var_lng[$id];
+			$group = false;
+			
+			// check for distance and cluster those within "rule" kilometers
+			foreach ( $loc_post_id as $this_id ) {
+				
+				// get and prep the list
+				if (($group == false) && ($this_id != $id) && (eypd_distance($et_var_lat[$this_id], $et_var_lng[$this_id], $et_var_lat[$id], $et_var_lng[$id] ) < $closeness)) {
+					// group the items
+					$group = true;
+
+					// get this one
+					$et_grp_id[$this_id][]= $id;
+					$et_grp_lat[$this_id] = $et_var_lat[$id];
+					$et_grp_lng[$this_id] = $et_var_lng[$id];		
+					
+					// get the one that was close
+					$et_grp_id[$this_id][] = $this_id;
+					$et_grp_lat[$this_id] = $et_var_lat[$this_id];
+					$et_grp_lng[$this_id] = $et_var_lng[$this_id];		
+					
+					// print print_r($et_grp_id, TRUE)." $this_id\n";
+
+					$et_grp_id[$this_id] = array_unique($et_grp_id[$this_id]);
+
+					// print print_r($et_grp_id, TRUE)." $this_id\n";
+				}
+			}
+
+			if ($group == false) {
+				// store the marker
+
+				// $marker[$id] = sprintf('et_add_marker(%d, %s, %s, \'<div id="et_marker_%d" class="et_marker_info"><div class="location-description"> <div class="location-title"> <h2>%s</h2> <div class="listing-info"></div> </div> </div> <!-- .location-description --> </div> <!-- .et_marker_info -->\');', $i, esc_html( $et_location_lat ), esc_html( $et_location_lng ), $i, get_post( $id )->post_title)."\n";	
+
+				$marker[$id] = sprintf("et_add_marker(%d, %s, %s, '%s');", $i, esc_html( $et_location_lat ), esc_html( $et_location_lng ), eypd_event_output($id, array(), $i))."\n";	
+
+				$i++;
+			}
+			else {
+				// toss the individual markers
+
+				// print __LINE__." about to REMOVE ".$id." and ".$this_id."\n";
+				// print print_r($marker, TRUE)."\n";
+
+				unset($marker[$id]);
+				unset($marker[$this_id]);
+			}
 		}
-		$i ++;
+		// output markers
+
+		foreach ($marker as $js) {
+			print $js;
 		}
+
+		// output groups
+		$g = 0;
+		foreach ($et_grp_id as $id => $group) {
+				$events = $city = "";
+				foreach ($group as $single_id) {
+					if ($city == "") {
+						$city = get_post_meta( $id, '_location_town', true );
+					}
+					$events .= sprintf("<a href=\"#\" onClick=\"et_fetch(%d)\">%s</a><br/>", $single_id, get_post( $single_id )->post_title);
+				}
+
+				printf('et_add_marker(%d, %s, %s, \'<div id="et_marker_%d" class="et_marker_info group"><div class="location-description"> <div class="location-title"> <h2>%s</h2> <div class="listing-info">%s</div> </div> </div> <!-- .location-description --> </div> <!-- .et_marker_info -->\');', $i, esc_html( $et_grp_lat[$id] ), esc_html( $et_grp_lng[$id] ), $i, $city, $events)."\n";				
+				$i++;
+		}
+
 		?>
 	})(jQuery)
 </script>

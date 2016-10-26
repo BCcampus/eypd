@@ -430,6 +430,36 @@
         }
     }
 
+    /**
+     * fetches records from ajax source
+     *
+     */
+    function et_fetch(id) {
+		var lat;
+		var lng;
+		var html;
+
+		// ajax call to get the lat, long and html
+
+		$.ajax({
+			type: 'POST',
+			dataType: 'json',
+			url: '/wp-admin/admin-ajax.php',
+			data: 'action=et_fetch&q='+id,
+			success: function(data) {
+				response(data);
+			}
+		});
+
+
+		et_add_marker(id, lat, lng, html);
+		// zoom
+
+		// activate marker
+
+    }
+
+
     $(window).load(function () {
         $('.et-normal-listings #et-listings').tinyscrollbar();
 

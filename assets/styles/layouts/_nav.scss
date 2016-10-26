@@ -8,10 +8,19 @@
 |
 */
 
+// inner header nav
+.main-menu ul a{
+  color: $color-blue-boston;
+  &:hover{
+    background: none;
+  }
+}
+
 .base-menu ul li.current-cat a,
 .base-menu ul li.current_page_item a,
 .base-menu ul li.current-menu-item a {
   background: none;
+  font-weight: normal;
 }
 
 .top-menu,
@@ -35,4 +44,9 @@ thead:first-child tr td,
 
 .top-wrap .base-menu.sub-menu{
   border-radius: 4px;
+}
+
+.base-menu ul a, div.item-list-tabs ul li a, div.item-list-tabs ul li span, #footer-menu ul li a{
+  text-shadow: none;
+  font-weight: normal;
 }

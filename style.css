@@ -94,6 +94,9 @@ body.home-page .top-wrap.row {
 h2.page-title, h2.post-title, h1.page-title, h1.post-title {
   color: #333333; }
 
+.author-box, .category-box, .tag-box, .info-box, #sidebar, .activity-inner, div.activity-comments form.ac-form, .postthumb img, span.activity, h1#site-title, div#site-title, #inner-sidebar, .sidebar-activity-tabs ul li, div#subnav.item-list-tabs, #top-homepage, .fluid-width-video-wrapper, #bbpress-forums .bbp-breadcrumb, #bbpress-forums li.bbp-footer, .bbp-reply-header {
+  text-shadow: none; }
+
 /*
 |--------------------------------------------------------------------------
 | Map
@@ -109,8 +112,17 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
 #et_main_map img, #et-single-map img {
   max-width: none; }
 
-/* marker on homepage */
+/* single marker on homepage */
 .et_marker_info {
+  opacity: 0;
+  bottom: 50px;
+  position: absolute;
+  z-index: 3;
+  display: none;
+  background-color: #ffffff; }
+
+/* group marker on homepage */
+.et_marker_group_info {
   opacity: 0;
   bottom: 50px;
   position: absolute;
@@ -137,6 +149,9 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
   text-shadow: 1px 1px 0 #ffffff;
   border-bottom: 1px solid #e6f4fb;
   padding: 19px 35px; }
+
+.group .location-title h2 {
+  padding: 19px 15px; }
 
 .listing-info {
   margin-bottom: -22px;
@@ -347,9 +362,6 @@ div.thumbnail {
   top: 160px;
   left: 60px; }
 
-#et_listings {
-  height: auto !important; }
-
 /*
 |--------------------------------------------------------------------------
 | Lists
@@ -371,6 +383,30 @@ div.thumbnail {
 |
 |
 */
+/*
+|--------------------------------------------------------------------------
+| Forms
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+.field-visibility-settings-notoggle {
+  display: none; }
+
+/*
+|--------------------------------------------------------------------------
+| Tables
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+table.em-calendar thead {
+  font-weight: normal; }
+
 /*
 |--------------------------------------------------------------------------
 | Header
@@ -398,10 +434,16 @@ div.thumbnail {
 |
 |
 */
+.main-menu ul a {
+  color: #4183C4; }
+  .main-menu ul a:hover {
+    background: none; }
+
 .base-menu ul li.current-cat a,
 .base-menu ul li.current_page_item a,
 .base-menu ul li.current-menu-item a {
-  background: none; }
+  background: none;
+  font-weight: normal; }
 
 .top-menu,
 .top-wrap .sub-menu,
@@ -423,6 +465,10 @@ thead:first-child tr td,
 
 .top-wrap .base-menu.sub-menu {
   border-radius: 4px; }
+
+.base-menu ul a, div.item-list-tabs ul li a, div.item-list-tabs ul li span, #footer-menu ul li a {
+  text-shadow: none;
+  font-weight: normal; }
 
 /*
 |--------------------------------------------------------------------------
