@@ -395,6 +395,9 @@ div.thumbnail {
 .field-visibility-settings-notoggle {
   display: none; }
 
+#event-form #em-editor-content_ifr {
+  height: 200px !important; }
+
 /*
 |--------------------------------------------------------------------------
 | Tables

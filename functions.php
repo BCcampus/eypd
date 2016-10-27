@@ -217,3 +217,36 @@ function et_fetch( $post_id = - 1, $ajax = true ) {
 	}
 }
 
+/*
+|--------------------------------------------------------------------------
+| Labels/Localization
+|--------------------------------------------------------------------------
+|
+| Addin' sum canadiana to this here 'merican plugin
+|
+|
+*/
+
+// changing state to province
+update_option( 'dbem_search_form_state_label', 'Province' );
+
+// changing state to province
+function eypd_terminology_modify( $translated, $original, $domain ) {
+
+	if ( 'events-manager' == $domain ) {
+		$modify = array(
+			"State/County:" => "Province:",
+			"Details"       => "Event Description",
+			"Category:"     => "Category: (select multiple items [mac]=command,click [pc]=ctrl,click)",
+			"Submit %s"     => "Post %s",
+		);
+
+		if ( isset( $modify[ $original ] ) ) {
+			$translated = $modify[ $original ];
+		}
+	}
+
+	return $translated;
+}
+
+add_filter( 'gettext', 'eypd_terminology_modify', 11, 3 );
