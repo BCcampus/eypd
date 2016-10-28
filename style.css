@@ -395,6 +395,9 @@ div.thumbnail {
 .field-visibility-settings-notoggle {
   display: none; }
 
+#event-form #em-editor-content_ifr {
+  height: 200px !important; }
+
 /*
 |--------------------------------------------------------------------------
 | Tables
@@ -517,7 +520,6 @@ thead:first-child tr td,
   padding-left: 0;
   padding-right: 0;
   padding-top: 19px;
-  position: absolute;
   width: 100%;
   z-index: 2; }
 
