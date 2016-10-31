@@ -963,13 +963,20 @@ function em_maps() {
 				google.maps.event.trigger(map, 'resize');
 				map.setCenter(position);
 				map.panBy(40,-55);
+
+				var content = '';
+				if (mapTitle.length > 0) {
+					content += '<strong>' + mapTitle + '</strong><br/>';
+				}
+				if (jQuery('#location-address').val().length > 0) {
+					content += jQuery('#location-address').val() + '<br/>';
+				}
+				if (jQuery('#location-town').val().length > 0) {
+					content += jQuery('#location-town').val();
+				}
+
 				infoWindow.setContent( 
-					'<div id="location-balloon-content"><strong>' + 
-					mapTitle + 
-					'</strong><br/>' + 
-					jQuery('#location-address').val() + 
-					'<br/>' + jQuery('#location-town').val()+ 
-					'</div>'
+					'<div id="location-balloon-content">' + content +  '</div>'
 				);
 				infoWindow.open(map, marker);
 				jQuery(document).triggerHandler('em_maps_location_hook', [map, infowindow, marker, 0]);
