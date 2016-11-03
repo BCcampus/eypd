@@ -910,7 +910,8 @@ function em_maps_load_location(el){
 	    zoom: 14,
 	    center: em_LatLng,
 	    mapTypeId: google.maps.MapTypeId.ROADMAP,
-	    mapTypeControl: false
+	    mapTypeControl: false,
+		scrollwheel: false
 	};
 	jQuery(document).triggerHandler('em_maps_location_map_options', map_options);
 	maps[map_id] = new google.maps.Map( document.getElementById('em-location-map-'+map_id), map_options);
