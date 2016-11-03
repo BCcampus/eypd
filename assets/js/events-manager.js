@@ -908,7 +908,7 @@ function em_maps_load_location(el){
 	//extend map and markers via event triggers
 	var map_options = {
 	    zoom: 14,
-	    center: em_LatLng,
+	    center: em_LatLng, 
 	    mapTypeId: google.maps.MapTypeId.ROADMAP,
 	    mapTypeControl: false, 
 		scrollwheel: false

@@ -866,61 +866,61 @@ function eypd_event_etc_output($input = "") {
 
 
 function eypd_cluster_locations($json_locations, $group_key) {
-		// iterate through the positions
-		foreach ($json_locations as $location_key => $location_array) {
-			// pull those that are close and group them
-			foreach ($json_locations as $compare_key => $compare_array) {
-				if (($compare_key != $location_key) && (eypd_distance($location_array['location_latitude'], $location_array['location_longitude'], $compare_array['location_latitude'], $compare_array['location_longitude']) < constant("CLOSENESS"))) {
-					$group_key++;
-					// pull the location_key, then the compare_key, merge them into one larger balloon and add to the $json_locations_grouped
+	// iterate through the positions
+	foreach ($json_locations as $location_key => $location_array) {
+		// pull those that are close and group them
+		foreach ($json_locations as $compare_key => $compare_array) {
+			if (($compare_key != $location_key) && (eypd_distance($location_array['location_latitude'], $location_array['location_longitude'], $compare_array['location_latitude'], $compare_array['location_longitude']) < constant("CLOSENESS"))) {
+				$group_key++;
+				// pull the location_key, then the compare_key, merge them into one larger balloon and add to the $json_locations_grouped
 
-					$json_locations[$group_key] = $location_array;
-					$json_locations[$group_key]['location_name'] = $location_array['location_town'];
-					$json_locations[$group_key]['location_latitude'] = floatval(($location_array['location_latitude'] + $compare_array['location_latitude']) / 2);
-					$json_locations[$group_key]['location_longitude'] = floatval(($location_array['location_longitude'] + $compare_array['location_longitude']) / 2);
+				$json_locations[$group_key] = $location_array;
+				$json_locations[$group_key]['location_name'] = $location_array['location_town'];
+				$json_locations[$group_key]['location_latitude'] = floatval(($location_array['location_latitude'] + $compare_array['location_latitude']) / 2);
+				$json_locations[$group_key]['location_longitude'] = floatval(($location_array['location_longitude'] + $compare_array['location_longitude']) / 2);
 
-					// name
-					// slug
-					// address
-					// town
-					// state
+				// name
+				// slug
+				// address
+				// town
+				// state
 
-					
-					$address = '<span style="display: block;">';
-					$address .= (strlen($json_locations[$location_key]['location_name']) > 1) ? "<strong>".$json_locations[$location_key]['location_name']."</strong><br/>" : "";
-					$address .= (strlen($json_locations[$location_key]['location_address']) > 1) ? $json_locations[$location_key]['location_address']."<br/>" : "";
-					$address .= (strlen($json_locations[$location_key]['location_town']) > 1) ? $json_locations[$location_key]['location_town'] : "";
-					$address .= (strlen($json_locations[$location_key]['location_state']) > 0) ? ", ".$json_locations[$location_key]['location_state'] : "";
-					$address .= "</span>";
+				
+				$address = '<span style="display: block;">';
+				$address .= (strlen($json_locations[$location_key]['location_name']) > 1) ? "<strong>".$json_locations[$location_key]['location_name']."</strong><br/>" : "";
+				$address .= (strlen($json_locations[$location_key]['location_address']) > 1) ? $json_locations[$location_key]['location_address']."<br/>" : "";
+				$address .= (strlen($json_locations[$location_key]['location_town']) > 1) ? $json_locations[$location_key]['location_town'] : "";
+				$address .= (strlen($json_locations[$location_key]['location_state']) > 0) ? ", ".$json_locations[$location_key]['location_state'] : "";
+				$address .= "</span>";
 
-					$json_locations[$group_key]['location_balloon'] = str_replace($address, "", $json_locations[$group_key]['location_balloon']);
-					$json_locations[$group_key]['location_balloon'] = "<span>".$json_locations[$location_key]['location_balloon']."</span>";
-					
-					// recycle the variable $address
+				$json_locations[$group_key]['location_balloon'] = str_replace($address, "", $json_locations[$group_key]['location_balloon']);
+				$json_locations[$group_key]['location_balloon'] = "<span>".$json_locations[$location_key]['location_balloon']."</span>";
+				
+				// recycle the variable $address
 
-					$address = '<span style="display: block;">';
-					$address .= (strlen($json_locations[$compare_key]['location_name']) > 1) ? "<strong>".$json_locations[$compare_key]['location_name']."</strong><br/>" : "";
-					$address .= (strlen($json_locations[$compare_key]['location_address']) > 1) ? $json_locations[$compare_key]['location_address']."<br/>" : "";
-					$address .= (strlen($json_locations[$compare_key]['location_town']) > 1) ? $json_locations[$compare_key]['location_town'] : "";
-					$address .= (strlen($json_locations[$compare_key]['location_state']) > 0) ? ", ".$json_locations[$compare_key]['location_state'] : "";
-					$address .= "</span>";
+				$address = '<span style="display: block;">';
+				$address .= (strlen($json_locations[$compare_key]['location_name']) > 1) ? "<strong>".$json_locations[$compare_key]['location_name']."</strong><br/>" : "";
+				$address .= (strlen($json_locations[$compare_key]['location_address']) > 1) ? $json_locations[$compare_key]['location_address']."<br/>" : "";
+				$address .= (strlen($json_locations[$compare_key]['location_town']) > 1) ? $json_locations[$compare_key]['location_town'] : "";
+				$address .= (strlen($json_locations[$compare_key]['location_state']) > 0) ? ", ".$json_locations[$compare_key]['location_state'] : "";
+				$address .= "</span>";
 
-					$json_locations[$group_key]['location_balloon'] = str_replace($address, "", $json_locations[$group_key]['location_balloon']);
-					$json_locations[$group_key]['location_balloon'] .= "<span>".$json_locations[$compare_key]['location_balloon']."</span>";
+				$json_locations[$group_key]['location_balloon'] = str_replace($address, "", $json_locations[$group_key]['location_balloon']);
+				$json_locations[$group_key]['location_balloon'] .= "<span>".$json_locations[$compare_key]['location_balloon']."</span>";
 
-					$json_locations[$group_key]['location_address'] = "";
-					$json_locations[$group_key]['location_town'] = "";
-					$json_locations[$group_key]['location_state'] = "";
+				$json_locations[$group_key]['location_address'] = "";
+				$json_locations[$group_key]['location_town'] = "";
+				$json_locations[$group_key]['location_state'] = "";
 
-					// toss these
-					// this should destroy these but not effect that they still exist in the for next loop
-					unset($json_locations[$location_key]);
-					unset($json_locations[$compare_key]);
-				}
+				// toss these
+				// this should destroy these but not effect that they still exist in the for next loop
+				unset($json_locations[$location_key]);
+				unset($json_locations[$compare_key]);
 			}
 		}
-		return array($json_locations, $group_key);
 	}
+	return array($json_locations, $group_key);
+}
 
 add_action('wp_ajax_nopriv_cyop_lookup', 'et_fetch');
 add_action('wp_ajax_cyop_lookup', 'et_fetch');
