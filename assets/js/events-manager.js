@@ -907,7 +907,7 @@ function em_maps_load_location(el){
 	em_LatLng = new google.maps.LatLng( jQuery('#em-location-map-coords-'+map_id+' .lat').text(), jQuery('#em-location-map-coords-'+map_id+' .lng').text());
 	//extend map and markers via event triggers
 	var map_options = {
-	    zoom: 14,
+	    zoom: 12,
 	    center: em_LatLng, 
 	    mapTypeId: google.maps.MapTypeId.ROADMAP,
 	    mapTypeControl: false, 
