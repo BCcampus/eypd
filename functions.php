@@ -115,7 +115,7 @@ add_filter( 'gettext', 'eypd_terminology_modify', 11, 3 );
 */
 
 function eypd_init_actions() {
-	global $wpdb,$EM_Notices,$EM_Event,$closeness; 
+	global $wpdb,$EM_Notices,$EM_Event;
 
 	update_option ( 'dbem_location_event_list_item_format', '<li class="category-#_EVENTPOSTID">#_EVENTLINK - #_EVENTDATES - #_EVENTTIMES</li>', TRUE );
 
