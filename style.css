@@ -533,3 +533,7 @@ thead:first-child tr td,
   width: 750px; }
 
 /*# sourceMappingURL=style.css.map */
+
+.em-map-balloon-content span {
+	display: block;
+}

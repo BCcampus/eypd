@@ -907,10 +907,11 @@ function em_maps_load_location(el){
 	em_LatLng = new google.maps.LatLng( jQuery('#em-location-map-coords-'+map_id+' .lat').text(), jQuery('#em-location-map-coords-'+map_id+' .lng').text());
 	//extend map and markers via event triggers
 	var map_options = {
-	    zoom: 14,
-	    center: em_LatLng,
+	    zoom: 12,
+	    center: em_LatLng, 
 	    mapTypeId: google.maps.MapTypeId.ROADMAP,
-	    mapTypeControl: false
+	    mapTypeControl: false, 
+		scrollwheel: false
 	};
 	jQuery(document).triggerHandler('em_maps_location_map_options', map_options);
 	maps[map_id] = new google.maps.Map( document.getElementById('em-location-map-'+map_id), map_options);
@@ -963,13 +964,20 @@ function em_maps() {
 				google.maps.event.trigger(map, 'resize');
 				map.setCenter(position);
 				map.panBy(40,-55);
+
+				var content = '';
+				if (mapTitle.length > 0) {
+					content += '<strong>' + mapTitle + '</strong><br/>';
+				}
+				if (jQuery('#location-address').val().length > 0) {
+					content += jQuery('#location-address').val() + '<br/>';
+				}
+				if (jQuery('#location-town').val().length > 0) {
+					content += jQuery('#location-town').val();
+				}
+
 				infoWindow.setContent( 
-					'<div id="location-balloon-content"><strong>' + 
-					mapTitle + 
-					'</strong><br/>' + 
-					jQuery('#location-address').val() + 
-					'<br/>' + jQuery('#location-town').val()+ 
-					'</div>'
+					'<div id="location-balloon-content">' + content +  '</div>'
 				);
 				infoWindow.open(map, marker);
 				jQuery(document).triggerHandler('em_maps_location_hook', [map, infowindow, marker, 0]);
