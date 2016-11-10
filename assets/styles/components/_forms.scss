@@ -18,3 +18,8 @@
     height: 200px !important;
   }
 }
+
+// hides Region from registration form
+tr.em-location-data-region {
+  display:none;
+}

@@ -40,6 +40,21 @@ define( 'CLOSENESS', 5 );
 */
 include( get_stylesheet_directory() . '/eypd-actions.php' );
 
+/*
+|--------------------------------------------------------------------------
+| Admin Styles
+|--------------------------------------------------------------------------
+|
+| for admin pages only
+|
+|
+*/
+function eypd_admin_style() {
+	wp_register_style( 'eypd_admin_css', get_stylesheet_directory_uri() . '/assets/styles/admin.css', false, false, 'screen' );
+	wp_enqueue_style( 'eypd_admin_css' );
+}
+
+add_action( 'admin_enqueue_scripts', 'eypd_admin_style' );
 
 /**
  * Load our scripts
@@ -47,7 +62,7 @@ include( get_stylesheet_directory() . '/eypd-actions.php' );
 function eypd_load_scripts() {
 	$template_dir = get_stylesheet_directory_uri();
 
-	// toss Events Manager scripts and their dependancies
+	// toss Events Manager scripts and their dependencies
 	wp_dequeue_script( 'events-manager' );
 
 	// replace script from theme

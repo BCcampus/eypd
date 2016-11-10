@@ -398,6 +398,9 @@ div.thumbnail {
 #event-form #em-editor-content_ifr {
   height: 200px !important; }
 
+tr.em-location-data-region {
+  display: none; }
+
 /*
 |--------------------------------------------------------------------------
 | Tables
@@ -533,7 +536,3 @@ thead:first-child tr td,
   width: 750px; }
 
 /*# sourceMappingURL=style.css.map */
-
-.em-map-balloon-content span {
-	display: block;
-}
