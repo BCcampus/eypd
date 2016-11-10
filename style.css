@@ -401,6 +401,26 @@ div.thumbnail {
 tr.em-location-data-region {
   display: none; }
 
+div.time-picker li {
+  height: auto; }
+
+#em-location-data table.em-location-data select, #em-location-data table.em-location-data input {
+  width: 95%; }
+
+.event-extra-details input, .event-extra-details select {
+  width: 50%; }
+.event-extra-details label {
+  font-family: "Roboto Condensed";
+  color: #333333;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-transform: none;
+  margin: 0.5em 0 1em 0;
+  line-height: 1.5em; }
+
+#event-form #event-name {
+  padding: 8px 11px; }
+
 /*
 |--------------------------------------------------------------------------
 | Tables

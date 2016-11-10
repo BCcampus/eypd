@@ -9,7 +9,7 @@
 */
 
 // hides message about field visibility
-.field-visibility-settings-notoggle{
+.field-visibility-settings-notoggle {
   display: none;
 }
 
@@ -21,5 +21,37 @@
 
 // hides Region from registration form
 tr.em-location-data-region {
-  display:none;
+  display: none;
+}
+
+// increases line height for time picker
+div.time-picker li {
+  height: auto;
+}
+
+// wider input fields
+#em-location-data table.em-location-data {
+  select, input {
+    width: 95%;
+  }
+}
+
+// event attributes to look like the rest of the form
+.event-extra-details {
+  input, select {
+    width: 50%;
+  }
+  label {
+    font-family: "Roboto Condensed";
+    color: $color-black-mineshaft;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-transform: none;
+    margin: 0.5em 0 1em 0;
+    line-height: 1.5em;
+  }
+}
+
+#event-form #event-name {
+  padding: 8px 11px;
 }
