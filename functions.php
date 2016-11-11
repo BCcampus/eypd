@@ -105,10 +105,40 @@ add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
 |
 */
 
+function eypd_get_provinces(){
+	$provinces = array(
+		'Alberta',
+		'British Columbia',
+		'Manitoba',
+		'New Brunswick',
+		'Newfoundland',
+		'Northwest Territories',
+		'Nova Scotia',
+		'Nunavut',
+		'Ontario',
+		'Prince Edward Island',
+		'Quebec',
+		'Saskatchewan',
+		'Yukon',
+	);
+
+	return $provinces;
+}
+
 /**
  * Changing state to province on search form
  */
 update_option( 'dbem_search_form_state_label', 'Province' );
+
+/**
+ * All events will be in Canada
+ */
+update_option( 'dbem_location_default_country', 'CA' );
+
+/**
+ * Most events will be in British Columbia
+ */
+update_option( 'eypd_location_default_province', 'British Columbia' );
 
 /**
  * Changing state to province and other customizations
