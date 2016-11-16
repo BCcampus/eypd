@@ -418,6 +418,9 @@ div.time-picker li {
   margin: 0.5em 0 1em 0;
   line-height: 1.5em; }
 
+#event-form p.margin-up {
+  margin-top: -20px; }
+
 #event-form #event-name {
   padding: 8px 11px; }
 

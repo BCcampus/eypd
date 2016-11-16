@@ -1,10 +1,13 @@
 <?php
 /*
- * Remember that this file is only used if you have chosen to override event pages with formats in your event settings!
- * You can also override the single event page completely in any case (e.g. at a level where you can control sidebars etc.), as described here - http://codex.wordpress.org/Post_Types#Template_Files
- * Your file would be named single-event.php
- */
-/*
+ * Modified from original events manager plugin version: 5.6.6.1 file 'templates/placeholders/event-single.php'
+ * Copyright (c) 2016, Marcus Sykes
+ * http://wp-events-plugin.com
+ * Licence: GPL 2 or later
+ *
+ * Modifications by Brad Payne
+ * Licence GPL 3+
+ *
  * This page displays a single event, called during the the_content filter if this is an event page.
  * You can override the default display settings pages by copying this file to yourthemefolder/plugins/events-manager/templates/ and modifying it however you need.
  * You can display events however you wish, there are a few variables made available to you:

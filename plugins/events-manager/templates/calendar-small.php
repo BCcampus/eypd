@@ -1,7 +1,13 @@
 <?php 
 /*
- * This file contains the HTML generated for small calendars. You can copy this file to yourthemefolder/plugins/events-manager/templates and modify it in an upgrade-safe manner.
- * 
+ * Modified from original events manager plugin version: 5.6.6.1 file 'templates/placeholders/calendar-small.php'
+ * Copyright (c) 2016, Marcus Sykes
+ * http://wp-events-plugin.com
+ * Licence: GPL 2 or later
+ *
+ * Modifications by Brad Payne
+ * Licence GPL 3+
+ *
  * There are two variables made available to you: 
  * 
  * 	$calendar - contains an array of information regarding the calendar and is used to generate the content

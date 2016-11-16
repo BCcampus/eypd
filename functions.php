@@ -155,7 +155,7 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 		$modify = array(
 			"State/County:" => "Province:",
 			"Details"       => "Event Description",
-			"Category:"     => "Category: (select multiple items [mac]=command,click [pc]=ctrl,click)",
+			"Category:"     => "Category",
 			"Submit %s"     => "Post %s",
 		);
 

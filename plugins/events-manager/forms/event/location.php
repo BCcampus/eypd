@@ -1,4 +1,13 @@
 <?php
+/* Modified from original events manager plugin version: 5.6.6.1 file 'templates/forms/location.php'
+ * Copyright (c) 2016, Marcus Sykes
+ * http://wp-events-plugin.com
+ * Licence: GPL 2 or later
+ *
+ * Modifications by Brad Payne
+ * Licence GPL 3+
+ */
+
 global $EM_Event;
 $required = apply_filters( 'em_required_html', '<i>*</i>' );
 ?>
