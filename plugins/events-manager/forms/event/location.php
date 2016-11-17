@@ -138,6 +138,17 @@ $required = apply_filters( 'em_required_html', '<i>*</i>' );
 					</select>
 				</td>
 			</tr>
+			<tr class="em-location-data-country">
+				<th><?php _e ( 'Country:', 'events-manager')?>&nbsp;</th>
+				<td>
+					<select id="location-country" name="location_country">
+						<option value="0" <?php echo ( $EM_Location->location_country == '' && $EM_Location->location_id == '' && get_option('dbem_location_default_country') == '' ) ? 'selected="selected"':''; ?>><?php _e('none selected','events-manager'); ?></option>
+						<?php foreach(em_get_countries() as $country_key => $country_name): ?>
+							<option value="<?php echo esc_attr($country_key); ?>" <?php echo ( $EM_Location->location_country == $country_key || ($EM_Location->location_country == '' && $EM_Location->location_id == '' && get_option('dbem_location_default_country')==$country_key) ) ? 'selected="selected"':''; ?>><?php echo esc_html($country_name); ?></option>
+						<?php endforeach; ?>
+					</select><?php echo $required; ?>
+				</td>
+			</tr>
 			<tr class="em-location-data-postcode">
 				<th><?php _e( 'Postcode:', 'events-manager' ) ?>&nbsp;</th>
 				<td>
