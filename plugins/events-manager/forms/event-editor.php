@@ -70,6 +70,14 @@ if( !empty($_REQUEST['success']) ){
 			?>
 		</div>
 
+		<!-- Start Custom — Adding an Attribute outside of the attribute area -->
+		<div class="event-attributes event-extra-details">
+			<label for="em_attributes[Online]">Online</label>
+			<p>Yes: <input type="radio" name="em_attributes[Online]" id="em_attributes_online_yes" value="yes">
+				No: <input type="radio" name="em_attributes[Online]" id="em_attributes_online_no" value="no"></p>
+		</div>
+		<!-- End Custom -->
+
 		<?php if( get_option('dbem_locations_enabled') ): ?>
 			<h3 class="event-form-where"><?php esc_html_e( 'Where', 'events-manager'); ?></h3>
 			<div class="inside event-form-where">

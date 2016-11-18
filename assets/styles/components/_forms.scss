@@ -38,7 +38,7 @@ div.time-picker li {
 
 // event attributes to look like the rest of the form
 .event-extra-details {
-  input, select {
+  input[type=text], select {
     width: 50%;
   }
   label {

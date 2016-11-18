@@ -407,7 +407,7 @@ div.time-picker li {
 #em-location-data table.em-location-data select, #em-location-data table.em-location-data input {
   width: 95%; }
 
-.event-extra-details input, .event-extra-details select {
+.event-extra-details input[type=text], .event-extra-details select {
   width: 50%; }
 .event-extra-details label {
   font-family: "Roboto Condensed";
