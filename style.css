@@ -420,9 +420,10 @@ div.time-picker li {
 
 #event-form p.margin-up {
   margin-top: -20px; }
-
 #event-form #event-name {
   padding: 8px 11px; }
+#event-form .mce-path-item {
+  display: none; }
 
 /*
 |--------------------------------------------------------------------------

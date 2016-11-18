@@ -154,7 +154,7 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 	if ( 'events-manager' == $domain ) {
 		$modify = array(
 			"State/County:" => "Province:",
-			"Details"       => "Event Description",
+			"Details"       => "Event Description and Objectives",
 			"Category:"     => "Category",
 			"Submit %s"     => "Post %s",
 		);

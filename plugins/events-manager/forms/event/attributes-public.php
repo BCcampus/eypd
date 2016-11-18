@@ -22,14 +22,14 @@ $has_deprecated = false;
 			<label for="em_attributes[<?php echo $name ?>]"><?php echo $name ?></label>
 			<?php
 			switch ( $name ) {
-				case 'Objectives':
-					echo '<p class="margin-up"><i>(What will participants learn?)</i></p>';
-					break;
 				case 'Registration Link':
 					echo '<p class="margin-up"><i>(if available)</i></p>';
 					break;
 				case 'Target Audience':
 					echo '<p class="margin-up"><i>(For professionals who work with:)</i></p>';
+					break;
+				case 'Professional Development Certificate Credit Hours':
+					echo '<p class="margin-up"><i>(Type a number)</i></p>';
 					break;
 				default:
 					echo '';

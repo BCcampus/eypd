@@ -51,10 +51,15 @@ div.time-picker li {
     line-height: 1.5em;
   }
 }
-#event-form p.margin-up{
-  margin-top: -20px;
-}
 
-#event-form #event-name {
-  padding: 8px 11px;
+#event-form {
+  p.margin-up {
+    margin-top: -20px;
+  }
+  #event-name {
+    padding: 8px 11px;
+  }
+  .mce-path-item {
+    display: none;
+  }
 }
