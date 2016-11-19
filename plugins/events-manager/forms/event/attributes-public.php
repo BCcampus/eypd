@@ -19,7 +19,7 @@ $has_deprecated = false;
 <?php if ( count( $attributes['names'] ) > 0 ) : ?>
 	<?php foreach ( $attributes['names'] as $name ) : ?>
 		<div class="event-attributes">
-			<label for="em_attributes[<?php echo $name ?>]"><?php echo $name ?></label>
+			<label for="em_attributes[<?php echo $name ?>]"><?php echo $name ?><?php echo ( 'Registration Fee' == $name ) ? "<i>*</i>" : '' ?></label>
 			<?php
 			switch ( $name ) {
 				case 'Registration Link':

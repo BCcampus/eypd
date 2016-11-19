@@ -49,9 +49,9 @@ if( !empty($_REQUEST['success']) ){
 				<?php do_action('em_font_event_form_guest'); //deprecated ?>
 			</div>
 		<?php endif; ?>
-		<h3 class="event-form-name"><?php esc_html_e( 'Event Name', 'events-manager'); ?></h3>
+		<h3 class="event-form-name"><?php esc_html_e( 'Event Name', 'events-manager'); ?><?php echo $required; ?></h3>
 		<div class="inside event-form-name">
-			<input type="text" name="event_name" id="event-name" value="<?php echo esc_attr($EM_Event->event_name,ENT_QUOTES); ?>" /><?php echo $required; ?>
+			<input type="text" name="event_name" id="event-name" value="<?php echo esc_attr($EM_Event->event_name,ENT_QUOTES); ?>" />
 			<br />
 			<?php esc_html_e('The event name. Example: Birthday party', 'events-manager'); ?>
 			<?php em_locate_template('forms/event/group.php',true); ?>
@@ -70,13 +70,7 @@ if( !empty($_REQUEST['success']) ){
 			?>
 		</div>
 
-		<!-- Start Custom — Adding an Attribute outside of the attribute area -->
-		<div class="event-attributes event-extra-details">
-			<label for="em_attributes[Online]">Online</label>
-			<p>Yes: <input type="radio" name="em_attributes[Online]" id="em_attributes_online_yes" value="yes">
-				No: <input type="radio" name="em_attributes[Online]" id="em_attributes_online_no" value="no"></p>
-		</div>
-		<!-- End Custom -->
+		<?php em_locate_template( 'forms/event/attribute-online.php', true ); ?>
 
 		<?php if( get_option('dbem_locations_enabled') ): ?>
 			<h3 class="event-form-where"><?php esc_html_e( 'Where', 'events-manager'); ?></h3>
@@ -85,7 +79,7 @@ if( !empty($_REQUEST['success']) ){
 			</div>
 		<?php endif; ?>
 
-		<h3 class="event-form-details"><?php esc_html_e( 'Details', 'events-manager'); ?></h3>
+		<h3 class="event-form-details"><?php esc_html_e( 'Details', 'events-manager'); ?><?php echo $required; ?></h3>
 		<p class="margin-up"><i>(What will participants learn?)</i></p>
 		<div class="inside event-form-details">
 			<div class="event-editor">
