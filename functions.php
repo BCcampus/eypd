@@ -105,7 +105,7 @@ add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
 |
 */
 
-function eypd_get_provinces(){
+function eypd_get_provinces() {
 	$provinces = array(
 		'Alberta',
 		'British Columbia',
@@ -158,10 +158,16 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 			"Category:"     => "Category",
 			"Submit %s"     => "Post %s",
 		);
+	}
+	if ( 'buddypress' == $domain ) {
+		$modify = array(
+			'Register' => 'Sign Up',
+			'Email Address' => 'Work Email Address',
+		);
+	}
 
-		if ( isset( $modify[ $original ] ) ) {
-			$translated = $modify[ $original ];
-		}
+	if ( isset( $modify[ $original ] ) ) {
+		$translated = $modify[ $original ];
 	}
 
 	return $translated;
