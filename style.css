@@ -451,6 +451,8 @@ table.em-calendar thead {
 */
 #wpadminbar {
   background-color: #222222; }
+  #wpadminbar #wp-admin-bar-wp-logo > .ab-item {
+    display: none; }
 
 #header {
   min-height: 70px;

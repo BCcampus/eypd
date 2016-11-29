@@ -10,6 +10,9 @@
 
 #wpadminbar {
   background-color: $color-black-mineshaft-dark;
+  #wp-admin-bar-wp-logo>.ab-item{
+    display: none;
+  }
 }
 
 #header {
@@ -18,4 +21,3 @@
   padding-top: 10px;
   background: $color-white;
 }
-
