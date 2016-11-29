@@ -38,7 +38,7 @@ define( 'CLOSENESS', 5 );
 |
 |
 */
-include( get_stylesheet_directory() . '/eypd-actions.php' );
+//include( get_stylesheet_directory() . '/eypd-actions.php' );
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +63,7 @@ function eypd_load_scripts() {
 	$template_dir = get_stylesheet_directory_uri();
 
 	// toss Events Manager scripts and their dependencies
-	wp_dequeue_script( 'events-manager' );
+	//wp_dequeue_script( 'events-manager' );
 
 	// replace script from theme
 	// wp_enqueue_script('events-manager', plugins_url('assets/js/events-manager.js',__FILE__), array(), EM_VERSION); 
@@ -89,8 +89,8 @@ function eypd_load_scripts() {
 
 	wp_enqueue_script( 'jquery-ui-draggable' );
 
-	wp_enqueue_script( 'custom_script', $template_dir . '/assets/js/custom.js', array( 'jquery' ), '1.0', true );
-	wp_enqueue_script( 'tinyscrollbar', $template_dir . '/assets/js/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
+	//wp_enqueue_script( 'custom_script', $template_dir . '/assets/js/custom.js', array( 'jquery' ), '1.0', true );
+	//wp_enqueue_script( 'tinyscrollbar', $template_dir . '/assets/js/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
 }
 
 add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
@@ -178,65 +178,6 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 add_filter( 'gettext', 'eypd_terminology_modify', 11, 3 );
 
 /**
- * Queries database for all posts that have post_meta
- * with a key = '_location_id'
- *
- * @return array
- */
-function eypd_get_unique_location_id( $sets = array( 'loc_post_id' ) ) {
-	$loc_id      = array();
-	$loc_post_id = array();
-
-	// set up to get all location longitude, latitude
-	$args_ev = array(
-		'post_type'     => 'event',
-		'post_status'   => 'publish',
-		'cache_results' => true,
-	);
-
-	$q_ev = new WP_Query( $args_ev );
-
-	// get a unique list of all locations from active events
-	while ( $q_ev->have_posts() ) : $q_ev->the_post();
-		$loc_id[] = get_post_meta( get_the_ID(), '_location_id', true );
-	endwhile;
-
-	rewind_posts();
-
-	// make locations unique
-	$loc_id = array_unique( $loc_id );
-
-	// loc_id allows for clustering
-
-	$args_loc = array(
-		'post_type'     => 'location',
-		'post_status'   => 'publish',
-		'cache_results' => true,
-	);
-
-	$q_loc = new WP_Query( $args_loc );
-
-	while ( $q_loc->have_posts() ) : $q_loc->the_post();
-		$_loc = get_post_meta( get_the_ID(), '_location_id', true );
-		if ( in_array( $_loc, $loc_id ) ) {
-			$loc_post_id[ $_loc ] = get_the_ID();
-		}
-	endwhile;
-
-	// loc_post_id allows for individual items
-
-	$output = array();
-	if ( in_array( 'loc_post_id', $sets ) ) {
-		$output['loc_post_id'] = $loc_post_id;
-	}
-	if ( in_array( 'loc_id', $sets ) ) {
-		$output['loc_id'] = $loc_id;
-	}
-
-	return $output;
-}
-
-/**
  * Calculates distance in kms between two points
  *
  * @param $lat1
@@ -270,14 +211,6 @@ function eypd_center( $et_var_lat, $et_var_lng ) {
 	return array( $et_center_lat, $et_center_lng );
 }
 
-/**
- * @param $post_id
- *
- * @return array
- */
-function eypd_event_data( $post_id ) {
-	return get_post_custom( $post_id );
-}
 
 /**
  *
@@ -288,15 +221,12 @@ function eypd_event_data( $post_id ) {
  */
 function eypd_event_output( $post_id = 0, $data = array() ) {
 	// get the data
-	if ( $data === array() ) {
-		$data = eypd_event_data( $post_id );
+	if ( is_array( $data ) ) {
+		$data = get_post_custom( $post_id );
 	}
-	// get the design
 
 	// return the design
 	return $data;
-
-	return $output;
 }
 
 /**
