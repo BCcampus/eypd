@@ -1775,11 +1775,75 @@ jQuery(document).bind('em_search_ajax', function(e, vars, wrapper){
         wrapper.find('.em-locations-map').each( function(index, el){ em_maps_load_locations(el); });
     }
 });
+
+function em_maps_load_clusters(el){
+    var el = jQuery(el);
+    var map_id = el.attr('id').replace('em-locations-map-','');
+    var em_data = jQuery.parseJSON( el.nextAll('.em-locations-map-coords').first().text() );
+    if( em_data == null ){
+        var em_data = jQuery.parseJSON( jQuery('#em-locations-map-coords-'+map_id).text() );
+    }
+    jQuery.getJSON(document.URL, em_data , function(data){
+        if(data.length > 0){
+            //define default options and allow option for extension via event triggers
+            var map_options = { mapTypeId: google.maps.MapTypeId.ROADMAP };
+            jQuery(document).triggerHandler('em_maps_locations_map_options', map_options);
+            var marker_options = {};
+            jQuery(document).triggerHandler('em_maps_location_marker_options', marker_options);
+
+            maps[map_id] = new google.maps.Map(el[0], map_options);
+            maps_markers[map_id] = [];
+
+            var minLatLngArr = [0,0];
+            var maxLatLngArr = [0,0];
+
+            for (var i = 0; i < data.length; i++) {
+                if( !(data[i].location_latitude == 0 && data[i].location_longitude == 0) ){
+                    var latitude = parseFloat( data[i].location_latitude );
+                    var longitude = parseFloat( data[i].location_longitude );
+                    var location = new google.maps.LatLng( latitude, longitude );
+                    //extend the default marker options
+                    jQuery.extend(marker_options, {
+                        position: location,
+                        map: maps[map_id]
+                    })
+                    var marker = new google.maps.Marker(marker_options);
+                    maps_markers[map_id].push(marker);
+                    marker.setTitle(data[i].location_name);
+                    var myContent = '<div class="em-map-balloon"><div id="em-map-balloon-'+map_id+'" class="em-map-balloon-content">'+ data[i].location_balloon +'</div></div>';
+                    em_map_infobox(marker, myContent, maps[map_id]);
+
+                    //Get min and max long/lats
+                    minLatLngArr[0] = (latitude < minLatLngArr[0] || i == 0) ? latitude : minLatLngArr[0];
+                    minLatLngArr[1] = (longitude < minLatLngArr[1] || i == 0) ? longitude : minLatLngArr[1];
+                    maxLatLngArr[0] = (latitude > maxLatLngArr[0] || i == 0) ? latitude : maxLatLngArr[0];
+                    maxLatLngArr[1] = (longitude > maxLatLngArr[1] || i == 0) ? longitude : maxLatLngArr[1];
+                }
+            }
+            // Zoom in to the bounds
+            var minLatLng = new google.maps.LatLng(minLatLngArr[0],minLatLngArr[1]);
+            var maxLatLng = new google.maps.LatLng(maxLatLngArr[0],maxLatLngArr[1]);
+            var bounds = new google.maps.LatLngBounds(minLatLng,maxLatLng);
+            maps[map_id].fitBounds(bounds);
+
+            var markerCluster = new MarkerClusterer( maps[map_id], maps_markers[map_id], {imagePath: 'wp-content/themes/early-years/assets/images/cluster/m'});
+
+            //Call a hook if exists
+            jQuery(document).triggerHandler('em_maps_locations_hook', [maps[map_id], data, map_id]);
+        }else{
+            el.children().first().html('No locations found');
+            jQuery(document).triggerHandler('em_maps_locations_hook_not_found', [el]);
+        }
+    });
+
+}
+
 //Load single maps (each map is treated as a seperate map).
 function em_maps() {
     //Find all the maps on this page and load them
     jQuery('.em-location-map').each( function(index, el){ em_maps_load_location(el); } );
-    jQuery('.em-locations-map').each( function(index, el){ em_maps_load_locations(el); } );
+    //jQuery('.em-locations-map').each( function(index, el){ em_maps_load_locations(el); } );
+    jQuery('.em-locations-map').each( function(index, el){ em_maps_load_clusters(el); } );
 
     //Location stuff - only needed if inputs for location exist
     if( jQuery('select#location-select-id, input#location-address').length > 0 ){

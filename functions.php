@@ -63,10 +63,10 @@ function eypd_load_scripts() {
 	$template_dir = get_stylesheet_directory_uri();
 
 	// toss Events Manager scripts and their dependencies
-	//wp_dequeue_script( 'events-manager' );
+	wp_dequeue_script( 'events-manager' );
 
-	// replace script from theme
-	// wp_enqueue_script('events-manager', plugins_url('assets/js/events-manager.js',__FILE__), array(), EM_VERSION); 
+	wp_enqueue_script( 'jquery-ui-draggable' );
+	wp_enqueue_script( 'markerclusterer', $template_dir . '/assets/js/markerclusterer.js' );
 
 	$script_deps = array(
 		'jquery'                 => 'jquery',
@@ -76,21 +76,10 @@ function eypd_load_scripts() {
 		'jquery-ui-sortable'     => 'jquery-ui-sortable',
 		'jquery-ui-datepicker'   => 'jquery-ui-datepicker',
 		'jquery-ui-autocomplete' => 'jquery-ui-autocomplete',
-		'jquery-ui-dialog'       => 'jquery-ui-dialog'
+		'jquery-ui-dialog'       => 'jquery-ui-dialog',
+		'markerclusterer'       => 'markerclusterer',
 	);
-
 	wp_enqueue_script( 'events-manager', $template_dir . '/assets/js/events-manager.js', array_values( $script_deps ), EM_VERSION );
-
-	/*
-	wp_enqueue_script( 'google-maps-api', 'https://maps.google.com/maps/api/js?key=AIzaSyBZkJ6T__mkEkwdr1SIK-dHfyjbKJqBy70', array( 'jquery' ), '1.0', false );
-	wp_enqueue_script( 'gmap3', $template_dir . '/assets/js/gmap3.min.js', array( 'jquery' ), '1.0', false );
-	wp_enqueue_script( 'jquery-ui-core' );
-	*/
-
-	wp_enqueue_script( 'jquery-ui-draggable' );
-
-	//wp_enqueue_script( 'custom_script', $template_dir . '/assets/js/custom.js', array( 'jquery' ), '1.0', true );
-	//wp_enqueue_script( 'tinyscrollbar', $template_dir . '/assets/js/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
 }
 
 add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );

@@ -48,48 +48,14 @@ function eypd_init_actions() {
 			echo EM_Object::json_encode( $result );
 			die();
 		}
-
-		if ( isset( $_REQUEST['query'] ) && $_REQUEST['query'] == 'GlobalMapData' ) {
-			$EM_Locations   = EM_Locations::get( $_REQUEST );
+		if(isset($_REQUEST['query']) && $_REQUEST['query'] == 'GlobalMapData') {
+			$EM_Locations = EM_Locations::get( $_REQUEST );
 			$json_locations = array();
-			$group_key      = 0;
-
-			// gather the locations
-			foreach ( $EM_Locations as $location_key => $EM_Location ) {
-				$json_locations[ $location_key ] = $EM_Location->to_array();
-
-				$eypd_edit = $EM_Location->output( get_option( 'dbem_map_text_format' ) );
-				$eypd_edit = eypd_event_etc_output( $eypd_edit );
-
-				$json_locations[ $location_key ]['location_balloon'] = $eypd_edit;
-
-				// toss venues without events
-				if ( ( substr_count( $eypd_edit, '<li' ) < 2 ) && ( substr_count( $eypd_edit, 'No events in this location' ) > 0 ) ) {
-					unset( $json_locations[ $location_key ] );
-				} else {
-					// only need to fire if its being used
-					if ( $location_key > $group_key ) {
-						$group_key = $location_key;
-					}
-				}
+			foreach($EM_Locations as $location_key => $EM_Location) {
+				$json_locations[$location_key] = $EM_Location->to_array();
+				$json_locations[$location_key]['location_balloon'] = $EM_Location->output(get_option('dbem_map_text_format'));
 			}
-
-			$location_size = sizeof( $json_locations );
-			while ( $location_size > $cluster_size ) {
-				$location_size = sizeof( $json_locations );
-				list( $json_locations, $group_key ) = eypd_cluster_locations( $json_locations, $group_key );
-				$cluster_size = sizeof( $json_locations );
-
-				// loop until the location stops shrinking from clustering
-			}
-			$json_locations = array_filter( $json_locations );
-			$output         = 0;
-			foreach ( $json_locations as $json_location ) {
-				$json_location_output[ $output ++ ] = $json_location;
-			}
-
-
-			echo EM_Object::json_encode( $json_location_output );
+			echo EM_Object::json_encode($json_locations);
 			die();
 		}
 
