@@ -1786,7 +1786,11 @@ function em_maps_load_clusters(el){
     jQuery.getJSON(document.URL, em_data , function(data){
         if(data.length > 0){
             //define default options and allow option for extension via event triggers
-            var map_options = { mapTypeId: google.maps.MapTypeId.ROADMAP };
+            var map_options = {
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+                scrollwheel: false,
+                gestureHandling: 'auto',
+            };
             jQuery(document).triggerHandler('em_maps_locations_map_options', map_options);
             var marker_options = {};
             jQuery(document).triggerHandler('em_maps_location_marker_options', marker_options);
