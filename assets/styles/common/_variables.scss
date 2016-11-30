@@ -1,0 +1,37 @@
+// Variables
+// ====
+
+
+// Spacing Units
+// ---
+
+$unit: 5px;
+
+// Colors
+// ----
+
+// Neutrals
+$neutral-00: #fff;
+$neutral-10: #F4F5F7;
+$neutral-20: #E6E7E8;
+$neutral-40: #D1D2D4;
+$neutral-80: #333334;
+
+
+// Brand Colors
+$brand-blue: #068CC4;
+
+
+// Font Sizes
+// ---
+
+$font-size: 16px;
+
+// Borders
+// ---
+$border-radius: $unit*1.5;
+$border: 1px solid $brand-blue;
+
+
+$tap-size: 44px;
+$slow-animation: 0.25s ease-in-out all;

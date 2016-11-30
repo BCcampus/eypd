@@ -9,6 +9,8 @@
  Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
  Text Domain:  early-years
 */
+
+@import 'common/variables';
 @import 'common/mixins';
 @import 'common/fonts';
 @import 'common/colors';
@@ -26,8 +28,8 @@
 @import 'layouts/nav';
 @import 'layouts/posts';
 @import 'layouts/profile';
+@import 'layouts/sidebar';
 @import 'layouts/footer';
 
 // must be last
 @import 'common/media-queries';
-

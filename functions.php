@@ -438,6 +438,11 @@ function fb_move_admin_bar() { ?>
 		flex-direction: column;
 		padding-top: 10px;
 		padding-bottom: 30px;
+
+		width: 10%;
+		right: 0;
+		margin-left: auto;
+		pointer-events: none;
 	}
 
 	.ab-item {
@@ -447,6 +452,8 @@ function fb_move_admin_bar() { ?>
 	#wp-admin-bar-site-name {
 		display: none;
 	}
+
+
 
 	</style>
 <?php }

@@ -41,16 +41,53 @@ thead:first-child tr td,
 .mobile-menu-container,
 .info-box h3,
 #bbpress-forums li.bbp-header {
-  background: $color-blue-astral;
+  background: $neutral-20;
   border: none;
   box-shadow: none;
-}
-
-.top-wrap .base-menu.sub-menu{
-  border-radius: 4px;
 }
 
 .base-menu ul a, div.item-list-tabs ul li a, div.item-list-tabs ul li span, #footer-menu ul li a{
   text-shadow: none;
   font-weight: normal;
+}
+
+// Grey Nav Bar
+// ---
+//
+// 1. Important to override dynamic styles
+
+.base-menu.sub-menu {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid $neutral-40 !important; // 1;
+  border-bottom: 1px solid $neutral-40;
+
+  a {
+    color: $neutral-80;
+  }
+
+  a:focus,
+  a:active,
+  a:hover {
+    color: $brand-blue;
+  }
+
+  .menu-item.sfHover {
+    color: $brand-blue;
+  }
+}
+
+#menu-item-1839.sfHover {
+  color: $brand-blue;
+}
+
+// Post an Event link
+// ---
+#menu-item-1843 {
+  @extend .c-button;
+  @extend .c--ghost;
+
+  a {
+    margin: 0;
+  }
 }
