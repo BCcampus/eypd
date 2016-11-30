@@ -423,9 +423,6 @@ add_action( 'wp_before_admin_bar_render', 'eypd_admin_bar_render' );
 
 function fb_move_admin_bar() { ?>
 	<style type="text/css">
-	html {
-		margin: 0 !important;
-	}
 
 	body {
 		border: none;
@@ -439,6 +436,8 @@ function fb_move_admin_bar() { ?>
 		display: flex;
 		justify-content: center;
 		flex-direction: column;
+		padding-top: 10px;
+		padding-bottom: 30px;
 	}
 
 	.ab-item {
@@ -448,9 +447,18 @@ function fb_move_admin_bar() { ?>
 	#wp-admin-bar-site-name {
 		display: none;
 	}
+
 	</style>
 <?php }
 // on backend area
 add_action( 'admin_head', 'fb_move_admin_bar' );
 // on frontend area
 add_action( 'wp_head', 'fb_move_admin_bar' );
+
+
+// Remove the admin bar margin
+add_action('get_header', 'my_filter_head');
+
+function my_filter_head() {
+	remove_action('wp_head', '_admin_bar_bump_cb');
+}
