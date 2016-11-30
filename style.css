@@ -458,6 +458,9 @@ table.em-calendar thead {
   padding-top: 10px;
   background: #ffffff; }
 
+#main-menu-wrap {
+  padding-right: 150px; }
+
 /*
 |--------------------------------------------------------------------------
 | Nav
@@ -471,6 +474,9 @@ table.em-calendar thead {
   color: #4183C4; }
   .main-menu ul a:hover {
     background: none; }
+
+#main-menu-wrap {
+  padding-right: 150px; }
 
 .base-menu ul li.current-cat a,
 .base-menu ul li.current_page_item a,

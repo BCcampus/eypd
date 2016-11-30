@@ -66,7 +66,7 @@ function eypd_load_scripts() {
 	wp_dequeue_script( 'events-manager' );
 
 	// replace script from theme
-	// wp_enqueue_script('events-manager', plugins_url('assets/js/events-manager.js',__FILE__), array(), EM_VERSION); 
+	// wp_enqueue_script('events-manager', plugins_url('assets/js/events-manager.js',__FILE__), array(), EM_VERSION);
 
 	$script_deps = array(
 		'jquery'                 => 'jquery',
@@ -407,3 +407,50 @@ function et_fetch( $post_id = - 1, $ajax = true ) {
 
 add_action( 'wp_ajax_nopriv_cyop_lookup', 'et_fetch' );
 add_action( 'wp_ajax_cyop_lookup', 'et_fetch' );
+
+
+// remove links/menus from the admin bar
+function eypd_admin_bar_render() {
+	global $wp_admin_bar;
+	$wp_admin_bar->remove_menu('comments');
+	$wp_admin_bar->remove_menu('edit');
+	$wp_admin_bar->remove_menu('new-content');
+	$wp_admin_bar->remove_menu('updates');
+	$wp_admin_bar->remove_menu('my-blogs');
+	$wp_admin_bar->remove_menu('customize');
+}
+add_action( 'wp_before_admin_bar_render', 'eypd_admin_bar_render' );
+
+function fb_move_admin_bar() { ?>
+	<style type="text/css">
+	html {
+		margin: 0 !important;
+	}
+
+	body {
+		border: none;
+	}
+
+	#wpadminbar {
+		position: absolute;
+		top: 0;
+		background: transparent;
+		height: 100px;
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
+	}
+
+	.ab-item {
+		color: #4988C6 !important;
+	}
+
+	#wp-admin-bar-site-name {
+		display: none;
+	}
+	</style>
+<?php }
+// on backend area
+add_action( 'admin_head', 'fb_move_admin_bar' );
+// on frontend area
+add_action( 'wp_head', 'fb_move_admin_bar' );
