@@ -79,8 +79,7 @@ h2 {
 
 h3 {
   font-size: 20px;
-  line-height: 24px;
-  text-transform: uppercase; }
+  line-height: 24px; }
 
 h4 {
   font-size: 20px;
@@ -126,6 +125,10 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
 
 .author-box, .category-box, .tag-box, .info-box, #sidebar, .activity-inner, div.activity-comments form.ac-form, .postthumb img, span.activity, h1#site-title, div#site-title, #inner-sidebar, .sidebar-activity-tabs ul li, div#subnav.item-list-tabs, #top-homepage, .fluid-width-video-wrapper, #bbpress-forums .bbp-breadcrumb, #bbpress-forums li.bbp-footer, .bbp-reply-header {
   text-shadow: none; }
+
+#content-full {
+  max-width: 1024px;
+  margin: 0 auto; }
 
 /*
 |--------------------------------------------------------------------------
@@ -413,7 +416,7 @@ div.thumbnail {
 |
 |
 */
-.c-button, #menu-item-1843 {
+.c-button, .button-primary, .button-primary.button.orange, #menu-item-1843 {
   min-width: 44px;
   min-height: 44px;
   margin: 0;
@@ -428,6 +431,7 @@ div.thumbnail {
   line-height: normal;
   text-align: center;
   text-decoration: none;
+  text-shadow: none;
   transition: 0.25s ease-in-out all;
   cursor: pointer;
   user-select: none;
@@ -436,20 +440,32 @@ div.thumbnail {
   -webkit-appearance: none;
   -moz-appearance: none; }
 
-.c-button.c--primary, .c--primary#menu-item-1843 {
+.c-button.c--primary, .button-primary, .button-primary.button.orange, .c--primary#menu-item-1843, #menu-item-1843.button-primary {
   background: #068CC4;
   color: #fff; }
-  .c-button.c--primary:active, .c--primary#menu-item-1843:active, .c-button.c--primary:hover, .c--primary#menu-item-1843:hover, .c-button.c--primary:focus, .c--primary#menu-item-1843:focus {
-    background: #046993; }
+  .c-button.c--primary:active, .button-primary:active, .button-primary.button.orange:active, .c--primary#menu-item-1843:active, #menu-item-1843.button-primary:active, .c-button.c--primary:hover, .button-primary:hover, .button-primary.button.orange:hover, .c--primary#menu-item-1843:hover, #menu-item-1843.button-primary:hover, .c-button.c--primary:focus, .button-primary:focus, .button-primary.button.orange:focus, .c--primary#menu-item-1843:focus, #menu-item-1843.button-primary:focus {
+    background: #046993;
+    outline: none;
+    box-shadow: none;
+    border: none; }
 
-.c-button.c--ghost, #menu-item-1843 {
+.c-button.c--ghost, .c--ghost.button-primary, .c--ghost.button-primary.button.orange, #menu-item-1843 {
   padding: 5px;
   border: 1px solid #068CC4;
   border-radius: 7.5px; }
-  .c-button.c--ghost:active, #menu-item-1843:active, .c-button.c--ghost:hover, #menu-item-1843:hover, .c-button.c--ghost:focus, #menu-item-1843:focus {
+  .c-button.c--ghost:active, .c--ghost.button-primary:active, #menu-item-1843:active, .c-button.c--ghost:hover, .c--ghost.button-primary:hover, #menu-item-1843:hover, .c-button.c--ghost:focus, .c--ghost.button-primary:focus, #menu-item-1843:focus {
     border-color: #046993; }
-  .c-button.c--ghost a:active, #menu-item-1843 a:active, .c-button.c--ghost a:hover, #menu-item-1843 a:hover, .c-button.c--ghost a:focus, #menu-item-1843 a:focus {
+  .c-button.c--ghost a:active, .c--ghost.button-primary a:active, #menu-item-1843 a:active, .c-button.c--ghost a:hover, .c--ghost.button-primary a:hover, #menu-item-1843 a:hover, .c-button.c--ghost a:focus, .c--ghost.button-primary a:focus, #menu-item-1843 a:focus {
     color: #046993 !important; }
+
+.submit.button.orange {
+  background: none;
+  border: none;
+  padding: 0; }
+  .submit.button.orange:active, .submit.button.orange:hover, .submit.button.orange:focus {
+    outline: none;
+    box-shadow: none;
+    border: none; }
 
 /*
 |--------------------------------------------------------------------------

@@ -27,6 +27,7 @@
   line-height: normal;
   text-align: center;
   text-decoration: none;
+  text-shadow: none;
 
   transition: $slow-animation;
 
@@ -49,6 +50,9 @@
   &:hover,
   &:focus {
       background: darken($brand-blue, 10%);
+      outline: none;
+      box-shadow: none;
+      border: none;
   }
 }
 
@@ -70,5 +74,31 @@
     &:focus {
       color: darken($brand-blue, 10%) !important;
     }
+  }
+}
+
+// Extend custom styles over dynamic styles
+
+.button-primary {
+  @extend .c-button;
+  @extend .c--primary;
+}
+
+.button-primary.button.orange {
+  @extend .c-button;
+  @extend .c--primary;
+}
+
+.submit.button.orange {
+  background: none;
+  border: none;
+  padding: 0;
+
+  &:active,
+  &:hover,
+  &:focus {
+      outline: none;
+      box-shadow: none;
+      border: none;
   }
 }

@@ -31,3 +31,8 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
 .author-box,.category-box,.tag-box,.info-box,#sidebar,.activity-inner,div.activity-comments form.ac-form,.postthumb img,span.activity,h1#site-title,div#site-title,#inner-sidebar,.sidebar-activity-tabs ul li,div#subnav.item-list-tabs,#top-homepage,.fluid-width-video-wrapper,#bbpress-forums .bbp-breadcrumb, #bbpress-forums li.bbp-footer, .bbp-reply-header {
   text-shadow: none;
 }
+
+#content-full {
+  max-width: 1024px;
+  margin: 0 auto;
+}
