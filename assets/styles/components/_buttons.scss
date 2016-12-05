@@ -14,7 +14,7 @@
   min-width: $tap-size;
   min-height: $tap-size;
   margin: 0;
-  padding: $unit*2;
+  padding: $unit*2 $unit*4;
   display: block;
 
   border-radius: 0;
@@ -28,6 +28,8 @@
   text-align: center;
   text-decoration: none;
   text-shadow: none;
+  font-family: $font-family;
+  font-size: 18px;
 
   transition: $slow-animation;
 
@@ -84,7 +86,7 @@
   @extend .c--primary;
 }
 
-.button-primary.button.orange {
+.button {
   @extend .c-button;
   @extend .c--primary;
 }

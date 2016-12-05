@@ -1,0 +1,158 @@
+.t-home {
+  h2 {
+   color: $brand-blue;
+  }
+
+  h2, p {
+   text-align: center;
+  }
+
+  h2 {
+    margin-bottom: $unit*3;
+  }
+}
+
+
+.t-home__search {
+  padding: $unit*3;
+  max-width: 1024px;
+  margin: 0 auto;
+
+  @media (min-width: 1045px) {
+    padding: 0;
+  }
+
+  .em-search-wrapper {
+    margin-bottom: $unit*10;
+  }
+
+  .em-search-main,
+  .em-search-scope {
+    display: flex;
+  }
+
+  .em-search-main {
+    flex-direction: column;
+
+    @media (min-width: 667px) {
+      flex-direction: row;
+    }
+  }
+
+  .em-search-text,
+  .em-search-geo {
+    flex: 1;
+
+    input {
+      width: 100%;
+    }
+  }
+
+  .em-search-text {
+    @media (min-width: 667px) {
+      padding-right: $unit*5;
+    }
+  }
+
+  .em-search-geo {
+    @media (min-width: 667px) {
+      padding-left: $unit*5;
+    }
+  }
+
+  .em-search-category {
+    display: block;
+    padding-left: $unit*2;
+
+
+    @media (min-width: 853px) {
+      padding-left: $unit*6;
+    }
+  }
+
+  span,
+  label {
+    text-transform: capitalize;
+  }
+
+  label + label {
+    margin-left: $unit*3;
+  }
+
+  .em-search-advanced {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    position: relative;
+
+    @media (min-width: 667px) {
+      flex-direction: row;
+      height: $unit*20;
+    }
+  }
+
+  .em-search-submit {
+    position: absolute;
+    bottom: -$unit*11;
+    right: 0;
+  }
+
+  .em-search-scope {
+    width: 100%;
+
+    @media (min-width: 667px) {
+     width: auto;
+    }
+  }
+
+  .em-events-search-dates {
+    width: 100%;
+
+    @media (min-width: 667px) {
+     width: auto;
+    }
+
+    label {
+     display: flex;
+     flex-direction: column;
+     justify-content: flex-end;
+     width: 100%;
+
+     @media (min-width: 667px) {
+       width: auto;
+     }
+    }
+
+    input {
+     width: 100%;
+
+     @media (min-width: 667px) {
+       width: auto;
+     }
+    }
+  }
+
+  .em-search-category {
+    width: 100%;
+    padding-left: 0;
+
+    @media (min-width: 667px) {
+      width: auto;
+      margin-left: $unit*8;
+    }
+
+    label {
+     display: flex;
+     flex-direction: column;
+    }
+
+    select {
+      width: 100%;
+
+      @media (min-width: 667px) {
+        min-width: 340px;
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+// Event Search
+// ====
+//
+// 1. Important to override specificity
+
+
+div.css-search,
+.em-search-main {
+  border: none !important;
+}

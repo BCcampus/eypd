@@ -23,6 +23,7 @@
 @import 'components/buttons';
 @import 'components/forms';
 @import 'components/table';
+@import 'components/search';
 
 @import 'layouts/header';
 @import 'layouts/nav';
@@ -30,6 +31,8 @@
 @import 'layouts/profile';
 @import 'layouts/sidebar';
 @import 'layouts/footer';
+@import 'layouts/home';
+
 
 // must be last
 @import 'common/media-queries';
