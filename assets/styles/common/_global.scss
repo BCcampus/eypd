@@ -10,8 +10,9 @@
 
 
 h1, h2, h3, h4, h5, h6, p, label {
-  font-family: Roboto Condensed;
+  font-family: $font-family;
   color: $neutral-80;
+  font-weight: 500;
 }
 
 body, body.theme-option{
@@ -26,6 +27,7 @@ h1 {
 h2 {
   font-size: 24px;
   line-height: 28px;
+  font-family: $font-family-slab;
 }
 
 h3 {
@@ -45,11 +47,26 @@ h5 {
   font-weight: bold;
 }
 
-p {
+p, label, li {
   font-size: $font-size;
-  line-height: 20px;
+  line-height: 24px;
 }
 
 .row {
   width: 100% !important;
+}
+
+// Inputs
+
+// All Text inputs
+input[type="text"] {
+  padding: $unit*2.5 $unit*3;
+  box-shadow: none;
+  border: 1px solid $neutral-50;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 17px;
+  height: 17px;
 }

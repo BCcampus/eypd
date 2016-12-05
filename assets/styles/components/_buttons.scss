@@ -88,17 +88,3 @@
   @extend .c-button;
   @extend .c--primary;
 }
-
-.submit.button.orange {
-  background: none;
-  border: none;
-  padding: 0;
-
-  &:active,
-  &:hover,
-  &:focus {
-      outline: none;
-      box-shadow: none;
-      border: none;
-  }
-}

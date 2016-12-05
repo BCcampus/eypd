@@ -24,35 +24,15 @@
   font-weight: 400;
   font-style: normal; }
 @font-face {
-  font-family: "Roboto Condensed";
-  src: url("assets/fonts/RobotoCondensed-Regular.ttf") format("truetype");
-  font-weight: normal;
+  font-family: "Roboto";
+  src: url("assets/fonts/Roboto-Bold.ttf") format("truetype");
+  font-weight: 800;
   font-style: normal; }
 @font-face {
-  font-family: "Roboto Condensed";
-  src: url("assets/fonts/RobotoCondensed-Bold.ttf") format("truetype");
-  font-weight: bold;
+  font-family: "RobotoSlab";
+  src: url("assets/fonts/RobotoSlab-Regular.ttf") format("truetype");
+  font-weight: 400;
   font-style: normal; }
-@font-face {
-  font-family: "Roboto Condensed";
-  src: url("assets/fonts/RobotoCondensed-BoldItalic.ttf") format("truetype");
-  font-weight: bold;
-  font-style: italic; }
-@font-face {
-  font-family: "Roboto Condensed";
-  src: url("assets/fonts/RobotoCondensed-Italic.ttf") format("truetype");
-  font-weight: normal;
-  font-style: italic; }
-@font-face {
-  font-family: "Roboto Condensed";
-  src: url("assets/fonts/RobotoCondensed-Light.ttf") format("truetype");
-  font-weight: 300;
-  font-style: normal; }
-@font-face {
-  font-family: "Roboto Condensed";
-  src: url("assets/fonts/RobotoCondensed-LightItalic.ttf") format("truetype");
-  font-weight: 300;
-  font-style: italic; }
 /*
 |--------------------------------------------------------------------------
 | Global
@@ -63,8 +43,9 @@
 |
 */
 h1, h2, h3, h4, h5, h6, p, label {
-  font-family: Roboto Condensed;
-  color: #333334; }
+  font-family: "Roboto";
+  color: #333334;
+  font-weight: 500; }
 
 body, body.theme-option {
   background: none no-repeat; }
@@ -75,7 +56,8 @@ h1 {
 
 h2 {
   font-size: 24px;
-  line-height: 28px; }
+  line-height: 28px;
+  font-family: "RobotoSlab"; }
 
 h3 {
   font-size: 20px;
@@ -87,16 +69,26 @@ h4 {
   text-transform: capitalize; }
 
 h5 {
-  font-size: 16px;
+  font-size: 18px;
   line-height: 20px;
   font-weight: bold; }
 
-p {
-  font-size: 16px;
-  line-height: 20px; }
+p, label, li {
+  font-size: 18px;
+  line-height: 24px; }
 
 .row {
   width: 100% !important; }
+
+input[type="text"] {
+  padding: 12.5px 15px;
+  box-shadow: none;
+  border: 1px solid #808284; }
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 17px;
+  height: 17px; }
 
 /*
 |--------------------------------------------------------------------------
@@ -458,15 +450,6 @@ div.thumbnail {
   .c-button.c--ghost a:active, .c--ghost.button-primary a:active, #menu-item-1843 a:active, .c-button.c--ghost a:hover, .c--ghost.button-primary a:hover, #menu-item-1843 a:hover, .c-button.c--ghost a:focus, .c--ghost.button-primary a:focus, #menu-item-1843 a:focus {
     color: #046993 !important; }
 
-.submit.button.orange {
-  background: none;
-  border: none;
-  padding: 0; }
-  .submit.button.orange:active, .submit.button.orange:hover, .submit.button.orange:focus {
-    outline: none;
-    box-shadow: none;
-    border: none; }
-
 /*
 |--------------------------------------------------------------------------
 | Forms
@@ -493,14 +476,6 @@ div.time-picker li {
 
 .event-extra-details input[type=text], .event-extra-details select {
   width: 50%; }
-.event-extra-details label {
-  font-family: "Roboto Condensed";
-  color: #333333;
-  font-size: 1.5em;
-  font-weight: bold;
-  text-transform: none;
-  margin: 0.5em 0 1em 0;
-  line-height: 1.5em; }
 
 #event-form p.margin-up {
   margin-top: -20px; }
@@ -511,6 +486,41 @@ div.time-picker li {
 
 .field-visibility-settings-toggle {
   display: none; }
+
+.entry {
+  margin-top: 0; }
+  .entry em {
+    font-size: 16px; }
+
+.page-1561 .page-title {
+  margin-bottom: 0; }
+
+.mce-tinymce.mce-container.mce-panel {
+  border: 1px solid #E5E5E5; }
+
+.css-event-form .margin-up {
+  margin-top: 0 !important; }
+.css-event-form em,
+.css-event-form .margin-up {
+  font-size: 16px; }
+.css-event-form label {
+  text-transform: capitalize; }
+.css-event-form h3 {
+  font-weight: 800;
+  font-size: 22px;
+  margin-bottom: 5px;
+  margin-top: 50px; }
+.css-event-form .event-extra-details label {
+  font-weight: 600; }
+.css-event-form .submit.button.orange {
+  margin-top: 50px !important;
+  background: none;
+  border: none;
+  padding: 0; }
+  .css-event-form .submit.button.orange:active, .css-event-form .submit.button.orange:hover, .css-event-form .submit.button.orange:focus {
+    outline: none;
+    box-shadow: none;
+    border: none; }
 
 /*
 |--------------------------------------------------------------------------
