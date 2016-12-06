@@ -16,10 +16,6 @@
   }
 }
 
-#main-menu-wrap {
-  padding-right: 150px;
-}
-
 .base-menu ul li.current-cat a,
 .base-menu ul li.current_page_item a,
 .base-menu ul li.current-menu-item a {
@@ -87,7 +83,14 @@ thead:first-child tr td,
   @extend .c-button;
   @extend .c--ghost;
 
+  margin-right: $unit*3;
+
   a {
     margin: 0;
   }
+}
+
+#menu-event-mgmt {
+  display: flex;
+  align-items: center;
 }

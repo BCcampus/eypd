@@ -679,9 +679,6 @@ div.css-search,
   padding-top: 10px;
   background: #ffffff; }
 
-#main-menu-wrap {
-  padding-right: 150px; }
-
 /*
 |--------------------------------------------------------------------------
 | Nav
@@ -695,9 +692,6 @@ div.css-search,
   color: #4183C4; }
   .main-menu ul a:hover {
     background: none; }
-
-#main-menu-wrap {
-  padding-right: 150px; }
 
 .base-menu ul li.current-cat a,
 .base-menu ul li.current_page_item a,
@@ -744,8 +738,14 @@ thead:first-child tr td,
 #menu-item-1839.sfHover {
   color: #068CC4; }
 
-#menu-item-1843 a {
-  margin: 0; }
+#menu-item-1843 {
+  margin-right: 15px; }
+  #menu-item-1843 a {
+    margin: 0; }
+
+#menu-event-mgmt {
+  display: flex;
+  align-items: center; }
 
 /*
 |--------------------------------------------------------------------------
