@@ -14,9 +14,7 @@ infinity_get_header();
 <div class="t-home">
 
 <div class="c-banner">
-	<img src="<?php echo get_stylesheet_directory_uri();?>/assets/images/eypd-logo.png" alt="EYPD logo">
-
-	<img src="<?php echo get_stylesheet_directory_uri();?>/assets/images/bc-map.svg" alt="Outline of a map of BC">
+	<img class="c-banner__logo" src="<?php echo get_stylesheet_directory_uri();?>/assets/images/logo-map.png" alt="EYPD logo">
 </div>
 
 	<div class="grid_24" role="main">
