@@ -45,7 +45,7 @@ div.time-picker li {
 
 #event-form {
   p.margin-up {
-    margin-top: -20px;
+    margin-top: 0;
   }
   #event-name {
     padding: 8px 11px;
@@ -89,7 +89,8 @@ div.time-picker li {
 // ---
 // 1. Important to override utility class
 //
-.entry {
+.entry,
+#event-form {
   .margin-up {
     margin-top: 0 !important; // 1
   }
@@ -133,4 +134,13 @@ div.time-picker li {
         border: none;
     }
   }
+}
+
+// Form Table
+// ---
+// 1. important t ooverride dynamic styles
+//
+
+.form-table th {
+  color: $neutral-80 !important; //1
 }

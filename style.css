@@ -500,7 +500,7 @@ div.time-picker li {
   width: 50%; }
 
 #event-form p.margin-up {
-  margin-top: -20px; }
+  margin-top: 0; }
 #event-form #event-name {
   padding: 8px 11px; }
 #event-form .mce-path-item {
@@ -520,29 +520,42 @@ div.time-picker li {
 .mce-tinymce.mce-container.mce-panel {
   border: 1px solid #E5E5E5; }
 
-.entry .margin-up {
+.entry .margin-up,
+#event-form .margin-up {
   margin-top: 0 !important; }
 .entry em,
-.entry .margin-up {
+.entry .margin-up,
+#event-form em,
+#event-form .margin-up {
   font-size: 16px; }
-.entry label {
+.entry label,
+#event-form label {
   text-transform: capitalize; }
-.entry h3 {
+.entry h3,
+#event-form h3 {
   font-weight: 800;
   font-size: 22px;
   margin-bottom: 5px;
   margin-top: 50px; }
-.entry .event-extra-details label {
+.entry .event-extra-details label,
+#event-form .event-extra-details label {
   font-weight: 600; }
-.entry .submit.button.orange {
+.entry .submit.button.orange,
+#event-form .submit.button.orange {
   margin-top: 50px !important;
   background: none;
   border: none;
   padding: 0; }
-  .entry .submit.button.orange:active, .entry .submit.button.orange:hover, .entry .submit.button.orange:focus {
+  .entry .submit.button.orange:active, .entry .submit.button.orange:hover, .entry .submit.button.orange:focus,
+  #event-form .submit.button.orange:active,
+  #event-form .submit.button.orange:hover,
+  #event-form .submit.button.orange:focus {
     outline: none;
     box-shadow: none;
     border: none; }
+
+.form-table th {
+  color: #333334 !important; }
 
 /*
 |--------------------------------------------------------------------------
