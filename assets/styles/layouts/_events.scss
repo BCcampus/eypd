@@ -1,0 +1,43 @@
+// Add new button
+a.em-button {
+  padding: $unit*2 $unit*4 !important;
+  margin: 0;
+  background: none;
+  border: none;
+  color: $brand-blue;
+  float: none;
+  font-size: 16px;
+  padding: 0 !important;
+
+  &:before {
+    content: '+';
+    font-weight: 400 !important;
+    font-family: 'Roboto' !important;
+  }
+}
+
+// Upcoming/Paste events
+.subsubsub {
+  display: none;
+}
+
+// Search events box
+.search-box {
+  display: none;
+
+  @media (min-width: 480px) {
+    // display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  label {
+    text-transform: capitalize;
+  }
+
+  label,
+  input {
+    margin-right: $unit*2;
+  }
+}

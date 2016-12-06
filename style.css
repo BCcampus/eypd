@@ -84,7 +84,8 @@ input[type="text"] {
   padding: 12.5px 15px;
   box-shadow: none;
   border: 1px solid #808284;
-  border-radius: 7.5px; }
+  border-radius: 7.5px;
+  margin: 0; }
 
 input[type="checkbox"],
 input[type="radio"] {
@@ -554,7 +555,8 @@ div.time-picker li {
     box-shadow: none;
     border: none; }
 
-.form-table th {
+.form-table th,
+.events-table th {
   color: #333334 !important; }
 
 /*
@@ -794,11 +796,46 @@ thead:first-child tr td,
 #my-locations-personal-li {
   display: none; }
 
+.item-list-tabs {
+  display: none; }
+
+#item-header {
+  display: none; }
+
+#item-body h3 {
+  font-size: 32px;
+  line-height: 36px;
+  margin-bottom: 5px; }
+
 #sidebar {
   background: #F4F5F7;
   border-right: 1px solid #D1D2D4;
   border-bottom: 1px solid #D1D2D4;
   box-shadow: none; }
+
+#item-header-avatar img.avatar {
+  box-shadow: none;
+  border-radius: 7.5px;
+  border: 1px solid #E6E7E8; }
+
+#profile-nav-menu a {
+  color: #068CC4;
+  text-align: left; }
+
+#profile-sidebar {
+  margin-bottom: 30px; }
+
+.sidebar-activity-tabs {
+  border-top: 1px solid #E6E7E8; }
+  .sidebar-activity-tabs li {
+    background-image: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important; }
+    .sidebar-activity-tabs li.current a, .sidebar-activity-tabs li.selected a {
+      color: #333334 !important; }
+  .sidebar-activity-tabs a {
+    font-family: "Roboto";
+    text-shadow: none; }
 
 /*
 |--------------------------------------------------------------------------
@@ -865,5 +902,35 @@ thead:first-child tr td,
   color: #068CC4; }
 .t-home h2, .t-home p {
   text-align: center; }
+
+a.em-button {
+  padding: 10px 20px !important;
+  margin: 0;
+  background: none;
+  border: none;
+  color: #068CC4;
+  float: none;
+  font-size: 16px;
+  padding: 0 !important; }
+  a.em-button:before {
+    content: '+';
+    font-weight: 400 !important;
+    font-family: 'Roboto' !important; }
+
+.subsubsub {
+  display: none; }
+
+.search-box {
+  display: none; }
+  @media (min-width: 480px) {
+    .search-box {
+      align-items: center;
+      flex-direction: row;
+      justify-content: flex-start; } }
+  .search-box label {
+    text-transform: capitalize; }
+  .search-box label,
+  .search-box input {
+    margin-right: 10px; }
 
 /*# sourceMappingURL=style.css.map */

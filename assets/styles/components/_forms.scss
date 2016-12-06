@@ -141,6 +141,7 @@ div.time-picker li {
 // 1. important t ooverride dynamic styles
 //
 
-.form-table th {
+.form-table th,
+.events-table th {
   color: $neutral-80 !important; //1
 }
