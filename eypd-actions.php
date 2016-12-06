@@ -48,14 +48,26 @@ function eypd_init_actions() {
 			echo EM_Object::json_encode( $result );
 			die();
 		}
-		if(isset($_REQUEST['query']) && $_REQUEST['query'] == 'GlobalMapData') {
-			$EM_Locations = EM_Locations::get( $_REQUEST );
+		if ( isset( $_REQUEST['query'] ) && $_REQUEST['query'] == 'GlobalMapData' ) {
+			$args           = [ 'eventful' => true, $_REQUEST ];
+			$EM_Locations   = EM_Locations::get( $args );
 			$json_locations = array();
-			foreach($EM_Locations as $location_key => $EM_Location) {
-				$json_locations[$location_key] = $EM_Location->to_array();
-				$json_locations[$location_key]['location_balloon'] = $EM_Location->output(get_option('dbem_map_text_format'));
+			foreach ( $EM_Locations as $location_key => $EM_Location ) {
+				$json_locations[ $location_key ] = $EM_Location->to_array();
+
+				$eypd_edit                                           = $EM_Location->output( get_option( 'dbem_map_text_format' ) );
+				$eypd_edit                                           = eypd_event_etc_output( $eypd_edit );
+				$json_locations[ $location_key ]['location_balloon'] = $eypd_edit;
+				// toss venues without events
+				if ( ( substr_count( $eypd_edit, '<li' ) < 2 ) && ( substr_count( $eypd_edit, 'No events in this location' ) > 0 ) ) {
+					unset( $json_locations[ $location_key ] );
+				}
+				$output = 0;
+				foreach ( $json_locations as $json_location ) {
+					$json_location_output[ $output ++ ] = $json_location;
+				}
 			}
-			echo EM_Object::json_encode($json_locations);
+			echo EM_Object::json_encode( $json_location_output );
 			die();
 		}
 
