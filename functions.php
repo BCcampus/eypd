@@ -38,7 +38,7 @@ define( 'CLOSENESS', 5 );
 |
 |
 */
-//include( get_stylesheet_directory() . '/eypd-actions.php' );
+include( get_stylesheet_directory() . '/eypd-actions.php' );
 
 /*
 |--------------------------------------------------------------------------
@@ -80,6 +80,7 @@ function eypd_load_scripts() {
 		'markerclusterer'       => 'markerclusterer',
 	);
 	wp_enqueue_script( 'events-manager', $template_dir . '/assets/js/events-manager.js', array_values( $script_deps ), EM_VERSION );
+	wp_enqueue_script( 'tinyscrollbar', $template_dir . '/assets/js/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
 }
 
 add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
