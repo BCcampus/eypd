@@ -2,3 +2,7 @@
 .sass-cache
 **/.sass-cache
 **/.sass-cache/*
+
+.css.map
+**/.css.map
+**/.css.map/*
