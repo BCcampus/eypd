@@ -17,7 +17,7 @@ global $EM_Event, $EM_Notices, $bp;
 //check that user can access this page
 if( is_object($EM_Event) && !$EM_Event->can_manage('edit_events','edit_others_events') ){
 	?>
-	<div class="wrap"><h2><?php esc_html_e('Unauthorized Access','events-manager'); ?></h2><p><?php echo sprintf(__('You do not have the rights to manage this %s.','events-manager'),__('Event','events-manager')); ?></p></div>
+	<div class="wrap"><h2><?php esc_html_e('Looking to Learn?','events-manager'); ?></h2><p><?php echo __('We\'re making it easier for early years sector professionals to find courses, conferences and workshops in British Columbia. Sign up, or Log in','events-manager'); ?></p></div>
 	<?php
 	return false;
 }elseif( !is_object($EM_Event) ){
