@@ -87,6 +87,29 @@ add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
 
 /*
 |--------------------------------------------------------------------------
+| Excerpt
+|--------------------------------------------------------------------------
+|
+| Filter the read more ...
+|
+|
+*/
+
+/**
+ * @param $more
+ *
+ * @return string
+ */
+function eypd_read_more( $more ) {
+	global $post;
+
+	return ' <a href="' . get_the_permalink( $post->ID ) . '">...[Read full article]</a>';
+}
+
+add_filter( 'excerpt_more', 'eypd_read_more' );
+
+/*
+|--------------------------------------------------------------------------
 | Labels/Localization
 |--------------------------------------------------------------------------
 |

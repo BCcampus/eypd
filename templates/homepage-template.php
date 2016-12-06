@@ -27,6 +27,12 @@ infinity_get_header();
 			<?php echo do_shortcode( '[events_search]' ); ?>
 		</div>
 	</div>
+    <div class="row">
+        <div class="container">
+            <h3>Explore the professional learning showcase</h3>
+			<?php infinity_load_template( 'templates/featured-stories.php' ); ?>
+        </div>
+    </div>
 	<?php
 	do_action( 'close_page' );
 	do_action( 'close_content' );
@@ -35,3 +41,4 @@ infinity_get_header();
 <?php
 infinity_get_footer();
 ?>
+
