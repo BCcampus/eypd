@@ -97,7 +97,6 @@ select {
   box-shadow: none;
   border: 1px solid #808284;
   border-radius: 7.5px;
-  min-width: 340px;
   background-image: url("assets/images/arrow-down.svg");
   background-repeat: no-repeat;
   background-size: 20px 20px;
@@ -401,6 +400,13 @@ div.thumbnail {
   top: 160px;
   left: 60px; }
 
+.c-map {
+  background-color: #F4F5F7;
+  padding: 30px 0;
+  margin-top: 30px; }
+  .c-map h2 {
+    margin-bottom: 30px; }
+
 /*
 |--------------------------------------------------------------------------
 | Lists
@@ -553,6 +559,107 @@ table.em-calendar thead {
 div.css-search,
 .em-search-main {
   border: none !important; }
+
+.c-search {
+  margin-top: 50px !important;
+  margin-bottom: 100px !important;
+  padding: 15px;
+  max-width: 1024px;
+  margin: 0 auto; }
+  @media (min-width: 1045px) {
+    .c-search {
+      padding: 0; } }
+  .c-search h2 {
+    margin-bottom: 15px; }
+  .c-search .em-search-wrapper {
+    margin-bottom: 50px; }
+  .c-search .em-search-main,
+  .c-search .em-search-scope {
+    display: flex; }
+  .c-search .em-search-main {
+    flex-direction: column; }
+    @media (min-width: 667px) {
+      .c-search .em-search-main {
+        flex-direction: row; } }
+  .c-search .em-search-text,
+  .c-search .em-search-geo {
+    flex: 1; }
+    .c-search .em-search-text input,
+    .c-search .em-search-geo input {
+      width: 100%; }
+  @media (min-width: 667px) {
+    .c-search .em-search-text {
+      padding-right: 25px; } }
+  @media (min-width: 667px) {
+    .c-search .em-search-geo {
+      padding-left: 25px; } }
+  .c-search .em-search-category {
+    display: block;
+    padding-left: 10px; }
+    @media (min-width: 853px) {
+      .c-search .em-search-category {
+        padding-left: 30px; } }
+  .c-search span,
+  .c-search label {
+    text-transform: capitalize; }
+  .c-search label + label {
+    margin-left: 15px; }
+  .c-search .em-search-advanced {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative; }
+    @media (min-width: 667px) {
+      .c-search .em-search-advanced {
+        flex-direction: row;
+        height: 100px; } }
+  .c-search .em-search-submit {
+    position: absolute;
+    bottom: -55px;
+    right: 0; }
+  .c-search .em-search-scope {
+    width: 100%; }
+    @media (min-width: 667px) {
+      .c-search .em-search-scope {
+        width: auto; } }
+  .c-search .em-events-search-dates {
+    width: 100%; }
+    @media (min-width: 667px) {
+      .c-search .em-events-search-dates {
+        width: auto; } }
+    .c-search .em-events-search-dates label {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      width: 100%; }
+      @media (min-width: 667px) {
+        .c-search .em-events-search-dates label {
+          width: auto; } }
+    .c-search .em-events-search-dates input {
+      width: 100%; }
+      @media (min-width: 667px) {
+        .c-search .em-events-search-dates input {
+          width: auto; } }
+  .c-search .em-search-category {
+    width: 100%;
+    padding-left: 0; }
+    @media (min-width: 667px) {
+      .c-search .em-search-category {
+        width: auto;
+        margin-left: 40px; } }
+    .c-search .em-search-category label {
+      display: flex;
+      flex-direction: column; }
+    .c-search .em-search-category select {
+      width: 100%; }
+      @media (min-width: 667px) {
+        .c-search .em-search-category select {
+          min-width: 340px; } }
+
+.c-banner {
+  background-image: url("assets/images/banner-bg.png");
+  background-size: contain;
+  height: 250px; }
 
 /*
 |--------------------------------------------------------------------------
@@ -723,99 +830,5 @@ thead:first-child tr td,
   color: #068CC4; }
 .t-home h2, .t-home p {
   text-align: center; }
-.t-home h2 {
-  margin-bottom: 15px; }
-
-.t-home__search {
-  padding: 15px;
-  max-width: 1024px;
-  margin: 0 auto; }
-  @media (min-width: 1045px) {
-    .t-home__search {
-      padding: 0; } }
-  .t-home__search .em-search-wrapper {
-    margin-bottom: 50px; }
-  .t-home__search .em-search-main,
-  .t-home__search .em-search-scope {
-    display: flex; }
-  .t-home__search .em-search-main {
-    flex-direction: column; }
-    @media (min-width: 667px) {
-      .t-home__search .em-search-main {
-        flex-direction: row; } }
-  .t-home__search .em-search-text,
-  .t-home__search .em-search-geo {
-    flex: 1; }
-    .t-home__search .em-search-text input,
-    .t-home__search .em-search-geo input {
-      width: 100%; }
-  @media (min-width: 667px) {
-    .t-home__search .em-search-text {
-      padding-right: 25px; } }
-  @media (min-width: 667px) {
-    .t-home__search .em-search-geo {
-      padding-left: 25px; } }
-  .t-home__search .em-search-category {
-    display: block;
-    padding-left: 10px; }
-    @media (min-width: 853px) {
-      .t-home__search .em-search-category {
-        padding-left: 30px; } }
-  .t-home__search span,
-  .t-home__search label {
-    text-transform: capitalize; }
-  .t-home__search label + label {
-    margin-left: 15px; }
-  .t-home__search .em-search-advanced {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    position: relative; }
-    @media (min-width: 667px) {
-      .t-home__search .em-search-advanced {
-        flex-direction: row;
-        height: 100px; } }
-  .t-home__search .em-search-submit {
-    position: absolute;
-    bottom: -55px;
-    right: 0; }
-  .t-home__search .em-search-scope {
-    width: 100%; }
-    @media (min-width: 667px) {
-      .t-home__search .em-search-scope {
-        width: auto; } }
-  .t-home__search .em-events-search-dates {
-    width: 100%; }
-    @media (min-width: 667px) {
-      .t-home__search .em-events-search-dates {
-        width: auto; } }
-    .t-home__search .em-events-search-dates label {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      width: 100%; }
-      @media (min-width: 667px) {
-        .t-home__search .em-events-search-dates label {
-          width: auto; } }
-    .t-home__search .em-events-search-dates input {
-      width: 100%; }
-      @media (min-width: 667px) {
-        .t-home__search .em-events-search-dates input {
-          width: auto; } }
-  .t-home__search .em-search-category {
-    width: 100%;
-    padding-left: 0; }
-    @media (min-width: 667px) {
-      .t-home__search .em-search-category {
-        width: auto;
-        margin-left: 40px; } }
-    .t-home__search .em-search-category label {
-      display: flex;
-      flex-direction: column; }
-    .t-home__search .em-search-category select {
-      width: 100%; }
-      @media (min-width: 667px) {
-        .t-home__search .em-search-category select {
-          min-width: 340px; } }
 
 /*# sourceMappingURL=style.css.map */

@@ -12,10 +12,16 @@ infinity_get_header();
 
 ?>
 <div class="t-home">
+
+<div class="c-banner">
+	<img src="../assets/images/arrow-down.svg" alt="EYPD logo">
+	<img src="../assets/images/bc-map.svg" alt="Outline of a map of BC">
+</div>
+
 	<div class="grid_24" role="main">
 
-		<div id="filter-bar">
-			<div class="t-home__search">
+		<div>
+			<div class="c-search">
 				<h2>Search for training events</h2>
 				<p>Fill in one or more of the fields below</p>
 				<?php echo do_shortcode( '[events_search]' ); ?>
@@ -27,7 +33,7 @@ infinity_get_header();
 		?>
 	</div>
 
-	<div class="u-color-bg-grey">
+	<div class="c-map">
 		<h2>Find training events near you</h2>
 		<?php
 		do_action( 'open_content' );
