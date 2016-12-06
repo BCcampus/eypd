@@ -670,6 +670,10 @@ div.css-search,
 |
 |
 */
+#header {
+  padding: 20px !important;
+  border-bottom: 1px solid #E6E7E8; }
+
 #wpadminbar {
   background-color: #222222; }
 

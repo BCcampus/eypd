@@ -8,6 +8,11 @@
 |
 */
 
+#header {
+  padding: 20px !important;
+  border-bottom: 1px solid $neutral-20;
+}
+
 #wpadminbar {
   background-color: $color-black-mineshaft-dark;
 }
