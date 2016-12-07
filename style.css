@@ -631,7 +631,7 @@ div.css-search,
     align-items: center;
     flex-direction: column;
     position: relative; }
-    @media (min-width: 667px) {
+    @media (min-width: 789px) {
       .c-search .em-search-advanced {
         flex-direction: row;
         height: 100px; } }
@@ -641,12 +641,12 @@ div.css-search,
     right: 0; }
   .c-search .em-search-scope {
     width: 100%; }
-    @media (min-width: 667px) {
+    @media (min-width: 789px) {
       .c-search .em-search-scope {
         width: auto; } }
   .c-search .em-events-search-dates {
     width: 100%; }
-    @media (min-width: 667px) {
+    @media (min-width: 789px) {
       .c-search .em-events-search-dates {
         width: auto; } }
     .c-search .em-events-search-dates label {
@@ -654,18 +654,18 @@ div.css-search,
       flex-direction: column;
       justify-content: flex-end;
       width: 100%; }
-      @media (min-width: 667px) {
+      @media (min-width: 789px) {
         .c-search .em-events-search-dates label {
           width: auto; } }
     .c-search .em-events-search-dates input {
       width: 100%; }
-      @media (min-width: 667px) {
+      @media (min-width: 789px) {
         .c-search .em-events-search-dates input {
           width: auto; } }
   .c-search .em-search-category {
     width: 100%;
     padding-left: 0; }
-    @media (min-width: 667px) {
+    @media (min-width: 789px) {
       .c-search .em-search-category {
         width: auto;
         margin-left: 40px; } }
@@ -675,6 +675,9 @@ div.css-search,
     .c-search .em-search-category select {
       width: 100%; }
       @media (min-width: 667px) {
+        .c-search .em-search-category select {
+          min-width: 300px; } }
+      @media (min-width: 900px) {
         .c-search .em-search-category select {
           min-width: 340px; } }
 

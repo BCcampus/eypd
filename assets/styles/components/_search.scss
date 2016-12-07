@@ -89,7 +89,7 @@ div.css-search,
 
     position: relative;
 
-    @media (min-width: 667px) {
+    @media (min-width: 789px) {
       flex-direction: row;
       height: $unit*20;
     }
@@ -104,7 +104,7 @@ div.css-search,
   .em-search-scope {
     width: 100%;
 
-    @media (min-width: 667px) {
+    @media (min-width: 789px) {
      width: auto;
     }
   }
@@ -112,7 +112,7 @@ div.css-search,
   .em-events-search-dates {
     width: 100%;
 
-    @media (min-width: 667px) {
+    @media (min-width: 789px) {
      width: auto;
     }
 
@@ -122,7 +122,7 @@ div.css-search,
      justify-content: flex-end;
      width: 100%;
 
-     @media (min-width: 667px) {
+     @media (min-width: 789px) {
        width: auto;
      }
     }
@@ -130,7 +130,7 @@ div.css-search,
     input {
      width: 100%;
 
-     @media (min-width: 667px) {
+     @media (min-width: 789px) {
        width: auto;
      }
     }
@@ -140,7 +140,7 @@ div.css-search,
     width: 100%;
     padding-left: 0;
 
-    @media (min-width: 667px) {
+    @media (min-width: 789px) {
       width: auto;
       margin-left: $unit*8;
     }
@@ -154,6 +154,10 @@ div.css-search,
       width: 100%;
 
       @media (min-width: 667px) {
+        min-width: 300px;
+      }
+
+      @media (min-width: 900px) {
         min-width: 340px;
       }
     }
