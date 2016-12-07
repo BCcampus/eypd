@@ -43,6 +43,16 @@ infinity_get_header();
 
 		?>
 	</div>
+    <div class="row">
+        <div class="container">
+            <h3>Explore the professional learning showcase</h3>
+			<?php infinity_load_template( 'templates/featured-stories.php' ); ?>
+        </div>
+    </div>
+	<?php
+	do_action( 'close_page' );
+	do_action( 'close_content' );
+	?>
 </div>
 <?php
 infinity_get_footer();

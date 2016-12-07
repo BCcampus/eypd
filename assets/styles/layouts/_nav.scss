@@ -81,8 +81,12 @@ thead:first-child tr td,
   display: flex;
   align-items: center;
   justify-content: space-between;
-  
+
   margin: 0;
+
+  @media (min-width: 785px) {
+    display: none;
+  }
 
   select {
     margin: 0;

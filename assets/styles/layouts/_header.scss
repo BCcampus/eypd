@@ -24,20 +24,19 @@
 // Admin Bar
 #wpadminbar {
   background-color: $neutral-20;
+
+  #wp-admin-bar-wp-logo>.ab-item{
+    display: none;
+  }
 }
 
-// #wpadminbar .quicklinks ul {
-//   max-width: 1024px;
-//   margin: 0 auto;
-// }
 
 #wp-admin-bar-root-default {
   display: flex;
   justify-content: flex-end;
 }
-//
+
 #wp-admin-bar-wp-logo,
-// #wp-admin-bar-top-secondary
 #wp-admin-bar-site-name,
 #wp-admin-bar-search {
   display: none;
@@ -77,5 +76,4 @@
   @media (min-width: 667px) {
     width: auto;
   }
-
 }

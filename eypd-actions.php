@@ -8,7 +8,7 @@
  * Licence: GPL 2 or later
  *
  *
- * Modifications by Shawn DeWolfe
+ * Modifications by Shawn DeWolfe, Brad Payne
  * Licence GPL 3+
  *
  */
@@ -33,47 +33,40 @@ function eypd_init_actions() {
 			}
 			die();
 		}
-
+		if ( isset( $_REQUEST['em_ajax_action'] ) && $_REQUEST['em_ajax_action'] == 'delete_ticket' ) {
+			if ( isset( $_REQUEST['id'] ) ) {
+				$EM_Ticket = new EM_Ticket( $_REQUEST['id'] );
+				$result    = $EM_Ticket->delete();
+				if ( $result ) {
+					$result = array( 'result' => true );
+				} else {
+					$result = array( 'result' => false, 'error' => $EM_Ticket->feedback_message );
+				}
+			} else {
+				$result = array( 'result' => false, 'error' => __( 'No ticket id provided', 'events-manager' ) );
+			}
+			echo EM_Object::json_encode( $result );
+			die();
+		}
 		if ( isset( $_REQUEST['query'] ) && $_REQUEST['query'] == 'GlobalMapData' ) {
-			$EM_Locations   = EM_Locations::get( $_REQUEST );
+			$args           = [ 'eventful' => true, $_REQUEST ];
+			$EM_Locations   = EM_Locations::get( $args );
 			$json_locations = array();
-			$group_key      = 0;
-
-			// gather the locations
 			foreach ( $EM_Locations as $location_key => $EM_Location ) {
 				$json_locations[ $location_key ] = $EM_Location->to_array();
 
-				$eypd_edit = $EM_Location->output( get_option( 'dbem_map_text_format' ) );
-				$eypd_edit = eypd_event_etc_output( $eypd_edit );
-
+				$eypd_edit                                           = $EM_Location->output( get_option( 'dbem_map_text_format' ) );
+				$eypd_edit                                           = eypd_event_etc_output( $eypd_edit );
 				$json_locations[ $location_key ]['location_balloon'] = $eypd_edit;
-
 				// toss venues without events
 				if ( ( substr_count( $eypd_edit, '<li' ) < 2 ) && ( substr_count( $eypd_edit, 'No events in this location' ) > 0 ) ) {
 					unset( $json_locations[ $location_key ] );
-				} else {
-					// only need to fire if its being used
-					if ( $location_key > $group_key ) {
-						$group_key = $location_key;
-					}
+				}
+				$output = 0;
+				foreach ( $json_locations as $json_location ) {
+					$json_location_output[ $output ++ ] = $json_location;
 				}
 			}
-
-			$location_size = sizeof( $json_locations );
-			while ( $location_size > $cluster_size ) {
-				$location_size = sizeof( $json_locations );
-				list( $json_locations, $group_key ) = eypd_cluster_locations( $json_locations, $group_key );
-				$cluster_size = sizeof( $json_locations );
-
-				// loop until the location stops shrinking from clustering
-			}
-			$json_locations = array_filter( $json_locations );
-			$output         = 0;
-			foreach ( $json_locations as $json_location ) {
-				$json_location_output[ $output ++ ] = $json_location;
-			}
-
-
 			echo EM_Object::json_encode( $json_location_output );
 			die();
 		}
@@ -563,7 +556,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 				//quick shortcut for quick html form manipulation
 				ob_start();
 				?>
-				<option value=''><?php echo get_option( 'dbem_search_form_states_label' ) ?></option>
+                <option value=''><?php echo get_option( 'dbem_search_form_states_label' ) ?></option>
 				<?php
 				foreach ( $results as $result ) {
 					echo "<option>{$result}</option>";
@@ -594,7 +587,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 				//quick shortcut for quick html form manipulation
 				ob_start();
 				?>
-				<option value=''><?php echo get_option( 'dbem_search_form_towns_label' ); ?></option>
+                <option value=''><?php echo get_option( 'dbem_search_form_towns_label' ); ?></option>
 				<?php
 				foreach ( $results as $result ) {
 					echo "<option>$result</option>";
@@ -618,7 +611,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 				//quick shortcut for quick html form manipulation
 				ob_start();
 				?>
-				<option value=''><?php echo get_option( 'dbem_search_form_regions_label' ); ?></option>
+                <option value=''><?php echo get_option( 'dbem_search_form_regions_label' ); ?></option>
 				<?php
 				foreach ( $results as $result ) {
 					echo "<option>{$result->value}</option>";

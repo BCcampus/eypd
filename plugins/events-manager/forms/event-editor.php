@@ -17,7 +17,7 @@ global $EM_Event, $EM_Notices, $bp;
 //check that user can access this page
 if( is_object($EM_Event) && !$EM_Event->can_manage('edit_events','edit_others_events') ){
 	?>
-	<div class="wrap"><h2><?php esc_html_e('Unauthorized Access','events-manager'); ?></h2><p><?php echo sprintf(__('You do not have the rights to manage this %s.','events-manager'),__('Event','events-manager')); ?></p></div>
+	<div class="wrap"><h2><?php esc_html_e('Looking to Learn?','events-manager'); ?></h2><p><?php echo __('We\'re making it easier for early years sector professionals to find courses, conferences and workshops in British Columbia. Sign up, or Log in','events-manager'); ?></p></div>
 	<?php
 	return false;
 }elseif( !is_object($EM_Event) ){
@@ -53,7 +53,7 @@ if( !empty($_REQUEST['success']) ){
 		<div class="inside event-form-name">
 			<input type="text" name="event_name" id="event-name" value="<?php echo esc_attr($EM_Event->event_name,ENT_QUOTES); ?>" />
 			<br />
-			<?php esc_html_e('The event name. Example: Birthday party', 'events-manager'); ?>
+			<i><?php esc_html_e('The event name. Example: Birthday party', 'events-manager'); ?></i>
 			<?php em_locate_template('forms/event/group.php',true); ?>
 		</div>
 
@@ -74,6 +74,7 @@ if( !empty($_REQUEST['success']) ){
 
 		<?php if( get_option('dbem_locations_enabled') ): ?>
 			<h3 class="event-form-where"><?php esc_html_e( 'Where', 'events-manager'); ?></h3>
+            <p class="margin-up"><i>If your event is online fill in the location fields based on the location of the organization sponsoring this event.</i></p>
 			<div class="inside event-form-where">
 				<?php em_locate_template('forms/event/location.php',true); ?>
 			</div>
