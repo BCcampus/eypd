@@ -418,11 +418,11 @@ div.time-picker li {
   margin: 0.5em 0 1em 0;
   line-height: 1.5em; }
 
-#event-form p.margin-up {
+#event-form p.margin-up, .css-events-admin p.margin-up {
   margin-top: -20px; }
-#event-form #event-name {
+#event-form #event-name, .css-events-admin #event-name {
   padding: 8px 11px; }
-#event-form .mce-path-item {
+#event-form .mce-path-item, .css-events-admin .mce-path-item {
   display: none; }
 
 .field-visibility-settings-toggle {

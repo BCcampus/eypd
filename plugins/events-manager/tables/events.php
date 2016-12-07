@@ -11,7 +11,7 @@ global $wpdb, $bp, $EM_Notices;
 /* @var $show_add_new bool */
 /* @var $limit int */
 ?>
-<p><i>Click on the links below to begin editing an event post.</i></p>
+<p class="margin-up"><i>Click on the links below to begin editing an event post.</i></p>
 <?php
 //add new button will only appear if called from em_event_admin template tag, or if the $show_add_new var is set
 if ( ! empty( $show_add_new ) && current_user_can( 'edit_events' ) ) {
