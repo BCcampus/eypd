@@ -35,20 +35,32 @@
   display: flex;
   justify-content: flex-end;
 }
-
+//
 #wp-admin-bar-wp-logo,
-#wp-admin-bar-top-secondary {
+// #wp-admin-bar-top-secondary
+#wp-admin-bar-site-name,
+#wp-admin-bar-search {
   display: none;
 }
 
 #wp-toolbar {
   padding: 0 45px;
 
-  #wp-admin-bar-root-default li a {
+  ul li a {
     color: $neutral-80 !important;
   }
-  #wp-admin-bar-root-default li:hover a {
+  ul li:hover a {
     background-color: $neutral-20 !important;
     color: $brand-blue !important;
   }
+}
+
+#wp-admin-bar-my-account * {
+  background-color: $neutral-20 !important;
+}
+
+#wp-admin-bar-user-actions li a:hover span,
+#wp-admin-bar-user-actions li:hover a,
+#wp-admin-bar-user-actions li a:hover  {
+  color: darken($brand-blue, 10%) !important;
 }
