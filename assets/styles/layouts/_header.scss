@@ -64,3 +64,18 @@
 #wp-admin-bar-user-actions li a:hover  {
   color: darken($brand-blue, 10%) !important;
 }
+
+.mobile-menu-container a.button {
+  background-color: transparent;
+  color: $neutral-80;
+  box-shadow: none;
+}
+
+#logo-menu-wrap div a {
+  width: 200px;
+
+  @media (min-width: 667px) {
+    width: auto;
+  }
+
+}

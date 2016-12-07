@@ -30,17 +30,22 @@ div.time-picker li {
 }
 
 // wider input fields
-#em-location-data table.em-location-data {
-  select, input {
-    width: 95%;
-  }
-}
+// #em-location-data table.em-location-data {
+//   select, input {
+//     width: 95%;
+//   }
+// }
 
 // event attributes to look like the rest of the form
-.event-extra-details {
-  input[type=text], select {
-    width: 50%;
-  }
+// .event-extra-details {
+//   input[type=text], select {
+//     width: 50%;
+//   }
+// }
+
+.event-categories select {
+  background: none;
+  width: 100%;
 }
 
 #event-form {

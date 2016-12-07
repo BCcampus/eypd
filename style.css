@@ -501,11 +501,9 @@ tr.em-location-data-region {
 div.time-picker li {
   height: auto; }
 
-#em-location-data table.em-location-data select, #em-location-data table.em-location-data input {
-  width: 95%; }
-
-.event-extra-details input[type=text], .event-extra-details select {
-  width: 50%; }
+.event-categories select {
+  background: none;
+  width: 100%; }
 
 #event-form p.margin-up {
   margin-top: 0; }
@@ -751,6 +749,17 @@ div.css-search,
 #wp-admin-bar-user-actions li a:hover {
   color: #046993 !important; }
 
+.mobile-menu-container a.button {
+  background-color: transparent;
+  color: #333334;
+  box-shadow: none; }
+
+#logo-menu-wrap div a {
+  width: 200px; }
+  @media (min-width: 667px) {
+    #logo-menu-wrap div a {
+      width: auto; } }
+
 /*
 |--------------------------------------------------------------------------
 | Nav
@@ -803,6 +812,21 @@ thead:first-child tr td,
   align-items: center; }
   #menu-event-mgmt a:hover span {
     color: #046993; }
+
+.mobile-menu-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0; }
+  .mobile-menu-container select {
+    margin: 0; }
+  .mobile-menu-container a.button {
+    position: initial;
+    padding: 0;
+    text-transform: capitalize;
+    min-height: initial; }
+    .mobile-menu-container a.button[href="#sidebar"] {
+      display: none; }
 
 /*
 |--------------------------------------------------------------------------

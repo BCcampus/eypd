@@ -72,3 +72,30 @@ thead:first-child tr td,
     color: darken($brand-blue, 10%);
   }
 }
+
+// Mobile Nav
+// ---
+//
+
+.mobile-menu-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+  margin: 0;
+
+  select {
+    margin: 0;
+  }
+
+  a.button {
+    position: initial;
+    padding: 0;
+    text-transform: capitalize;
+    min-height: initial;
+
+    &[href="#sidebar"] {
+      display: none;
+    }
+  }
+}
