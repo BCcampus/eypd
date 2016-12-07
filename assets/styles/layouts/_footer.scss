@@ -8,7 +8,8 @@
 |
 */
 .footer-wrap {
-  background: $color-white;
+  background: $neutral-80;
+  color: $neutral-00;
   border: none;
   box-shadow: none;
   padding-top: 2rem;
@@ -19,6 +20,7 @@
   background-color:$color-white;
   color: inherit;
   font-weight: normal;
+  padding-top: 0;
 }
 
 #footer {
@@ -66,4 +68,3 @@
   text-align: left;
   width: 750px;
 }
-

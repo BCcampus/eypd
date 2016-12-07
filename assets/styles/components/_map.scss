@@ -295,3 +295,14 @@ div.thumbnail {
   top: 160px;
   left: 60px;
 }
+
+
+.c-map {
+  background-color: $neutral-10;
+  padding: 30px 0;
+  margin-top: 30px;
+
+  h2 {
+    margin-bottom: $unit*6;
+  }
+}

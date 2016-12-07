@@ -65,8 +65,13 @@ function eypd_load_scripts() {
 	// toss Events Manager scripts and their dependencies
 	wp_dequeue_script( 'events-manager' );
 
+
+	// replace script from theme
+	// wp_enqueue_script('events-manager', plugins_url('assets/js/events-manager.js',__FILE__), array(), EM_VERSION);
+
 	wp_enqueue_script( 'jquery-ui-draggable' );
 	wp_enqueue_script( 'markerclusterer', $template_dir . '/assets/js/markerclusterer.js' );
+
 
 	$script_deps = array(
 		'jquery'                 => 'jquery',
@@ -250,3 +255,16 @@ function et_fetch( $post_id = -1, $ajax = true ) {
 
 add_action( 'wp_ajax_nopriv_cyop_lookup', 'et_fetch' );
 add_action( 'wp_ajax_cyop_lookup', 'et_fetch' );
+
+
+// remove links/menus from the admin bar
+function eypd_admin_bar_render() {
+	global $wp_admin_bar;
+	$wp_admin_bar->remove_menu('comments');
+	$wp_admin_bar->remove_menu('edit');
+	$wp_admin_bar->remove_menu('new-content');
+	$wp_admin_bar->remove_menu('updates');
+	$wp_admin_bar->remove_menu('my-blogs');
+	$wp_admin_bar->remove_menu('customize');
+}
+add_action( 'wp_before_admin_bar_render', 'eypd_admin_bar_render' );

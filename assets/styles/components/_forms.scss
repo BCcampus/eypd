@@ -30,31 +30,27 @@ div.time-picker li {
 }
 
 // wider input fields
-#em-location-data table.em-location-data {
-  select, input {
-    width: 95%;
-  }
-}
+// #em-location-data table.em-location-data {
+//   select, input {
+//     width: 95%;
+//   }
+// }
 
 // event attributes to look like the rest of the form
-.event-extra-details {
-  input[type=text], select {
-    width: 50%;
-  }
-  label {
-    font-family: "Roboto Condensed";
-    color: $color-black-mineshaft;
-    font-size: 1.5em;
-    font-weight: bold;
-    text-transform: none;
-    margin: 0.5em 0 1em 0;
-    line-height: 1.5em;
-  }
+// .event-extra-details {
+//   input[type=text], select {
+//     width: 50%;
+//   }
+// }
+
+.event-categories select {
+  background: none;
+  width: 100%;
 }
 
 #event-form, .css-events-admin {
   p.margin-up {
-    margin-top: -20px;
+    margin-top: 0;
   }
   #event-name {
     padding: 8px 11px;
@@ -66,4 +62,91 @@ div.time-picker li {
 
 .field-visibility-settings-toggle{
   display:none;
+}
+
+// Post Event Page
+// ---
+// 1. Remove large margin under title
+//
+
+.entry {
+  margin-top: 0; // 1
+
+  em {
+    font-size: 16px;
+  }
+}
+
+.page-1561 .page-title {
+  margin-bottom: 0; // 1
+}
+
+
+// Content Editor
+// ---
+// 1. Add a border around the edit box
+//
+.mce-tinymce.mce-container.mce-panel {
+  border: 1px solid #E5E5E5; // 1
+}
+
+// Post Event Form
+// ---
+// 1. Important to override utility class
+//
+.entry,
+#event-form {
+  .margin-up {
+    margin-top: 0 !important; // 1
+  }
+
+  em,
+  .margin-up {
+    font-size: 16px;
+  }
+
+  label {
+    text-transform: capitalize;
+  }
+
+  h3 {
+    font-weight: 800;
+    font-size: 22px;
+    margin-bottom: $unit;
+    margin-top: $unit*10;
+  }
+
+  .event-extra-details label {
+    font-weight: 600;
+  }
+
+  // Submit button
+  // ---
+  // 1. Important to override p style
+  //
+
+  .submit.button.orange {
+    margin-top: $unit*10 !important;
+    background: none;
+    border: none;
+    padding: 0;
+
+    &:active,
+    &:hover,
+    &:focus {
+        outline: none;
+        box-shadow: none;
+        border: none;
+    }
+  }
+}
+
+// Form Table
+// ---
+// 1. important t ooverride dynamic styles
+//
+
+.form-table th,
+.events-table th {
+  color: $neutral-80 !important; //1
 }

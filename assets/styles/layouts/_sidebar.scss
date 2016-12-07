@@ -1,0 +1,44 @@
+// Sidebar
+// ====
+
+
+#sidebar {
+  background: $neutral-10;
+  border-right: 1px solid $neutral-40;
+  border-bottom: 1px solid $neutral-40;
+  box-shadow: none;
+}
+
+#item-header-avatar img.avatar {
+  box-shadow: none;
+  border-radius: $border-radius;
+  border: 1px solid $neutral-20;
+}
+
+#profile-nav-menu a {
+  color: $brand-blue;
+  text-align: left;
+}
+
+#profile-sidebar {
+  margin-bottom: $unit*6;
+}
+
+.sidebar-activity-tabs {
+  border-top: 1px solid $neutral-20;
+  li {
+    background-image: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+
+    &.current a,
+    &.selected a {
+      color: $neutral-80 !important;
+    }
+  }
+
+  a {
+    font-family: $font-family;
+    text-shadow: none;
+  }
+}

@@ -8,11 +8,9 @@
 |
 */
 
-#wpadminbar {
-  background-color: $color-black-mineshaft-dark;
-  #wp-admin-bar-wp-logo>.ab-item{
-    display: none;
-  }
+#header {
+  padding: 20px !important;
+  border-bottom: 1px solid $neutral-20;
 }
 
 #header {
@@ -20,4 +18,62 @@
   padding-top: 10px;
   padding-top: 10px;
   background: $color-white;
+}
+
+
+// Admin Bar
+#wpadminbar {
+  background-color: $neutral-20;
+
+  #wp-admin-bar-wp-logo>.ab-item{
+    display: none;
+  }
+}
+
+
+#wp-admin-bar-root-default {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#wp-admin-bar-wp-logo,
+#wp-admin-bar-site-name,
+#wp-admin-bar-search {
+  display: none;
+}
+
+#wp-toolbar {
+  padding: 0 45px;
+
+  ul li a {
+    color: $neutral-80 !important;
+  }
+  ul li:hover a {
+    background-color: $neutral-20 !important;
+    color: $brand-blue !important;
+  }
+}
+
+#wp-admin-bar-my-account * {
+  background-color: $neutral-20 !important;
+}
+
+#wp-admin-bar-user-actions li a:hover span,
+#wp-admin-bar-user-actions li:hover a,
+#wp-admin-bar-user-actions li a:hover  {
+  color: darken($brand-blue, 10%) !important;
+}
+
+.mobile-menu-container a.button {
+  background-color: transparent;
+  color: $neutral-80;
+  box-shadow: none;
+}
+
+#logo-menu-wrap div a {
+  width: 200px;
+
+  @media (min-width: 667px) {
+    width: auto;
+  }
 }

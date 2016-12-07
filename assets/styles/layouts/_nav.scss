@@ -37,16 +37,69 @@ thead:first-child tr td,
 .mobile-menu-container,
 .info-box h3,
 #bbpress-forums li.bbp-header {
-  background: $color-blue-astral;
+  background: $neutral-20;
   border: none;
   box-shadow: none;
-}
-
-.top-wrap .base-menu.sub-menu{
-  border-radius: 4px;
 }
 
 .base-menu ul a, div.item-list-tabs ul li a, div.item-list-tabs ul li span, #footer-menu ul li a{
   text-shadow: none;
   font-weight: normal;
+}
+
+// Post an Event link
+// ---
+#menu-item-1843 {
+  @extend .c-button;
+  @extend .c--ghost;
+
+  margin-right: $unit*3;
+
+  a {
+    margin: 0;
+  }
+}
+
+// Header Menu
+// ---
+//
+
+#menu-event-mgmt {
+  display: flex;
+  align-items: center;
+
+  & a:hover span {
+    color: darken($brand-blue, 10%);
+  }
+}
+
+// Mobile Nav
+// ---
+//
+
+.mobile-menu-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin: 0;
+
+  @media (min-width: 785px) {
+    display: none;
+  }
+
+  select {
+    margin: 0;
+  }
+
+  a.button {
+    position: initial;
+    padding: 0;
+    text-transform: capitalize;
+    min-height: initial;
+
+    &[href="#sidebar"] {
+      display: none;
+    }
+  }
 }

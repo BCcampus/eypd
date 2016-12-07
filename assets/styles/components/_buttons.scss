@@ -8,3 +8,83 @@
 |
 */
 
+// Button
+
+.c-button {
+  min-width: $tap-size;
+  min-height: $tap-size;
+  margin: 0;
+  padding: $unit*2 $unit*4;
+  display: block;
+
+  border-radius: 0;
+  background: none;
+  border: 0;
+  border-radius: $border-radius;
+
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: none;
+  font-family: $font-family;
+  font-size: 18px;
+
+  cursor: pointer;
+  user-select: none;
+
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance:    none;
+}
+
+.c-button.c--primary {
+  background: $brand-blue;
+
+  color: $neutral-00;
+
+  &:active,
+  &:hover,
+  &:focus {
+      background: darken($brand-blue, 10%);
+      outline: none;
+      box-shadow: none;
+      border: none;
+  }
+}
+
+.c-button.c--ghost {
+  padding: $unit;
+
+  border: $border;
+  border-radius: $border-radius;
+
+  &:active,
+  &:hover,
+  &:focus {
+      border-color: darken($brand-blue, 10%);
+  }
+
+  a {
+    &:active,
+    &:hover,
+    &:focus {
+      color: darken($brand-blue, 10%) !important;
+    }
+  }
+}
+
+// Extend custom styles over dynamic styles
+
+.button-primary {
+  @extend .c-button;
+  @extend .c--primary;
+}
+
+.button {
+  @extend .c-button;
+  @extend .c--primary;
+}

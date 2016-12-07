@@ -1,1 +1,7 @@
 .idea
+.sass-cache
+**/.sass-cache
+**/.sass-cache/*
+
+style.css.map
+*.css.map
