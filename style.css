@@ -42,13 +42,16 @@
 |
 |
 */
+body, body.theme-option {
+  background: none no-repeat; }
+
+body {
+  border: none; }
+
 h1, h2, h3, h4, h5, h6, p, label {
   font-family: "Roboto";
   color: #333334;
   font-weight: 500; }
-
-body, body.theme-option {
-  background: none no-repeat; }
 
 h1 {
   font-size: 32px;
@@ -80,7 +83,9 @@ p, label, li {
 .row {
   width: 100% !important; }
 
-input[type="text"] {
+input[type="text"],
+input[type="password"],
+input[type="email"] {
   padding: 12.5px 15px;
   box-shadow: none;
   border: 1px solid #808284;
@@ -450,7 +455,6 @@ div.thumbnail {
   text-shadow: none;
   font-family: "Roboto";
   font-size: 18px;
-  transition: 0.25s ease-in-out all;
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -710,14 +714,30 @@ div.css-search,
   padding: 20px !important;
   border-bottom: 1px solid #E6E7E8; }
 
-#wpadminbar {
-  background-color: #222222; }
-
 #header {
   min-height: 70px;
   padding-top: 10px;
   padding-top: 10px;
   background: #ffffff; }
+
+#wpadminbar {
+  background-color: #E6E7E8; }
+
+#wp-admin-bar-root-default {
+  display: flex;
+  justify-content: flex-end; }
+
+#wp-admin-bar-wp-logo,
+#wp-admin-bar-top-secondary {
+  display: none; }
+
+#wp-toolbar {
+  padding: 0 45px; }
+  #wp-toolbar #wp-admin-bar-root-default li a {
+    color: #333334 !important; }
+  #wp-toolbar #wp-admin-bar-root-default li:hover a {
+    background-color: #E6E7E8 !important;
+    color: #068CC4 !important; }
 
 /*
 |--------------------------------------------------------------------------
@@ -761,23 +781,6 @@ thead:first-child tr td,
   text-shadow: none;
   font-weight: normal; }
 
-.base-menu.sub-menu {
-  display: flex;
-  justify-content: flex-end;
-  border-top: 1px solid #D1D2D4 !important;
-  border-bottom: 1px solid #D1D2D4; }
-  .base-menu.sub-menu a {
-    color: #333334; }
-  .base-menu.sub-menu a:focus,
-  .base-menu.sub-menu a:active,
-  .base-menu.sub-menu a:hover {
-    color: #068CC4; }
-  .base-menu.sub-menu .menu-item.sfHover {
-    color: #068CC4; }
-
-#menu-item-1839.sfHover {
-  color: #068CC4; }
-
 #menu-item-1843 {
   margin-right: 15px; }
   #menu-item-1843 a {
@@ -786,6 +789,8 @@ thead:first-child tr td,
 #menu-event-mgmt {
   display: flex;
   align-items: center; }
+  #menu-event-mgmt a:hover span {
+    color: #046993; }
 
 /*
 |--------------------------------------------------------------------------

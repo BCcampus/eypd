@@ -13,13 +13,42 @@
   border-bottom: 1px solid $neutral-20;
 }
 
-#wpadminbar {
-  background-color: $color-black-mineshaft-dark;
-}
-
 #header {
   min-height: 70px;
   padding-top: 10px;
   padding-top: 10px;
   background: $color-white;
+}
+
+
+// Admin Bar
+#wpadminbar {
+  background-color: $neutral-20;
+}
+
+// #wpadminbar .quicklinks ul {
+//   max-width: 1024px;
+//   margin: 0 auto;
+// }
+
+#wp-admin-bar-root-default {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#wp-admin-bar-wp-logo,
+#wp-admin-bar-top-secondary {
+  display: none;
+}
+
+#wp-toolbar {
+  padding: 0 45px;
+
+  #wp-admin-bar-root-default li a {
+    color: $neutral-80 !important;
+  }
+  #wp-admin-bar-root-default li:hover a {
+    background-color: $neutral-20 !important;
+    color: $brand-blue !important;
+  }
 }

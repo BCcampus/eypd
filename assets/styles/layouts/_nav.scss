@@ -47,36 +47,6 @@ thead:first-child tr td,
   font-weight: normal;
 }
 
-// Grey Nav Bar
-// ---
-//
-// 1. Important to override dynamic styles
-
-.base-menu.sub-menu {
-  display: flex;
-  justify-content: flex-end;
-  border-top: 1px solid $neutral-40 !important; // 1;
-  border-bottom: 1px solid $neutral-40;
-
-  a {
-    color: $neutral-80;
-  }
-
-  a:focus,
-  a:active,
-  a:hover {
-    color: $brand-blue;
-  }
-
-  .menu-item.sfHover {
-    color: $brand-blue;
-  }
-}
-
-#menu-item-1839.sfHover {
-  color: $brand-blue;
-}
-
 // Post an Event link
 // ---
 #menu-item-1843 {
@@ -90,7 +60,15 @@ thead:first-child tr td,
   }
 }
 
+// Header Menu
+// ---
+//
+
 #menu-event-mgmt {
   display: flex;
   align-items: center;
+
+  & a:hover span {
+    color: darken($brand-blue, 10%);
+  }
 }

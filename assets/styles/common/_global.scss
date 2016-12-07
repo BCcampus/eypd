@@ -8,15 +8,18 @@
 |
 */
 
+body, body.theme-option{
+  background: none no-repeat;
+}
+
+body {
+  border: none;
+}
 
 h1, h2, h3, h4, h5, h6, p, label {
   font-family: $font-family;
   color: $neutral-80;
   font-weight: 500;
-}
-
-body, body.theme-option{
-  background: none no-repeat;
 }
 
 h1 {
@@ -60,7 +63,9 @@ p, label, li {
 // ---
 
 // All Text and Select inputs
-input[type="text"] {
+input[type="text"],
+input[type="password"],
+input[type="email"] {
   padding: $unit*2.5 $unit*3;
   box-shadow: none;
   border: 1px solid $neutral-50;
