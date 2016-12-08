@@ -9,10 +9,17 @@
 */
 
 // inner header nav
-.main-menu ul a{
+.main-menu ul a {
   color: $color-blue-boston;
-  &:hover{
+  &:hover {
     background: none;
+  }
+}
+
+#wpadminbar.nojq .quicklinks .ab-top-menu>li>.ab-item,
+#wpadminbar:not(.mobile) .ab-top-menu>li>.ab-item {
+  &:focus {
+    background: $color-neutral-20;
   }
 }
 
@@ -37,41 +44,41 @@ thead:first-child tr td,
 .mobile-menu-container,
 .info-box h3,
 #bbpress-forums li.bbp-header {
-  background: $neutral-20;
+  background: $color-neutral-20;
   border: none;
   box-shadow: none;
 }
 
-.base-menu ul a, div.item-list-tabs ul li a, div.item-list-tabs ul li span, #footer-menu ul li a{
+.base-menu ul a, div.item-list-tabs ul li a, div.item-list-tabs ul li span, #footer-menu ul li a {
   text-shadow: none;
   font-weight: normal;
 }
 
-// Post an Event link
-// ---
-#menu-event-mgmt {
-  li:first-child {
+/****************************************
+	Main Menu buttons - Inside Header
+*****************************************/
+.main-menu ul {
+  li {
     @extend .c-button;
     @extend .c--ghost;
-
     margin-right: $unit*3;
-
-    a {
-      margin: 0;
-    }
   }
+  a {
+    margin: 0;
+  }
+
 }
 
 // Header Menu
 // ---
 //
 
-#menu-event-mgmt {
+.main-menu {
   display: flex;
   align-items: center;
 
   & a:hover span {
-    color: darken($brand-blue, 10%);
+    color: darken($color-brand-blue, 10%);
   }
 }
 

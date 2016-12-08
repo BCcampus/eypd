@@ -3,20 +3,20 @@
 
 
 #sidebar {
-  background: $neutral-10;
-  border-right: 1px solid $neutral-40;
-  border-bottom: 1px solid $neutral-40;
+  background: $color-neutral-10;
+  border-right: 1px solid $color-neutral-40;
+  border-bottom: 1px solid $color-neutral-40;
   box-shadow: none;
 }
 
 #item-header-avatar img.avatar {
   box-shadow: none;
   border-radius: $border-radius;
-  border: 1px solid $neutral-20;
+  border: 1px solid $color-neutral-20;
 }
 
 #profile-nav-menu a {
-  color: $brand-blue;
+  color: $color-brand-blue;
   text-align: left;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .sidebar-activity-tabs {
-  border-top: 1px solid $neutral-20;
+  border-top: 1px solid $color-neutral-20;
 
   ul:first-child {
     margin-top: 0 !important;
@@ -39,7 +39,7 @@
 
     &.current a,
     &.selected a {
-      color: $neutral-80 !important;
+      color: $color-neutral-80 !important;
     }
 
     &:hover,
@@ -47,13 +47,13 @@
     &:focus,
     &.current,
     &.selected {
-      background-color: $neutral-20 !important;
+      background-color: $color-neutral-20 !important;
     }
 
     &.current,
     &.selected {
-      border-top: 1px solid $neutral-40 !important;
-      border-bottom: 1px solid $neutral-40 !important;
+      border-top: 1px solid $color-neutral-40 !important;
+      border-bottom: 1px solid $color-neutral-40 !important;
     }
 
     .profile-subnav {
@@ -61,13 +61,13 @@
 
       li {
         &:hover {
-          background-color: $neutral-40 !important;
+          background-color: $color-neutral-40 !important;
           border: none !important;
         }
 
         &.current,
         &.selected {
-          background-color: $neutral-40 !important;
+          background-color: $color-neutral-40 !important;
           border: none !important;
         }
       }
@@ -77,11 +77,11 @@
   a {
     font-family: $font-family;
     font-weight: 400 !important;
-    color: $neutral-80 !important;
+    color: $color-neutral-80 !important;
     text-shadow: none;
 
     &:before {
-      color: $neutral-80;
+      color: $color-neutral-80;
     }
   }
 }

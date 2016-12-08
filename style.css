@@ -11,7 +11,37 @@
 */
 /*
 |--------------------------------------------------------------------------
+| Variables
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+/****************************************
+	Spacing Units
+*****************************************/
+/****************************************
+	Colors
+*****************************************/
+/****************************************
+	Fonts
+*****************************************/
+/****************************************
+	Borders
+*****************************************/
+/*
+|--------------------------------------------------------------------------
 | Mixins
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+/*
+|--------------------------------------------------------------------------
+| Fonts
 |--------------------------------------------------------------------------
 |
 |
@@ -166,7 +196,7 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
   position: absolute;
   z-index: 3;
   display: none;
-  background-color: #ffffff; }
+  background-color: #fff; }
 
 /* group marker on homepage */
 .et_marker_group_info {
@@ -193,7 +223,7 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
 
 .location-title h2 {
   color: #333333;
-  text-shadow: 1px 1px 0 #ffffff;
+  text-shadow: 1px 1px 0 #fff;
   border-bottom: 1px solid #e6f4fb;
   padding: 19px 35px; }
 
@@ -439,7 +469,7 @@ div.thumbnail {
 |
 |
 */
-.c-button, .button-primary, .button, #menu-event-mgmt li:first-child {
+.c-button, .button-primary, .button, .main-menu ul li {
   min-width: 44px;
   min-height: 44px;
   margin: 0;
@@ -464,22 +494,22 @@ div.thumbnail {
   -webkit-appearance: none;
   -moz-appearance: none; }
 
-.c-button.c--primary, .button-primary, .button, #menu-event-mgmt li.c--primary:first-child, #menu-event-mgmt li.button-primary:first-child, #menu-event-mgmt li.button:first-child {
+input.c-button.c--primary, input.button-primary, input.button {
   background: #068CC4;
   color: #fff; }
-  .c-button.c--primary:active, .button-primary:active, .button:active, #menu-event-mgmt li.c--primary:active:first-child, #menu-event-mgmt li.button-primary:active:first-child, #menu-event-mgmt li.button:active:first-child, .c-button.c--primary:hover, .button-primary:hover, .button:hover, #menu-event-mgmt li.c--primary:hover:first-child, #menu-event-mgmt li.button-primary:hover:first-child, #menu-event-mgmt li.button:hover:first-child, .c-button.c--primary:focus, .button-primary:focus, .button:focus, #menu-event-mgmt li.c--primary:focus:first-child, #menu-event-mgmt li.button-primary:focus:first-child, #menu-event-mgmt li.button:focus:first-child {
+  input.c-button.c--primary:active, input.button-primary:active, input.button:active, input.c-button.c--primary:hover, input.button-primary:hover, input.button:hover, input.c-button.c--primary:focus, input.button-primary:focus, input.button:focus {
     background: #046993;
     outline: none;
     box-shadow: none;
     border: none; }
 
-.c-button.c--ghost, .c--ghost.button-primary, .c--ghost.button, #menu-event-mgmt li:first-child {
+.c-button.c--ghost, .c--ghost.button-primary, .c--ghost.button, .main-menu ul li {
   padding: 5px;
   border: 1px solid #068CC4;
   border-radius: 7.5px; }
-  .c-button.c--ghost:active, .c--ghost.button-primary:active, .c--ghost.button:active, #menu-event-mgmt li:active:first-child, .c-button.c--ghost:hover, .c--ghost.button-primary:hover, .c--ghost.button:hover, #menu-event-mgmt li:hover:first-child, .c-button.c--ghost:focus, .c--ghost.button-primary:focus, .c--ghost.button:focus, #menu-event-mgmt li:focus:first-child {
+  .c-button.c--ghost:active, .c--ghost.button-primary:active, .c--ghost.button:active, .main-menu ul li:active, .c-button.c--ghost:hover, .c--ghost.button-primary:hover, .c--ghost.button:hover, .main-menu ul li:hover, .c-button.c--ghost:focus, .c--ghost.button-primary:focus, .c--ghost.button:focus, .main-menu ul li:focus {
     border-color: #046993; }
-  .c-button.c--ghost a:active, .c--ghost.button-primary a:active, .c--ghost.button a:active, #menu-event-mgmt li:first-child a:active, .c-button.c--ghost a:hover, .c--ghost.button-primary a:hover, .c--ghost.button a:hover, #menu-event-mgmt li:first-child a:hover, .c-button.c--ghost a:focus, .c--ghost.button-primary a:focus, .c--ghost.button a:focus, #menu-event-mgmt li:first-child a:focus {
+  .c-button.c--ghost a:active, .c--ghost.button-primary a:active, .main-menu ul li.button-primary a:active, .c--ghost.button a:active, .main-menu ul li.button a:active, .main-menu ul li a:active, .c-button.c--ghost a:hover, .c--ghost.button-primary a:hover, .main-menu ul li.button-primary a:hover, .c--ghost.button a:hover, .main-menu ul li.button a:hover, .main-menu ul li a:hover, .c-button.c--ghost a:focus, .c--ghost.button-primary a:focus, .main-menu ul li.button-primary a:focus, .c--ghost.button a:focus, .main-menu ul li.button a:focus, .main-menu ul li a:focus {
     color: #046993 !important; }
 
 /*
@@ -748,27 +778,20 @@ img.wp-smiley, img.emoji {
   min-height: 70px;
   padding-top: 10px;
   padding-top: 10px;
-  background: #ffffff; }
+  background: #fff; }
 
 #wpadminbar {
   background-color: #E6E7E8; }
-  #wpadminbar #wp-admin-bar-wp-logo > .ab-item {
-    display: none; }
 
 #wp-admin-bar-root-default {
   display: flex;
   justify-content: flex-end; }
 
-#wp-admin-bar-wp-logo,
-#wp-admin-bar-site-name,
-#wp-admin-bar-search {
-  display: none; }
-
-#wp-toolbar {
+#wp-toolbar, .base-menu {
   padding: 0 45px; }
-  #wp-toolbar ul li a {
+  #wp-toolbar ul li a, .base-menu ul li a {
     color: #333334 !important; }
-  #wp-toolbar ul li:hover a {
+  #wp-toolbar ul li:hover a, .base-menu ul li:hover a {
     background-color: #E6E7E8 !important;
     color: #068CC4 !important; }
 
@@ -805,6 +828,10 @@ img.wp-smiley, img.emoji {
   .main-menu ul a:hover {
     background: none; }
 
+#wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus,
+#wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item:focus {
+  background: #E6E7E8; }
+
 .base-menu ul li.current-cat a,
 .base-menu ul li.current_page_item a,
 .base-menu ul li.current-menu-item a {
@@ -833,15 +860,18 @@ thead:first-child tr td,
   text-shadow: none;
   font-weight: normal; }
 
-#menu-event-mgmt li:first-child {
+/****************************************
+	Main Menu buttons - Inside Header
+*****************************************/
+.main-menu ul li {
   margin-right: 15px; }
-  #menu-event-mgmt li:first-child a {
-    margin: 0; }
+.main-menu ul a {
+  margin: 0; }
 
-#menu-event-mgmt {
+.main-menu {
   display: flex;
   align-items: center; }
-  #menu-event-mgmt a:hover span {
+  .main-menu a:hover span {
     color: #046993; }
 
 .mobile-menu-container {
@@ -957,7 +987,7 @@ thead:first-child tr td,
 
 #powered-by {
   border-top: 1px solid #777777;
-  background-color: #ffffff;
+  background-color: #fff;
   color: inherit;
   font-weight: normal;
   padding-top: 0; }
