@@ -51,7 +51,7 @@ body {
 h1, h2, h3, h4, h5, h6, p, label {
   font-family: "Roboto";
   color: #333334;
-  font-weight: 500; }
+  font-weight: 400; }
 
 h1 {
   font-size: 32px;
@@ -415,6 +415,8 @@ div.thumbnail {
   margin-top: 30px; }
   .c-map h2 {
     margin-bottom: 30px; }
+  .c-map h2, .c-map p {
+    text-align: center; }
 
 /*
 |--------------------------------------------------------------------------
@@ -437,7 +439,7 @@ div.thumbnail {
 |
 |
 */
-.c-button, .button-primary, .button, #menu-item-1843 {
+.c-button, .button-primary, .button, #menu-event-mgmt li:first-child {
   min-width: 44px;
   min-height: 44px;
   margin: 0;
@@ -462,22 +464,22 @@ div.thumbnail {
   -webkit-appearance: none;
   -moz-appearance: none; }
 
-.c-button.c--primary, .button-primary, .button, .c--primary#menu-item-1843, #menu-item-1843.button-primary, #menu-item-1843.button {
+.c-button.c--primary, .button-primary, .button, #menu-event-mgmt li.c--primary:first-child, #menu-event-mgmt li.button-primary:first-child, #menu-event-mgmt li.button:first-child {
   background: #068CC4;
   color: #fff; }
-  .c-button.c--primary:active, .button-primary:active, .button:active, .c--primary#menu-item-1843:active, #menu-item-1843.button-primary:active, #menu-item-1843.button:active, .c-button.c--primary:hover, .button-primary:hover, .button:hover, .c--primary#menu-item-1843:hover, #menu-item-1843.button-primary:hover, #menu-item-1843.button:hover, .c-button.c--primary:focus, .button-primary:focus, .button:focus, .c--primary#menu-item-1843:focus, #menu-item-1843.button-primary:focus, #menu-item-1843.button:focus {
+  .c-button.c--primary:active, .button-primary:active, .button:active, #menu-event-mgmt li.c--primary:active:first-child, #menu-event-mgmt li.button-primary:active:first-child, #menu-event-mgmt li.button:active:first-child, .c-button.c--primary:hover, .button-primary:hover, .button:hover, #menu-event-mgmt li.c--primary:hover:first-child, #menu-event-mgmt li.button-primary:hover:first-child, #menu-event-mgmt li.button:hover:first-child, .c-button.c--primary:focus, .button-primary:focus, .button:focus, #menu-event-mgmt li.c--primary:focus:first-child, #menu-event-mgmt li.button-primary:focus:first-child, #menu-event-mgmt li.button:focus:first-child {
     background: #046993;
     outline: none;
     box-shadow: none;
     border: none; }
 
-.c-button.c--ghost, .c--ghost.button-primary, .c--ghost.button, #menu-item-1843 {
+.c-button.c--ghost, .c--ghost.button-primary, .c--ghost.button, #menu-event-mgmt li:first-child {
   padding: 5px;
   border: 1px solid #068CC4;
   border-radius: 7.5px; }
-  .c-button.c--ghost:active, .c--ghost.button-primary:active, .c--ghost.button:active, #menu-item-1843:active, .c-button.c--ghost:hover, .c--ghost.button-primary:hover, .c--ghost.button:hover, #menu-item-1843:hover, .c-button.c--ghost:focus, .c--ghost.button-primary:focus, .c--ghost.button:focus, #menu-item-1843:focus {
+  .c-button.c--ghost:active, .c--ghost.button-primary:active, .c--ghost.button:active, #menu-event-mgmt li:active:first-child, .c-button.c--ghost:hover, .c--ghost.button-primary:hover, .c--ghost.button:hover, #menu-event-mgmt li:hover:first-child, .c-button.c--ghost:focus, .c--ghost.button-primary:focus, .c--ghost.button:focus, #menu-event-mgmt li:focus:first-child {
     border-color: #046993; }
-  .c-button.c--ghost a:active, .c--ghost.button-primary a:active, .c--ghost.button a:active, #menu-item-1843 a:active, .c-button.c--ghost a:hover, .c--ghost.button-primary a:hover, .c--ghost.button a:hover, #menu-item-1843 a:hover, .c-button.c--ghost a:focus, .c--ghost.button-primary a:focus, .c--ghost.button a:focus, #menu-item-1843 a:focus {
+  .c-button.c--ghost a:active, .c--ghost.button-primary a:active, .c--ghost.button a:active, #menu-event-mgmt li:first-child a:active, .c-button.c--ghost a:hover, .c--ghost.button-primary a:hover, .c--ghost.button a:hover, #menu-event-mgmt li:first-child a:hover, .c-button.c--ghost a:focus, .c--ghost.button-primary a:focus, .c--ghost.button a:focus, #menu-event-mgmt li:first-child a:focus {
     color: #046993 !important; }
 
 /*
@@ -582,13 +584,14 @@ div.css-search,
 
 .c-search {
   margin-top: 50px !important;
-  margin-bottom: 100px !important;
   padding: 15px;
   max-width: 1024px;
   margin: 0 auto; }
   @media (min-width: 1045px) {
     .c-search {
       padding: 0; } }
+  .c-search h2, .c-search p {
+    text-align: center; }
   .c-search h2 {
     margin-bottom: 15px; }
   .c-search .em-search-wrapper {
@@ -624,24 +627,38 @@ div.css-search,
     text-transform: capitalize; }
   .c-search label + label {
     margin-left: 15px; }
-  .c-search .em-search-advanced {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    position: relative; }
-    @media (min-width: 789px) {
-      .c-search .em-search-advanced {
-        flex-direction: row;
-        height: 100px; } }
   .c-search .em-search-submit {
-    position: absolute;
-    bottom: -55px;
-    right: 0; }
-  .c-search .em-search-scope {
     width: 100%; }
+    @media (min-width: 667px) {
+      .c-search .em-search-submit {
+        width: auto;
+        margin-left: auto; } }
+  .c-search .em-search-scope {
+    width: 100%;
+    float: none; }
     @media (min-width: 789px) {
       .c-search .em-search-scope {
-        width: auto; } }
+        width: auto;
+        float: left;
+        margin-right: 20px; } }
+  .c-search .em-search-location-meta {
+    display: flex;
+    flex-direction: row; }
+    .c-search .em-search-location-meta .em-search-field {
+      flex: 1; }
+      @media (min-width: 789px) {
+        .c-search .em-search-location-meta .em-search-field {
+          flex: initial; } }
+      .c-search .em-search-location-meta .em-search-field + .em-search-field {
+        margin-left: 20px; }
+      .c-search .em-search-location-meta .em-search-field label {
+        display: flex;
+        flex-direction: column; }
+      .c-search .em-search-location-meta .em-search-field select {
+        width: 100%; }
+        @media (min-width: 789px) {
+          .c-search .em-search-location-meta .em-search-field select {
+            width: 250px; } }
   .c-search .em-events-search-dates {
     width: 100%; }
     @media (min-width: 789px) {
@@ -816,9 +833,9 @@ thead:first-child tr td,
   text-shadow: none;
   font-weight: normal; }
 
-#menu-item-1843 {
+#menu-event-mgmt li:first-child {
   margin-right: 15px; }
-  #menu-item-1843 a {
+  #menu-event-mgmt li:first-child a {
     margin: 0; }
 
 #menu-event-mgmt {
@@ -908,11 +925,15 @@ thead:first-child tr td,
 |
 */
 .footer-wrap {
-  background: #333334;
-  color: #fff;
+  background: #E2E2E1 !important;
+  color: #333334;
   border: none;
   box-shadow: none;
   padding-top: 2rem; }
+  .footer-wrap a {
+    color: #333334; }
+    .footer-wrap a:hover {
+      color: #068CC4; }
 
 #powered-by {
   border-top: 1px solid #777777;
@@ -961,8 +982,6 @@ thead:first-child tr td,
 
 .t-home h2 {
   color: #068CC4; }
-.t-home h2, .t-home p {
-  text-align: center; }
 
 a.em-button {
   padding: 10px 20px !important;

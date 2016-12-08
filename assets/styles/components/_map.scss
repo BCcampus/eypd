@@ -305,4 +305,8 @@ div.thumbnail {
   h2 {
     margin-bottom: $unit*6;
   }
+
+  h2, p {
+   text-align: center;
+  }
 }

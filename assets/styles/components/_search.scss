@@ -12,13 +12,16 @@ div.css-search,
 
 .c-search {
   margin-top: $unit*10 !important;
-  margin-bottom: $unit*20 !important;
   padding: $unit*3;
   max-width: 1024px;
   margin: 0 auto;
 
   @media (min-width: 1045px) {
     padding: 0;
+  }
+
+  h2, p {
+   text-align: center;
   }
 
   h2 {
@@ -82,30 +85,53 @@ div.css-search,
     margin-left: $unit*3;
   }
 
-  .em-search-advanced {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-
-    position: relative;
-
-    @media (min-width: 789px) {
-      flex-direction: row;
-      height: $unit*20;
-    }
-  }
-
   .em-search-submit {
-    position: absolute;
-    bottom: -$unit*11;
-    right: 0;
+    width: 100%;
+
+    @media (min-width: 667px) {
+      width: auto;
+      margin-left: auto;
+    }
   }
 
   .em-search-scope {
     width: 100%;
+    float: none;
 
     @media (min-width: 789px) {
      width: auto;
+     float: left;
+      margin-right: $unit*4;
+    }
+  }
+
+  .em-search-location-meta {
+    display: flex;
+    flex-direction: row;
+
+    .em-search-field {
+      flex: 1;
+
+      @media (min-width: 789px) {
+       flex: initial;
+      }
+
+      & + .em-search-field {
+        margin-left: $unit*4;
+      }
+
+      label {
+        display: flex;
+        flex-direction: column;
+      }
+
+      select {
+        width: 100%;
+
+        @media (min-width: 789px) {
+         width: 250px;
+        }
+      }
     }
   }
 
