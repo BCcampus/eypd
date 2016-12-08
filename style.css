@@ -72,6 +72,9 @@
 |
 |
 */
+@media screen and (max-width: 782px) {
+  html.no-js {
+    margin-top: 46px !important; } }
 body, body.theme-option {
   background: none no-repeat; }
 
@@ -141,6 +144,11 @@ select {
 
 .em-ticket-select {
   background-size: 13px; }
+
+#wpadminbar #wp-admin-bar-my-account .ab-item {
+  text-indent: initial !important;
+  width: auto !important;
+  position: static !important; }
 
 /*
 |--------------------------------------------------------------------------
@@ -469,7 +477,7 @@ div.thumbnail {
 |
 |
 */
-.c-button, .button-primary, .button, .main-menu ul li {
+.c-button, .button-primary, .button, #menu-event-mgmt li:first-child {
   min-width: 44px;
   min-height: 44px;
   margin: 0;
@@ -503,13 +511,13 @@ input.c-button.c--primary, input.button-primary, input.button {
     box-shadow: none;
     border: none; }
 
-.c-button.c--ghost, .c--ghost.button-primary, .c--ghost.button, .main-menu ul li {
+.c-button.c--ghost, .c--ghost.button-primary, .c--ghost.button, #menu-event-mgmt li:first-child {
   padding: 5px;
   border: 1px solid #068CC4;
   border-radius: 7.5px; }
-  .c-button.c--ghost:active, .c--ghost.button-primary:active, .c--ghost.button:active, .main-menu ul li:active, .c-button.c--ghost:hover, .c--ghost.button-primary:hover, .c--ghost.button:hover, .main-menu ul li:hover, .c-button.c--ghost:focus, .c--ghost.button-primary:focus, .c--ghost.button:focus, .main-menu ul li:focus {
+  .c-button.c--ghost:active, .c--ghost.button-primary:active, .c--ghost.button:active, #menu-event-mgmt li:active:first-child, .c-button.c--ghost:hover, .c--ghost.button-primary:hover, .c--ghost.button:hover, #menu-event-mgmt li:hover:first-child, .c-button.c--ghost:focus, .c--ghost.button-primary:focus, .c--ghost.button:focus, #menu-event-mgmt li:focus:first-child {
     border-color: #046993; }
-  .c-button.c--ghost a:active, .c--ghost.button-primary a:active, .main-menu ul li.button-primary a:active, .c--ghost.button a:active, .main-menu ul li.button a:active, .main-menu ul li a:active, .c-button.c--ghost a:hover, .c--ghost.button-primary a:hover, .main-menu ul li.button-primary a:hover, .c--ghost.button a:hover, .main-menu ul li.button a:hover, .main-menu ul li a:hover, .c-button.c--ghost a:focus, .c--ghost.button-primary a:focus, .main-menu ul li.button-primary a:focus, .c--ghost.button a:focus, .main-menu ul li.button a:focus, .main-menu ul li a:focus {
+  .c-button.c--ghost a:active, .c--ghost.button-primary a:active, .c--ghost.button a:active, #menu-event-mgmt li:first-child a:active, .c-button.c--ghost a:hover, .c--ghost.button-primary a:hover, .c--ghost.button a:hover, #menu-event-mgmt li:first-child a:hover, .c-button.c--ghost a:focus, .c--ghost.button-primary a:focus, .c--ghost.button a:focus, #menu-event-mgmt li:first-child a:focus {
     color: #046993 !important; }
 
 /*
@@ -771,48 +779,23 @@ img.wp-smiley, img.emoji {
 |
 */
 #header {
-  padding: 20px !important;
+  padding: 0 !important;
+  height: auto !important;
   border-bottom: 1px solid #E6E7E8; }
+  @media (min-width: 766px) {
+    #header {
+      padding: 20px !important; } }
+  #header h1 {
+    margin: 10px 10px 0; }
+    @media (min-width: 840px) {
+      #header h1 {
+        margin: 0; } }
 
 #header {
   min-height: 70px;
   padding-top: 10px;
   padding-top: 10px;
   background: #fff; }
-
-#wpadminbar {
-  background-color: #E6E7E8; }
-
-#wp-admin-bar-root-default {
-  display: flex;
-  justify-content: flex-end; }
-
-#wp-toolbar, .base-menu {
-  padding: 0 45px; }
-  #wp-toolbar ul li a, .base-menu ul li a {
-    color: #333334 !important; }
-  #wp-toolbar ul li:hover a, .base-menu ul li:hover a {
-    background-color: #E6E7E8 !important;
-    color: #068CC4 !important; }
-
-#wp-admin-bar-my-account * {
-  background-color: #E6E7E8 !important; }
-
-#wp-admin-bar-user-actions li a:hover span,
-#wp-admin-bar-user-actions li:hover a,
-#wp-admin-bar-user-actions li a:hover {
-  color: #046993 !important; }
-
-.mobile-menu-container a.button {
-  background-color: transparent;
-  color: #333334;
-  box-shadow: none; }
-
-#logo-menu-wrap div a {
-  width: 200px; }
-  @media (min-width: 667px) {
-    #logo-menu-wrap div a {
-      width: auto; } }
 
 /*
 |--------------------------------------------------------------------------
@@ -863,39 +846,57 @@ thead:first-child tr td,
 /****************************************
 	Main Menu buttons - Inside Header
 *****************************************/
-.main-menu ul li {
-  margin-right: 15px; }
-.main-menu ul a {
-  margin: 0; }
-
-.main-menu {
+#logo-menu-wrap {
   display: flex;
-  align-items: center; }
-  .main-menu a:hover span {
+  flex-direction: column;
+  align-items: flex-start; }
+  @media (min-width: 766px) {
+    #logo-menu-wrap {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between; } }
+  #logo-menu-wrap h1 {
+    position: static !important; }
+  #logo-menu-wrap a {
+    width: auto !important; }
+
+#main-menu-wrap {
+  margin-top: 25px !important; }
+  @media (min-width: 766px) {
+    #main-menu-wrap {
+      margin: 0 !important;
+      padding: 0; } }
+
+nav.main-menu {
+  padding: 0 !important; }
+  @media (min-width: 766px) {
+    nav.main-menu {
+      padding-left: 45px; } }
+
+#menu-event-mgmt {
+  display: flex !important;
+  align-items: center;
+  padding: 0 10px 10px; }
+  @media (min-width: 765px) {
+    #menu-event-mgmt {
+      padding: 0; } }
+  #menu-event-mgmt a:hover span {
     color: #046993; }
+  #menu-event-mgmt li:first-child {
+    margin-right: 15px; }
+  #menu-event-mgmt a {
+    font-size: 14px;
+    margin: 0;
+    color: #068CC4 !important; }
+    @media (min-width: 667px) {
+      #menu-event-mgmt a {
+        font-size: 16px; } }
+    @media (min-width: 840px) {
+      #menu-event-mgmt a {
+        font-size: 18px; } }
 
 .mobile-menu-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0; }
-  @media (min-width: 785px) {
-    .mobile-menu-container {
-      display: none; } }
-  .mobile-menu-container select {
-    margin: 0; }
-  .mobile-menu-container a.button {
-    min-height: initial;
-    position: initial;
-    padding: 0;
-    text-transform: capitalize;
-    text-shadow: none;
-    font-family: "Roboto";
-    font-weight: 400;
-    background: #E6E7E8;
-    border: none; }
-    .mobile-menu-container a.button[href="#sidebar"] {
-      display: none; }
+  display: none !important; }
 
 /*
 |--------------------------------------------------------------------------
@@ -1067,5 +1068,53 @@ a.em-button {
   .search-box label,
   .search-box input {
     margin-right: 10px; }
+
+#wpadminbar {
+  background-color: #E6E7E8;
+  display: block !important; }
+  @media screen and (max-width: 600px) {
+    #wpadminbar {
+      position: fixed; } }
+
+#wp-admin-bar-root-default {
+  display: flex;
+  justify-content: flex-end; }
+
+#wp-toolbar, .base-menu {
+  padding: 0 45px; }
+  #wp-toolbar ul li a, .base-menu ul li a {
+    color: #333334 !important; }
+  #wp-toolbar ul li:hover a, .base-menu ul li:hover a {
+    background-color: #E6E7E8 !important;
+    color: #068CC4 !important; }
+
+#wp-admin-bar-my-account * {
+  background-color: #E6E7E8 !important; }
+
+#wp-admin-bar-user-actions li a:hover span,
+#wp-admin-bar-user-actions li:hover a,
+#wp-admin-bar-user-actions li a:hover {
+  color: #046993 !important; }
+
+.mobile-menu-container a.button {
+  background-color: transparent;
+  color: #333334;
+  box-shadow: none; }
+
+#logo-menu-wrap div a {
+  width: 200px; }
+  @media (min-width: 667px) {
+    #logo-menu-wrap div a {
+      width: auto; } }
+
+#wpadminbar #wp-admin-bar-my-account > .ab-item {
+  text-indent: initial !important;
+  width: auto !important;
+  position: static !important; }
+
+#wp-toolbar > ul > li {
+  display: block !important; }
+  #wp-toolbar > ul > li a {
+    padding: 0 8px 0 7px !important; }
 
 /*# sourceMappingURL=style.css.map */

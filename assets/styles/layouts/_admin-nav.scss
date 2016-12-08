@@ -1,0 +1,65 @@
+// Admin Bar
+#wpadminbar {
+  background-color: $color-neutral-20;
+  display: block !important;
+
+  @media screen and (max-width: 600px){
+    position: fixed;
+  }
+}
+
+
+#wp-admin-bar-root-default {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#wp-toolbar, .base-menu {
+  padding: 0 45px;
+
+  ul li a {
+    color: $color-neutral-80 !important;
+  }
+  ul li:hover a {
+    background-color: $color-neutral-20 !important;
+    color: $color-brand-blue !important;
+  }
+}
+
+#wp-admin-bar-my-account * {
+  background-color: $color-neutral-20 !important;
+}
+
+#wp-admin-bar-user-actions li a:hover span,
+#wp-admin-bar-user-actions li:hover a,
+#wp-admin-bar-user-actions li a:hover  {
+  color: darken($color-brand-blue, 10%) !important;
+}
+
+.mobile-menu-container a.button {
+  background-color: transparent;
+  color: $color-neutral-80;
+  box-shadow: none;
+}
+
+#logo-menu-wrap div a {
+  width: 200px;
+
+  @media (min-width: 667px) {
+    width: auto;
+  }
+}
+
+#wpadminbar #wp-admin-bar-my-account>.ab-item {
+  text-indent: initial !important;
+  width: auto !important;
+  position: static !important;
+}
+
+#wp-toolbar>ul>li {
+  display: block !important;
+
+  a {
+    padding: 0 8px 0 7px !important;
+  }
+}
