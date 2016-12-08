@@ -49,14 +49,16 @@ thead:first-child tr td,
 
 // Post an Event link
 // ---
-#menu-item-1843 {
-  @extend .c-button;
-  @extend .c--ghost;
+#menu-event-mgmt {
+  li:first-child {
+    @extend .c-button;
+    @extend .c--ghost;
 
-  margin-right: $unit*3;
+    margin-right: $unit*3;
 
-  a {
-    margin: 0;
+    a {
+      margin: 0;
+    }
   }
 }
 
