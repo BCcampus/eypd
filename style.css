@@ -628,24 +628,36 @@ div.css-search,
     text-transform: capitalize; }
   .c-search label + label {
     margin-left: 15px; }
-  .c-search .em-search-advanced {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    position: relative; }
-    @media (min-width: 789px) {
-      .c-search .em-search-advanced {
-        flex-direction: row;
-        height: 100px; } }
   .c-search .em-search-submit {
     position: absolute;
     bottom: -55px;
     right: 0; }
   .c-search .em-search-scope {
-    width: 100%; }
+    width: 100%;
+    float: none; }
     @media (min-width: 789px) {
       .c-search .em-search-scope {
-        width: auto; } }
+        width: auto;
+        float: left;
+        margin-right: 20px; } }
+  .c-search .em-search-location-meta {
+    display: flex;
+    flex-direction: row; }
+    .c-search .em-search-location-meta .em-search-field {
+      flex: 1; }
+      @media (min-width: 789px) {
+        .c-search .em-search-location-meta .em-search-field {
+          flex: initial; } }
+      .c-search .em-search-location-meta .em-search-field + .em-search-field {
+        margin-left: 20px; }
+      .c-search .em-search-location-meta .em-search-field label {
+        display: flex;
+        flex-direction: column; }
+      .c-search .em-search-location-meta .em-search-field select {
+        width: 100%; }
+        @media (min-width: 789px) {
+          .c-search .em-search-location-meta .em-search-field select {
+            width: 250px; } }
   .c-search .em-events-search-dates {
     width: 100%; }
     @media (min-width: 789px) {
