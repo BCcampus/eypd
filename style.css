@@ -885,10 +885,15 @@ thead:first-child tr td,
   .mobile-menu-container select {
     margin: 0; }
   .mobile-menu-container a.button {
+    min-height: initial;
     position: initial;
     padding: 0;
     text-transform: capitalize;
-    min-height: initial; }
+    text-shadow: none;
+    font-family: "Roboto";
+    font-weight: 400;
+    background: #E6E7E8;
+    border: none; }
     .mobile-menu-container a.button[href="#sidebar"] {
       display: none; }
 

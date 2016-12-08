@@ -102,10 +102,18 @@ thead:first-child tr td,
   }
 
   a.button {
+    min-height: initial;
+
     position: initial;
     padding: 0;
+
     text-transform: capitalize;
-    min-height: initial;
+    text-shadow: none;
+    font-family: $font-family;
+    font-weight: 400;
+
+    background: $color-neutral-20;
+    border: none;
 
     &[href="#sidebar"] {
       display: none;
