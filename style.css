@@ -935,15 +935,35 @@ thead:first-child tr td,
 
 .sidebar-activity-tabs {
   border-top: 1px solid #E6E7E8; }
+  .sidebar-activity-tabs ul:first-child {
+    margin-top: 0 !important; }
   .sidebar-activity-tabs li {
     background-image: none !important;
     box-shadow: none !important;
-    background-color: transparent !important; }
+    background-color: transparent !important;
+    border: none !important; }
     .sidebar-activity-tabs li.current a, .sidebar-activity-tabs li.selected a {
       color: #333334 !important; }
+    .sidebar-activity-tabs li:hover, .sidebar-activity-tabs li:active, .sidebar-activity-tabs li:focus, .sidebar-activity-tabs li.current, .sidebar-activity-tabs li.selected {
+      background-color: #E6E7E8 !important; }
+    .sidebar-activity-tabs li.current, .sidebar-activity-tabs li.selected {
+      border-top: 1px solid #D1D2D4 !important;
+      border-bottom: 1px solid #D1D2D4 !important; }
+    .sidebar-activity-tabs li .profile-subnav {
+      border-top: none !important; }
+      .sidebar-activity-tabs li .profile-subnav li:hover {
+        background-color: #D1D2D4 !important;
+        border: none !important; }
+      .sidebar-activity-tabs li .profile-subnav li.current, .sidebar-activity-tabs li .profile-subnav li.selected {
+        background-color: #D1D2D4 !important;
+        border: none !important; }
   .sidebar-activity-tabs a {
     font-family: "Roboto";
+    font-weight: 400 !important;
+    color: #333334 !important;
     text-shadow: none; }
+    .sidebar-activity-tabs a:before {
+      color: #333334; }
 
 /*
 |--------------------------------------------------------------------------

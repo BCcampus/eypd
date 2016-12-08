@@ -26,19 +26,62 @@
 
 .sidebar-activity-tabs {
   border-top: 1px solid $color-neutral-20;
+
+  ul:first-child {
+    margin-top: 0 !important;
+  }
+
   li {
     background-image: none !important;
     box-shadow: none !important;
     background-color: transparent !important;
+    border: none !important;
 
     &.current a,
     &.selected a {
       color: $color-neutral-80 !important;
     }
+
+    &:hover,
+    &:active,
+    &:focus,
+    &.current,
+    &.selected {
+      background-color: $color-neutral-20 !important;
+    }
+
+    &.current,
+    &.selected {
+      border-top: 1px solid $color-neutral-40 !important;
+      border-bottom: 1px solid $color-neutral-40 !important;
+    }
+
+    .profile-subnav {
+      border-top: none !important;
+
+      li {
+        &:hover {
+          background-color: $color-neutral-40 !important;
+          border: none !important;
+        }
+
+        &.current,
+        &.selected {
+          background-color: $color-neutral-40 !important;
+          border: none !important;
+        }
+      }
+    }
   }
 
   a {
     font-family: $font-family;
+    font-weight: 400 !important;
+    color: $color-neutral-80 !important;
     text-shadow: none;
+
+    &:before {
+      color: $color-neutral-80;
+    }
   }
 }
