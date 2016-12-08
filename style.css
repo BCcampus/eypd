@@ -584,7 +584,6 @@ div.css-search,
 
 .c-search {
   margin-top: 50px !important;
-  margin-bottom: 100px !important;
   padding: 15px;
   max-width: 1024px;
   margin: 0 auto; }
@@ -629,9 +628,11 @@ div.css-search,
   .c-search label + label {
     margin-left: 15px; }
   .c-search .em-search-submit {
-    position: absolute;
-    bottom: -55px;
-    right: 0; }
+    width: 100%; }
+    @media (min-width: 667px) {
+      .c-search .em-search-submit {
+        width: auto;
+        margin-left: auto; } }
   .c-search .em-search-scope {
     width: 100%;
     float: none; }
