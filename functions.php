@@ -196,6 +196,24 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 add_filter( 'gettext', 'eypd_terminology_modify', 11, 3 );
 
 /**
+ * Howdy message needs a higher priority and different logic
+ * than @see eypd_terminology_modify()
+ *
+ * @param $translated_text
+ * @param $text
+ * @param $domain
+ *
+ * @return mixed
+ */
+function eypd_howdy_message( $translated_text, $text, $domain ) {
+	$new_message = str_replace( 'Howdy,', '', $text );
+
+	return $new_message;
+}
+
+add_filter( 'gettext', 'eypd_howdy_message', 10, 3 );
+
+/**
  *
  * @param int $post_id
  * @param array $data
@@ -256,15 +274,39 @@ function et_fetch( $post_id = -1, $ajax = true ) {
 add_action( 'wp_ajax_nopriv_cyop_lookup', 'et_fetch' );
 add_action( 'wp_ajax_cyop_lookup', 'et_fetch' );
 
-
-// remove links/menus from the admin bar
+/**
+ * remove links/menus from the admin bar,
+ * if you are not an admin
+ */
 function eypd_admin_bar_render() {
 	global $wp_admin_bar;
-	$wp_admin_bar->remove_menu('comments');
-	$wp_admin_bar->remove_menu('edit');
-	$wp_admin_bar->remove_menu('new-content');
-	$wp_admin_bar->remove_menu('updates');
-	$wp_admin_bar->remove_menu('my-blogs');
-	$wp_admin_bar->remove_menu('customize');
+
+	// check if the admin panel is attempting to be displayed
+	if ( ! is_admin() ) {
+		$wp_admin_bar->remove_node( 'wp-logo' );
+		$wp_admin_bar->remove_node( 'search' );
+		$wp_admin_bar->remove_node( 'comments' );
+		$wp_admin_bar->remove_node( 'edit' );
+		$wp_admin_bar->remove_node( 'new-content' );
+		$wp_admin_bar->remove_node( 'updates' );
+		$wp_admin_bar->remove_node( 'my-blogs' );
+		$wp_admin_bar->remove_node( 'customize' );
+		$wp_admin_bar->remove_node( 'site-name' );
+
+		// maintain a way for admins to access the dashboard
+		if ( current_user_can( 'activate_plugins' ) ) {
+			$url = get_admin_url();
+			$wp_admin_bar->add_node( array(
+				'id'    => 'eypd_dashboard',
+				'title' => 'Dashboard',
+				'href'  => $url,
+				'meta'  => array(
+					'class' => 'my-toolbar-page'
+				)
+			) );
+		}
+	}
+
 }
+
 add_action( 'wp_before_admin_bar_render', 'eypd_admin_bar_render' );

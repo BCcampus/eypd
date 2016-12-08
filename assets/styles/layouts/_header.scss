@@ -24,10 +24,6 @@
 // Admin Bar
 #wpadminbar {
   background-color: $neutral-20;
-
-  #wp-admin-bar-wp-logo>.ab-item{
-    display: none;
-  }
 }
 
 
@@ -36,13 +32,7 @@
   justify-content: flex-end;
 }
 
-#wp-admin-bar-wp-logo,
-#wp-admin-bar-site-name,
-#wp-admin-bar-search {
-  display: none;
-}
-
-#wp-toolbar {
+#wp-toolbar, .base-menu {
   padding: 0 45px;
 
   ul li a {

@@ -752,23 +752,16 @@ img.wp-smiley, img.emoji {
 
 #wpadminbar {
   background-color: #E6E7E8; }
-  #wpadminbar #wp-admin-bar-wp-logo > .ab-item {
-    display: none; }
 
 #wp-admin-bar-root-default {
   display: flex;
   justify-content: flex-end; }
 
-#wp-admin-bar-wp-logo,
-#wp-admin-bar-site-name,
-#wp-admin-bar-search {
-  display: none; }
-
-#wp-toolbar {
+#wp-toolbar, .base-menu {
   padding: 0 45px; }
-  #wp-toolbar ul li a {
+  #wp-toolbar ul li a, .base-menu ul li a {
     color: #333334 !important; }
-  #wp-toolbar ul li:hover a {
+  #wp-toolbar ul li:hover a, .base-menu ul li:hover a {
     background-color: #E6E7E8 !important;
     color: #068CC4 !important; }
 
