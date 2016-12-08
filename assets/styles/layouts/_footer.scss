@@ -8,11 +8,19 @@
 |
 */
 .footer-wrap {
-  background: $neutral-80;
-  color: $neutral-00;
+  background: $neutral-30 !important;
+  color: $neutral-80;
   border: none;
   box-shadow: none;
   padding-top: 2rem;
+
+  a {
+    color: $neutral-80;
+
+    &:hover {
+      color: $brand-blue;
+    }
+  }
 }
 
 #powered-by{

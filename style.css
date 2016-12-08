@@ -924,11 +924,15 @@ thead:first-child tr td,
 |
 */
 .footer-wrap {
-  background: #333334;
-  color: #fff;
+  background: #E2E2E1 !important;
+  color: #333334;
   border: none;
   box-shadow: none;
   padding-top: 2rem; }
+  .footer-wrap a {
+    color: #333334; }
+    .footer-wrap a:hover {
+      color: #068CC4; }
 
 #powered-by {
   border-top: 1px solid #777777;
