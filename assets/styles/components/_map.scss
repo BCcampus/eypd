@@ -24,7 +24,7 @@
   position: absolute;
   z-index: 3;
   display: none;
-  background-color: $color-white;
+  background-color: $color-neutral-00;
 }
 
 /* group marker on homepage */
@@ -54,7 +54,7 @@
 
 .location-title h2 {
   color: $color-black-mineshaft;
-  text-shadow: 1px 1px 0 $color-white;
+  text-shadow: 1px 1px 0 $color-neutral-00;
   border-bottom: 1px solid $color-white-ice;
   padding: 19px 35px;
 }
@@ -298,7 +298,7 @@ div.thumbnail {
 
 
 .c-map {
-  background-color: $neutral-10;
+  background-color: $color-neutral-10;
   padding: 30px 0;
   margin-top: 30px;
 

@@ -1,8 +1,16 @@
-// Roboto
+/*
+|--------------------------------------------------------------------------
+| Fonts
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
 
+// Roboto
 @include font-face( 'Roboto', url('assets/fonts/Roboto-Regular.ttf'), 'truetype', 400, normal);
 @include font-face( 'Roboto', url('assets/fonts/Roboto-Bold.ttf'), 'truetype', 800, normal);
 
 // Roboto Slab
-
 @include font-face( 'RobotoSlab', url('assets/fonts/RobotoSlab-Regular.ttf'), 'truetype', 400, normal);

@@ -41,15 +41,15 @@
   -moz-appearance:    none;
 }
 
-.c-button.c--primary {
-  background: $brand-blue;
+input.c-button.c--primary {
+  background: $color-brand-blue;
 
-  color: $neutral-00;
+  color: $color-neutral-00;
 
   &:active,
   &:hover,
   &:focus {
-      background: darken($brand-blue, 10%);
+      background: darken($color-brand-blue, 10%);
       outline: none;
       box-shadow: none;
       border: none;
@@ -65,14 +65,14 @@
   &:active,
   &:hover,
   &:focus {
-      border-color: darken($brand-blue, 10%);
+      border-color: darken($color-brand-blue, 10%);
   }
 
   a {
     &:active,
     &:hover,
     &:focus {
-      color: darken($brand-blue, 10%) !important;
+      color: darken($color-brand-blue, 10%) !important;
     }
   }
 }

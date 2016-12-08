@@ -3,20 +3,20 @@
 
 
 #sidebar {
-  background: $neutral-10;
-  border-right: 1px solid $neutral-40;
-  border-bottom: 1px solid $neutral-40;
+  background: $color-neutral-10;
+  border-right: 1px solid $color-neutral-40;
+  border-bottom: 1px solid $color-neutral-40;
   box-shadow: none;
 }
 
 #item-header-avatar img.avatar {
   box-shadow: none;
   border-radius: $border-radius;
-  border: 1px solid $neutral-20;
+  border: 1px solid $color-neutral-20;
 }
 
 #profile-nav-menu a {
-  color: $brand-blue;
+  color: $color-brand-blue;
   text-align: left;
 }
 
@@ -25,7 +25,7 @@
 }
 
 .sidebar-activity-tabs {
-  border-top: 1px solid $neutral-20;
+  border-top: 1px solid $color-neutral-20;
   li {
     background-image: none !important;
     box-shadow: none !important;
@@ -33,7 +33,7 @@
 
     &.current a,
     &.selected a {
-      color: $neutral-80 !important;
+      color: $color-neutral-80 !important;
     }
   }
 
