@@ -170,7 +170,8 @@ body.home-page .top-wrap.row {
 
 #wrapper {
   padding-top: 0px;
-  padding-bottom: 0px; }
+  padding-bottom: 0px;
+  margin: 0 !important; }
 
 h2.page-title, h2.post-title, h1.page-title, h1.post-title {
   color: #333333; }
@@ -896,6 +897,9 @@ nav.main-menu {
     @media (min-width: 840px) {
       #menu-event-mgmt a {
         font-size: 18px; } }
+
+#infinity-base .icext-feature {
+  position: static !important; }
 
 .mobile-menu-container {
   display: none !important; }
