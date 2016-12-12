@@ -75,7 +75,9 @@ function eypd_content( $page_content ) {
 						if ( get_option( 'dbem_events_page_search_form' ) ) {
 							//load the search form and pass on custom arguments (from settings page)
 							$search_args = em_get_search_form_defaults();
+							echo "<div class='c-search'>";
 							em_locate_template( 'templates/events-search.php', true, array( 'args' => $search_args ) );
+							echo "</div>";
 						}
 						if ( ! empty( $args['ajax'] ) ) {
 							echo "</div>";
