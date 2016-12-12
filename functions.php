@@ -34,11 +34,19 @@ define( 'CLOSENESS', 5 );
 | Maps
 |--------------------------------------------------------------------------
 |
-| Hijacks em-actions.php from events-manager plugin
+| Hijacks files from events-manager plugin
 |
 |
 */
+if ( function_exists( 'em_content' ) ) {
+	remove_filter( 'the_content', 'em_content' );
+}
+
+if ( function_exists( 'em_content' ) ) {
+	remove_filter( 'init', 'em_init_actions' );
+}
 include( get_stylesheet_directory() . '/eypd-actions.php' );
+include( get_stylesheet_directory() . '/eypd-events.php' );
 
 /*
 |--------------------------------------------------------------------------
@@ -64,10 +72,6 @@ function eypd_load_scripts() {
 
 	// toss Events Manager scripts and their dependencies
 	wp_dequeue_script( 'events-manager' );
-
-
-	// replace script from theme
-	// wp_enqueue_script('events-manager', plugins_url('assets/js/events-manager.js',__FILE__), array(), EM_VERSION);
 
 	wp_enqueue_script( 'jquery-ui-draggable' );
 	wp_enqueue_script( 'markerclusterer', $template_dir . '/assets/js/markerclusterer.js' );
