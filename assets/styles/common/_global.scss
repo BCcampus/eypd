@@ -8,7 +8,7 @@
 |
 */
 
-body, body.theme-option{
+body, body.theme-option {
   background: none no-repeat;
 }
 
@@ -16,7 +16,7 @@ body {
   border: none;
 }
 
-h1, h2, h3, h4, h5, h6, p, label {
+h1, h2, h3, h4, h5, h6, p, label, span.label {
   font-family: $font-family;
   color: $color-neutral-80;
   font-weight: 400;
@@ -50,13 +50,9 @@ h5 {
   font-weight: bold;
 }
 
-p, label, li {
+p, label, li, span.label {
   font-size: $font-size;
   line-height: 24px;
-}
-
-.row {
-  width: 100% !important;
 }
 
 // Inputs
@@ -94,6 +90,4 @@ select {
   background-position-y: 50%;
 }
 
-.em-ticket-select {
-  background-size: 13px;
-}
+

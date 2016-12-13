@@ -78,7 +78,7 @@ body, body.theme-option {
 body {
   border: none; }
 
-h1, h2, h3, h4, h5, h6, p, label {
+h1, h2, h3, h4, h5, h6, p, label, span.label {
   font-family: "Roboto";
   color: #333334;
   font-weight: 400; }
@@ -106,12 +106,9 @@ h5 {
   line-height: 20px;
   font-weight: bold; }
 
-p, label, li {
+p, label, li, span.label {
   font-size: 16px;
   line-height: 24px; }
-
-.row {
-  width: 100% !important; }
 
 input[type="text"],
 input[type="password"],
@@ -138,9 +135,6 @@ select {
   background-size: 20px 20px;
   background-position-x: 95%;
   background-position-y: 50%; }
-
-.em-ticket-select {
-  background-size: 13px; }
 
 /*
 |--------------------------------------------------------------------------
@@ -176,6 +170,12 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
 
 .blue {
   color: #068CC4; }
+
+.em-ticket-select {
+  background-size: 13px; }
+
+.row {
+  width: 100% !important; }
 
 /*
 |--------------------------------------------------------------------------
