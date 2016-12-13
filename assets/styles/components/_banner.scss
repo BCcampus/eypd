@@ -11,11 +11,11 @@
   background-image: url('assets/images/banner-bg.png');
   background-size: contain;
 
-  @media (min-width: 480px) {
+  @media (min-width: $xsmall) {
     height: 200px;
   }
 
-  @media (min-width: 667px) {
+  @media (min-width: $small) {
     height: 250px;
   }
 }
@@ -28,7 +28,7 @@
   position: relative;
   z-index: 10;
 
-  @media (min-width: 667px) {
+  @media (min-width: $small) {
       width: 600px;
   }
 }

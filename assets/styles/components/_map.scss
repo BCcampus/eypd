@@ -287,7 +287,7 @@ div.thumbnail {
 /*#et-list-view .thumb { background: rgba( 60,60,60,0.2 ); }*/
 /*.et-map-post .disable, #et-list-view .disable { display: none; }*/
 .et-map-post {
-  width: 480px;
+  width: $xsmall;
   -webkit-box-shadow: 0 3px 20px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 3px 20px rgba(0, 0, 0, 0.1);
   box-shadow: 0 3px 20px rgba(0, 0, 0, 0.1);

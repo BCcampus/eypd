@@ -54,3 +54,12 @@ $border: 1px solid $color-brand-blue;
 
 $tap-size: 44px;
 $slow-animation: 0.25s ease-in-out all;
+
+
+/****************************************
+	Media Queries
+*****************************************/
+$xsmall: 480px; // e.g.iphone 4
+$small: 667px; // e.g.iphone 6
+$medium: 768px; // e.g. ipad
+$large: 1024px; // e.g. landscape ipad, laptop

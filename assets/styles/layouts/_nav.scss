@@ -57,58 +57,86 @@ thead:first-child tr td,
 /****************************************
 	Main Menu buttons - Inside Header
 *****************************************/
-.main-menu ul {
-  li {
+
+#logo-menu-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @media (min-width: $medium) {
+    flex-direction: row;
+    align-items: center;
+      justify-content: space-between;
+  }
+
+  h1 {
+    position: static !important;
+  }
+
+  a {
+    width: auto !important;
+  }
+}
+
+#main-menu-wrap {
+  margin-top: $unit*5 !important;
+
+  @media (min-width: $medium) {
+    margin: 0 !important;
+    padding: 0;
+  }
+}
+
+nav.main-menu {
+  padding: 0 !important;
+
+  @media (min-width: $medium) {
+    padding-left: $unit*9;
+  }
+}
+
+#main-menu-wrap .main-menu ul {
+  display: flex !important;
+  align-items: center;
+  padding: 0 10px 10px;
+
+  @media (min-width: $medium) {
+    padding: 0;
+  }
+
+  & a:hover span {
+    color: darken($color-brand-blue, 10%);
+  }
+
+  li:first-child {
     @extend .c-button;
     @extend .c--ghost;
     margin-right: $unit*3;
   }
   a {
+    font-size: 14px;
     margin: 0;
-  }
+    color: $color-brand-blue !important;
 
-}
+    @media (min-width: $small) {
+      font-size: 16px;
+    }
 
-// Header Menu
-// ---
-//
-
-.main-menu {
-  display: flex;
-  align-items: center;
-
-  & a:hover span {
-    color: darken($color-brand-blue, 10%);
+    @media (min-width: 840px) {
+      font-size: 18px;
+    }
   }
 }
+
+#infinity-base .icext-feature {
+  position: static !important;
+}
+
 
 // Mobile Nav
 // ---
 //
 
 .mobile-menu-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  margin: 0;
-
-  @media (min-width: 785px) {
-    display: none;
-  }
-
-  select {
-    margin: 0;
-  }
-
-  a.button {
-    position: initial;
-    padding: 0;
-    text-transform: capitalize;
-    min-height: initial;
-
-    &[href="#sidebar"] {
-      display: none;
-    }
-  }
+  display: none !important;
 }

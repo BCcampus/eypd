@@ -31,19 +31,18 @@ infinity_get_header();
 <div class="c-map row">
     <h2 class="blue">Find training events near you</h2>
     <div class="four columns">
-
-	<?php
-	//$events_list = '[events_list scope="future" limit="6"]<p>#_EVENTLINK will take place at #_LOCATIONLINK on #_EVENTDATES</p>[/events_list]';
-	$events_list = '[events_list scope="future" limit="6"]';
-	echo do_shortcode( $events_list );
-	?>
+      <h3>Upcoming Events</h3>
+      	<?php
+      	// $events_list = '[events_list scope="future" limit="6"]<p>#_EVENTLINK will take place at #_LOCATIONLINK on #_EVENTDATES</p>[/events_list]';
+      	$events_list = '[events_list scope="future" limit="6"]';
+      	echo do_shortcode( $events_list );
+      	?>
     </div>
     <div class="twelve columns">
-	<?php
-	infinity_load_template( 'templates/google-map.php' );
-	?>
+    	<?php
+    	infinity_load_template( 'templates/google-map.php' );
+    	?>
     </div>
-</div>
 </div>
 
 <div id="content" class="row">
