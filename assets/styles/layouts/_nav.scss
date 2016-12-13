@@ -63,7 +63,7 @@ thead:first-child tr td,
   flex-direction: column;
   align-items: flex-start;
 
-  @media (min-width: 766px) {
+  @media (min-width: $medium) {
     flex-direction: row;
     align-items: center;
       justify-content: space-between;
@@ -81,7 +81,7 @@ thead:first-child tr td,
 #main-menu-wrap {
   margin-top: $unit*5 !important;
 
-  @media (min-width: 766px) {
+  @media (min-width: $medium) {
     margin: 0 !important;
     padding: 0;
   }
@@ -90,7 +90,7 @@ thead:first-child tr td,
 nav.main-menu {
   padding: 0 !important;
 
-  @media (min-width: 766px) {
+  @media (min-width: $medium) {
     padding-left: $unit*9;
   }
 }
@@ -100,7 +100,7 @@ nav.main-menu {
   align-items: center;
   padding: 0 10px 10px;
 
-  @media (min-width: 765px) {
+  @media (min-width: $medium) {
     padding: 0;
   }
 
@@ -118,7 +118,7 @@ nav.main-menu {
     margin: 0;
     color: $color-brand-blue !important;
 
-    @media (min-width: 667px) {
+    @media (min-width: $small) {
       font-size: 16px;
     }
 

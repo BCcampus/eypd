@@ -30,6 +30,9 @@
 /****************************************
 	Borders
 *****************************************/
+/****************************************
+	Media Queries
+*****************************************/
 /*
 |--------------------------------------------------------------------------
 | Mixins
@@ -72,8 +75,9 @@
 |
 |
 */
-@media screen and (max-width: 782px) {
-  html.no-js {
+@media screen and (max-width: 768px) {
+  html.no-js,
+  html.js {
     margin-top: 46px !important; } }
 body, body.theme-option {
   background: none no-repeat; }
@@ -623,7 +627,7 @@ div.css-search,
   padding: 15px;
   max-width: 1024px;
   margin: 0 auto; }
-  @media (min-width: 1045px) {
+  @media (min-width: 1024px) {
     .c-search {
       padding: 0; } }
   .c-search h2, .c-search p {
@@ -655,7 +659,7 @@ div.css-search,
   .c-search .em-search-category {
     display: block;
     padding-left: 10px; }
-    @media (min-width: 853px) {
+    @media (min-width: 768px) {
       .c-search .em-search-category {
         padding-left: 30px; } }
   .c-search span,
@@ -672,7 +676,7 @@ div.css-search,
   .c-search .em-search-scope {
     width: 100%;
     float: none; }
-    @media (min-width: 789px) {
+    @media (min-width: 768px) {
       .c-search .em-search-scope {
         width: auto;
         float: left;
@@ -682,7 +686,7 @@ div.css-search,
     flex-direction: row; }
     .c-search .em-search-location-meta .em-search-field {
       flex: 1; }
-      @media (min-width: 789px) {
+      @media (min-width: 768px) {
         .c-search .em-search-location-meta .em-search-field {
           flex: initial; } }
       .c-search .em-search-location-meta .em-search-field + .em-search-field {
@@ -692,12 +696,12 @@ div.css-search,
         flex-direction: column; }
       .c-search .em-search-location-meta .em-search-field select {
         width: 100%; }
-        @media (min-width: 789px) {
+        @media (min-width: 768px) {
           .c-search .em-search-location-meta .em-search-field select {
             width: 250px; } }
   .c-search .em-events-search-dates {
     width: 100%; }
-    @media (min-width: 789px) {
+    @media (min-width: 768px) {
       .c-search .em-events-search-dates {
         width: auto; } }
     .c-search .em-events-search-dates label {
@@ -705,18 +709,18 @@ div.css-search,
       flex-direction: column;
       justify-content: flex-end;
       width: 100%; }
-      @media (min-width: 789px) {
+      @media (min-width: 768px) {
         .c-search .em-events-search-dates label {
           width: auto; } }
     .c-search .em-events-search-dates input {
       width: 100%; }
-      @media (min-width: 789px) {
+      @media (min-width: 768px) {
         .c-search .em-events-search-dates input {
           width: auto; } }
   .c-search .em-search-category {
     width: 100%;
     padding-left: 0; }
-    @media (min-width: 789px) {
+    @media (min-width: 768px) {
       .c-search .em-search-category {
         width: auto;
         margin-left: 40px; } }
@@ -780,12 +784,12 @@ img.wp-smiley, img.emoji {
   padding: 0 !important;
   height: auto !important;
   border-bottom: 1px solid #E6E7E8; }
-  @media (min-width: 766px) {
+  @media (min-width: 768px) {
     #header {
       padding: 20px !important; } }
   #header h1 {
     margin: 10px 10px 0; }
-    @media (min-width: 840px) {
+    @media (min-width: 768px) {
       #header h1 {
         margin: 0; } }
 
@@ -848,7 +852,7 @@ thead:first-child tr td,
   display: flex;
   flex-direction: column;
   align-items: flex-start; }
-  @media (min-width: 766px) {
+  @media (min-width: 768px) {
     #logo-menu-wrap {
       flex-direction: row;
       align-items: center;
@@ -860,14 +864,14 @@ thead:first-child tr td,
 
 #main-menu-wrap {
   margin-top: 25px !important; }
-  @media (min-width: 766px) {
+  @media (min-width: 768px) {
     #main-menu-wrap {
       margin: 0 !important;
       padding: 0; } }
 
 nav.main-menu {
   padding: 0 !important; }
-  @media (min-width: 766px) {
+  @media (min-width: 768px) {
     nav.main-menu {
       padding-left: 45px; } }
 
@@ -875,7 +879,7 @@ nav.main-menu {
   display: flex !important;
   align-items: center;
   padding: 0 10px 10px; }
-  @media (min-width: 765px) {
+  @media (min-width: 768px) {
     #main-menu-wrap .main-menu ul {
       padding: 0; } }
   #main-menu-wrap .main-menu ul a:hover span {
@@ -1070,7 +1074,7 @@ a.em-button {
 #wpadminbar {
   background-color: #E6E7E8;
   display: block !important; }
-  @media screen and (max-width: 600px) {
+  @media screen and (max-width: 667px) {
     #wpadminbar {
       position: fixed; } }
 

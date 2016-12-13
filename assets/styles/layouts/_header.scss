@@ -14,14 +14,14 @@
 
   border-bottom: 1px solid $color-neutral-20;
 
-  @media (min-width: 766px) {
+  @media (min-width: $medium) {
     padding: 20px !important;
   }
 
   h1 {
     margin: 10px 10px 0;
 
-    @media (min-width: 840px) {
+    @media (min-width: $medium) {
       margin: 0;
     }
   }

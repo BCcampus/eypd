@@ -11,8 +11,9 @@
 // higher specificity to override theme styles 💩
 
 
-@media screen and (max-width: 782px) {
-  html.no-js { // 1
+@media screen and (max-width: $medium) {
+  html.no-js,
+  html.js { // 1
     margin-top: 46px !important;
   }
 }

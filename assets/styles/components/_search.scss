@@ -16,7 +16,7 @@ div.css-search,
   max-width: 1024px;
   margin: 0 auto;
 
-  @media (min-width: 1045px) {
+  @media (min-width: $large) {
     padding: 0;
   }
 
@@ -40,7 +40,7 @@ div.css-search,
   .em-search-main {
     flex-direction: column;
 
-    @media (min-width: 667px) {
+    @media (min-width: $small) {
       flex-direction: row;
     }
   }
@@ -55,13 +55,13 @@ div.css-search,
   }
 
   .em-search-text {
-    @media (min-width: 667px) {
+    @media (min-width: $small) {
       padding-right: $unit*5;
     }
   }
 
   .em-search-geo {
-    @media (min-width: 667px) {
+    @media (min-width: $small) {
       padding-left: $unit*5;
     }
   }
@@ -71,7 +71,7 @@ div.css-search,
     padding-left: $unit*2;
 
 
-    @media (min-width: 853px) {
+    @media (min-width: $medium) {
       padding-left: $unit*6;
     }
   }
@@ -88,7 +88,7 @@ div.css-search,
   .em-search-submit {
     width: 100%;
 
-    @media (min-width: 667px) {
+    @media (min-width: $small) {
       width: auto;
       margin-left: auto;
     }
@@ -98,7 +98,7 @@ div.css-search,
     width: 100%;
     float: none;
 
-    @media (min-width: 789px) {
+    @media (min-width: $medium) {
      width: auto;
      float: left;
       margin-right: $unit*4;
@@ -112,7 +112,7 @@ div.css-search,
     .em-search-field {
       flex: 1;
 
-      @media (min-width: 789px) {
+      @media (min-width: $medium) {
        flex: initial;
       }
 
@@ -128,7 +128,7 @@ div.css-search,
       select {
         width: 100%;
 
-        @media (min-width: 789px) {
+        @media (min-width: $medium) {
          width: 250px;
         }
       }
@@ -138,7 +138,7 @@ div.css-search,
   .em-events-search-dates {
     width: 100%;
 
-    @media (min-width: 789px) {
+    @media (min-width: $medium) {
      width: auto;
     }
 
@@ -148,7 +148,7 @@ div.css-search,
      justify-content: flex-end;
      width: 100%;
 
-     @media (min-width: 789px) {
+     @media (min-width: $medium) {
        width: auto;
      }
     }
@@ -156,7 +156,7 @@ div.css-search,
     input {
      width: 100%;
 
-     @media (min-width: 789px) {
+     @media (min-width: $medium) {
        width: auto;
      }
     }
@@ -166,7 +166,7 @@ div.css-search,
     width: 100%;
     padding-left: 0;
 
-    @media (min-width: 789px) {
+    @media (min-width: $medium) {
       width: auto;
       margin-left: $unit*8;
     }
@@ -179,7 +179,7 @@ div.css-search,
     select {
       width: 100%;
 
-      @media (min-width: 667px) {
+      @media (min-width: $small) {
         min-width: 300px;
       }
 

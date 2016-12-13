@@ -3,7 +3,7 @@
   background-color: $color-neutral-20;
   display: block !important;
 
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: $small){
     position: fixed;
   }
 }
@@ -45,7 +45,7 @@
 #logo-menu-wrap div a {
   width: 200px;
 
-  @media (min-width: 667px) {
+  @media (min-width: $small) {
     width: auto;
   }
 }
