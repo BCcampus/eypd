@@ -14,16 +14,18 @@ $args    = array(
 $myposts = get_posts( $args );
 foreach ( $myposts as $post ) : setup_postdata( $post );
 	?>
-    <div class="eight columns">
-        <h4><a href="<?php the_permalink(); ?>" rel="bookmark"
-               title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h4>
-        <p><?php the_excerpt(); ?>
+    <article class="row">
+        <div class="eight columns">
+            <h4><a href="<?php the_permalink(); ?>" rel="bookmark"
+                   title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h4>
+            <p><?php the_excerpt(); ?>
 
-    </div>
-    <div class="eight columns">
-        <p><a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail( '150' ); ?></a></p>
-    </div>
-
+        </div>
+        <div class="eight columns">
+            <p><a href="<?php the_permalink(); ?>" rel="bookmark"
+                  title="<?php the_title_attribute(); ?>"><?php the_post_thumbnail( '150' ); ?></a></p>
+        </div>
+    </article>
 
 <?php endforeach; ?>
 <?php wp_reset_postdata(); ?>

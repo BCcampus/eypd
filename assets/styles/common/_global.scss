@@ -21,6 +21,9 @@
 
 body, body.theme-option {
   background: none no-repeat;
+  #content{
+    background-color: $color-neutral-00;
+  }
 }
 
 body {

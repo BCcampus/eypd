@@ -38,7 +38,7 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
   margin: 0 auto;
 }
 
-.blue {
+.text-blue {
   color: $color-brand-blue;
 }
 
@@ -48,4 +48,8 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
 
 .row {
   width: 100% !important;
+}
+
+.text-center{
+  text-align: center;
 }
