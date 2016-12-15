@@ -310,7 +310,13 @@ function eypd_admin_bar_render() {
 			) );
 		}
 	}
-
 }
 
 add_action( 'wp_before_admin_bar_render', 'eypd_admin_bar_render' );
+
+// Add favicon
+function eypd_favicon_link() {
+    echo '<link rel="shortcut icon" type="image/x-icon" href="<?php echo get_stylesheet_directory_uri();?>/assets/images/favicon.ico" />' . "\n";
+}
+
+add_action( 'wp_head', 'eypd_favicon_link' );
