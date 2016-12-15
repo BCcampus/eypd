@@ -8,7 +8,8 @@
   border-bottom: 1px solid $color-neutral-40;
   box-shadow: none;
 
-  .widget_calendar {
+  .widget_calendar,
+  .widget_em_calendar  {
     display: none;
 
     @media (min-width: $large) {
