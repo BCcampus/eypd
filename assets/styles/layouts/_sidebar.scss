@@ -7,6 +7,19 @@
   border-right: 1px solid $color-neutral-40;
   border-bottom: 1px solid $color-neutral-40;
   box-shadow: none;
+
+  .widget_calendar {
+    display: none;
+
+    @media (min-width: $large) {
+      display: block;
+    }
+
+    .month_name,
+    .em-calnav {
+      color: $color-neutral-80 !important;
+    }
+  }
 }
 
 #item-header-avatar img.avatar {
