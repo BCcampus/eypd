@@ -677,6 +677,14 @@ nav.main-menu {
   border-right: 1px solid #D1D2D4;
   border-bottom: 1px solid #D1D2D4;
   box-shadow: none; }
+  #sidebar .widget_calendar {
+    display: none; }
+    @media (min-width: 1024px) {
+      #sidebar .widget_calendar {
+        display: block; } }
+    #sidebar .widget_calendar .month_name,
+    #sidebar .widget_calendar .em-calnav {
+      color: #333334 !important; }
 
 #item-header-avatar img.avatar {
   box-shadow: none;
