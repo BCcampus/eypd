@@ -8,8 +8,9 @@
 
   position: relative;
 
-  background-image: url('assets/images/banner-bg.png');
-  background-size: contain;
+  background-image: url('assets/images/background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
 
   @media (min-width: $xsmall) {
     height: 200px;
@@ -17,6 +18,11 @@
 
   @media (min-width: $small) {
     height: 250px;
+  }
+
+  @media (min-width: $medium) {
+    background-size: contain;
+    background-repeat: repeat;
   }
 }
 

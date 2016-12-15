@@ -486,14 +486,19 @@ div.css-search,
   display: flex;
   height: 150px;
   position: relative;
-  background-image: url("assets/images/banner-bg.png");
-  background-size: contain; }
+  background-image: url("assets/images/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat; }
   @media (min-width: 480px) {
     .c-banner {
       height: 200px; } }
   @media (min-width: 667px) {
     .c-banner {
       height: 250px; } }
+  @media (min-width: 768px) {
+    .c-banner {
+      background-size: contain;
+      background-repeat: repeat; } }
 
 .c-banner__logo {
   width: 80%;
