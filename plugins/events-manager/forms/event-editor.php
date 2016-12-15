@@ -70,7 +70,7 @@ if( !empty($_REQUEST['success']) ){
 			?>
 		</div>
 
-		<?php em_locate_template( 'forms/event/attribute-online.php', true ); ?>
+		<?php // em_locate_template( 'forms/event/attribute-online.php', true ); ?>
 
 		<?php if( get_option('dbem_locations_enabled') ): ?>
 			<h3 class="event-form-where"><?php esc_html_e( 'Where', 'events-manager'); ?></h3>
