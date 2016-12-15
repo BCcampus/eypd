@@ -30,6 +30,10 @@ echo $EM_Notices;
 if( !empty($_REQUEST['success']) ){
 	if(!get_option('dbem_events_form_reshow')) return false;
 }
+
+if ( ! $_REQUEST['success'] ) {
+_e( "This form is to be completed in order to post events on this web portal. To add your event, fill in the fields below. Fields marked with an * are mandatory. If you have multiple events to post please contact earlyyears[at]bccampus.ca for assistance.", 'early-years' );
+}
 ?>
 <form enctype='multipart/form-data' id="event-form" method="post" action="<?php echo esc_url(add_query_arg(array('success'=>null))); ?>">
 	<div class="wrap">
