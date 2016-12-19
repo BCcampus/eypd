@@ -1,7 +1,7 @@
 /*
  Theme Name:   Early Years Professional Development
- Description:  Child Theme of CBox, spiced with Explorable
- Author:       Brad Payne
+ Description:  Child Theme of CBox (default theme for commons-in-a-box plugin) for the Early Years Professional Development Project
+ Author:       Maggie Caspar (design and development) Brad Payne (development)
  Template:     cbox-theme
  Version:      1.0.0
  License:      GNU General Public License v2 or later
@@ -35,6 +35,3 @@
 @import 'layouts/events';
 @import 'layouts/admin-nav';
 
-
-// must be last
-@import 'common/media-queries';

@@ -1,7 +1,7 @@
 /*
  Theme Name:   Early Years Professional Development
- Description:  Child Theme of CBox, spiced with Explorable
- Author:       Brad Payne
+ Description:  Child Theme of CBox (default theme for commons-in-a-box plugin) for the Early Years Professional Development Project
+ Author:       Maggie Caspar (design and development) Brad Payne (development)
  Template:     cbox-theme
  Version:      1.0.0
  License:      GNU General Public License v2 or later
@@ -559,10 +559,6 @@ img.wp-smiley, img.emoji {
   .main-menu ul a:hover {
     background: none; }
 
-#wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus,
-#wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item:focus {
-  background: #E6E7E8; }
-
 .base-menu ul li.current-cat a,
 .base-menu ul li.current_page_item a,
 .base-menu ul li.current-menu-item a {
@@ -832,9 +828,14 @@ a.em-button {
   padding: 0 45px; }
   #wp-toolbar ul li a, .base-menu ul li a {
     color: #333334 !important; }
-  #wp-toolbar ul li:hover a, .base-menu ul li:hover a {
-    background-color: #E6E7E8 !important;
-    color: #068CC4 !important; }
+    #wp-toolbar ul li a:hover, .base-menu ul li a:hover {
+      background-color: #E6E7E8 !important;
+      color: #068CC4 !important; }
+
+#wp-toolbar > ul > li {
+  display: block !important; }
+  #wp-toolbar > ul > li a {
+    padding: 0 8px 0 7px !important; }
 
 #wp-admin-bar-my-account * {
   background-color: #E6E7E8 !important; }
@@ -860,9 +861,11 @@ a.em-button {
   width: auto !important;
   position: static !important; }
 
-#wp-toolbar > ul > li {
-  display: block !important; }
-  #wp-toolbar > ul > li a {
-    padding: 0 8px 0 7px !important; }
+#wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus,
+#wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item:focus {
+  background: #E6E7E8; }
+
+#wp-admin-bar-my-account-buddypress li {
+  padding-left: 20px !important; }
 
 /*# sourceMappingURL=style.css.map */

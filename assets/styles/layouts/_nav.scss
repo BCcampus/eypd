@@ -16,13 +16,6 @@
   }
 }
 
-#wpadminbar.nojq .quicklinks .ab-top-menu>li>.ab-item,
-#wpadminbar:not(.mobile) .ab-top-menu>li>.ab-item {
-  &:focus {
-    background: $color-neutral-20;
-  }
-}
-
 .base-menu ul li.current-cat a,
 .base-menu ul li.current_page_item a,
 .base-menu ul li.current-menu-item a {
