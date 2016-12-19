@@ -1,13 +1,18 @@
 <?php
 /**
- * Template Name: Homepage Template
+ * Early-Years Theme: homepage template
  *
+ * Modified from original header template in cbox theme
+ * @author Brad Payne
+ * @package early-years
+ * @since 0.9
+ * @license https://www.gnu.org/licenses/gpl.html GPLv3 or later
+ *
+ * Original:
  * @author Bowe Frankema <bowe@presscrew.com>
- * @link http://shop.presscrew.com/
  * @copyright Copyright (C) 2010-2011 Bowe Frankema
- * @license http://www.gnu.org/licenses/gpl.html GPLv2 or later
- * @since 1.0
  */
+
 infinity_get_header();
 
 ?>

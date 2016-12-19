@@ -1,19 +1,18 @@
 <?php
-/*
- * Modified from original events manager plugin version: 5.6.6.1 file 'templates/placeholders/event-single.php'
- * Copyright (c) 2016, Marcus Sykes
- * http://wp-events-plugin.com
- * Licence: GPL 2 or later
- *
- * Modifications by Brad Payne
- * Licence GPL 3+
- *
+/**
  * This page displays a single event, called during the the_content filter if this is an event page.
- * You can override the default display settings pages by copying this file to yourthemefolder/plugins/events-manager/templates/ and modifying it however you need.
- * You can display events however you wish, there are a few variables made available to you:
  *
- * $args - the args passed onto EM_Events::output()
+ * Modified from original events manager plugin version: 5.6.6.1
+ * @author Brad Payne
+ * @package early-years
+ * @since 0.9
+ * @license https://www.gnu.org/licenses/gpl.html GPLv3 or later
+ *
+ * Original:
+ * @author Marcus Sykes
+ * @copyright Copyright Marcus Sykes
  */
+
 global $EM_Event;
 /* @var $EM_Event EM_Event */
 echo $EM_Event->output_single();

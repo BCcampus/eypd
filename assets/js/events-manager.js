@@ -1,3 +1,15 @@
+/**
+ * Modified from original events-manager.js
+ *
+ * @author Brad Payne
+ * @package early-years
+ * @since 0.9
+ * @license https://www.gnu.org/licenses/gpl.html GPLv3 or later
+ *
+ * Original:
+ * @author Bowe Frankema <bowe@presscrew.com>
+ * @copyright Copyright (C) 2010-2011 Bowe Frankema
+ */
 jQuery(document).ready( function($){
     var load_ui_css = false; //load jquery ui css?
     /* Time Entry */

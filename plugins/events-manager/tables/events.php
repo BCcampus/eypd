@@ -1,4 +1,18 @@
 <?php
+/**
+ * Events table
+ *
+ * Modified from original events manager plugin version: 5.6.6.1
+ * @author Brad Payne
+ * @package early-years
+ * @since 0.9
+ * @license https://www.gnu.org/licenses/gpl.html GPLv3 or later
+ *
+ * Original:
+ * @author Marcus Sykes
+ * @copyright Copyright Marcus Sykes
+ */
+
 //TODO Simplify panel for events, use form flags to detect certain actions (e.g. submitted, etc)
 global $wpdb, $bp, $EM_Notices;
 /* @var $args array */

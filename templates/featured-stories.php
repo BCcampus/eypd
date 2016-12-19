@@ -1,6 +1,12 @@
 <?php
 /**
- * Featured Stories
+ * Early-Years Theme: Featured Stories
+ *
+ * Modified from original header template in cbox theme
+ * @author Brad Payne
+ * @package early-years
+ * @since 0.9
+ * @license http://www.gnu.org/licenses/gpl.html GPLv3 or later
  */
 
 global $post;

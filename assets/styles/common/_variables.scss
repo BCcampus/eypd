@@ -1,27 +1,14 @@
-/*
-|--------------------------------------------------------------------------
-| Variables
-|--------------------------------------------------------------------------
-|
-|
-|
-|
-*/
-
-/****************************************
-	Spacing Units
-*****************************************/
+// Spacing
 $unit: 5px;
 
-/****************************************
-	Colors
-*****************************************/
+// Colors
 $color-white-ice: #e6f4fb;
 
 $color-black: #000000;
 $color-black-mineshaft: #333333;
 
 $color-gray-boulder: #777777;
+$color-gray-mercury: #E5E5E5;
 
 $color-blue-boston: #4183C4;
 
@@ -37,28 +24,20 @@ $color-neutral-80: #333334;
 // Brand Colors
 $color-brand-blue: #068CC4;
 
-/****************************************
-	Fonts
-*****************************************/
-
+// Fonts
 $font-size: 16px;
 
 $font-family: 'Roboto';
 $font-family-slab: 'RobotoSlab';
 
-/****************************************
-	Borders
-*****************************************/
+// Borders
 $border-radius: $unit*1.5;
 $border: 1px solid $color-brand-blue;
 
 $tap-size: 44px;
 $slow-animation: 0.25s ease-in-out all;
 
-
-/****************************************
-	Media Queries
-*****************************************/
+// Media Queries
 $xsmall: 480px; // e.g.iphone 4
 $small: 667px; // e.g.iphone 6
 $medium: 768px; // e.g. ipad

@@ -19,6 +19,10 @@ Map functions include displaying location pins, clustering, searching, and filte
 A secondary purpose is to contain all customizations in the child theme and still benefit from parent theme updates. 
 
 #### Licence ####
-Early Years Child Theme is released under a GPLv3. 
+Unless otherwise noted, the Early Years Child Theme is copyright (c) Brad Payne, Maggie Caspar and is released under a GPLv3 or later version.
 
+Otherwise noted: 
+- markerclusterer.js is copyright Google Inc. licenced under Apache 2.0 (compatible with GPLv3)
 
+### Contributors ###
+- Shawn DeWolfe 

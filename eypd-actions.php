@@ -2,16 +2,17 @@
 /**
  * Performs actions on init. This works for both ajax and normal requests, the return results depends if an em_ajax flag is passed via POST or GET.
  *
- * Modified from original events manager plugin version: 5.6.6.1 file 'em-actions.php'
- * Copyright (c) 2016, Marcus Sykes
- * http://wp-events-plugin.com
- * Licence: GPL 2 or later
+ * Modified from original events manager plugin version: 5.6.6.1
+ * @author Brad Payne, Shawn DeWolfe
+ * @package early-years
+ * @since 0.9
+ * @license https://www.gnu.org/licenses/gpl.html GPLv3 or later
  *
- *
- * Modifications by Shawn DeWolfe, Brad Payne
- * Licence GPL 3+
- *
+ * Original:
+ * @author Marcus Sykes
+ * @copyright Copyright Marcus Sykes
  */
+
 function eypd_init_actions() {
 	global $wpdb, $EM_Notices, $EM_Event;
 

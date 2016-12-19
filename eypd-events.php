@@ -3,6 +3,19 @@
  * Overrides parent theme function `em_events.php` in order to re-arrange the display
  * of event elements
  *
+ * Modified from original events manager plugin version: 5.6.6.1
+ * @author Brad Payne
+ * @package early-years
+ * @since 0.9
+ * @license https://www.gnu.org/licenses/gpl.html GPLv3 or later
+ *
+ * Original:
+ * @author Marcus Sykes
+ * @copyright Copyright Marcus Sykes
+ */
+
+/**
+ *
  * @param $page_content
  *
  * @return mixed|void

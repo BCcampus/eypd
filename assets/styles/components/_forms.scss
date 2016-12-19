@@ -46,15 +46,14 @@ div.time-picker li {
   }
 }
 
-.field-visibility-settings-toggle{
-  display:none;
+.field-visibility-settings-toggle {
+  display: none;
 }
 
 // Post Event Page
 // ---
 // 1. Remove large margin under title
 //
-
 .entry {
   margin-top: 0; // 1
 
@@ -63,31 +62,19 @@ div.time-picker li {
   }
 }
 
-.page-1561 .page-title {
-  margin-bottom: 0; // 1
-}
-
-
 // Content Editor
 // ---
 // 1. Add a border around the edit box
 //
 .mce-tinymce.mce-container.mce-panel {
-  border: 1px solid #E5E5E5; // 1
+  border: 1px solid $color-gray-mercury; // 1
 }
 
 // Post Event Form
 // ---
-// 1. Important to override utility class
-//
 .entry,
 #event-form {
-  .margin-up {
-    margin-top: 0 !important; // 1
-  }
-
-  em,
-  .margin-up {
+  em, .margin-up {
     font-size: 16px;
   }
 
@@ -120,9 +107,9 @@ div.time-picker li {
     &:active,
     &:hover,
     &:focus {
-        outline: none;
-        box-shadow: none;
-        border: none;
+      outline: none;
+      box-shadow: none;
+      border: none;
     }
   }
 }
