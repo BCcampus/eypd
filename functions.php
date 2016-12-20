@@ -87,7 +87,7 @@ function eypd_load_scripts() {
 		'jquery-ui-datepicker'   => 'jquery-ui-datepicker',
 		'jquery-ui-autocomplete' => 'jquery-ui-autocomplete',
 		'jquery-ui-dialog'       => 'jquery-ui-dialog',
-		'markerclusterer'       => 'markerclusterer',
+		'markerclusterer'        => 'markerclusterer',
 	);
 	wp_enqueue_script( 'events-manager', $template_dir . '/assets/js/events-manager.js', array_values( $script_deps ), EM_VERSION );
 	wp_enqueue_script( 'tinyscrollbar', $template_dir . '/assets/js/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
@@ -148,25 +148,92 @@ function eypd_get_provinces() {
 	return $provinces;
 }
 
-/**
- * Do not use default styling for forms
- */
-update_option( 'dbem_css_search', 0 );
 
 /**
- * Changing state to province on search form
+ * Runs once to set up defaults
  */
-update_option( 'dbem_search_form_state_label', 'Province' );
+function eypd_run_once() {
 
-/**
- * All events will be in Canada
- */
-update_option( 'dbem_location_default_country', 'CA' );
+	// change eypd_version value to run it again
+	$eypd_version       = 1;
+	$current_version    = get_option( 'eypd_version', 0 );
+	$img_max_dimension  = 1000;
+	$img_min_dimension  = 50;
+	$img_max_size       = 8388608;
+	$default_no         = array(
+		'dbem_css_search',
+		'dbem_rsvp_enabled',
+		'dbem_events_form_reshow',
+		'dbem_events_anonymous_submissions',
+		'dbem_cp_events_comments',
 
-/**
- * Most events will be in British Columbia
- */
-update_option( 'eypd_location_default_province', 'British Columbia' );
+	);
+	$default_yes        = array(
+		'dbem_recurrence_enabled',
+		'dbem_categories_enabled',
+		'dbem_attributes_enabled',
+		'dbem_cp_events_custom_fields',
+		'dbem_locations_enabled',
+		'dbem_require_location',
+		'dbem_events_form_editor',
+		'dbem_cp_events_formats',
+	);
+	$default_attributes = '#_ATT{Online}{|Yes|No}
+#_ATT{Registration Fee}
+#_ATT{Presenter(s)}
+#_ATT{Presenter Information}
+#_ATT{Registration Contact Email}
+#_ATT{Registration Contact Phone Number}
+#_ATT{Registration Link}
+#_ATT{Professional Development Certificate}{|Yes|No|Upon Request|Not Currently Available}
+#_ATT{Professional Development Certificate Credit Hours}
+#_ATT{Prerequisite(s)}
+#_ATT{Required Materials}
+#_ATT{Event Sponsors}';
+	$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
+<p><strong>Go to the homepage and use the search or map feature to find your event.</strong></p>';
+
+	if ( $current_version < $eypd_version ) {
+
+		update_option( 'dbem_placeholders_custom', $default_attributes );
+		update_option( 'dbem_image_max_width', $img_max_dimension );
+		update_option( 'dbem_image_max_height', $img_max_dimension );
+		update_option( 'dbem_image_min_width', $img_min_dimension );
+		update_option( 'dbem_image_min_height', $img_min_dimension );
+		update_option( 'dbem_image_max_size', $img_max_size );
+		update_option( 'dbem_events_form_result_success', $success_message );
+		update_option('dbem_events_form_result_success_updated', $success_message );
+
+		foreach ( $default_no as $no ) {
+			update_option( $no, 0 );
+		}
+
+		foreach ( $default_yes as $yes ) {
+			update_option( $yes, 1 );
+		}
+		/**
+		 * Changing state to province on search form
+		 */
+		update_option( 'dbem_search_form_state_label', 'Province' );
+
+		/**
+		 * All events will be in Canada
+		 */
+		update_option( 'dbem_location_default_country', 'CA' );
+
+		/**
+		 * Most events will be in British Columbia
+		 */
+		update_option( 'eypd_location_default_province', 'British Columbia' );
+
+		/**
+		 * Update option to current version
+		 */
+		update_option( 'eypd_version', $eypd_version );
+	}
+}
+
+add_action( 'after_switch_theme', 'eypd_run_once' );
 
 /**
  * Changing state to province and other customizations
@@ -273,7 +340,7 @@ function eypd_event_etc_output( $input = "" ) {
  * @param int $post_id
  * @param bool $ajax
  */
-function et_fetch( $post_id = -1, $ajax = true ) {
+function et_fetch( $post_id = - 1, $ajax = true ) {
 	if ( $ajax == true ) {
 		$output = eypd_event_output( $post_id );
 		echo json_encode( $output ); //encode into JSON format and output
@@ -322,6 +389,7 @@ add_action( 'wp_before_admin_bar_render', 'eypd_admin_bar_render' );
 
 // Add favicon
 function eypd_favicon_link() {
-    echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() .'/assets/images/favicon.ico" />' . "\n";
+	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/assets/images/favicon.ico" />' . "\n";
 }
-add_action( 'wp_head', 'eypd_favicon_link');
+
+add_action( 'wp_head', 'eypd_favicon_link' );
