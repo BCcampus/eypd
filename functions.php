@@ -149,6 +149,11 @@ function eypd_get_provinces() {
 }
 
 /**
+ * Do not use default styling for forms
+ */
+update_option( 'dbem_css_search', 0 );
+
+/**
  * Changing state to province on search form
  */
 update_option( 'dbem_search_form_state_label', 'Province' );
