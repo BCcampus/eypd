@@ -735,6 +735,8 @@ nav.main-menu {
   padding-left: 0; }
   #footer ul li ul {
     margin-left: 20px; }
+#footer #copyright-info {
+  padding: 10px; }
 
 #filter-bar {
   background-color: #ffffff;

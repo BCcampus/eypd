@@ -48,6 +48,9 @@
       margin-left: 20px;
     }
   }
+  & #copyright-info{
+    padding: $unit*2;
+  }
 }
 
 #filter-bar {
@@ -76,3 +79,4 @@
   text-align: left;
   width: 750px;
 }
+
