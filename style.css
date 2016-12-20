@@ -802,7 +802,7 @@ a.em-button {
   justify-content: flex-end; }
 
 #wp-toolbar, .base-menu {
-  padding: 0 45px; }
+  padding: 0px; }
   #wp-toolbar ul li a, .base-menu ul li a {
     color: #333334 !important; }
     #wp-toolbar ul li a:hover, .base-menu ul li a:hover {
