@@ -152,7 +152,8 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
   background-size: 13px; }
 
 .row {
-  width: 100% !important; }
+  width: 100% !important;
+  margin: 0px !important; }
 
 .text-center {
   text-align: center; }
