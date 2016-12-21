@@ -14,6 +14,8 @@ function cbox_parent_theme_css() {
 }
 
 add_action( 'wp_enqueue_scripts', 'cbox_parent_theme_css' );
+
+// remove from parent theme
 remove_action( 'wp_head', 'infinity_custom_favicon' );
 
 
@@ -177,6 +179,7 @@ function eypd_run_once() {
 		'dbem_require_location',
 		'dbem_events_form_editor',
 		'dbem_cp_events_formats',
+		'dbem_gmap_is_active',
 	);
 	$default_attributes = '#_ATT{Online}{|Yes|No}
 #_ATT{Registration Fee}
@@ -190,8 +193,10 @@ function eypd_run_once() {
 #_ATT{Prerequisite(s)}
 #_ATT{Required Materials}
 #_ATT{Event Sponsors}';
-	$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
+	$success_message    = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
 <p><strong>Go to the homepage and use the search or map feature to find your event.</strong></p>';
+	$loc_balloon_format = '<strong>#_LOCATIONNAME</strong><address>#_LOCATIONADDRESS<br>#_LOCATIONTOWN</address>
+#_LOCATIONNEXTEVENTS';
 
 	if ( $current_version < $eypd_version ) {
 
@@ -202,7 +207,8 @@ function eypd_run_once() {
 		update_option( 'dbem_image_min_height', $img_min_dimension );
 		update_option( 'dbem_image_max_size', $img_max_size );
 		update_option( 'dbem_events_form_result_success', $success_message );
-		update_option('dbem_events_form_result_success_updated', $success_message );
+		update_option( 'dbem_events_form_result_success_updated', $success_message );
+		update_option( 'dbem_map_text_format', $loc_balloon_format );
 
 		foreach ( $default_no as $no ) {
 			update_option( $no, 0 );
