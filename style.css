@@ -330,6 +330,9 @@ div.time-picker li {
 table.em-calendar thead {
   font-weight: normal; }
 
+thead:first-child tr th {
+  color: inherit; }
+
 div.css-search,
 .em-search-main {
   border: none !important; }

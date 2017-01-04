@@ -10,3 +10,7 @@
 table.em-calendar thead{
   font-weight: normal;
 }
+
+thead:first-child tr th {
+  color: inherit;
+}

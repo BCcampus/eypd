@@ -168,6 +168,7 @@ function eypd_run_once() {
 		'dbem_events_form_reshow',
 		'dbem_events_anonymous_submissions',
 		'dbem_cp_events_comments',
+		'dbem_search_form_countries',
 
 	);
 	$default_yes        = array(
