@@ -20,7 +20,7 @@ global $EM_Event, $EM_Notices, $bp;
 if ( is_object( $EM_Event ) && ! $EM_Event->can_manage( 'edit_events', 'edit_others_events' ) ) {
 	?>
     <div class="wrap"><h2><?php esc_html_e( 'Looking to Learn?', 'events-manager' ); ?></h2>
-        <p><?php echo __( 'We\'re making it easier for early years sector professionals to find courses, conferences and workshops in British Columbia. Sign up, or Log in', 'events-manager' ); ?></p>
+        <p><?php echo __( 'You are using this site in the role as a Learner. Learners may search for, share, and print events. Learners are not authorized to post events.', 'events-manager' ); ?></p>
     </div>
 	<?php
 	return false;
