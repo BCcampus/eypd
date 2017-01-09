@@ -256,10 +256,11 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 
 	if ( 'events-manager' == $domain ) {
 		$modify = array(
-			"State/County:" => "Province:",
-			"Details"       => "Event Description and Objectives",
-			"Category:"     => "Category",
-			"Submit %s"     => "Post %s",
+			"State/County:"                                   => "Province:",
+			"Details"                                         => "Event Description and Objectives",
+			"Category:"                                       => "Category",
+			"Submit %s"                                       => "Post %s",
+			"You must log in to view and manage your events." => "You are using this site in the role as a Learner. Learners may search for, share, and print events. Only Organizers may post and edit events.",
 		);
 	}
 
