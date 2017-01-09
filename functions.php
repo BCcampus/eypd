@@ -169,7 +169,7 @@ function eypd_run_once() {
 		'dbem_events_anonymous_submissions',
 		'dbem_cp_events_comments',
 		'dbem_search_form_countries',
-
+		'dbem_locations_page_search_form',
 	);
 	$default_yes        = array(
 		'dbem_recurrence_enabled',
@@ -181,6 +181,7 @@ function eypd_run_once() {
 		'dbem_events_form_editor',
 		'dbem_cp_events_formats',
 		'dbem_gmap_is_active',
+		'dbem_cp_events_formats',
 	);
 	$default_attributes = '#_ATT{Online}{|Yes|No}
 #_ATT{Registration Fee}
