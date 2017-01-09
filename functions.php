@@ -343,7 +343,7 @@ function eypd_event_etc_output( $input = "" ) {
 
 
 /**
- * use it for two uses -- the Ajax response and th post info
+ * use it for two uses -- the Ajax response and the post info
  *
  * @param int $post_id
  * @param bool $ajax
