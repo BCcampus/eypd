@@ -34,7 +34,7 @@ infinity_get_header();
     <div class="four columns">
         <h3>Upcoming Events</h3>
 		<?php
-		$events_list = '[events_list scope="future" limit="3"]';
+		$events_list = '[events_list scope="after-today" limit="3"]';
 		echo do_shortcode( $events_list );
 		?>
     </div>

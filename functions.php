@@ -53,6 +53,35 @@ include( get_stylesheet_directory() . '/eypd-events.php' );
 
 /*
 |--------------------------------------------------------------------------
+| Events Manger
+|--------------------------------------------------------------------------
+|
+| Creates a new scope for the events manager short code, adn then registers it with events manager. 
+|It will only lists events with a date greater than today's.
+|
+|
+*/
+
+add_filter( 'em_events_build_sql_conditions', 'my_em_scope_conditions',1,2);
+function my_em_scope_conditions($conditions, $args){
+    if( !empty($args['scope']) && $args['scope']=='after-today' ){
+        $current_date = date('Y-m-d',current_time('timestamp'));
+        $conditions['scope'] = " (event_start_date > CAST('$current_date' AS DATE))";
+    }
+    return $conditions;
+}
+
+
+add_filter( 'em_get_scopes','my_em_scopes',1,1);
+function my_em_scopes($scopes){
+    $my_scopes = array(
+        'after-today' => 'After Today'
+    );
+    return $scopes + $my_scopes;
+}
+
+/*
+|--------------------------------------------------------------------------
 | Admin Styles
 |--------------------------------------------------------------------------
 |
