@@ -433,3 +433,28 @@ function eypd_favicon_link() {
 }
 
 add_action( 'wp_head', 'eypd_favicon_link' );
+
+/**
+ * Validating that required attribute fields are not empty
+ */
+function eypd_validate_attributes() {
+	global $EM_Event;
+
+	// bail early if not an object
+	if ( ! is_object( $EM_Event ) ) {
+		return false;
+	}
+
+	if ( empty( $EM_Event->event_attributes['Professional Development Certificate'] ) ) {
+		$EM_Event->add_error( sprintf( __( "%s is required.", 'early-years' ), __( 'Professional Development Certificate', 'early-years' ) ) );
+	}
+
+	if ( empty( $EM_Event->event_attributes['Registration Fee'] ) ) {
+		$EM_Event->add_error( sprintf( __( "%s is required.", 'early-years' ), __( 'Registration Fee', 'early-years' ) ) );
+	}
+
+	return $EM_Event;
+
+}
+
+add_action( 'em_event_validate', 'eypd_validate_attributes' );
