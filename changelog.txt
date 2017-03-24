@@ -1,0 +1,6 @@
+== Change Log ==
+
+= v0.9.1 =
+* changed how recurring events appear on homepage
+* added mandatory attribute fields
+* added attribute description
