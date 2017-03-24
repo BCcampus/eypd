@@ -32,6 +32,9 @@ if ( count( $attributes['names'] ) > 0 ) : ?>
 				case 'Professional Development Certificate Credit Hours':
 					echo '<p class="margin-up"><i>(Type a number)</i></p>';
 					break;
+				case 'Professional Development Certificate':
+					echo '<p class="margin-up"><i>(It is the responsibility of early childhood educators to follow professional development requirements as described by the <a href="http://www2.gov.bc.ca/gov/content/education-training/early-learning/teach/training-and-professional-development/become-an-early-childhood-educator/renew-maintain-ece-certification">ECE Registry</a>)</i></p>';
+					break;
 				default:
 					echo '';
 			}
