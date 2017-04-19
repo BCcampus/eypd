@@ -201,6 +201,9 @@ function eypd_run_once() {
 		'dbem_cp_events_comments',
 		'dbem_search_form_countries',
 		'dbem_locations_page_search_form',
+		'dbem_bookings_anonymous',
+		'dbem_bookings_approval',
+		'dbem_bookings_double',
 	);
 	$default_yes        = array(
 		'dbem_recurrence_enabled',
@@ -213,6 +216,10 @@ function eypd_run_once() {
 		'dbem_cp_events_formats',
 		'dbem_gmap_is_active',
 		'dbem_cp_events_formats',
+		'dbem_bookings_approval_reserved',
+		'dbem_bookings_user_cancellation',
+		'dbem_bookings_approval_overbooking',
+		'dbem_bookings_approval_overbooking',
 	);
 	$default_attributes = '#_ATT{Online}{|Yes|No}
 #_ATT{Registration Fee}
