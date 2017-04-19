@@ -184,11 +184,12 @@ function eypd_get_provinces() {
 
 /**
  * Runs once to set up defaults
+ * increase variable $eypd_version to ensure it runs again
  */
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version       = 1;
+	$eypd_version       = 2;
 	$current_version    = get_option( 'eypd_version', 0 );
 	$img_max_dimension  = 1000;
 	$img_min_dimension  = 50;
@@ -221,15 +222,36 @@ function eypd_run_once() {
 #_ATT{Registration Contact Email}
 #_ATT{Registration Contact Phone Number}
 #_ATT{Registration Link}
+#_ATT{Registration Space}{|Filling Up!|FULL}
 #_ATT{Professional Development Certificate}{|Yes|No|Upon Request|Not Currently Available}
 #_ATT{Professional Development Certificate Credit Hours}
 #_ATT{Prerequisite(s)}
 #_ATT{Required Materials}
 #_ATT{Event Sponsors}';
-	$success_message    = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
+	$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
 <p><strong>Go to the homepage and use the search or map feature to find your event.</strong></p>';
 	$loc_balloon_format = '<strong>#_LOCATIONNAME</strong><address>#_LOCATIONADDRESS<br>#_LOCATIONTOWN</address>
 #_LOCATIONNEXTEVENTS';
+
+	$format_event_list_header = '<table cellpadding="0" cellspacing="0" class="events-table" >
+    <thead>
+        <tr>
+			<th class="event-time" width="150">Date/Time</th>
+			<th class="event-description" width="*">Event</th>
+			<th class="event-capacity" width="*">Capacity</th>
+		</tr>
+   	</thead>
+    <tbody>';
+
+	$format_event_list = '<tr>
+			<td>#_EVENTDATES<br/>#_EVENTTIMES</td>
+            <td>#_EVENTLINK
+                {has_location}<br/><i>#_LOCATIONNAME, #_LOCATIONTOWN #_LOCATIONSTATE</i>{/has_location}
+            </td>
+			<td>#_ATT{Registration Space}</td>
+        </tr>';
+
+	$format_event_list_footer = '</tbody></table>';
 
 	if ( $current_version < $eypd_version ) {
 
@@ -242,6 +264,9 @@ function eypd_run_once() {
 		update_option( 'dbem_events_form_result_success', $success_message );
 		update_option( 'dbem_events_form_result_success_updated', $success_message );
 		update_option( 'dbem_map_text_format', $loc_balloon_format );
+		update_option( 'dbem_event_list_item_format', $format_event_list );
+		update_option( 'dbem_event_list_item_format_header', $format_event_list_header );
+		update_option( 'dbem_event_list_item_format_footer', $format_event_list_footer );
 
 		foreach ( $default_no as $no ) {
 			update_option( $no, 0 );
