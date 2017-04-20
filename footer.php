@@ -53,7 +53,7 @@ do_action( 'close_main_wrap' );
 do_action( 'close_body' );
 wp_footer();
 ?>
-<?php if ( is_page( 'register' ) ) {
+<?php if ( is_page( 'Sign Up' ) ) {
 	include( 'terms-modal.php' );
 } ?>
 </body>
