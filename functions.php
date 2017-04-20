@@ -29,9 +29,6 @@ remove_action( 'wp_head', 'infinity_custom_favicon' );
 add_theme_support( 'post-thumbnails' );
 set_post_thumbnail_size( 100, 100 );
 
-// used in eypd_distance
-define( 'CLOSENESS', 5 );
-
 /*
 |--------------------------------------------------------------------------
 | Maps
@@ -124,6 +121,12 @@ function eypd_load_scripts() {
 	);
 	wp_enqueue_script( 'events-manager', $template_dir . '/assets/js/events-manager.js', array_values( $script_deps ), EM_VERSION );
 	wp_enqueue_script( 'tinyscrollbar', $template_dir . '/assets/js/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
+
+	// only sign up page has requirements for modals
+	if ( is_page( 'Sign Up' ) ) {
+		wp_enqueue_script( 'modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
+		wp_enqueue_style( 'bootstrap', $template_dir . '/assets/styles/bootstrap.min.css' );
+	}
 }
 
 add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
@@ -481,22 +484,6 @@ function eypd_validate_attributes() {
 	return $EM_Event;
 
 }
-
-add_action( 'em_event_validate', 'eypd_validate_attributes' ); 
-
-/**
- * enqueue bootstrap js/css,
- * only for the registration page
- */
-
-function eypd_load_modal_scripts() {
-	if ( is_page( 'Sign Up' ) ) {
-		wp_enqueue_script( 'modal', get_stylesheet_directory_uri() . '/assets/js/bootstrap.min.js', array(), null, true );
-		wp_enqueue_style( 'bootstrap', get_stylesheet_directory_uri() . '/assets/styles/bootstrap.min.css' );
-	}
-}
-
-add_action( 'wp_enqueue_scripts', 'eypd_load_modal_scripts' );
 
 /**
  * Make the terms field into a modal,

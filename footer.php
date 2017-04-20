@@ -56,7 +56,7 @@ do_action( 'close_body' );
 wp_footer();
 ?>
 <?php if ( is_page( 'Sign Up' ) ) {
-	include( 'terms-modal.php' );
+	get_template_part( 'templates/terms-modal' );
 } ?>
 </body>
 </html>
