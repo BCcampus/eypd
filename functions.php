@@ -513,7 +513,7 @@ function eypd_terms_modal( $field_description ) {
 
 	if ( $bp_field_name == 'Agreement Terms:' ) {
 		// replace description text to enable the display of a modal with the content of terms-modal.php
-		$field_description = str_replace( 'Terms and Conditions', '<a href="#terms" data-toggle="modal">>Terms and Conditions</a>', $field_description );
+		$field_description = '<a href="#terms" data-toggle="modal">>Terms and Conditions</a>';
 	}
 
 	// the new description 
