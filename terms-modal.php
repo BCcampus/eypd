@@ -1,8 +1,9 @@
 <?php
-// Get the Terms and Conditions post by it's ID 
-$post_id      = 1515;
-$queried_post = get_post( $post_id );
-$title        = $queried_post->post_title;
+// Get the Terms and Conditions post by page name
+$page = get_page_by_title('terms and conditions');
+// $page is the post array. Get the title and content 
+$title = $page->post_title;
+$content = $page->post_content;
 ?>
 
 <!-- Modal for Registration page "Terms and Conditions" Field -->
@@ -13,7 +14,7 @@ $title        = $queried_post->post_title;
                 <button class="close" type="button" data-dismiss="modal">×</button>
                 <h4 class="modal-title"><?php echo $title; ?></h4>
             </div>
-            <div class="modal-body"><?php echo $queried_post->post_content; ?></div>
+            <div class="modal-body"><?php echo $content; ?></div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
