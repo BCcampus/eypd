@@ -3,7 +3,7 @@
  * Early-Years Theme: footer template
  *
  * Modified from original header template in cbox theme
- * @author Brad Payne
+ * @author Alex Paredes
  * @package early-years
  * @since 0.9
  * @license https://www.gnu.org/licenses/gpl.html GPLv3 or later
