@@ -490,7 +490,7 @@ add_action( 'em_event_validate', 'eypd_validate_attributes' );
  */
 
 function eypd_load_modal_scripts() {
-	if ( is_page( 'register' ) ) {
+	if ( is_page( 'Sign Up' ) ) {
 		wp_enqueue_script( 'modal', get_stylesheet_directory_uri() . '/assets/js/bootstrap.min.js', array(), null, true );
 		wp_enqueue_style( 'bootstrap', get_stylesheet_directory_uri() . '/assets/styles/bootstrap.min.css' );
 	}
