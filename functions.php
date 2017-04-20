@@ -482,4 +482,42 @@ function eypd_validate_attributes() {
 
 }
 
-add_action( 'em_event_validate', 'eypd_validate_attributes' );
+add_action( 'em_event_validate', 'eypd_validate_attributes' ); 
+
+/**
+ * enqueue bootstrap js/css,
+ * only for the registration page
+ */
+
+function eypd_load_modal_scripts() {
+	if ( is_page( 'Sign Up' ) ) {
+		wp_enqueue_script( 'modal', get_stylesheet_directory_uri() . '/assets/js/bootstrap.min.js', array(), null, true );
+		wp_enqueue_style( 'bootstrap', get_stylesheet_directory_uri() . '/assets/styles/bootstrap.min.css' );
+	}
+}
+
+add_action( 'wp_enqueue_scripts', 'eypd_load_modal_scripts' );
+
+/**
+ * Make the terms field into a modal,
+ * content of modal are in terms-modal.php
+ */
+
+function eypd_terms_modal( $field_description ) {
+
+// check xprofile is activated
+	if ( bp_is_active( 'xprofile' ) ) // get the terms field
+	{
+		$bp_field_name = bp_get_the_profile_field_name();
+	}
+
+	if ( $bp_field_name == 'Agreement Terms:' ) {
+		// replace description text to enable the display of a modal with the content of terms-modal.php
+		$field_description = '<a href="#terms" data-toggle="modal">>Terms and Conditions</a>';
+	}
+
+	// the new description 
+	return $field_description;
+}
+
+add_filter( 'bp_get_the_profile_field_description', 'eypd_terms_modal' );
