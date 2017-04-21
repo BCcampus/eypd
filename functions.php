@@ -53,7 +53,7 @@ include( get_stylesheet_directory() . '/eypd-events.php' );
 | Events Manager
 |--------------------------------------------------------------------------
 |
-| Creates a new scope for the events manager short code, and then registers it with events manager.
+| Creates a new scope for the events manager short code, and then registers it with events manager. 
 | It will only lists events with a date greater than today's.
 |
 |
