@@ -253,9 +253,16 @@ input.c-button.c--primary, input.button-primary, input.button {
 .field-visibility-settings-notoggle {
   display: none; }
 
+form.standard-form #profile-details-section {
+  float: left !important; }
+
+form.standard-form #basic-details-section {
+  float: right !important; }
+
 #event-form #em-editor-content_ifr {
   height: 200px !important; }
 
+f
 tr.em-location-data-region {
   display: none; }
 
