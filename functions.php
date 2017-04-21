@@ -487,7 +487,7 @@ function eypd_validate_attributes() {
 
 /**
  * Makes profile fields descriptions into modals,
- * content of modals are in /templates/*-modal.php
+ * content of modals are in eypd/templates/*-modal.php
  */
 
 function eypd_profile_field_modals() {
