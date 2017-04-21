@@ -13,11 +13,20 @@
   display: none;
 }
 
+// Switch order of columns on Sign Up form
+form.standard-form #profile-details-section {
+  float: left !important;
+}
+
+form.standard-form #basic-details-section {
+  float:right !important;
+}
+
 #event-form {
   #em-editor-content_ifr {
     height: 200px !important;
   }
-}
+}f
 
 // hides Region from registration form
 tr.em-location-data-region {
