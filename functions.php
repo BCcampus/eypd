@@ -508,7 +508,7 @@ function eypd_profile_field_modals() {
 				break;
 
 			case "Position/Role":
-				$field_description = '<a href="#role" data-toggle="modal">What’s the difference between a Learner and Organizer?</a>';
+				$field_description = '<a href="#role" data-toggle="modal">What’s the difference between Learner and Organizer?</a>';
 
 				return $field_description;
 				break;
