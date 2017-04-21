@@ -26,9 +26,6 @@ if ( count( $attributes['names'] ) > 0 ) : ?>
 				case 'Registration Link':
 					echo '<p class="margin-up"><i>(if available)</i></p>';
 					break;
-				case 'Target Audience':
-					echo '<p class="margin-up"><i>(For professionals who work with:)</i></p>';
-					break;
 				case 'Professional Development Certificate Credit Hours':
 					echo '<p class="margin-up"><i>(Type a number)</i></p>';
 					break;
