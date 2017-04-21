@@ -192,7 +192,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version       = 2;
+	$eypd_version       = 3;
 	$current_version    = get_option( 'eypd_version', 0 );
 	$img_max_dimension  = 1000;
 	$img_min_dimension  = 50;
@@ -218,7 +218,8 @@ function eypd_run_once() {
 		'dbem_gmap_is_active',
 		'dbem_cp_events_formats',
 	);
-	$default_attributes = '#_ATT{Online}{|Yes|No}
+	$default_attributes = '#_ATT{Target Audience}
+#_ATT{Online}{|Yes|No}
 #_ATT{Registration Fee}
 #_ATT{Presenter(s)}
 #_ATT{Presenter Information}
