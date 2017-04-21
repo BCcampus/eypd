@@ -486,25 +486,41 @@ function eypd_validate_attributes() {
 }
 
 /**
- * Make the terms field into a modal,
- * content of modal are in terms-modal.php
+ * Makes profile fields descriptions into modals,
+ * content of modals are in eypd/templates/*-modal.php
  */
 
-function eypd_terms_modal( $field_description ) {
+function eypd_profile_field_modals() {
 
 // check xprofile is activated
-	if ( bp_is_active( 'xprofile' ) ) // get the terms field
-	{
+	if ( bp_is_active( 'xprofile' ) ) {
+
 		$bp_field_name = bp_get_the_profile_field_name();
-	}
 
-	if ( $bp_field_name == 'Agreement Terms:' ) {
-		// replace description text to enable the display of a modal with the content of terms-modal.php
-		$field_description = '<a href="#terms" data-toggle="modal">>Terms and Conditions</a>';
-	}
+// replace content of $field_description to enable use of modals
+		switch ( $bp_field_name ) {
 
-	// the new description 
-	return $field_description;
+			case "Agreement Terms:":
+				$field_description = '<a href="#terms" data-toggle="modal">Terms and Conditions</a>';
+
+				return $field_description;
+				break;
+
+			case "Position/Role":
+				$field_description = '<a href="#role" data-toggle="modal">What’s the difference between a Learner and Organizer?</a>';
+
+				return $field_description;
+				break;
+		}
+	}
 }
 
-add_filter( 'bp_get_the_profile_field_description', 'eypd_terms_modal' );
+add_filter( 'bp_get_the_profile_field_description', 'eypd_profile_field_modals' );
+
+// display a link tp FAQ after the submit button on the registration page  
+function eypd_faq() {
+	$html = "<div class='submit faq'><a href=\"https://BCCAMPUS.mycusthelp.ca/webapp/_rs/FindAnswers.aspx?coid=6CFA1D4B2B28F770A1273B\" target=\"_blank\">Need help signing up?</a></div>";
+	echo $html;
+}
+
+add_filter( 'bp_after_registration_submit_buttons', 'eypd_faq' );
