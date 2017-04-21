@@ -254,10 +254,10 @@ input.c-button.c--primary, input.button-primary, input.button {
   display: none; }
 
 form.standard-form #profile-details-section {
-  float: left !important; }
+  float: left; }
 
 form.standard-form #basic-details-section {
-  float: right !important; }
+  float: right; }
 
 #event-form #em-editor-content_ifr {
   height: 200px !important; }
