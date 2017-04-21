@@ -53,7 +53,7 @@ include( get_stylesheet_directory() . '/eypd-events.php' );
 | Events Manager
 |--------------------------------------------------------------------------
 |
-| Creates a new scope for the events manager short code, and then registers it with events manager. 
+| Creates a new scope for the events manager short code, and then registers it with events manager.
 | It will only lists events with a date greater than today's.
 |
 |
@@ -231,7 +231,7 @@ function eypd_run_once() {
 #_ATT{Prerequisite(s)}
 #_ATT{Required Materials}
 #_ATT{Event Sponsors}';
-	$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
+	$success_message    = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
 <p><strong>Go to the homepage and use the search or map feature to find your event.</strong></p>';
 	$loc_balloon_format = '<strong>#_LOCATIONNAME</strong><address>#_LOCATIONADDRESS<br>#_LOCATIONTOWN</address>
 #_LOCATIONNEXTEVENTS';
@@ -486,25 +486,33 @@ function eypd_validate_attributes() {
 }
 
 /**
- * Make the terms field into a modal,
- * content of modal are in terms-modal.php
+ * Makes profile fields descriptions into modals,
+ * content of modals are in /templates/*-modal.php
  */
 
-function eypd_terms_modal( $field_description ) {
+function eypd_profile_field_modals() {
 
 // check xprofile is activated
-	if ( bp_is_active( 'xprofile' ) ) // get the terms field
-	{
+	if ( bp_is_active( 'xprofile' ) ) {
+
 		$bp_field_name = bp_get_the_profile_field_name();
-	}
 
-	if ( $bp_field_name == 'Agreement Terms:' ) {
-		// replace description text to enable the display of a modal with the content of terms-modal.php
-		$field_description = '<a href="#terms" data-toggle="modal">>Terms and Conditions</a>';
-	}
+// replace content of $field_description to enable use of modals
+		switch ( $bp_field_name ) {
 
-	// the new description 
-	return $field_description;
+			case "Agreement Terms:":
+				$field_description = '<a href="#terms" data-toggle="modal">Terms and Conditions</a>';
+
+				return $field_description;
+				break;
+
+			case "POSITION/ROLE":
+				$field_description = '<a href="#role" data-toggle="modal">What’s the difference between a Learner and Organizer?</a>';
+
+				return $field_description;
+				break;
+		}
+	}
 }
 
-add_filter( 'bp_get_the_profile_field_description', 'eypd_terms_modal' );
+add_filter( 'bp_get_the_profile_field_description', 'eypd_profile_field_modals' );
