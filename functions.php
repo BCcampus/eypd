@@ -29,9 +29,6 @@ remove_action( 'wp_head', 'infinity_custom_favicon' );
 add_theme_support( 'post-thumbnails' );
 set_post_thumbnail_size( 100, 100 );
 
-// used in eypd_distance
-define( 'CLOSENESS', 5 );
-
 /*
 |--------------------------------------------------------------------------
 | Maps
@@ -124,6 +121,12 @@ function eypd_load_scripts() {
 	);
 	wp_enqueue_script( 'events-manager', $template_dir . '/assets/js/events-manager.js', array_values( $script_deps ), EM_VERSION );
 	wp_enqueue_script( 'tinyscrollbar', $template_dir . '/assets/js/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
+
+	// only sign up page has requirements for modals
+	if ( is_page( 'Sign Up' ) ) {
+		wp_enqueue_script( 'modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
+		wp_enqueue_style( 'bootstrap', $template_dir . '/assets/styles/bootstrap.min.css' );
+	}
 }
 
 add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
@@ -184,11 +187,12 @@ function eypd_get_provinces() {
 
 /**
  * Runs once to set up defaults
+ * increase variable $eypd_version to ensure it runs again
  */
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version       = 1;
+	$eypd_version       = 3;
 	$current_version    = get_option( 'eypd_version', 0 );
 	$img_max_dimension  = 1000;
 	$img_min_dimension  = 50;
@@ -214,22 +218,44 @@ function eypd_run_once() {
 		'dbem_gmap_is_active',
 		'dbem_cp_events_formats',
 	);
-	$default_attributes = '#_ATT{Online}{|Yes|No}
+	$default_attributes = '#_ATT{Target Audience}
+#_ATT{Online}{|Yes|No}
 #_ATT{Registration Fee}
 #_ATT{Presenter(s)}
 #_ATT{Presenter Information}
 #_ATT{Registration Contact Email}
 #_ATT{Registration Contact Phone Number}
 #_ATT{Registration Link}
+#_ATT{Registration Space}{|Filling Up!|FULL}
 #_ATT{Professional Development Certificate}{|Yes|No|Upon Request|Not Currently Available}
 #_ATT{Professional Development Certificate Credit Hours}
 #_ATT{Prerequisite(s)}
 #_ATT{Required Materials}
 #_ATT{Event Sponsors}';
-	$success_message    = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
+	$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
 <p><strong>Go to the homepage and use the search or map feature to find your event.</strong></p>';
 	$loc_balloon_format = '<strong>#_LOCATIONNAME</strong><address>#_LOCATIONADDRESS<br>#_LOCATIONTOWN</address>
 #_LOCATIONNEXTEVENTS';
+
+	$format_event_list_header = '<table cellpadding="0" cellspacing="0" class="events-table" >
+    <thead>
+        <tr>
+			<th class="event-time" width="150">Date/Time</th>
+			<th class="event-description" width="*">Event</th>
+			<th class="event-capacity" width="*">Capacity</th>
+		</tr>
+   	</thead>
+    <tbody>';
+
+	$format_event_list = '<tr>
+			<td>#_EVENTDATES<br/>#_EVENTTIMES</td>
+            <td>#_EVENTLINK
+                {has_location}<br/><i>#_LOCATIONNAME, #_LOCATIONTOWN #_LOCATIONSTATE</i>{/has_location}
+            </td>
+			<td>#_ATT{Registration Space}</td>
+        </tr>';
+
+	$format_event_list_footer = '</tbody></table>';
 
 	if ( $current_version < $eypd_version ) {
 
@@ -242,6 +268,9 @@ function eypd_run_once() {
 		update_option( 'dbem_events_form_result_success', $success_message );
 		update_option( 'dbem_events_form_result_success_updated', $success_message );
 		update_option( 'dbem_map_text_format', $loc_balloon_format );
+		update_option( 'dbem_event_list_item_format', $format_event_list );
+		update_option( 'dbem_event_list_item_format_header', $format_event_list_header );
+		update_option( 'dbem_event_list_item_format_footer', $format_event_list_footer );
 
 		foreach ( $default_no as $no ) {
 			update_option( $no, 0 );
@@ -457,4 +486,42 @@ function eypd_validate_attributes() {
 
 }
 
-add_action( 'em_event_validate', 'eypd_validate_attributes' );
+/**
+ * Makes profile fields descriptions into modals,
+ * content of modals are in eypd/templates/*-modal.php
+ */
+
+function eypd_profile_field_modals() {
+
+// check xprofile is activated
+	if ( bp_is_active( 'xprofile' ) ) {
+
+		$bp_field_name = bp_get_the_profile_field_name();
+
+// replace content of $field_description to enable use of modals
+		switch ( $bp_field_name ) {
+
+			case "Agreement Terms:":
+				$field_description = '<a href="#terms" data-toggle="modal">Terms and Conditions</a>';
+
+				return $field_description;
+				break;
+
+			case "Position/Role":
+				$field_description = '<a href="#role" data-toggle="modal">What’s the difference between Learner and Organizer?</a>';
+
+				return $field_description;
+				break;
+		}
+	}
+}
+
+add_filter( 'bp_get_the_profile_field_description', 'eypd_profile_field_modals' );
+
+// display a link tp FAQ after the submit button on the registration page  
+function eypd_faq() {
+	$html = "<div class='submit faq'><a href=\"https://BCCAMPUS.mycusthelp.ca/webapp/_rs/FindAnswers.aspx?coid=6CFA1D4B2B28F770A1273B\" target=\"_blank\">Need help signing up?</a></div>";
+	echo $html;
+}
+
+add_filter( 'bp_after_registration_submit_buttons', 'eypd_faq' );
