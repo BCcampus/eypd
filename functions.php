@@ -533,8 +533,6 @@ function eypd_faq() {
 
 add_filter( 'bp_after_registration_submit_buttons', 'eypd_faq' );
 
-add_action( 'em_event_validate', 'eypd_validate_attributes' );
-
 /**
  *
  * @return int
