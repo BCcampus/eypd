@@ -313,6 +313,9 @@ div.time-picker li {
     outline: none;
     box-shadow: none;
     border: none; }
+.entry .event-form-bookings,
+#event-form .event-form-bookings {
+  display: none; }
 
 .form-table th,
 .events-table th {

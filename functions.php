@@ -195,7 +195,6 @@ function eypd_run_once() {
 	$img_max_size       = 8388608;
 	$default_no         = array(
 		'dbem_css_search',
-		'dbem_rsvp_enabled',
 		'dbem_events_form_reshow',
 		'dbem_events_anonymous_submissions',
 		'dbem_cp_events_comments',
@@ -206,6 +205,7 @@ function eypd_run_once() {
 		'dbem_bookings_double',
 	);
 	$default_yes        = array(
+		'dbem_rsvp_enabled',
 		'dbem_recurrence_enabled',
 		'dbem_categories_enabled',
 		'dbem_attributes_enabled',
@@ -219,7 +219,7 @@ function eypd_run_once() {
 		'dbem_bookings_approval_reserved',
 		'dbem_bookings_user_cancellation',
 		'dbem_bookings_approval_overbooking',
-		'dbem_bookings_approval_overbooking',
+		'dbem_bookings_login_form',
 	);
 	$default_attributes = '#_ATT{Online}{|Yes|No}
 #_ATT{Registration Fee}
@@ -465,3 +465,14 @@ function eypd_validate_attributes() {
 }
 
 add_action( 'em_event_validate', 'eypd_validate_attributes' );
+
+/**
+ *
+ * @return int
+ */
+function eypd_set_default_spaces(){
+	$default = 100;
+	return $default;
+}
+
+add_filter( 'em_ticket_get_spaces', 'eypd_set_default_spaces' );
