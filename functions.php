@@ -518,6 +518,8 @@ function eypd_validate_attributes() {
 
 }
 
+add_action( 'em_event_validate', 'eypd_validate_attributes' );
+
 /**
  * Makes profile fields descriptions into modals,
  * content of modals are in eypd/templates/*-modal.php
