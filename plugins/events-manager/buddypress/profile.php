@@ -95,6 +95,11 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 		'format_header' => $format_header,
 		'format_footer' => $format_footer,
 	) );
+	// tally up the hours
+	$num = eypd_cumulative_hours( $event_ids );
+	if ( $num ) {
+		echo "<p>Total Certificate Hours: {$num}</p>";
+	}
 } else {
 	?>
     <p><?php _e( 'No past events attended yet.', 'events-manager' ); ?></p>
