@@ -192,21 +192,24 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version       = 3;
+	$eypd_version       = 4;
 	$current_version    = get_option( 'eypd_version', 0 );
 	$img_max_dimension  = 1000;
 	$img_min_dimension  = 50;
 	$img_max_size       = 8388608;
 	$default_no         = array(
 		'dbem_css_search',
-		'dbem_rsvp_enabled',
 		'dbem_events_form_reshow',
 		'dbem_events_anonymous_submissions',
 		'dbem_cp_events_comments',
 		'dbem_search_form_countries',
 		'dbem_locations_page_search_form',
+		'dbem_bookings_anonymous',
+		'dbem_bookings_approval',
+		'dbem_bookings_double',
 	);
 	$default_yes        = array(
+		'dbem_rsvp_enabled',
 		'dbem_recurrence_enabled',
 		'dbem_categories_enabled',
 		'dbem_attributes_enabled',
@@ -217,6 +220,10 @@ function eypd_run_once() {
 		'dbem_cp_events_formats',
 		'dbem_gmap_is_active',
 		'dbem_cp_events_formats',
+		'dbem_bookings_approval_reserved',
+		'dbem_bookings_user_cancellation',
+		'dbem_bookings_approval_overbooking',
+		'dbem_bookings_login_form',
 	);
 	$default_attributes = '#_ATT{Target Audience}
 #_ATT{Online}{|Yes|No}
@@ -518,10 +525,21 @@ function eypd_profile_field_modals() {
 
 add_filter( 'bp_get_the_profile_field_description', 'eypd_profile_field_modals' );
 
-// display a link tp FAQ after the submit button on the registration page  
+// display a link to FAQ after the submit button on the registration page
 function eypd_faq() {
 	$html = "<div class='submit faq'><a href=\"https://BCCAMPUS.mycusthelp.ca/webapp/_rs/FindAnswers.aspx?coid=6CFA1D4B2B28F770A1273B\" target=\"_blank\">Need help signing up?</a></div>";
 	echo $html;
 }
 
 add_filter( 'bp_after_registration_submit_buttons', 'eypd_faq' );
+
+/**
+ *
+ * @return int
+ */
+function eypd_set_default_spaces(){
+	$default = 100;
+	return $default;
+}
+
+add_filter( 'em_ticket_get_spaces', 'eypd_set_default_spaces' );
