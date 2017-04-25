@@ -192,7 +192,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version       = 4;
+	$eypd_version       = 5;
 	$current_version    = get_option( 'eypd_version', 0 );
 	$img_max_dimension  = 1000;
 	$img_min_dimension  = 50;
@@ -305,10 +305,11 @@ function eypd_run_once() {
 		 * Update option to current version
 		 */
 		update_option( 'eypd_version', $eypd_version );
+
 	}
 }
 
-add_action( 'after_switch_theme', 'eypd_run_once' );
+add_action( 'wp_loaded', 'eypd_run_once' );
 
 /**
  * Changing state to province and other customizations
