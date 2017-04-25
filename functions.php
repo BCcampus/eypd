@@ -192,12 +192,12 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version       = 5;
-	$current_version    = get_option( 'eypd_version', 0 );
-	$img_max_dimension  = 1000;
-	$img_min_dimension  = 50;
-	$img_max_size       = 8388608;
-	$default_no         = array(
+	$eypd_version        = 5.2;
+	$current_version     = get_option( 'eypd_version', 0 );
+	$img_max_dimension   = 1000;
+	$img_min_dimension   = 50;
+	$img_max_size        = 8388608;
+	$default_no          = array(
 		'dbem_css_search',
 		'dbem_events_form_reshow',
 		'dbem_events_anonymous_submissions',
@@ -207,8 +207,9 @@ function eypd_run_once() {
 		'dbem_bookings_anonymous',
 		'dbem_bookings_approval',
 		'dbem_bookings_double',
+		'dbem_bookings_login_form',
 	);
-	$default_yes        = array(
+	$default_yes         = array(
 		'dbem_rsvp_enabled',
 		'dbem_recurrence_enabled',
 		'dbem_categories_enabled',
@@ -223,9 +224,8 @@ function eypd_run_once() {
 		'dbem_bookings_approval_reserved',
 		'dbem_bookings_user_cancellation',
 		'dbem_bookings_approval_overbooking',
-		'dbem_bookings_login_form',
 	);
-	$default_attributes = '#_ATT{Target Audience}
+	$default_attributes  = '#_ATT{Target Audience}
 #_ATT{Online}{|Yes|No}
 #_ATT{Registration Fee}
 #_ATT{Presenter(s)}
@@ -239,8 +239,31 @@ function eypd_run_once() {
 #_ATT{Prerequisite(s)}
 #_ATT{Required Materials}
 #_ATT{Event Sponsors}';
+	$single_event_format = '<div style="float:right; margin:0px 0px 15px 15px;">#_LOCATIONMAP</div>
+<p>
+	<strong>Date/Time</strong><br/>
+	Date(s) - #_EVENTDATES<br /><i>#_EVENTTIMES</i>
+</p>
+<p><strong>Add to My Calendar</strong><br>#_EVENTICALLINK</p>
+{has_location}
+<p>
+	<strong>Location</strong><br/>
+	#_LOCATIONLINK
+</p>
+{/has_location}
+<p>
+	<strong>Categories</strong>
+	#_CATEGORIES
+</p>
+<br style="clear:both" />
+#_EVENTNOTES
+{has_bookings}
+#_BOOKINGFORM
+{/has_bookings}';
+
 	$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
 <p><strong>Go to the homepage and use the search or map feature to find your event.</strong></p>';
+
 	$loc_balloon_format = '<strong>#_LOCATIONNAME</strong><address>#_LOCATIONADDRESS<br>#_LOCATIONTOWN</address>
 #_LOCATIONNEXTEVENTS';
 
@@ -278,6 +301,7 @@ function eypd_run_once() {
 		update_option( 'dbem_event_list_item_format', $format_event_list );
 		update_option( 'dbem_event_list_item_format_header', $format_event_list_header );
 		update_option( 'dbem_event_list_item_format_footer', $format_event_list_footer );
+		update_option( 'dbem_single_event_format', $single_event_format );
 
 		foreach ( $default_no as $no ) {
 			update_option( $no, 0 );
@@ -300,6 +324,11 @@ function eypd_run_once() {
 		 * Most events will be in British Columbia
 		 */
 		update_option( 'eypd_location_default_province', 'British Columbia' );
+
+		/**
+		 * Booking submit button text
+		 */
+		update_option( 'dbem_bookings_submit_button', 'Plan to attend' );
 
 		/**
 		 * Update option to current version
@@ -494,6 +523,8 @@ function eypd_validate_attributes() {
 
 }
 
+add_action( 'em_event_validate', 'eypd_validate_attributes' );
+
 /**
  * Makes profile fields descriptions into modals,
  * content of modals are in eypd/templates/*-modal.php
@@ -538,8 +569,9 @@ add_filter( 'bp_after_registration_submit_buttons', 'eypd_faq' );
  *
  * @return int
  */
-function eypd_set_default_spaces(){
+function eypd_set_default_spaces() {
 	$default = 100;
+
 	return $default;
 }
 
