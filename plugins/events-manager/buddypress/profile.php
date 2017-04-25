@@ -63,8 +63,6 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 
     <h4><?php _e( "Past Events I've Attended", 'events-manager' ); ?></h4>
 <?php
-$EM_Person   = new EM_Person( $bp->displayed_user->id );
-$EM_Bookings = $EM_Person->get_bookings( false, apply_filters( 'em_bp_attending_status', 1 ) );
 if ( count( $EM_Bookings->bookings ) > 0 ) {
 	//Get events here in one query to speed things up
 	$event_ids = array();
