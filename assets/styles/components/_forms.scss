@@ -13,13 +13,18 @@
   display: none;
 }
 
+// hides unused booking fields in single event page
+.em-booking-form p {
+  display: none;
+}
+
 // Switch order of columns on Sign Up form
 form.standard-form #profile-details-section {
   float: left;
 }
 
 form.standard-form #basic-details-section {
-  float:right;
+  float: right;
 }
 
 #event-form {
@@ -121,7 +126,7 @@ div.time-picker li {
       border: none;
     }
   }
-  .event-form-bookings{
+  .event-form-bookings {
     display: none;
   }
 }

@@ -253,6 +253,9 @@ input.c-button.c--primary, input.button-primary, input.button {
 .field-visibility-settings-notoggle {
   display: none; }
 
+.em-booking-form p {
+  display: none; }
+
 form.standard-form #profile-details-section {
   float: left; }
 
