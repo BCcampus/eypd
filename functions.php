@@ -598,3 +598,9 @@ function eypd_cumulative_hours( $ids ) {
 
 	return intval( $total );
 }
+
+// gets rid of the "Events I'm Attending" menu item
+add_action( 'admin_bar_menu', 'rm_events_attending', 999 );
+function rm_events_attending( $wp_admin_bar ) {
+	$wp_admin_bar->remove_node( 'my-em-events-attending');
+}
