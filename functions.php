@@ -598,3 +598,16 @@ function eypd_cumulative_hours( $ids ) {
 
 	return intval( $total );
 }
+
+/**
+ * update an extra field in user profile to store their certification hours
+ *
+ * @param $user_id
+ */
+function eypd_update_cert_hours( $user_id ) {
+	if ( current_user_can( 'edit_user', $user_id ) ) {
+		update_user_meta( $user_id, 'eypd_cert_hours', $_POST['eypd_cert_hours'] );
+	}
+}
+
+add_action( 'personal_options_update', 'eypd_update_cert_hours' );
