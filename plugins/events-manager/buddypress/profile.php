@@ -72,44 +72,49 @@ if ( is_user_logged_in() ) { ?>
 
 
         <div class='table-wrap'>
-            <table id='dbem-bookings-table' class='widefat post fixed'>
-                <thead>
-                <tr>
-                    <th class='manage-column' scope='col'><?php _e( 'Date', 'events-manager' ); ?></th>
-                    <th class='manage-column' scope='col'><?php _e( 'Event', 'events-manager' ); ?></th>
-                    <th class='manage-column' scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
-                    <th class='manage-column' scope='col'><?php _e( 'Validate', 'events-manager' ); ?></th>
-                </tr>
-                </thead>
-                <tbody>
-				<?php
-				$nonce       = wp_create_nonce( 'eypd_cert_hours' );
-				$event_count = 0;
-				$user_hours  = get_option( 'eypd_cert_hours' );
-				foreach ( $EM_Bookings as $EM_Booking ) {
-					/* @var $EM_Booking EM_Booking */
-					$EM_Event = $EM_Booking->get_event();
-					$event_id = $event_ids[ $event_count ]; ?>
-
+            <form id="eypd_cert_hours" class="eypd-cert-hours" action="" method="post">
+                <table id='dbem-bookings-table' class='widefat post fixed'>
+                    <thead>
                     <tr>
-                        <td><?php echo $EM_Event->output( "#_EVENTDATES<br/>#_EVENTTIMES" ); ?></td>
-                        <td><?php echo $EM_Event->output( "#_EVENTLINK
-                {has_location}<br/><i>#_LOCATIONNAME, #_LOCATIONTOWN #_LOCATIONSTATE</i>{/has_location}" ); ?></td>
-                        <td>
-							<?php echo $EM_Event->output( "#_ATT{Professional Development Certificate Credit Hours}" ); ?>
-                        </td>
-                        <td>
-                            <input id="event-rsvp" name=eypd_cert_hours[<?php echo $event_id; ?>]
-                                   value="1"
-                                   type='checkbox' <?php echo ( $user_hours[ $event_id ] ) ? 'checked="checked"' : ''; ?> />
-                        </td>
+                        <th class='manage-column' scope='col'><?php _e( 'Date', 'events-manager' ); ?></th>
+                        <th class='manage-column' scope='col'><?php _e( 'Event', 'events-manager' ); ?></th>
+                        <th class='manage-column' scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
+                        <th class='manage-column' scope='col'><?php _e( 'Validate', 'events-manager' ); ?></th>
                     </tr>
+                    </thead>
+                    <tbody>
 					<?php
-					$event_count ++;
-				}
-				?>
-                </tbody>
-            </table>
+					$nonce       = wp_create_nonce( 'eypd_cert_hours' );
+					$event_count = 0;
+					$user_hours  = get_option( 'eypd_cert_hours' );
+					foreach ( $EM_Bookings as $EM_Booking ) {
+						/* @var $EM_Booking EM_Booking */
+						$EM_Event = $EM_Booking->get_event();
+						$event_id = $event_ids[ $event_count ]; ?>
+
+                        <tr>
+                            <td><?php echo $EM_Event->output( "#_EVENTDATES<br/>#_EVENTTIMES" ); ?></td>
+                            <td><?php echo $EM_Event->output( "#_EVENTLINK
+                {has_location}<br/><i>#_LOCATIONNAME, #_LOCATIONTOWN #_LOCATIONSTATE</i>{/has_location}" ); ?></td>
+                            <td>
+								<?php echo $EM_Event->output( "#_ATT{Professional Development Certificate Credit Hours}" ); ?>
+                            </td>
+                            <td>
+                                <input id="eypd-cert-hours-<?php echo $event_id ;?>" name=eypd_cert_hours[<?php echo $event_id; ?>]
+                                       value="1"
+                                       type='checkbox' <?php echo ( $user_hours[ $event_id ] ) ? 'checked="checked"' : ''; ?> />
+                            </td>
+                        </tr>
+						<?php
+						$event_count ++;
+					}
+					?>
+                    </tbody>
+                </table>
+                <input type="hidden" name="_wpnonce" value="<?php echo $nonce ;?>" />
+                <input type="hidden" name="action" value="eypd_cert_hours"/>
+                <input type="submit" value="Update My Hours"/>
+            </form>
 			<?php
 			// tally up the hours
 			$num = eypd_cumulative_hours( $event_ids );
