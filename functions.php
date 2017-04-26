@@ -576,3 +576,25 @@ function eypd_set_default_spaces() {
 }
 
 add_filter( 'em_ticket_get_spaces', 'eypd_set_default_spaces' );
+
+/**
+ * @param $ids
+ *
+ * @return bool|int
+ */
+function eypd_cumulative_hours( $ids ) {
+	if ( ! is_array( $ids ) ) {
+		return false;
+	}
+	$total = 0;
+	foreach ( $ids as $id ) {
+		$e = em_get_event( $id );
+		foreach ( $e->event_attributes as $key => $val ) {
+			if ( 0 === strcmp( 'Professional Development Certificate Credit Hours', $key ) ) {
+				$total = $total + intval( $val );
+			}
+		}
+	}
+
+	return intval( $total );
+}

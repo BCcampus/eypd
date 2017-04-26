@@ -63,13 +63,43 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 
     <h4><?php _e( "Past Events I've Attended", 'events-manager' ); ?></h4>
 <?php
+
+$format_header = '<table cellpadding="0" cellspacing="0" class="events-table" >
+    <thead>
+        <tr>
+			<th class="event-time" width="150">Date/Time</th>
+			<th class="event-description" width="*">Past Event</th>
+			<th class="event-capacity" width="*">Certificate Hours</th>
+		</tr>
+   	</thead>
+    <tbody>';
+$format        = '<tr>
+			<td>#_EVENTDATES<br/>#_EVENTTIMES</td>
+            <td>#_EVENTLINK
+                {has_location}<br/><i>#_LOCATIONNAME, #_LOCATIONTOWN #_LOCATIONSTATE</i>{/has_location}
+            </td>
+			<td>#_ATT{Professional Development Certificate Credit Hours}</td>
+        </tr>';
+$format_footer = '</tbody></table>';
+
 if ( count( $EM_Bookings->bookings ) > 0 ) {
 	//Get events here in one query to speed things up
 	$event_ids = array();
 	foreach ( $EM_Bookings as $EM_Booking ) {
 		$event_ids[] = $EM_Booking->event_id;
 	}
-	echo EM_Events::output( array( 'event' => $event_ids, 'scope' => 'past' ) );
+	echo EM_Events::output( array(
+		'event'         => $event_ids,
+		'scope'         => 'past',
+		'format'        => $format,
+		'format_header' => $format_header,
+		'format_footer' => $format_footer,
+	) );
+	// tally up the hours
+	$num = eypd_cumulative_hours( $event_ids );
+	if ( $num ) {
+		echo "<p>Total Certificate Hours: {$num}</p>";
+	}
 } else {
 	?>
     <p><?php _e( 'No past events attended yet.', 'events-manager' ); ?></p>
