@@ -475,6 +475,7 @@ function eypd_admin_bar_render() {
 		$wp_admin_bar->remove_node( 'my-blogs' );
 		$wp_admin_bar->remove_node( 'customize' );
 		$wp_admin_bar->remove_node( 'site-name' );
+		$wp_admin_bar->remove_node( 'my-em-events-attending' );
 
 		// maintain a way for admins to access the dashboard
 		if ( current_user_can( 'activate_plugins' ) ) {
@@ -597,10 +598,4 @@ function eypd_cumulative_hours( $ids ) {
 	}
 
 	return intval( $total );
-}
-
-// gets rid of the "Events I'm Attending" menu item
-add_action( 'admin_bar_menu', 'rm_events_attending', 999 );
-function rm_events_attending( $wp_admin_bar ) {
-	$wp_admin_bar->remove_node( 'my-em-events-attending');
 }
