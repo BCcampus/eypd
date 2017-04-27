@@ -40,7 +40,7 @@ if ( is_user_logged_in() ):
                         <th class='manage-column' scope='col'><?php _e( 'Event', 'events-manager' ); ?></th>
                         <th class='manage-column' scope='col'><?php _e( 'Date', 'events-manager' ); ?></th>
                         <th class='manage-column' scope='col'><?php _e( 'Spaces', 'events-manager' ); ?></th>
-                        <th class='manage-column' scope='col'><?php _e( 'Status', 'events-manager' ); ?></th>
+                        <th class='manage-column lastfix' scope='col'><?php _e( 'Status', 'events-manager' ); ?></th>
                     </tr>
                     </thead>
                     <tbody>
