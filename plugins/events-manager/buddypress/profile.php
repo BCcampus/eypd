@@ -72,7 +72,17 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 	//Get events here in one query to speed things up
 	$event_ids = array();
 	foreach ( $EM_Bookings as $EM_Booking ) {
+
+		// collect ids of bookings made by the user
 		$event_ids[] = $EM_Booking->event_id;
+
+		// collect ids of bookings in the past
+		$past_booking = $EM_Booking->get_event();
+		$event_date   = strtotime( $past_booking->event_start_date, time() );
+		$today        = time();
+		if ( $today > $event_date ) {
+			$past_ids[] = $past_booking->event_id;
+		}
 	}
 	echo EM_Events::output( array(
 		'event'         => $event_ids,
@@ -93,17 +103,18 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 if ( is_user_logged_in() ) { ?>
     <h4><?php _e( "Past Events I've Attended", 'events-manager' ); ?></h4>
 	<?php
-	if ( $bookings_count > 0 ) { ?>
+	if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
 
         <div class='table-wrap'>
             <form id="eypd_cert_hours" class="eypd-cert-hours" action="" method="post">
                 <table id='dbem-bookings-table' class='widefat post fixed'>
                     <thead>
                     <tr>
-                        <th class='manage-column' scope='col'><?php _e( 'Date', 'events-manager' ); ?></th>
-                        <th class='manage-column' scope='col'><?php _e( 'Event', 'events-manager' ); ?></th>
-                        <th class='manage-column' scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
-                        <th class='manage-column' scope='col'><?php _e( 'Attended', 'events-manager' ); ?></th>
+                        <th class='event-time' scope='col'><?php _e( 'Date/Time', 'events-manager' ); ?></th>
+                        <th class='event-description'
+                            scope='col'><?php _e( 'Past Event Description', 'events-manager' ); ?></th>
+                        <th class='event-hours' scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
+                        <th class='event-attendance' scope='col'><?php _e( 'Attended', 'events-manager' ); ?></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -112,12 +123,14 @@ if ( is_user_logged_in() ) { ?>
 					$count = 0;
 					// save number of hours in the users profile
 					$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
-
 					foreach ( $EM_Bookings as $EM_Booking ) {
-						/* @var $EM_Booking EM_Booking */
+						// skip over if it's not in the past
+						if ( ! in_array( $EM_Booking->event_id, $past_ids ) ) {
+							continue;
+						}
 						$EM_Event = $EM_Booking->get_event();
 
-						$event_id = $event_ids[ $count ]; ?>
+						$event_id = $past_ids[ $count ]; ?>
                         <tr>
                             <td><?php echo $EM_Event->output( "#_EVENTDATES<br/>#_EVENTTIMES" ); ?></td>
                             <td><?php echo $EM_Event->output( "#_EVENTLINK
