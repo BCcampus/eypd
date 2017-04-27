@@ -192,7 +192,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 5.2;
+	$eypd_version        = 5.3;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -239,7 +239,7 @@ function eypd_run_once() {
 #_ATT{Prerequisite(s)}
 #_ATT{Required Materials}
 #_ATT{Event Sponsors}';
-	$single_event_format = '<div style="float:right; margin:0px 0px 15px 15px;">#_LOCATIONMAP</div>
+	$single_event_format = '<div style="float:right; clear:right; margin:0px 0px 15px 15px;">#_LOCATIONMAP</div>
 <p>
 	<strong>Date/Time</strong><br/>
 	Date(s) - #_EVENTDATES<br /><i>#_EVENTTIMES</i>
@@ -494,7 +494,9 @@ function eypd_admin_bar_render() {
 
 add_action( 'wp_before_admin_bar_render', 'eypd_admin_bar_render' );
 
-// Add favicon
+/**
+ * Add favicon
+ */
 function eypd_favicon_link() {
 	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/assets/images/favicon.ico" />' . "\n";
 }
@@ -558,7 +560,9 @@ function eypd_profile_field_modals() {
 
 add_filter( 'bp_get_the_profile_field_description', 'eypd_profile_field_modals' );
 
-// display a link to FAQ after the submit button on the registration page
+/**
+ * Display a link to FAQ after the submit button on the registration page
+ */
 function eypd_faq() {
 	$html = "<div class='submit faq'><a href=\"https://BCCAMPUS.mycusthelp.ca/webapp/_rs/FindAnswers.aspx?coid=6CFA1D4B2B28F770A1273B\" target=\"_blank\">Need help signing up?</a></div>";
 	echo $html;
@@ -567,6 +571,7 @@ function eypd_faq() {
 add_filter( 'bp_after_registration_submit_buttons', 'eypd_faq' );
 
 /**
+ * Setting a higher default for bookings capacity
  *
  * @return int
  */
@@ -579,6 +584,8 @@ function eypd_set_default_spaces() {
 add_filter( 'em_ticket_get_spaces', 'eypd_set_default_spaces' );
 
 /**
+ * Adds up hours (if available) from an event attribute
+ *
  * @param $ids
  *
  * @return bool|int
