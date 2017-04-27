@@ -588,7 +588,7 @@ function eypd_cumulative_hours( $ids ) {
 		return false;
 	}
 	$total = 0;
-	foreach ( $ids as $id ) {
+	foreach ( $ids as $id => $bool ) {
 		$e = em_get_event( $id );
 		foreach ( $e->event_attributes as $key => $val ) {
 			if ( 0 === strcmp( 'Professional Development Certificate Credit Hours', $key ) ) {
