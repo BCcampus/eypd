@@ -629,6 +629,9 @@ nav.main-menu {
 #infinity-base .icext-feature {
   position: static !important; }
 
+#wp-admin-bar-my-account-buddypress li {
+  padding-left: 20px !important; }
+
 .mobile-menu-container {
   display: none !important; }
 

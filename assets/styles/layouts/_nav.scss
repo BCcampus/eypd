@@ -125,6 +125,13 @@ nav.main-menu {
   position: static !important;
 }
 
+// Profile Menu
+// ---
+//
+
+#wp-admin-bar-my-account-buddypress li {
+  padding-left: $unit*4 !important;
+}
 
 // Mobile Nav
 // ---
