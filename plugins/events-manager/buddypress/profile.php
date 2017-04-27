@@ -70,7 +70,6 @@ if ( is_user_logged_in() ) { ?>
 	<?php
 	if ( $bookings_count > 0 ) { ?>
 
-
         <div class='table-wrap'>
             <form id="eypd_cert_hours" class="eypd-cert-hours" action="" method="post">
                 <table id='dbem-bookings-table' class='widefat post fixed'>
@@ -79,19 +78,21 @@ if ( is_user_logged_in() ) { ?>
                         <th class='manage-column' scope='col'><?php _e( 'Date', 'events-manager' ); ?></th>
                         <th class='manage-column' scope='col'><?php _e( 'Event', 'events-manager' ); ?></th>
                         <th class='manage-column' scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
-                        <th class='manage-column' scope='col'><?php _e( 'Validate', 'events-manager' ); ?></th>
+                        <th class='manage-column' scope='col'><?php _e( 'Attended', 'events-manager' ); ?></th>
                     </tr>
                     </thead>
                     <tbody>
 					<?php
-					$nonce       = wp_create_nonce( 'eypd_cert_hours' );
-					$event_count = 0;
-					$user_hours  = get_option( 'eypd_cert_hours' );
+					$nonce = wp_create_nonce( 'eypd_cert_hours' );
+					$count = 0;
+					// save number of hours in the users profile
+					$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
+
 					foreach ( $EM_Bookings as $EM_Booking ) {
 						/* @var $EM_Booking EM_Booking */
 						$EM_Event = $EM_Booking->get_event();
-						$event_id = $event_ids[ $event_count ]; ?>
 
+						$event_id = $event_ids[ $count ]; ?>
                         <tr>
                             <td><?php echo $EM_Event->output( "#_EVENTDATES<br/>#_EVENTTIMES" ); ?></td>
                             <td><?php echo $EM_Event->output( "#_EVENTLINK
@@ -100,27 +101,36 @@ if ( is_user_logged_in() ) { ?>
 								<?php echo $EM_Event->output( "#_ATT{Professional Development Certificate Credit Hours}" ); ?>
                             </td>
                             <td>
-                                <input id="eypd-cert-hours-<?php echo $event_id ;?>" name=eypd_cert_hours[<?php echo $event_id; ?>]
+                                <input id="eypd-cert-hours-<?php echo $event_id; ?>"
+                                       name=eypd_cert_hours[<?php echo $event_id; ?>]
                                        value="1"
                                        type='checkbox' <?php echo ( $user_hours[ $event_id ] ) ? 'checked="checked"' : ''; ?> />
                             </td>
                         </tr>
 						<?php
-						$event_count ++;
+						$count ++;
 					}
 					?>
                     </tbody>
                 </table>
-                <input type="hidden" name="_wpnonce" value="<?php echo $nonce ;?>" />
+                <input type="hidden" name="_wpnonce" value="<?php echo $nonce; ?>"/>
+                <input type="hidden" name="user_id" value="<?php echo $bp->displayed_user->id; ?>"/>
                 <input type="hidden" name="action" value="eypd_cert_hours"/>
-                <input type="submit" value="Update My Hours"/>
+                <input class="right" type="submit" value="Calculate My Hours"/>
             </form>
 			<?php
 			// tally up the hours
-			$num = eypd_cumulative_hours( $event_ids );
+			$num = eypd_cumulative_hours( $user_hours );
+			echo "<p>Total Certificate Certificate Hours: ";
+
 			if ( $num ) {
-				echo "<p>Total Certificate Hours: {$num}</p>";
+				echo "{$num}";
+			} else {
+				echo "0";
 			}
+
+			echo "</p>";
+
 			?>
 
         </div>
