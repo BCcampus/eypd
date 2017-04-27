@@ -720,8 +720,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 	// EYPD certificate hours
 	if ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'eypd_cert_hours' && wp_verify_nonce( $_REQUEST['_wpnonce'], 'eypd_cert_hours' ) ) {
 
-		if ( isset( $_POST['eypd_cert_hours'] ) ) {
-			;
+		if ( is_user_logged_in() ) {
 			// add the data
 			update_user_meta( $_POST['user_id'], 'eypd_cert_hours', $_POST['eypd_cert_hours'] );
 		}
