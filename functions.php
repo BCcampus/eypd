@@ -192,7 +192,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 5.3;
+	$eypd_version        = 5.7;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -227,36 +227,37 @@ function eypd_run_once() {
 	);
 	$default_attributes  = '#_ATT{Target Audience}
 #_ATT{Online}{|Yes|No}
+#_ATT{Professional Development Certificate}{|Yes|No|Upon Request|Not Currently Available}
+#_ATT{Professional Development Certificate Credit Hours}
 #_ATT{Registration Fee}
-#_ATT{Presenter(s)}
-#_ATT{Presenter Information}
+#_ATT{Registration Space}{|Filling Up!|FULL}
 #_ATT{Registration Contact Email}
 #_ATT{Registration Contact Phone Number}
 #_ATT{Registration Link}
-#_ATT{Registration Space}{|Filling Up!|FULL}
-#_ATT{Professional Development Certificate}{|Yes|No|Upon Request|Not Currently Available}
-#_ATT{Professional Development Certificate Credit Hours}
 #_ATT{Prerequisite(s)}
 #_ATT{Required Materials}
+#_ATT{Presenter(s)}
+#_ATT{Presenter Information}
 #_ATT{Event Sponsors}';
 	$single_event_format = '<div style="float:right; clear:right; margin:0px 0px 15px 15px;">#_LOCATIONMAP</div>
 <p>
 	<strong>Date/Time</strong><br/>
 	Date(s) - #_EVENTDATES<br /><i>#_EVENTTIMES</i>
 </p>
-<p><strong>Add to My Calendar</strong><br>#_EVENTICALLINK</p>
-{has_location}
 <p>
 	<strong>Location</strong><br/>
 	#_LOCATIONLINK
 </p>
+<p><strong>Add to My Calendar</strong><br>#_EVENTICALLINK</p>
+{has_location}
+
 {/has_location}
+<br style="clear:both" />
+#_EVENTNOTES
 <p>
 	<strong>Categories</strong>
 	#_CATEGORIES
 </p>
-<br style="clear:both" />
-#_EVENTNOTES
 {has_bookings}
 #_BOOKINGFORM
 {/has_bookings}';
