@@ -41,3 +41,11 @@ a.em-button {
     margin-right: $unit*2;
   }
 }
+// move event location map over to the right
+.entry {
+  .single-event-map {
+    float: right;
+    clear: right;
+    margin: 0px 0px 15px 15px;
+  }
+}

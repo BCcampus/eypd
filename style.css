@@ -814,6 +814,11 @@ a.em-button {
   .search-box input {
     margin-right: 10px; }
 
+.entry .single-event-map {
+  float: right;
+  clear: right;
+  margin: 0px 0px 15px 15px; }
+
 #wpadminbar {
   background-color: #E6E7E8;
   display: block !important; }
