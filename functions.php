@@ -477,6 +477,8 @@ function eypd_admin_bar_render() {
 		$wp_admin_bar->remove_node( 'customize' );
 		$wp_admin_bar->remove_node( 'site-name' );
 		$wp_admin_bar->remove_node( 'my-em-events-attending' );
+		$wp_admin_bar->remove_node( 'my-em-events-my-locations' );
+		$wp_admin_bar->remove_node( 'my-em-events-my-bookings' );
 
 		// maintain a way for admins to access the dashboard
 		if ( current_user_can( 'activate_plugins' ) ) {
