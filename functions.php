@@ -192,7 +192,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 5.8;
+	$eypd_version        = 5.9;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -332,6 +332,11 @@ function eypd_run_once() {
 		update_option( 'dbem_bookings_submit_button', 'Plan to attend' );
 
 		/**
+		 * Manage bookings link text
+		 */
+		update_option( '	dbem_bookings_form_msg_bookings_link', 'My Profile Page' );
+
+		/**
 		 * Update option to current version
 		 */
 		update_option( 'eypd_version', $eypd_version );
@@ -429,9 +434,9 @@ function eypd_event_etc_output( $input = "" ) {
 		$cats       = wp_get_object_terms( $post_id, 'event-categories' );
 		$cat_output = $space = "";
 		foreach ( $cats as $cat ) {
-			$c = get_category( $cat );
+			$c          = get_category( $cat );
 			$cat_output .= $space . "cat_" . str_replace( "-", "_", $c->slug );
-			$space = " ";
+			$space      = " ";
 		}
 		$new_classes = "<li class=\"$cat_output\">";
 		$output      = str_replace( $output_array[0][ $index ], $new_classes, $output );
@@ -608,4 +613,17 @@ function eypd_cumulative_hours( $ids ) {
 	}
 
 	return intval( $total );
+}
+
+/**
+ * URL to member profile
+ */
+function eypd_get_my_bookings_url() {
+	global $bp;
+	if ( ! empty( $bp->events->link ) ) {
+		//get member url
+		return $bp->events->link;
+	} else {
+		return "#";
+	}
 }

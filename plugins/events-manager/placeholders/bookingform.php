@@ -32,8 +32,7 @@ if( !$is_open && !is_user_logged_in() && $EM_Event->get_bookings()->is_open(true
 	?>
 	<?php if( is_object($EM_Booking) && !get_option('dbem_bookings_double') ): //Double bookings not allowed ?>
 		<p>
-			<?php echo get_option( 'dbem_bookings_form_msg_attending' ); ?> <a href="<?php global $current_user;
-			echo home_url() . '/members/' . $current_user->user_login . '/events/profile'; ?>">My Profile Page</a>
+			<?php echo get_option('dbem_bookings_form_msg_attending'); ?><a href="<?php echo eypd_get_my_bookings_url(); ?>"><?php echo get_option('dbem_bookings_form_msg_bookings_link'); ?></a>
 		</p>
 	<?php elseif( !$EM_Event->event_rsvp ): //bookings not enabled ?>
 		<p><?php echo get_option('dbem_bookings_form_msg_disabled'); ?></p>
