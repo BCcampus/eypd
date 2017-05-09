@@ -371,7 +371,7 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 		$modify = array(
 			'Register'                                                                                                                  => 'Sign Up',
 			'Email Address'                                                                                                             => 'Work Email Address',
-			'Registering for this site is easy. Just fill in the fields below, and we\'ll get a new account set up for you in no time.' => 'Fill in the fields below to register as an Organizer or a Learner. <b>Learner</b> — you are primarily looking for training events. <b>Organizer</b> — you are primarily posting training events on <b>behalf of your organization.</b>',
+			'Registering for this site is easy. Just fill in the fields below, and we\'ll get a new account set up for you in no time.' => 'Fill in the fields below to register as an Organizer or a Learner. <b>Learner</b> — you are primarily looking for training events. <b>Organizer</b> — you are primarily posting training events on behalf of your organization.',
 		);
 	}
 
