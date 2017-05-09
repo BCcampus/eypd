@@ -476,14 +476,36 @@ function eypd_admin_bar_render() {
 		$wp_admin_bar->remove_node( 'search' );
 		$wp_admin_bar->remove_node( 'comments' );
 		$wp_admin_bar->remove_node( 'edit' );
+		$wp_admin_bar->remove_node( 'edit-profile' );
+		$wp_admin_bar->remove_node( 'logout' );
 		$wp_admin_bar->remove_node( 'new-content' );
 		$wp_admin_bar->remove_node( 'updates' );
 		$wp_admin_bar->remove_node( 'my-blogs' );
 		$wp_admin_bar->remove_node( 'customize' );
 		$wp_admin_bar->remove_node( 'site-name' );
-		$wp_admin_bar->remove_node( 'my-em-events-attending' );
-		$wp_admin_bar->remove_node( 'my-em-events-my-locations' );
-		$wp_admin_bar->remove_node( 'my-em-events-my-bookings' );
+		$wp_admin_bar->remove_node( 'my-account-buddypress' );
+		$wp_admin_bar->remove_node( 'bp-notifications' );
+		$wp_admin_bar->remove_node( 'itsec_admin_bar_menu' );
+
+		// add my profile link
+		$profileurl = eypd_get_my_bookings_url();
+		$wp_admin_bar->add_node( array(
+			'id'     => 'my_profile',
+			'title'  => 'My Profile',
+			'href'   => $profileurl,
+			'parent' => 'user-actions', 
+			'meta'   => array( 'class' => 'my-profile-page' )
+		) );
+
+		//add logout link after my profile link, and redirect to homepage after logout
+		$logouturl = wp_logout_url( home_url() );
+		$wp_admin_bar->add_node( array(
+			'id'     => 'logout',
+			'title'  => 'Logout',
+			'href'   => $logouturl,
+			'parent' => 'user-actions',
+			'meta'   => array( 'class' => 'my-logout-link' )
+		) );
 
 		// maintain a way for admins to access the dashboard
 		if ( current_user_can( 'activate_plugins' ) ) {
