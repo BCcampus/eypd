@@ -536,10 +536,10 @@ function eypd_bp_nav() {
 	bp_core_remove_nav_item( 'friends' );
 	bp_core_remove_nav_item( 'messages' );
 	bp_core_remove_nav_item( 'notifications' );
-	bp_core_remove_nav_item( 'notifications' );
 	//subnav
 	bp_core_remove_subnav_item( 'events', 'attending' );
 	bp_core_remove_subnav_item( 'events', 'my-bookings' );
+	bp_core_remove_subnav_item( 'events', 'my-events' );
 
 }
 
