@@ -7,9 +7,7 @@
 |
 |
 */
-// 1. This is probably the worst hack, but it's the only way I could get
-// higher specificity to override theme styles 💩
-
+// 1. This is probably the worst hack
 
 @media screen and (max-width: $medium) {
   html.no-js,
