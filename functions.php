@@ -493,7 +493,7 @@ function eypd_admin_bar_render() {
 			'id'     => 'my_profile',
 			'title'  => 'My Profile',
 			'href'   => $profileurl,
-			'parent' => 'user-actions', 
+			'parent' => 'user-actions',
 			'meta'   => array( 'class' => 'my-profile-page' )
 		) );
 
@@ -523,6 +523,27 @@ function eypd_admin_bar_render() {
 }
 
 add_action( 'wp_before_admin_bar_render', 'eypd_admin_bar_render' );
+
+/**
+ * Remove BP sidebar menu items
+ */
+function eypd_bp_nav() {
+	global $bp;
+	bp_core_remove_nav_item( 'activity' );
+	bp_core_remove_nav_item( 'profile' );
+	bp_core_remove_nav_item( 'forums' );
+	bp_core_remove_nav_item( 'groups' );
+	bp_core_remove_nav_item( 'friends' );
+	bp_core_remove_nav_item( 'messages' );
+	bp_core_remove_nav_item( 'notifications' );
+	bp_core_remove_nav_item( 'notifications' );
+	//subnav
+	bp_core_remove_subnav_item( 'events', 'attending' );
+	bp_core_remove_subnav_item( 'events', 'my-bookings' );
+
+}
+
+add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
 
 /**
  * Add favicon
