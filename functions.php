@@ -122,11 +122,17 @@ function eypd_load_scripts() {
 	wp_enqueue_script( 'events-manager', $template_dir . '/assets/js/events-manager.js', array_values( $script_deps ), EM_VERSION );
 	wp_enqueue_script( 'tinyscrollbar', $template_dir . '/assets/js/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
 
+	// load popover only for users who aren't logged in
+	if ( ! is_user_logged_in() ) {
+		wp_enqueue_script( 'initpopover', $template_dir . '/assets/js/initpopover.js' );
+		wp_enqueue_script( 'popover', $template_dir . '/assets/js/bootstrap_popover.min.js', array(), null, true );
+		wp_enqueue_style( 'bootstrap', $template_dir . '/assets/styles/bootstrap_popover.min.css' );
+	}
+}
 	// only sign up page has requirements for modals
 	if ( is_page( 'Sign Up' ) ) {
-		wp_enqueue_script( 'modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
-		wp_enqueue_style( 'bootstrap', $template_dir . '/assets/styles/bootstrap.min.css' );
-	}
+	wp_enqueue_script( 'modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
+	wp_enqueue_style( 'bootstrap', $template_dir . '/assets/styles/bootstrap.min.css' );
 }
 
 add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
@@ -550,7 +556,7 @@ function eypd_nav_menu_items( $items ) {
 	if ( is_user_logged_in() ) {
 		$myeypd = '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
 	} else {
-		$myeypd = '<li class="home"><a href="' . home_url( '/my-eypd' ) . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
+		$myeypd = '<li class="home"><a href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Please <a href=\'wp-login.php\'>Login</a> or <a href=\'sign-up\'>Sign up</a> to view your events."><i>myEYPD</i></a></li>';
 	}
 	// add the myEYPD link to the end of the menu
 	$items = $items . $myeypd;
