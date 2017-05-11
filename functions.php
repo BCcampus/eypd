@@ -636,6 +636,7 @@ add_filter( 'em_ticket_get_spaces', 'eypd_set_default_spaces' );
 
 /**
  * Adds up hours (if available) from an event attribute
+ * hooked into init, integrates with eypd-actions.php
  *
  * @param $ids
  *
@@ -646,7 +647,12 @@ function eypd_cumulative_hours( $ids ) {
 		return false;
 	}
 	$total = 0;
+	// input is radio buttons with boolean values
+	// true means they attended (default)
 	foreach ( $ids as $id => $bool ) {
+		if ( false == $bool ) {
+			continue;
+		}
 		$e = em_get_event( $id );
 		foreach ( $e->event_attributes as $key => $val ) {
 			if ( 0 === strcmp( 'Professional Development Certificate Credit Hours', $key ) ) {

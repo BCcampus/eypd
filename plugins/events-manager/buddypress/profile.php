@@ -111,6 +111,8 @@ if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
                         scope='col'><?php _e( 'Event Description', 'events-manager' ); ?></th>
                     <th class='event-hours' scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
                     <th class='event-attendance' scope='col'><?php _e( 'Attended', 'events-manager' ); ?></th>
+                    <th class='event-attendance' scope='col'><?php _e( 'Did Not Attend', 'events-manager' ); ?></th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -138,7 +140,13 @@ if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
                             <input id="eypd-cert-hours-<?php echo $event_id; ?>"
                                    name=eypd_cert_hours[<?php echo $event_id; ?>]
                                    value="1"
-                                   type='checkbox' <?php echo ( $user_hours[ $event_id ] ) ? 'checked="checked"' : ''; ?> />
+                                   type='radio' <?php echo ( $user_hours[ $event_id ] || ! isset( $user_hours[ $event_id ] ) ) ? 'checked="checked"' : ''; ?> />
+                        </td>
+                        <td>
+                            <input id="eypd-cert-hours-<?php echo $event_id; ?>"
+                                   name=eypd_cert_hours[<?php echo $event_id; ?>]
+                                   value="0"
+                                   type='radio' <?php echo ( ! $user_hours[ $event_id ] ) ? 'checked="checked"' : ''; ?> />
                         </td>
                     </tr>
 					<?php
