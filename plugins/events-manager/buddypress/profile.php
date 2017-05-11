@@ -46,50 +46,79 @@ if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
     <h4><?php _e( "Events I'm Attending", 'events-manager' ); ?></h4>
 <?php
 
-
-$format_header = '<table cellpadding="0" cellspacing="0" class="events-table" >
-    <thead>
-        <tr>
-			<th class="event-time" width="150">Date/Time</th>
-			<th class="event-description" width="*">Upcoming Event</th>
-			<th class="event-ical" width="*">Add to Calendar</th>
-		</tr>
-   	</thead>
-    <tbody>';
-$format        = '<tr>
-			<td>#_EVENTDATES<br/>#_EVENTTIMES</td>
-            <td>#_EVENTLINK
-                {has_location}<br/><i>#_LOCATIONNAME, #_LOCATIONTOWN #_LOCATIONSTATE</i>{/has_location}
-            </td>
-			<td>#_EVENTICALLINK</td>
-        </tr>';
-$format_footer = '</tbody></table>';
-
-
 $EM_Person   = new EM_Person( $bp->displayed_user->id );
 $EM_Bookings = $EM_Person->get_bookings( false, apply_filters( 'em_bp_attending_status', 1 ) );
 if ( count( $EM_Bookings->bookings ) > 0 ) {
 	//Get events here in one query to speed things up
 	$event_ids = array();
-	foreach ( $EM_Bookings as $EM_Booking ) {
 
-		// collect ids of bookings made by the user
-		$event_ids[] = $EM_Booking->event_id;
+	?>
+    <table cellpadding="0" cellspacing="0" class="events-table">
+        <thead>
+        <tr>
+            <th class="event-time" width="150">Date/Time</th>
+            <th class="event-description" width="*">Upcoming Event</th>
+			<?php if ( is_user_logged_in() ) {
+				echo '<th class="event-delete">Delete this event from my profile</th>';
+			}
+			?>
+            <th class="event-ical" width="*">Add to Calendar</th>
+        </tr>
+        </thead>
+        <tbody>
+		<?php
+		$nonce = wp_create_nonce( 'booking_cancel' );
+		foreach ( $EM_Bookings as $EM_Booking ) {
+			// collect ids of bookings made by the user
+			$event_ids[] = $EM_Booking->event_id;
 
-		// collect ids of bookings in the past
-		$past_booking = $EM_Booking->get_event();
-		$event_date   = strtotime( $past_booking->event_start_date, time() );
-		$today        = time();
-		if ( $today > $event_date ) {
-			$past_ids[] = $past_booking->event_id;
+			// collect ids of bookings in the past
+			$past_booking = $EM_Booking->get_event();
+			$event_date   = strtotime( $past_booking->event_start_date, time() );
+			$today        = time();
+			if ( $today > $event_date ) {
+				$past_ids[] = $past_booking->event_id;
+			}
+
+			/* @var $EM_Booking EM_Booking */
+			$EM_Event = $EM_Booking->get_event();
+			?>
+            <tr>
+                <td><?php echo $EM_Event->output( "#_EVENTDATES<br/>#_EVENTTIMES" ); ?></td>
+                <td><?php echo $EM_Event->output( "#_EVENTLINK
+                {has_location}<br/><i>#_LOCATIONNAME, #_LOCATIONTOWN #_LOCATIONSTATE</i>{/has_location}" ); ?></td>
+
+				<?php if ( is_user_logged_in() ) {
+					echo '<td>';
+					$cancel_link = '';
+					if ( ! in_array( $EM_Booking->booking_status, array(
+							2,
+							3
+						) ) && get_option( 'dbem_bookings_user_cancellation' ) && $EM_Event->get_bookings()->has_open_time()
+					) {
+						$cancel_url  = em_add_get_params( $_SERVER['REQUEST_URI'], array(
+							'action'     => 'booking_cancel',
+							'booking_id' => $EM_Booking->booking_id,
+							'_wpnonce'   => $nonce
+						) );
+						$cancel_link = '<a class="em-bookings-cancel" href="' . $cancel_url . '" onclick="if( !confirm(EM.booking_warning_cancel) ){ return false; }">' . __( 'Delete', 'events-manager' ) . '</a>';
+					}
+					echo apply_filters( 'em_my_bookings_booking_actions', $cancel_link, $EM_Booking );
+					echo '</td>';
+				}
+				?>
+                <td><?php echo $EM_Event->output( '#_EVENTICALLINK' ); ?></td>
+            </tr>
+
+			<?php
 		}
-	}
-	echo EM_Events::output( array(
-		'event'         => $event_ids,
-		'format'        => $format,
-		'format_header' => $format_header,
-		'format_footer' => $format_footer,
-	) );
+		do_action( 'em_my_bookings_booking_loop', $EM_Booking );
+		?>
+        </tbody>
+    </table>
+    </div>
+	<?php
+
 } else {
 	?>
     <p><?php _e( 'Not attending any events yet.', 'events-manager' ); ?></p>
@@ -97,7 +126,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 }
 ?>
     <!-- Past Events Only -->
-    <h4><?php _e( "Past Events I've Attended", 'events-manager' ); ?></h4>
+    <p><?php _e( "Past Events I've Attended", 'events-manager' ); ?></p>
 <?php
 if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
 
