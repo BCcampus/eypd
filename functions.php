@@ -545,6 +545,21 @@ function eypd_bp_nav() {
 
 add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
 
+// Filter wp_nav_menu() to add myEYPD link to header menu
+function eypd_nav_menu_items( $items ) {
+	if ( is_user_logged_in() ) {
+		$myeypd = '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( 'myEYPD' ) . '</a></li>';
+	} else {
+		$myeypd = '<li class="home"><a href="' . home_url( '/my-eypd' ) . '">' . __( 'myEYPD' ) . '</a></li>';
+	}
+	// add the myEYPD link to the end of the menu
+	$items = $items . $myeypd;
+
+	return $items;
+}
+
+add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items' );
+
 /**
  * Add favicon
  */
