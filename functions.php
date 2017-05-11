@@ -548,9 +548,9 @@ add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
 // Filter wp_nav_menu() to add myEYPD link to header menu
 function eypd_nav_menu_items( $items ) {
 	if ( is_user_logged_in() ) {
-		$myeypd = '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( 'myEYPD' ) . '</a></li>';
+		$myeypd = '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
 	} else {
-		$myeypd = '<li class="home"><a href="' . home_url( '/my-eypd' ) . '">' . __( 'myEYPD' ) . '</a></li>';
+		$myeypd = '<li class="home"><a href="' . home_url( '/my-eypd' ) . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
 	}
 	// add the myEYPD link to the end of the menu
 	$items = $items . $myeypd;
