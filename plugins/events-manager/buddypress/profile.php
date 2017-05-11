@@ -67,9 +67,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
         </thead>
         <tbody>
 		<?php
-		$rowno       = 0;
-		$event_count = 0;
-		$nonce       = wp_create_nonce( 'booking_cancel' );
+		$nonce = wp_create_nonce( 'booking_cancel' );
 		foreach ( $EM_Bookings as $EM_Booking ) {
 			// collect ids of bookings made by the user
 			$event_ids[] = $EM_Booking->event_id;
@@ -84,41 +82,37 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 
 			/* @var $EM_Booking EM_Booking */
 			$EM_Event = $EM_Booking->get_event();
-			if ( ( $rowno < $limit || empty( $limit ) ) && ( $event_count >= $offset || $offset === 0 ) ) {
-				$rowno ++;
-				?>
-                <tr>
-                    <td><?php echo $EM_Event->output( "#_EVENTDATES<br/>#_EVENTTIMES" ); ?></td>
-                    <td><?php echo $EM_Event->output( "#_EVENTLINK
+			?>
+            <tr>
+                <td><?php echo $EM_Event->output( "#_EVENTDATES<br/>#_EVENTTIMES" ); ?></td>
+                <td><?php echo $EM_Event->output( "#_EVENTLINK
                 {has_location}<br/><i>#_LOCATIONNAME, #_LOCATIONTOWN #_LOCATIONSTATE</i>{/has_location}" ); ?></td>
 
-					<?php if ( is_user_logged_in() ) {
-						echo '<td>';
-						$cancel_link = '';
-						if ( ! in_array( $EM_Booking->booking_status, array(
-								2,
-								3
-							) ) && get_option( 'dbem_bookings_user_cancellation' ) && $EM_Event->get_bookings()->has_open_time()
-						) {
-							$cancel_url  = em_add_get_params( $_SERVER['REQUEST_URI'], array(
-								'action'     => 'booking_cancel',
-								'booking_id' => $EM_Booking->booking_id,
-								'_wpnonce'   => $nonce
-							) );
-							$cancel_link = '<a class="em-bookings-cancel" href="' . $cancel_url . '" onclick="if( !confirm(EM.booking_warning_cancel) ){ return false; }">' . __( 'Delete', 'events-manager' ) . '</a>';
-						}
-						echo apply_filters( 'em_my_bookings_booking_actions', $cancel_link, $EM_Booking );
-						echo '</td>';
+				<?php if ( is_user_logged_in() ) {
+					echo '<td>';
+					$cancel_link = '';
+					if ( ! in_array( $EM_Booking->booking_status, array(
+							2,
+							3
+						) ) && get_option( 'dbem_bookings_user_cancellation' ) && $EM_Event->get_bookings()->has_open_time()
+					) {
+						$cancel_url  = em_add_get_params( $_SERVER['REQUEST_URI'], array(
+							'action'     => 'booking_cancel',
+							'booking_id' => $EM_Booking->booking_id,
+							'_wpnonce'   => $nonce
+						) );
+						$cancel_link = '<a class="em-bookings-cancel" href="' . $cancel_url . '" onclick="if( !confirm(EM.booking_warning_cancel) ){ return false; }">' . __( 'Delete', 'events-manager' ) . '</a>';
 					}
-					?>
-                    <td><?php echo $EM_Event->output( '#_EVENTICALLINK' ); ?></td>
-                </tr>
+					echo apply_filters( 'em_my_bookings_booking_actions', $cancel_link, $EM_Booking );
+					echo '</td>';
+				}
+				?>
+                <td><?php echo $EM_Event->output( '#_EVENTICALLINK' ); ?></td>
+            </tr>
 
-				<?php
-			}
-			do_action( 'em_my_bookings_booking_loop', $EM_Booking );
-			$event_count ++;
+			<?php
 		}
+		do_action( 'em_my_bookings_booking_loop', $EM_Booking );
 		?>
         </tbody>
     </table>
