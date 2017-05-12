@@ -116,7 +116,6 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 		?>
         </tbody>
     </table>
-    </div>
 	<?php
 
 } else {
