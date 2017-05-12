@@ -25,4 +25,5 @@ Otherwise noted:
 - markerclusterer.js is copyright Google Inc. licenced under Apache 2.0 (compatible with GPLv3)
 
 ### Contributors ###
+- Alex Paredes
 - Shawn DeWolfe 
