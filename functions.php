@@ -558,7 +558,7 @@ function eypd_nav_menu_items( $items ) {
 		$myeypd = '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
 	} else {
 		//popover with a login and signup link if not logged in
-		$myeypd = '<li class="home"><a href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to view your events."><i>myEYPD</i></a></li>';
+		$myeypd = '<li class="home"><a href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to view your events."><i>my</i>EYPD</a></li>';
 	}
 	// add the myEYPD link to the end of the menu
 	$items = $items . $myeypd;
