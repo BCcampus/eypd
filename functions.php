@@ -366,11 +366,13 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 
 	if ( 'events-manager' == $domain ) {
 		$modify = array(
-			"State/County:"                                   => "Province:",
-			"Details"                                         => "Event Description and Objectives",
-			"Category:"                                       => "Category",
-			"Submit %s"                                       => "Post %s",
-			"You must log in to view and manage your events." => "You are using this site in the role as a Learner. Learners may search for, share, and print events. Only Organizers may post and edit events.",
+			"State/County:"                                                                  => "Province:",
+			"Details"                                                                        => "Event Description and Objectives",
+			"Category:"                                                                      => "Category",
+			"Submit %s"                                                                      => "Post %s",
+			"You must log in to view and manage your events."                                => "You are using this site in the role as a Learner. Learners may search for, share, and print events. Only Organizers may post and edit events.",
+			"You are currently viewing your public page, this is what other users will see." => "This is your professional development activity page. Search for more training events on the homepage.",
+			"Events"                                                                         => "myEYPD",
 		);
 	}
 
@@ -379,7 +381,7 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 			'Register'                                                                                                                  => 'Sign Up',
 			'Email Address'                                                                                                             => 'Work Email Address',
 			'Registering for this site is easy. Just fill in the fields below, and we\'ll get a new account set up for you in no time.' => 'Fill in the fields below to register as an Organizer or a Learner. <b>Learner</b> — you are primarily looking for training events. <b>Organizer</b> — you are primarily posting training events on behalf of your organization.',
-		);
+			);
 	}
 
 	if ( isset( $modify[ $original ] ) ) {
