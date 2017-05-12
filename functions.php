@@ -129,8 +129,9 @@ function eypd_load_scripts() {
 		wp_enqueue_style( 'bootstrap', $template_dir . '/assets/styles/bootstrap_popover.min.css' );
 	}
 }
-	// only sign up page has requirements for modals
-	if ( is_page( 'Sign Up' ) ) {
+
+// only sign up page has requirements for modals
+if ( is_page( 'Sign Up' ) ) {
 	wp_enqueue_script( 'modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
 	wp_enqueue_style( 'bootstrap', $template_dir . '/assets/styles/bootstrap.min.css' );
 }
@@ -556,7 +557,8 @@ function eypd_nav_menu_items( $items ) {
 	if ( is_user_logged_in() ) {
 		$myeypd = '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
 	} else {
-		$myeypd = '<li class="home"><a href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Please <a href=\'wp-login.php\'>Login</a> or <a href=\'sign-up\'>Sign up</a> to view your events."><i>myEYPD</i></a></li>';
+		//popover with a login and signup link if not logged in
+		$myeypd = '<li class="home"><a href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to view your events."><i>myEYPD</i></a></li>';
 	}
 	// add the myEYPD link to the end of the menu
 	$items = $items . $myeypd;
