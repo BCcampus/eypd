@@ -53,7 +53,6 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 
 	foreach ( $EM_Bookings as $EM_Booking ) {
 
-		// collect ids of bookings in the past
 		$booking    = $EM_Booking->get_event();
 		$event_date = strtotime( $booking->event_start_date, time() );
 		$today      = time();
@@ -86,7 +85,7 @@ if ( isset( $future_ids ) && count( $future_ids ) > 0 ) { ?>
         <tbody>
 		<?php
 		foreach ( $EM_Bookings as $EM_Booking ) {
-			// skip over if it's not in the past
+			// skip over if it's not in the future
 			if ( ! in_array( $EM_Booking->event_id, $future_ids ) ) {
 				continue;
 			}
@@ -200,20 +199,11 @@ if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
 		// tally up the hours
 		$num = eypd_cumulative_hours( $user_hours );
 		echo "<p>Total Certificate Certificate Hours: ";
-
-		if ( $num ) {
-			echo "{$num}";
-		} else {
-			echo "0";
-		}
-
+		echo ( $num ) ? $num : '0';
 		echo "</p>";
-
 		?>
-
     </div>
 	<?php
-
 } else {
 	_e( 'No past events attended yet.', 'events-manager' );
 }
