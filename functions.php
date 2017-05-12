@@ -537,7 +537,6 @@ add_action( 'wp_before_admin_bar_render', 'eypd_admin_bar_render' );
 function eypd_bp_nav() {
 	global $bp;
 	bp_core_remove_nav_item( 'activity' );
-	bp_core_remove_nav_item( 'profile' );
 	bp_core_remove_nav_item( 'forums' );
 	bp_core_remove_nav_item( 'groups' );
 	bp_core_remove_nav_item( 'friends' );
