@@ -49,10 +49,28 @@ if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
 $EM_Person   = new EM_Person( $bp->displayed_user->id );
 $EM_Bookings = $EM_Person->get_bookings( false, apply_filters( 'em_bp_attending_status', 1 ) );
 if ( count( $EM_Bookings->bookings ) > 0 ) {
-	//Get events here in one query to speed things up
-	$event_ids = array();
+	$nonce = wp_create_nonce( 'booking_cancel' );
 
-	?>
+	foreach ( $EM_Bookings as $EM_Booking ) {
+
+		// collect ids of bookings in the past
+		$booking    = $EM_Booking->get_event();
+		$event_date = strtotime( $booking->event_start_date, time() );
+		$today      = time();
+
+		// separate past and future event_ids
+		if ( $today > $event_date ) {
+			$past_ids[] = $booking->event_id;
+		} elseif ( $today < $event_date ) {
+			$future_ids[] = $booking->event_id;
+		}
+
+	}
+}
+
+// Future Events Only
+if ( isset( $future_ids ) && count( $future_ids ) > 0 ) { ?>
+
     <table cellpadding="0" cellspacing="0" class="events-table">
         <thead>
         <tr>
@@ -67,22 +85,12 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
         </thead>
         <tbody>
 		<?php
-		$nonce = wp_create_nonce( 'booking_cancel' );
 		foreach ( $EM_Bookings as $EM_Booking ) {
-			// collect ids of bookings made by the user
-			$event_ids[] = $EM_Booking->event_id;
-
-			// collect ids of bookings in the past
-			$past_booking = $EM_Booking->get_event();
-			$event_date   = strtotime( $past_booking->event_start_date, time() );
-			$today        = time();
-			if ( $today > $event_date ) {
-				$past_ids[] = $past_booking->event_id;
+			// skip over if it's not in the past
+			if ( ! in_array( $EM_Booking->event_id, $future_ids ) ) {
+				continue;
 			}
-
-			/* @var $EM_Booking EM_Booking */
-			$EM_Event = $EM_Booking->get_event();
-			?>
+			$EM_Event = $EM_Booking->get_event(); ?>
             <tr>
                 <td><?php echo $EM_Event->output( "#_EVENTDATES<br/>#_EVENTTIMES" ); ?></td>
                 <td><?php echo $EM_Event->output( "#_EVENTLINK
@@ -109,11 +117,8 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 				?>
                 <td><?php echo $EM_Event->output( '#_EVENTICALLINK' ); ?></td>
             </tr>
-
 			<?php
-		}
-		do_action( 'em_my_bookings_booking_loop', $EM_Booking );
-		?>
+		} ?>
         </tbody>
     </table>
 	<?php
@@ -125,7 +130,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 }
 ?>
     <!-- Past Events Only -->
-    <p><?php _e( "Past Events I've Attended", 'events-manager' ); ?></p>
+    <h4><?php _e( "Past Events I've Attended", 'events-manager' ); ?></h4>
 <?php
 if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
 
