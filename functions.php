@@ -500,7 +500,7 @@ function eypd_admin_bar_render() {
 		$profileurl = eypd_get_my_bookings_url();
 		$wp_admin_bar->add_node( array(
 			'id'     => 'my_profile',
-			'title'  => 'My Profile',
+			'title'  => 'myEYPD',
 			'href'   => $profileurl,
 			'parent' => 'user-actions',
 			'meta'   => array( 'class' => 'my-profile-page' )
