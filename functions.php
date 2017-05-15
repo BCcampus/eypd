@@ -122,11 +122,18 @@ function eypd_load_scripts() {
 	wp_enqueue_script( 'events-manager', $template_dir . '/assets/js/events-manager.js', array_values( $script_deps ), EM_VERSION );
 	wp_enqueue_script( 'tinyscrollbar', $template_dir . '/assets/js/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
 
-	// only sign up page has requirements for modals
-	if ( is_page( 'Sign Up' ) ) {
-		wp_enqueue_script( 'modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
-		wp_enqueue_style( 'bootstrap', $template_dir . '/assets/styles/bootstrap.min.css' );
+	// load popover only for users who aren't logged in
+	if ( ! is_user_logged_in() ) {
+		wp_enqueue_script( 'initpopover', $template_dir . '/assets/js/initpopover.js' );
+		wp_enqueue_script( 'popover', $template_dir . '/assets/js/bootstrap_popover.min.js', array(), null, true );
+		wp_enqueue_style( 'bootstrap', $template_dir . '/assets/styles/bootstrap_popover.min.css' );
 	}
+}
+
+// only sign up page has requirements for modals
+if ( is_page( 'Sign Up' ) ) {
+	wp_enqueue_script( 'modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
+	wp_enqueue_style( 'bootstrap', $template_dir . '/assets/styles/bootstrap.min.css' );
 }
 
 add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
@@ -192,21 +199,25 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version       = 3;
-	$current_version    = get_option( 'eypd_version', 0 );
-	$img_max_dimension  = 1000;
-	$img_min_dimension  = 50;
-	$img_max_size       = 8388608;
-	$default_no         = array(
+	$eypd_version        = 5.9;
+	$current_version     = get_option( 'eypd_version', 0 );
+	$img_max_dimension   = 1000;
+	$img_min_dimension   = 50;
+	$img_max_size        = 8388608;
+	$default_no          = array(
 		'dbem_css_search',
-		'dbem_rsvp_enabled',
 		'dbem_events_form_reshow',
 		'dbem_events_anonymous_submissions',
 		'dbem_cp_events_comments',
 		'dbem_search_form_countries',
 		'dbem_locations_page_search_form',
+		'dbem_bookings_anonymous',
+		'dbem_bookings_approval',
+		'dbem_bookings_double',
+		'dbem_bookings_login_form',
 	);
-	$default_yes        = array(
+	$default_yes         = array(
+		'dbem_rsvp_enabled',
 		'dbem_recurrence_enabled',
 		'dbem_categories_enabled',
 		'dbem_attributes_enabled',
@@ -217,23 +228,50 @@ function eypd_run_once() {
 		'dbem_cp_events_formats',
 		'dbem_gmap_is_active',
 		'dbem_cp_events_formats',
+		'dbem_bookings_approval_reserved',
+		'dbem_bookings_user_cancellation',
+		'dbem_bookings_approval_overbooking',
 	);
-	$default_attributes = '#_ATT{Target Audience}
+	$default_attributes  = '#_ATT{Target Audience}
 #_ATT{Online}{|Yes|No}
+#_ATT{Professional Development Certificate}{|Yes|No|Upon Request|Not Currently Available}
+#_ATT{Professional Development Certificate Credit Hours}
 #_ATT{Registration Fee}
-#_ATT{Presenter(s)}
-#_ATT{Presenter Information}
+#_ATT{Registration Space}{|Filling Up!|FULL}
 #_ATT{Registration Contact Email}
 #_ATT{Registration Contact Phone Number}
 #_ATT{Registration Link}
-#_ATT{Registration Space}{|Filling Up!|FULL}
-#_ATT{Professional Development Certificate}{|Yes|No|Upon Request|Not Currently Available}
-#_ATT{Professional Development Certificate Credit Hours}
 #_ATT{Prerequisite(s)}
 #_ATT{Required Materials}
+#_ATT{Presenter(s)}
+#_ATT{Presenter Information}
 #_ATT{Event Sponsors}';
+	$single_event_format = '<div class="single-event-map">#_LOCATIONMAP</div>
+<p>
+	<strong>Date/Time</strong><br/>
+	Date(s) - #_EVENTDATES<br /><i>#_EVENTTIMES</i>
+</p>
+<p>
+	<strong>Location</strong><br/>
+	#_LOCATIONLINK
+</p>
+<p><strong>Add to My Calendar</strong><br>#_EVENTICALLINK</p>
+{has_location}
+
+{/has_location}
+<br style="clear:both" />
+#_EVENTNOTES
+<p>
+	<strong>Categories</strong>
+	#_CATEGORIES
+</p>
+{has_bookings}
+#_BOOKINGFORM
+{/has_bookings}';
+
 	$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
 <p><strong>Go to the homepage and use the search or map feature to find your event.</strong></p>';
+
 	$loc_balloon_format = '<strong>#_LOCATIONNAME</strong><address>#_LOCATIONADDRESS<br>#_LOCATIONTOWN</address>
 #_LOCATIONNEXTEVENTS';
 
@@ -271,6 +309,7 @@ function eypd_run_once() {
 		update_option( 'dbem_event_list_item_format', $format_event_list );
 		update_option( 'dbem_event_list_item_format_header', $format_event_list_header );
 		update_option( 'dbem_event_list_item_format_footer', $format_event_list_footer );
+		update_option( 'dbem_single_event_format', $single_event_format );
 
 		foreach ( $default_no as $no ) {
 			update_option( $no, 0 );
@@ -295,13 +334,24 @@ function eypd_run_once() {
 		update_option( 'eypd_location_default_province', 'British Columbia' );
 
 		/**
+		 * Booking submit button text
+		 */
+		update_option( 'dbem_bookings_submit_button', 'Plan to attend' );
+
+		/**
+		 * Manage bookings link text
+		 */
+		update_option( '	dbem_bookings_form_msg_bookings_link', 'My Profile Page' );
+
+		/**
 		 * Update option to current version
 		 */
 		update_option( 'eypd_version', $eypd_version );
+
 	}
 }
 
-add_action( 'after_switch_theme', 'eypd_run_once' );
+add_action( 'wp_loaded', 'eypd_run_once' );
 
 /**
  * Changing state to province and other customizations
@@ -316,11 +366,13 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 
 	if ( 'events-manager' == $domain ) {
 		$modify = array(
-			"State/County:"                                   => "Province:",
-			"Details"                                         => "Event Description and Objectives",
-			"Category:"                                       => "Category",
-			"Submit %s"                                       => "Post %s",
-			"You must log in to view and manage your events." => "You are using this site in the role as a Learner. Learners may search for, share, and print events. Only Organizers may post and edit events.",
+			"State/County:"                                                                  => "Province:",
+			"Details"                                                                        => "Event Description and Objectives",
+			"Category:"                                                                      => "Category",
+			"Submit %s"                                                                      => "Post %s",
+			"You must log in to view and manage your events."                                => "You are using this site in the role as a Learner. Learners may search for, share, and print events. Only Organizers may post and edit events.",
+			"You are currently viewing your public page, this is what other users will see." => "This is your professional development activity page. Search for more training events on the homepage.",
+			"Events"                                                                         => "myEYPD",
 		);
 	}
 
@@ -328,7 +380,7 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 		$modify = array(
 			'Register'                                                                                                                  => 'Sign Up',
 			'Email Address'                                                                                                             => 'Work Email Address',
-			'Registering for this site is easy. Just fill in the fields below, and we\'ll get a new account set up for you in no time.' => 'Fill in the fields below to register as an Organizer or a Learner. Learner — you are primarily looking for training events. Organizer — you are primarily posting training events on this site.',
+			'Registering for this site is easy. Just fill in the fields below, and we\'ll get a new account set up for you in no time.' => 'Fill in the fields below to register as an Organizer or a Learner. <b>Learner</b> — you are primarily looking for training events. <b>Organizer</b> — you are primarily posting training events on behalf of your organization.',
 		);
 	}
 
@@ -391,9 +443,9 @@ function eypd_event_etc_output( $input = "" ) {
 		$cats       = wp_get_object_terms( $post_id, 'event-categories' );
 		$cat_output = $space = "";
 		foreach ( $cats as $cat ) {
-			$c = get_category( $cat );
+			$c          = get_category( $cat );
 			$cat_output .= $space . "cat_" . str_replace( "-", "_", $c->slug );
-			$space = " ";
+			$space      = " ";
 		}
 		$new_classes = "<li class=\"$cat_output\">";
 		$output      = str_replace( $output_array[0][ $index ], $new_classes, $output );
@@ -433,11 +485,36 @@ function eypd_admin_bar_render() {
 		$wp_admin_bar->remove_node( 'search' );
 		$wp_admin_bar->remove_node( 'comments' );
 		$wp_admin_bar->remove_node( 'edit' );
+		$wp_admin_bar->remove_node( 'edit-profile' );
+		$wp_admin_bar->remove_node( 'logout' );
 		$wp_admin_bar->remove_node( 'new-content' );
 		$wp_admin_bar->remove_node( 'updates' );
 		$wp_admin_bar->remove_node( 'my-blogs' );
 		$wp_admin_bar->remove_node( 'customize' );
 		$wp_admin_bar->remove_node( 'site-name' );
+		$wp_admin_bar->remove_node( 'my-account-buddypress' );
+		$wp_admin_bar->remove_node( 'bp-notifications' );
+		$wp_admin_bar->remove_node( 'itsec_admin_bar_menu' );
+
+		// add my profile link
+		$profileurl = eypd_get_my_bookings_url();
+		$wp_admin_bar->add_node( array(
+			'id'     => 'my_profile',
+			'title'  => 'myEYPD',
+			'href'   => $profileurl,
+			'parent' => 'user-actions',
+			'meta'   => array( 'class' => 'my-profile-page' )
+		) );
+
+		//add logout link after my profile link, and redirect to homepage after logout
+		$logouturl = wp_logout_url( home_url() );
+		$wp_admin_bar->add_node( array(
+			'id'     => 'logout',
+			'title'  => 'Logout',
+			'href'   => $logouturl,
+			'parent' => 'user-actions',
+			'meta'   => array( 'class' => 'my-logout-link' )
+		) );
 
 		// maintain a way for admins to access the dashboard
 		if ( current_user_can( 'activate_plugins' ) ) {
@@ -456,7 +533,45 @@ function eypd_admin_bar_render() {
 
 add_action( 'wp_before_admin_bar_render', 'eypd_admin_bar_render' );
 
-// Add favicon
+/**
+ * Remove BP sidebar menu items
+ */
+function eypd_bp_nav() {
+	global $bp;
+	bp_core_remove_nav_item( 'activity' );
+	bp_core_remove_nav_item( 'forums' );
+	bp_core_remove_nav_item( 'groups' );
+	bp_core_remove_nav_item( 'friends' );
+	bp_core_remove_nav_item( 'messages' );
+	bp_core_remove_nav_item( 'notifications' );
+	//subnav
+	bp_core_remove_subnav_item( 'events', 'attending' );
+	bp_core_remove_subnav_item( 'events', 'my-bookings' );
+	bp_core_remove_subnav_item( 'events', 'my-events' );
+
+}
+
+add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
+
+// Filter wp_nav_menu() to add myEYPD link to header menu
+function eypd_nav_menu_items( $items ) {
+	if ( is_user_logged_in() ) {
+		$myeypd = '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
+	} else {
+		//popover with a login and signup link if not logged in
+		$myeypd = '<li class="home"><a href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to view your events."><i>my</i>EYPD</a></li>';
+	}
+	// add the myEYPD link to the end of the menu
+	$items = $items . $myeypd;
+
+	return $items;
+}
+
+add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items' );
+
+/**
+ * Add favicon
+ */
 function eypd_favicon_link() {
 	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/assets/images/favicon.ico" />' . "\n";
 }
@@ -485,6 +600,8 @@ function eypd_validate_attributes() {
 	return $EM_Event;
 
 }
+
+add_action( 'em_event_validate', 'eypd_validate_attributes' );
 
 /**
  * Makes profile fields descriptions into modals,
@@ -518,10 +635,68 @@ function eypd_profile_field_modals() {
 
 add_filter( 'bp_get_the_profile_field_description', 'eypd_profile_field_modals' );
 
-// display a link tp FAQ after the submit button on the registration page  
+/**
+ * Display a link to FAQ after the submit button on the registration page
+ */
 function eypd_faq() {
 	$html = "<div class='submit faq'><a href=\"https://BCCAMPUS.mycusthelp.ca/webapp/_rs/FindAnswers.aspx?coid=6CFA1D4B2B28F770A1273B\" target=\"_blank\">Need help signing up?</a></div>";
 	echo $html;
 }
 
 add_filter( 'bp_after_registration_submit_buttons', 'eypd_faq' );
+
+/**
+ * Setting a higher default for bookings capacity
+ *
+ * @return int
+ */
+function eypd_set_default_spaces() {
+	$default = 100;
+
+	return $default;
+}
+
+add_filter( 'em_ticket_get_spaces', 'eypd_set_default_spaces' );
+
+/**
+ * Adds up hours (if available) from an event attribute
+ * hooked into init, integrates with eypd-actions.php
+ *
+ * @param $ids
+ *
+ * @return bool|int
+ */
+function eypd_cumulative_hours( $ids ) {
+	if ( ! is_array( $ids ) ) {
+		return false;
+	}
+	$total = 0;
+	// input is radio buttons with boolean values
+	// true means they attended (default)
+	foreach ( $ids as $id => $bool ) {
+		if ( false == $bool ) {
+			continue;
+		}
+		$e = em_get_event( $id );
+		foreach ( $e->event_attributes as $key => $val ) {
+			if ( 0 === strcmp( 'Professional Development Certificate Credit Hours', $key ) ) {
+				$total = $total + intval( $val );
+			}
+		}
+	}
+
+	return intval( $total );
+}
+
+/**
+ * URL to member profile
+ */
+function eypd_get_my_bookings_url() {
+	global $bp;
+	if ( ! empty( $bp->events->link ) ) {
+		//get member url
+		return $bp->events->link;
+	} else {
+		return "#";
+	}
+}

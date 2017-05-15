@@ -135,17 +135,6 @@ if ( ! empty( $show_add_new ) && current_user_can( 'edit_events' ) ) {
                                 <a class="row-title"
                                    href="<?php echo esc_url( $EM_Event->get_edit_url() ); ?>"><?php echo esc_html( $EM_Event->event_name ); ?></a>
                             </strong>
-							<?php
-							if ( get_option( 'dbem_rsvp_enabled' ) == 1 && $EM_Event->event_rsvp == 1 ) {
-								?>
-                                <br/>
-                                <a href="<?php echo $EM_Event->get_bookings_url(); ?>"><?php esc_html_e( "Bookings", 'events-manager' ); ?></a> &ndash;
-								<?php esc_html_e( "Booked", 'events-manager' ); ?>: <?php echo $EM_Event->get_bookings()->get_booked_spaces() . "/" . $EM_Event->get_spaces(); ?>
-								<?php if ( get_option( 'dbem_bookings_approval' ) == 1 ): ?>
-                                    | <?php _e( "Pending", 'events-manager' ) ?>: <?php echo $EM_Event->get_bookings()->get_pending_spaces(); ?>
-								<?php endif;
-							}
-							?>
                             <div class="row-actions">
 								<?php if ( current_user_can( 'delete_events' ) ) : ?>
                                     <span class="trash"><a href="<?php echo esc_url( add_query_arg( array(

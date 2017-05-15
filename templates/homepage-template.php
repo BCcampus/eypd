@@ -31,14 +31,14 @@ infinity_get_header();
 
 <div class="c-map row">
     <h2 class="text-blue text-center">Find training events near you</h2>
-    <div class="four columns">
+    <div class="five columns">
         <h3>Upcoming Events</h3>
 		<?php
 		$events_list = '[events_list scope="after-today" limit="3"]';
 		echo do_shortcode( $events_list );
 		?>
     </div>
-    <div class="twelve columns">
+    <div class="eleven columns">
 		<?php
 		infinity_load_template( 'templates/google-map.php' );
 		?>

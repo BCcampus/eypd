@@ -716,6 +716,19 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 		fclose( $handle );
 		exit();
 	}
+
+	// EYPD certificate hours
+	if ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'eypd_cert_hours' && wp_verify_nonce( $_REQUEST['_wpnonce'], 'eypd_cert_hours' ) ) {
+
+		if ( is_user_logged_in() ) {
+			// add the data
+			update_user_meta( $_POST['user_id'], 'eypd_cert_hours', $_POST['eypd_cert_hours'] );
+		}
+
+		// redirect back to the page
+		wp_redirect( em_wp_get_referer() );
+
+	}
 }
 
 add_action( 'init', 'eypd_init_actions', 10 );

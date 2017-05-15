@@ -1,5 +1,15 @@
 == Change Log ==
 
+= v0.9.3 (05/12/2017) =
+* hide booking functionality from view
+* add myEYPD menu item and labels
+* hide menu items from profile page
+* modify language on sign up page
+* hide admin menu items
+* link to user profile page
+* add delete event from profile functionality
+* change logic for calculation of cert hours
+
 = v0.9.2 (04/21/2017) =
 * added 'target audience' attribute to post an event page
 * modified the content and column placement of sign up page

@@ -1,9 +1,9 @@
 /*
  Theme Name:   Early Years Professional Development
  Description:  Child Theme of CBox (default theme for commons-in-a-box plugin) for the Early Years Professional Development Project
- Author:       Maggie Caspar (design and development) Brad Payne (development)
+ Author:       Maggie Caspar (design and development) Brad Payne, Alex Paredes (development)
  Template:     cbox-theme
- Version:      0.9.2
+ Version:      0.9.3
  License:      GNU General Public License v2 or later
  License URI:  http://www.gnu.org/licenses/gpl-2.0.html
  Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
@@ -253,6 +253,9 @@ input.c-button.c--primary, input.button-primary, input.button {
 .field-visibility-settings-notoggle {
   display: none; }
 
+.em-booking-form p {
+  display: none; }
+
 form.standard-form #profile-details-section {
   float: left; }
 
@@ -319,6 +322,9 @@ div.time-picker li {
     outline: none;
     box-shadow: none;
     border: none; }
+.entry .event-form-bookings,
+#event-form .event-form-bookings {
+  display: none; }
 
 .form-table th,
 .events-table th {
@@ -338,6 +344,9 @@ table.em-calendar thead {
 
 thead:first-child tr th {
   color: inherit; }
+
+[class*="column"] + [class*="lastfix"]:last-child {
+  float: none; }
 
 div.css-search,
 .em-search-main {
@@ -804,6 +813,11 @@ a.em-button {
   .search-box label,
   .search-box input {
     margin-right: 10px; }
+
+.entry .single-event-map {
+  float: right;
+  clear: right;
+  margin: 0px 0px 15px 15px; }
 
 #wpadminbar {
   background-color: #E6E7E8;
