@@ -125,15 +125,14 @@ function eypd_load_scripts() {
 	// load popover only for users who aren't logged in
 	if ( ! is_user_logged_in() ) {
 		wp_enqueue_script( 'initpopover', $template_dir . '/assets/js/initpopover.js' );
-		wp_enqueue_script( 'popover', $template_dir . '/assets/js/bootstrap_popover.min.js', array(), null, true );
-		wp_enqueue_style( 'bootstrap', $template_dir . '/assets/styles/bootstrap_popover.min.css' );
+		wp_enqueue_script( 'bootstrap_popover', $template_dir . '/assets/js/bootstrap_popover.min.js', array(), null, true );
+		wp_enqueue_style( 'bootstrap_popover_style', $template_dir . '/assets/styles/bootstrap_popover.min.css' );
 	}
-}
-
-// only sign up page has requirements for modals
-if ( is_page( 'Sign Up' ) ) {
-	wp_enqueue_script( 'modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
-	wp_enqueue_style( 'bootstrap', $template_dir . '/assets/styles/bootstrap.min.css' );
+	// only sign up page has requirements for modals
+	if ( is_page( 'sign-up' ) ) {
+		wp_enqueue_script( 'bootstrap_modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
+		wp_enqueue_style( 'bootstrap_modal_style', $template_dir . '/assets/styles/bootstrap.min.css' );
+	}
 }
 
 add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
