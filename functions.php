@@ -699,3 +699,36 @@ function eypd_get_my_bookings_url() {
 		return "#";
 	}
 }
+
+/**
+ * Show only own items in media uploader
+ */
+add_filter( 'ajax_query_attachments_args', 'eypd_my_attachments_only' );
+
+function eypd_my_attachments_only( $query ) {
+	if ( $user_id = get_current_user_id() ) {
+		// exclude administrator
+		if ( ! current_user_can( 'administrator' ) ) {
+			$query['author'] = $user_id;
+		}
+	}
+
+	return $query;
+}
+
+/**
+ * Hide some options from Add Media panel
+ */
+function eypd_media_strings( $strings ) {
+	// exclude administrator
+	if ( ! current_user_can( 'administrator' ) ) {
+		// remove the following
+		unset( $strings['createGalleryTitle'] );
+		unset( $strings['insertFromUrlTitle'] );
+
+	}
+
+	return $strings;
+}
+
+add_filter( 'media_view_strings', 'eypd_media_strings' );
