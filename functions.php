@@ -701,7 +701,7 @@ function eypd_get_my_bookings_url() {
 }
 
 /**
- *  customize TinyMCE on event editor page
+ *  customize TinyMCE on editor and post event pages
  */
 
 function eypd_format_TinyMCE( $in ) {
@@ -715,15 +715,26 @@ function eypd_format_TinyMCE( $in ) {
 add_filter( 'tiny_mce_before_init', 'eypd_format_TinyMCE' );
 
 /**
- * customize Media Manager Panel on event editor page
+ * customize Media Manager Panel and hide editor tabs on the editor and post event pages
  */
 function eypd_media_manager_style() {
 	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
-		echo "<style>.media-frame-menu, .media-sidebar, .attachment-filters, label[for=media-attachment-filters],label[for=media-attachment-date-filters], label[for=media-search-input],.media-frame input[type=search]{display:none;}</style>";
+		echo "<style>.media-frame-menu, .media-sidebar, .attachment-filters, label[for=media-attachment-filters],label[for=media-attachment-date-filters], label[for=media-search-input],.media-frame input[type=search]{display:none;}.wp-editor-tabs {display: none;}</style>";
 	}
 }
 
 add_action( 'wp_head', 'eypd_media_manager_style', 100 );
+
+/**
+ * Make the visual editor the default on editor and post event pages
+ */
+function force_default_editor() {
+	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
+		return 'tinymce';
+	}
+}
+
+add_filter( 'wp_default_editor', 'force_default_editor' );
 
 /**
  * Show only own items in media library
@@ -743,7 +754,7 @@ function eypd_my_images_only( $query ) {
 add_filter( 'ajax_query_attachments_args', 'eypd_my_images_only' );
 
 /**
- * Rename add media button on event editor page
+ * Rename add media button on editor and post event pages
  */
 
 function eypd_rename_media_button( $translation, $text ) {
@@ -757,7 +768,7 @@ function eypd_rename_media_button( $translation, $text ) {
 add_filter( 'gettext', 'eypd_rename_media_button', 10, 2 );
 
 /**
- * Rename items in media panel on event editor page
+ * Rename items in media panel on editor and post event pages
  */
 
 function eypd_media_view_strings( $strings ) {
