@@ -701,11 +701,35 @@ function eypd_get_my_bookings_url() {
 }
 
 /**
- * Show only own items in media uploader
+ *  customize TinyMCE on event editor page
  */
-add_filter( 'ajax_query_attachments_args', 'eypd_my_attachments_only' );
 
-function eypd_my_attachments_only( $query ) {
+function eypd_format_TinyMCE( $in ) {
+	if ( is_page( 'edit-events' ) ) {
+		$in['content_css'] = get_stylesheet_directory_uri() . "/editor-style.css";
+
+		return $in;
+	}
+}
+
+add_filter( 'tiny_mce_before_init', 'eypd_format_TinyMCE' );
+
+/**
+ * customize Media Manager Panel on event editor page
+ */
+function eypd_media_manager_style() {
+	if ( is_page( 'edit-events' ) ) {
+		echo "<style>.media-frame-menu, .media-sidebar, .attachment-filters, label[for=media-attachment-filters],label[for=media-attachment-date-filters], label[for=media-search-input],.media-frame input[type=search]{display:none;}</style>";
+	}
+}
+
+add_action( 'wp_head', 'eypd_media_manager_style', 100 );
+
+/**
+ * Show only own items in media library
+ */
+
+function eypd_my_images_only( $query ) {
 	if ( $user_id = get_current_user_id() ) {
 		// exclude administrator
 		if ( ! current_user_can( 'administrator' ) ) {
@@ -716,19 +740,31 @@ function eypd_my_attachments_only( $query ) {
 	return $query;
 }
 
-/**
- * Hide some options from Add Media panel
- */
-function eypd_media_strings( $strings ) {
-	// exclude administrator
-	if ( ! current_user_can( 'administrator' ) ) {
-		// remove the following
-		unset( $strings['createGalleryTitle'] );
-		unset( $strings['insertFromUrlTitle'] );
+add_filter( 'ajax_query_attachments_args', 'eypd_my_images_only' );
 
+/**
+ * Rename add media button on event editor page
+ */
+
+function eypd_rename_media_button( $translation, $text ) {
+	if ( is_page( 'edit-events' ) && 'Add Media' === $text ) {
+		return 'Add Banner Image';
 	}
+
+	return $translation;
+}
+
+add_filter( 'gettext', 'eypd_rename_media_button', 10, 2 );
+
+/**
+ * Rename items in media panel on event editor page
+ */
+
+function eypd_media_view_strings( $strings ) {
+	$strings ['insertMediaTitle'] = 'Add Banner Image';
+	$strings ['insertIntoPost']   = 'Save Banner Image';
 
 	return $strings;
 }
 
-add_filter( 'media_view_strings', 'eypd_media_strings' );
+add_filter( 'media_view_strings', 'eypd_media_view_strings' );
