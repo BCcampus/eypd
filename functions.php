@@ -873,7 +873,7 @@ function eypd_banner_image( $content ) {
 		// remove all images, just in case there's more than one
 		$content = preg_replace( "/<img[^>]+\>/i", "", $content );
 		// display banner image before the event info
-		echo $banner_img;
+		echo '<p>'. $banner_img . '</p>';
 	}
 
 	return $content;
