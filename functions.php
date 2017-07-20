@@ -702,7 +702,7 @@ function eypd_get_my_bookings_url() {
 
 /*
 |--------------------------------------------------------------------------
-| Customize TinyMCE
+| Customize TinyMCE and Media Panel
 |--------------------------------------------------------------------------
 |
 | For the edit-events and post-event pages only
@@ -711,7 +711,7 @@ function eypd_get_my_bookings_url() {
 */
 
 /**
- *  Add stylesheet to TinyMCE
+ *  Add stylesheet to TinyMCE, allows us to style the content of the editor
  */
 
 function eypd_format_TinyMCE( $in ) {
@@ -727,7 +727,7 @@ function eypd_format_TinyMCE( $in ) {
 add_filter( 'tiny_mce_before_init', 'eypd_format_TinyMCE' );
 
 /**
- * Hide Media Manager Panel editor tabs, toolbars, and sidebars
+ * Hide images inserted in WYSIWYG, hide the editor tabs, hide toolbars and sidebars from Median Manager Panel
  */
 function eypd_media_manager_style() {
 	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
@@ -789,7 +789,7 @@ add_filter( 'gettext', 'eypd_rename_media_button', 10, 2 );
 
 function eypd_media_view_strings( $strings ) {
 	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
-		$strings ['insertMediaTitle'] = 'Add Banner Image';
+		$strings ['insertMediaTitle'] = 'Add Banner Image (Recommended size: 1000px by 217px )';
 		$strings ['insertIntoPost']   = 'Save Banner Image';
 	}
 
@@ -798,8 +798,85 @@ function eypd_media_view_strings( $strings ) {
 
 add_filter( 'media_view_strings', 'eypd_media_view_strings' );
 
+/**
+ * Add a class to image html when inserted into TinyMCE
+ */
+
+function eypd_image_tag_class( $class ) {
+	$class .= ' banner';
+
+	return $class;
+}
+
+add_filter( 'get_image_tag_class', 'eypd_image_tag_class' );
+
 /*
 |--------------------------------------------------------------------------
-| End Customize TinyMCE
+| Banner Image for events
 |--------------------------------------------------------------------------
+|
+| Use the image inserted into post as the banner image
+|
+|
+
 */
+
+/**
+ * Control size and maintain proportion of event images
+ */
+function eypd_control_banner() {
+	if ( is_singular( 'event' ) ) {
+		echo "<style>img.banner{height: auto; width: auto; max-width: 1000px; max-height: 217px;}</style>";
+	}
+}
+
+add_action( 'wp_head', 'eypd_control_banner', 100 );
+
+/**
+ * Sanitize and Save only the latest image inserted when creating or editing an event
+ */
+function eypd_one_image( $content ) {
+	// todo: make this only happen for event post types, when created/edited in front-end or backend
+	if ( $content ) {
+		$latest_img = '';
+		// find all images
+		preg_match_all( "/<img[^>]+\>/i", $content, $matches );
+		// get the latest image
+		if ( isset( $matches[0][0] ) ) {
+			$latest_img = $matches [0] [0];
+		}
+		// remove the rest
+		$content = preg_replace( "/<img[^>]+\>/i", "", $content );
+
+		// add the latest image
+		return $content . $latest_img;
+	}
+
+	return $content;
+}
+
+add_action( 'content_save_pre', 'eypd_one_image' );
+
+/**
+ * Get the image and display it before the content
+ */
+function eypd_banner_image( $content ) {
+// make sure we are on a single event page and that there's content
+	if ( $content && is_singular( 'event' ) ) {
+		$banner_img = '';
+		// find the image
+		preg_match_all( "/<img[^>]+\>/i", $content, $matches );
+		// set the banner image
+		if ( isset( $matches[0][0] ) ) {
+			$banner_img = $matches [0] [0];
+		}
+		// remove all images, just in case there's more than one
+		$content = preg_replace( "/<img[^>]+\>/i", "", $content );
+		// display banner image before the event info
+		echo $banner_img;
+	}
+
+	return $content;
+}
+
+add_filter( 'the_content', 'eypd_banner_image' );
