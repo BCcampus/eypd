@@ -790,7 +790,7 @@ add_filter( 'gettext', 'eypd_rename_media_button', 10, 2 );
 function eypd_media_view_strings( $strings ) {
 	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
 		$strings ['insertMediaTitle'] = 'Add Banner Image (Recommended size: 1000px by 217px )';
-		$strings ['insertIntoPost']   = 'Save Banner Image';
+		$strings ['insertIntoPost']   = 'Add Banner Image';
 	}
 
 	return $strings;
