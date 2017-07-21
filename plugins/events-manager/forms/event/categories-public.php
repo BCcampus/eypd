@@ -18,7 +18,7 @@ $categories = EM_Categories::get( array( 'orderby' => 'name', 'hide_empty' => 0 
 <?php if ( count( $categories ) > 0 ): ?>
     <div class="event-categories">
         <!-- START Categories -->
-        <label for="event_categories[]"><?php _e( 'Category:', 'events-manager' ); ?><?php echo $required; ?></label>
+        <label for="event_categories[]"><?php _e( 'Category:', 'events-manager' ); ?><?php //echo $required; ?></label>
         <p class="margin-up"><i>(To select multiple items [mac]=command,click [pc]=ctrl,click)</i></p>
         <select name="event_categories[]" multiple size="10">
 			<?php

@@ -198,7 +198,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 5.9;
+	$eypd_version        = 6.0;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -269,7 +269,7 @@ function eypd_run_once() {
 {/has_bookings}';
 
 	$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
-<p><strong>Go to the homepage and use the search or map feature to find your event.</strong></p>';
+<p><strong>Go to the <a href="' . get_site_url() . '">' . 'homepage</a> and use the search or map feature to find your event.</strong></p>';
 
 	$loc_balloon_format = '<strong>#_LOCATIONNAME</strong><address>#_LOCATIONADDRESS<br>#_LOCATIONTOWN</address>
 #_LOCATIONNEXTEVENTS';
@@ -873,7 +873,7 @@ function eypd_banner_image( $content ) {
 		// remove all images, just in case there's more than one
 		$content = preg_replace( "/<img[^>]+\>/i", "", $content );
 		// display banner image before the event info
-		echo '<p>'. $banner_img . '</p>';
+		echo '<p>' . $banner_img . '</p>';
 	}
 
 	return $content;
