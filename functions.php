@@ -566,6 +566,7 @@ function eypd_nav_menu_items() {
 	} else {
 		//add popover with a message, and login and sign-up links
 		$popover = '<li class="home"><a href="#" data-container="body"  tabindex="0" role="button" data-trigger="focus"  data-toggle="popover" data-placement="bottom" data-html="true" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to ';
+
 		$nav     = $popover . 'post events.">Post an Event</a></li>';
 		$nav     .= $popover . 'edit your events.">Edit Event</a></li>';
 		$nav     .= $popover . ' view your events."><i>my</i>EYPD</a></li>';
