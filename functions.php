@@ -198,7 +198,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 6.0;
+	$eypd_version        = 6.1;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -336,6 +336,11 @@ function eypd_run_once() {
 		 * Booking submit button text
 		 */
 		update_option( 'dbem_bookings_submit_button', 'Plan to attend' );
+
+		/**
+		 * Booking submit success
+		 */
+		update_option( 'dbem_booking_feedback', 'Event added! Click on myEYPD (top right of your screen) to find this saved event.' );
 
 		/**
 		 * Manage bookings link text
@@ -560,7 +565,8 @@ function eypd_nav_menu_items() {
 		$nav .= '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
 	} else {
 		//add popover with a message, and login and sign-up links
-		$popover = '<li class="home"><a href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to ';
+		$popover = '<li class="home"><a href="#" data-container="body"  tabindex="0" role="button" data-trigger="focus"  data-toggle="popover" data-placement="bottom" data-html="true" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to ';
+
 		$nav     = $popover . 'post events.">Post an Event</a></li>';
 		$nav     .= $popover . 'edit your events.">Edit Event</a></li>';
 		$nav     .= $popover . ' view your events."><i>my</i>EYPD</a></li>';
