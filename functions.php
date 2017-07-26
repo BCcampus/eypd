@@ -565,8 +565,7 @@ function eypd_nav_menu_items() {
 		$nav .= '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
 	} else {
 		//add popover with a message, and login and sign-up links
-		$popover = '<li class="home"><a href="#" data-container="body"  tabindex="0" role="button" data-trigger="focus"  data-toggle="popover" data-placement="bottom" data-html="true" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to ';
-
+		$popover = '<li class="home"><a href="#" data-container="body"  role="button"  data-toggle="popover" data-placement="bottom" data-html="true" data-original-title="" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to ';
 		$nav     = $popover . 'post events.">Post an Event</a></li>';
 		$nav     .= $popover . 'edit your events.">Edit Event</a></li>';
 		$nav     .= $popover . ' view your events."><i>my</i>EYPD</a></li>';
@@ -576,6 +575,30 @@ function eypd_nav_menu_items() {
 }
 
 add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items' );
+
+/**
+ * this allows for multiple dismissible popovers, with clickable links, inside the popover data-content
+ */
+
+function eypd_close_popover() {
+	?>
+	<script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $('[data-toggle="popover"],[data-original-title]').popover();
+            $(document).on('click', function (e) {
+                $('[data-toggle="popover"],[data-original-title]').each(function () {
+                    if (!$(this).is(e.target)) {
+                        $(this).popover('hide').data('bs.popover').inState.click = false
+                    }
+
+                });
+            });
+        });
+	</script>
+	<?php
+}
+
+add_filter( 'wp_head', 'eypd_close_popover' );
 
 /**
  * Add favicon
