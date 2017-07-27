@@ -172,14 +172,13 @@ if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
                             <input id="eypd-cert-hours-<?php echo $event_id; ?>"
                                    name=eypd_cert_hours[<?php echo $event_id; ?>]
                                    value="1"
-                                   type='radio' <?php echo ( $user_hours[ $event_id ] || ! isset( $user_hours[ $event_id ] ) ) ? 'checked="checked"' : ''; ?> />
+                                   type='radio' <?php echo ( isset( $user_hours[ $event_id ] ) || ! isset( $user_hours[ $event_id ] ) ) ? 'checked="checked"' : ''; ?> />
                         </td>
                         <td>
                             <input id="eypd-cert-hours-<?php echo $event_id; ?>"
                                    name=eypd_cert_hours[<?php echo $event_id; ?>]
                                    value="0"
-                                   type='radio' <?php echo ( ! $user_hours[ $event_id ] ) ? 'checked="checked"' : ''; ?> />
-                        </td>
+                                   type='radio' <?php echo ( ! isset( $user_hours[ $event_id ] ) ) ? 'checked="checked"' : ''; ?> />                        </td>
                     </tr>
 					<?php
 					$count ++;
