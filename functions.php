@@ -135,7 +135,7 @@ function eypd_load_scripts() {
 	}
 	// load styling for datepicker in myEYPD profile page only
 	if ( bp_is_my_profile() ) {
-		wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+		wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 	}
 }
 
