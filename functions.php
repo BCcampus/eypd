@@ -135,7 +135,6 @@ function eypd_load_scripts() {
 	}
 	// load styling for datepicker in myEYPD profile page only
 	if ( bp_is_my_profile() ) {
-		// get the date picker style for myEYPD
 		wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 
 	}
@@ -563,6 +562,7 @@ function eypd_bp_nav() {
 
 add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
 
+
 // Filter wp_nav_menu() to add pop-overs to links in header menu
 function eypd_nav_menu_items() {
 	if ( is_user_logged_in() ) {
@@ -585,7 +585,27 @@ add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items' );
 /**
  * this allows for multiple dismissible popovers, with clickable links, inside the popover data-content
  */
+function eypd_close_popover() {
+	if ( ! is_user_logged_in() ) {
+		?>
+        <script type="text/javascript">
 
+            jQuery(document).ready(function ($) {
+                $('[data-toggle="popover"],[data-original-title]').popover();
+                $(document).on('click', function (e) {
+                    $('[data-toggle="popover"],[data-original-title]').each(function () {
+                        if (!$(this).is(e.target)) {
+                            $(this).popover('hide').data('bs.popover').inState.click = false
+                        }
+                    });
+                });
+            });
+        </script>
+		<?php
+	}
+}
+
+add_filter( 'wp_head', 'eypd_close_popover', 11 );
 
 /**
  * Add favicon
@@ -901,8 +921,8 @@ function eypd_banner_image( $content ) {
 add_filter( 'the_content', 'eypd_banner_image' );
 
 function eypd_datepicker_countdown() {
-    //todo: consider using wp_enqueue_scripts to load this in a .js file
-    // only if it's my own profile
+	//todo: consider using wp_enqueue_scripts to load this in a .js file
+	// only if it's my own profile
 	if ( bp_is_my_profile() ) {
 		?>
         <!-- jQuery date picker as input for the countdown -->
