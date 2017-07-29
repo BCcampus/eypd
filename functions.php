@@ -133,6 +133,11 @@ function eypd_load_scripts() {
 		wp_enqueue_script( 'bootstrap-modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
 		wp_enqueue_style( 'bootstrap-modal-style', $template_dir . '/assets/styles/bootstrap.min.css' );
 	}
+	// load styling for datepicker in myEYPD profile page only
+	if ( bp_is_my_profile() ) {
+		wp_enqueue_style( 'jquery-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+
+	}
 }
 
 add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
@@ -557,6 +562,7 @@ function eypd_bp_nav() {
 
 add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
 
+
 // Filter wp_nav_menu() to add pop-overs to links in header menu
 function eypd_nav_menu_items() {
 	if ( is_user_logged_in() ) {
@@ -579,26 +585,27 @@ add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items' );
 /**
  * this allows for multiple dismissible popovers, with clickable links, inside the popover data-content
  */
-
 function eypd_close_popover() {
-	?>
-	<script type="text/javascript">
-        jQuery(document).ready(function ($) {
-            $('[data-toggle="popover"],[data-original-title]').popover();
-            $(document).on('click', function (e) {
-                $('[data-toggle="popover"],[data-original-title]').each(function () {
-                    if (!$(this).is(e.target)) {
-                        $(this).popover('hide').data('bs.popover').inState.click = false
-                    }
+	if ( ! is_user_logged_in() ) {
+		?>
+        <script type="text/javascript">
 
+            jQuery(document).ready(function ($) {
+                $('[data-toggle="popover"],[data-original-title]').popover();
+                $(document).on('click', function (e) {
+                    $('[data-toggle="popover"],[data-original-title]').each(function () {
+                        if (!$(this).is(e.target)) {
+                            $(this).popover('hide').data('bs.popover').inState.click = false
+                        }
+                    });
                 });
             });
-        });
-	</script>
-	<?php
+        </script>
+		<?php
+	}
 }
 
-add_filter( 'wp_head', 'eypd_close_popover' );
+add_filter( 'wp_head', 'eypd_close_popover', 11 );
 
 /**
  * Add favicon
@@ -912,3 +919,61 @@ function eypd_banner_image( $content ) {
 }
 
 add_filter( 'the_content', 'eypd_banner_image' );
+
+function eypd_datepicker_countdown() {
+	//todo: consider using wp_enqueue_scripts to load this in a .js file
+	// only if it's my own profile
+	if ( bp_is_my_profile() ) {
+		?>
+        <!-- jQuery date picker as input for the countdown -->
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                $expirydate = '#expiry-date';   // input field where date picker will show up
+                jQuery($expirydate).datepicker('hide');
+                jQuery($expirydate).click(function () {
+
+                    jQuery($expirydate).datepicker({
+                        dateFormat: 'dd-mm-yy',
+                        changeMonth: true,
+                        changeYear: true
+                    });
+                    jQuery($expirydate).datepicker('show');
+                });
+                // end date picker
+
+                // countdown functionality
+                //todo: get saved date using get_user_meta, if empty set date using date picker input field #expiry-date, and save/update new date using add_user_meta if new, and update_user_meta if already exists
+                var countDownDate = new Date("Fri Jul 28 2018 11:53:54 GMT-0700").getTime();
+
+                // set interval at 1 second to start countdown and check for changes
+                var x = setInterval(function () {
+
+                    // today's date and time
+                    var now = new Date().getTime();
+
+                    // distance between now and count down date
+                    var distance = countDownDate - now;
+
+                    // time calculations
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    // var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    // var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    // output countdown in element with id "certexpire"
+                    document.getElementById("certcoutdown").innerHTML = "<p><b>" + days + "</b>" + " days and " + "<b>" + hours + "</b>" + " hours " + "</p>";
+
+                    // when countdown finishes todo: display nothing if get_user_meta is empty.
+                    if (distance < 0) {
+                        clearInterval(x);
+                        document.getElementById("certcoutdown").innerHTML = "Your certificate has expired";
+                    }
+                }, 1000);
+
+
+            });
+        </script>
+	<?php }
+}
+
+add_action( 'wp_footer', 'eypd_datepicker_countdown', 10 );
