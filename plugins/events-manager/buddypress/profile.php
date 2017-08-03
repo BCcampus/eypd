@@ -211,13 +211,6 @@ if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
 					echo '</b></p>';
 					?>
                 </div>
-
-                <!-- countdown to certificate expiry -->
-                <div class="certexpire">
-                    <p>Countdown:</p>
-                    <input id="expiry-date" value="Select date..." name="expiry-date" type="text"/>
-                    <div id="certcoutdown"><p>calculating...</p></div>
-                </div>
 			<?php } ?>
         </form>
     </div>
