@@ -14,7 +14,7 @@
 global $EM_Event;
 /* @var $EM_Event EM_Event */
 ?>
-    <p class="margin-up"><i>(The maximum allowed size for images is 8MB. Max dimensions 1000px x 217px)</i></p>
+    <p class="margin-up"><i>(The maximum allowed size for images is 8MB. Max dimensions 1000px x 1000px)</i></p>
     <p id="event-image-img">
 		<?php if ( $EM_Event->get_image_url() != '' ) : ?>
             <img src='<?php echo $EM_Event->get_image_url( 'medium' ); ?>' alt='<?php echo $EM_Event->event_name ?>'/>

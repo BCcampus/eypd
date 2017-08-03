@@ -104,6 +104,7 @@ nav.main-menu {
   li:first-child {
     @extend .c-button;
     @extend .c--ghost;
+    margin-right: $unit*3;
   }
   a {
     font-size: 14px;

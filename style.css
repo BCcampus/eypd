@@ -233,7 +233,11 @@ input.c-button.c--primary, input.button-primary, input.button {
     border: none; }
 
 .c-button.c--ghost, .c--ghost.button-primary, .c--ghost.button, #main-menu-wrap .main-menu ul li:first-child {
-  padding: 5px; }
+  padding: 5px;
+  border: 1px solid #068CC4;
+  border-radius: 7.5px; }
+  .c-button.c--ghost:active, .c--ghost.button-primary:active, .c--ghost.button:active, #main-menu-wrap .main-menu ul li:active:first-child, .c-button.c--ghost:hover, .c--ghost.button-primary:hover, .c--ghost.button:hover, #main-menu-wrap .main-menu ul li:hover:first-child, .c-button.c--ghost:focus, .c--ghost.button-primary:focus, .c--ghost.button:focus, #main-menu-wrap .main-menu ul li:focus:first-child {
+    border-color: #046993; }
   .c-button.c--ghost a:active, .c--ghost.button-primary a:active, .c--ghost.button a:active, #main-menu-wrap .main-menu ul li:first-child a:active, .c-button.c--ghost a:hover, .c--ghost.button-primary a:hover, .c--ghost.button a:hover, #main-menu-wrap .main-menu ul li:first-child a:hover, .c-button.c--ghost a:focus, .c--ghost.button-primary a:focus, .c--ghost.button a:focus, #main-menu-wrap .main-menu ul li:first-child a:focus {
     color: #046993 !important; }
 
@@ -609,6 +613,8 @@ nav.main-menu {
       padding: 0; } }
   #main-menu-wrap .main-menu ul a:hover span {
     color: #046993; }
+  #main-menu-wrap .main-menu ul li:first-child {
+    margin-right: 15px; }
   #main-menu-wrap .main-menu ul a {
     font-size: 14px;
     margin: 0;

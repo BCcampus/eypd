@@ -125,18 +125,15 @@ function eypd_load_scripts() {
 	// load popover only for users who aren't logged in
 	if ( ! is_user_logged_in() ) {
 		wp_enqueue_script( 'initpopover', $template_dir . '/assets/js/initpopover.js' );
-		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/assets/js/bootstrap_popover.min.js', array(), null, true );
-		wp_enqueue_style( 'bootstrap-popover-style', $template_dir . '/assets/styles/bootstrap_popover.min.css' );
+		wp_enqueue_script( 'popover', $template_dir . '/assets/js/bootstrap_popover.min.js', array(), null, true );
+		wp_enqueue_style( 'bootstrap', $template_dir . '/assets/styles/bootstrap_popover.min.css' );
 	}
-	// only sign up page has requirements for modals
-	if ( is_page( 'sign-up' ) ) {
-		wp_enqueue_script( 'bootstrap-modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
-		wp_enqueue_style( 'bootstrap-modal-style', $template_dir . '/assets/styles/bootstrap.min.css' );
-	}
-	// load styling for datepicker in myEYPD profile page only
-	if ( bp_is_my_profile() ) {
-		wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
-	}
+}
+
+// only sign up page has requirements for modals
+if ( is_page( 'Sign Up' ) ) {
+	wp_enqueue_script( 'modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
+	wp_enqueue_style( 'bootstrap', $template_dir . '/assets/styles/bootstrap.min.css' );
 }
 
 add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
@@ -202,7 +199,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 6.1;
+	$eypd_version        = 6.0;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -271,6 +268,7 @@ function eypd_run_once() {
 {has_bookings}
 #_BOOKINGFORM
 {/has_bookings}';
+	
 $success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
 <p><strong>Go to the <a href="' . get_site_url() . '">' . 'homepage</a> and use the search or map feature to find your event.</strong></p>';
 
@@ -341,11 +339,6 @@ $success_message = '<p><strong>Congratulations! You have successfully submitted 
 		update_option( 'dbem_bookings_submit_button', 'Plan to attend' );
 
 		/**
-		 * Booking submit success
-		 */
-		update_option( 'dbem_booking_feedback', 'Event added! Click on myEYPD (top right of your screen) to find this saved event.' );
-
-		/**
 		 * Manage bookings link text
 		 */
 		update_option( '	dbem_bookings_form_msg_bookings_link', 'My Profile Page' );
@@ -378,7 +371,7 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 			"Category:"                                                                      => "Category",
 			"Submit %s"                                                                      => "Post %s",
 			"You must log in to view and manage your events."                                => "You are using this site in the role as a Learner. Learners may search for, share, and print events. Only Organizers may post and edit events.",
-			"You are currently viewing your public page, this is what other users will see." => "This is your professional development activity page - a personal record of your training events, events you plan on </br> attending, and record of professional development hours you have accumulated. <p>To officially register for a professional development event you must contact the agency responsible for the training event.</p>",
+			"You are currently viewing your public page, this is what other users will see." => "This is your professional development activity page. Search for more training events on the homepage.",
 			"Events"                                                                         => "myEYPD",
 		);
 	}
@@ -560,50 +553,21 @@ function eypd_bp_nav() {
 
 add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
 
-
-// Filter wp_nav_menu() to add pop-overs to links in header menu
-function eypd_nav_menu_items() {
+// Filter wp_nav_menu() to add myEYPD link to header menu
+function eypd_nav_menu_items( $items ) {
 	if ( is_user_logged_in() ) {
-		$nav = '<li class="home"><a href=' . home_url() . '/post-event>Post an Event</a></li>';
-		$nav .= '<li class="home"><a href=' . home_url() . '/edit-events>Edit Events</a></li>';
-		$nav .= '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
+		$myeypd = '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
 	} else {
-		//add popover with a message, and login and sign-up links
-		$popover = '<li class="home"><a href="#" data-container="body"  role="button"  data-toggle="popover" data-placement="bottom" data-html="true" data-original-title="" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to ';
-		$nav     = $popover . 'post events.">Post an Event</a></li>';
-		$nav     .= $popover . 'edit your events.">Edit Event</a></li>';
-		$nav     .= $popover . ' view your events."><i>my</i>EYPD</a></li>';
+		//popover with a login and signup link if not logged in
+		$myeypd = '<li class="home"><a href="#" data-container="body" data-toggle="popover" data-placement="bottom" data-html="true" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to view your events."><i>my</i>EYPD</a></li>';
 	}
+	// add the myEYPD link to the end of the menu
+	$items = $items . $myeypd;
 
-	return $nav;
+	return $items;
 }
 
 add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items' );
-
-/**
- * this allows for multiple dismissible popovers, with clickable links, inside the popover data-content
- */
-function eypd_close_popover() {
-	if ( ! is_user_logged_in() ) {
-		?>
-        <script type="text/javascript">
-
-            jQuery(document).ready(function ($) {
-                $('[data-toggle="popover"],[data-original-title]').popover();
-                $(document).on('click', function (e) {
-                    $('[data-toggle="popover"],[data-original-title]').each(function () {
-                        if (!$(this).is(e.target)) {
-                            $(this).popover('hide').data('bs.popover').inState.click = false
-                        }
-                    });
-                });
-            });
-        </script>
-		<?php
-	}
-}
-
-add_filter( 'wp_head', 'eypd_close_popover', 11 );
 
 /**
  * Add favicon
