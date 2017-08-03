@@ -59,6 +59,15 @@ input.c-button.c--primary {
 .c-button.c--ghost {
   padding: $unit;
 
+  border: $border;
+  border-radius: $border-radius;
+
+  &:active,
+  &:hover,
+  &:focus {
+      border-color: darken($color-brand-blue, 10%);
+  }
+
   a {
     &:active,
     &:hover,
