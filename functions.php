@@ -271,8 +271,7 @@ function eypd_run_once() {
 {has_bookings}
 #_BOOKINGFORM
 {/has_bookings}';
-
-	$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
+$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
 <p><strong>Go to the <a href="' . get_site_url() . '">' . 'homepage</a> and use the search or map feature to find your event.</strong></p>';
 
 	$loc_balloon_format = '<strong>#_LOCATIONNAME</strong><address>#_LOCATIONADDRESS<br>#_LOCATIONTOWN</address>
