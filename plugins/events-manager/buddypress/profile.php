@@ -153,7 +153,9 @@ if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
 				$count = 0;
 				// save number of hours in the users profile
 				$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
-				foreach ( $EM_Bookings as $EM_Booking ) {
+				foreach ( $EM_Bookings
+
+				as $EM_Booking ) {
 				// skip over if it's not in the past
 				if ( ! in_array( $EM_Booking->event_id, $past_ids ) ) {
 					continue;
@@ -210,6 +212,12 @@ if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
 					echo ( $num ) ? $num : '0';
 					echo '</b></p>';
 					?>
+                </div>
+                <!-- countdown to certificate expiry -->
+                <div class="certexpire">
+                    <p>Countdown:</p>
+                    <input id="expiry-date" value="Select date..." name="expiry-date" type="text"/>
+                    <div id="certcoutdown"><p>calculating...</p></div>
                 </div>
 			<?php } ?>
         </form>
