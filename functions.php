@@ -934,7 +934,7 @@ function eypd_datepicker_countdown() {
                 jQuery($expirydate).click(function () {
 
                     jQuery($expirydate).datepicker({
-                        dateFormat: 'mm-dd-yy',
+                        dateFormat: 'mm/dd/yy',
                         changeMonth: true,
                         changeYear: true
                     });
