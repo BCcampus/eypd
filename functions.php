@@ -271,7 +271,7 @@ function eypd_run_once() {
 {has_bookings}
 #_BOOKINGFORM
 {/has_bookings}';
-$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
+	$success_message     = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
 <p><strong>Go to the <a href="' . get_site_url() . '">' . 'homepage</a> and use the search or map feature to find your event.</strong></p>';
 
 	$loc_balloon_format = '<strong>#_LOCATIONNAME</strong><address>#_LOCATIONADDRESS<br>#_LOCATIONTOWN</address>
@@ -919,9 +919,12 @@ function eypd_banner_image( $content ) {
 add_filter( 'the_content', 'eypd_banner_image' );
 
 function eypd_datepicker_countdown() {
-	//todo: consider using wp_enqueue_scripts to load this in a .js file
+	//todo: consider using wp_enqueue_scripts to load js in a .js file
 	// only if it's my own profile
 	if ( bp_is_my_profile() ) {
+		// get the cert expiry date
+		global $bp;
+		$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
 		?>
         <!-- jQuery date picker as input for the countdown -->
         <script type="text/javascript">
@@ -931,17 +934,16 @@ function eypd_datepicker_countdown() {
                 jQuery($expirydate).click(function () {
 
                     jQuery($expirydate).datepicker({
-                        dateFormat: 'dd-mm-yy',
+                        dateFormat: 'mm-dd-yy',
                         changeMonth: true,
                         changeYear: true
                     });
                     jQuery($expirydate).datepicker('show');
                 });
-                // end date picker
+                // end jQuery date picker
 
                 // countdown functionality
-                //todo: get saved date using get_user_meta, if empty set date using date picker input field #expiry-date, and save/update new date using add_user_meta if new, and update_user_meta if already exists
-                var countDownDate = new Date("Fri Jul 28 2018 11:53:54 GMT-0700").getTime();
+                var countDownDate = new Date("<?php echo $cert_expires; ?>").getTime();
 
                 // set interval at 1 second to start countdown and check for changes
                 var x = setInterval(function () {
@@ -958,17 +960,22 @@ function eypd_datepicker_countdown() {
                     // var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                     // var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                    // output countdown in element with id "certexpire"
-                    document.getElementById("certcoutdown").innerHTML = "<p><b>" + days + "</b>" + " days and " + "<b>" + hours + "</b>" + " hours " + "</p>";
-
-                    // when countdown finishes todo: display nothing if get_user_meta is empty.
+                    // expired
                     if (distance < 0) {
                         clearInterval(x);
-                        document.getElementById("certcoutdown").innerHTML = "Your certificate has expired";
+                        document.getElementById("certcoutdown").innerHTML = "<p>Your certificate has expired</p>";
+                    }
+                    // date in the future
+                    else if (countDownDate) {
+                        clearInterval(x);
+                        document.getElementById("certcoutdown").innerHTML = "<p>Your professional certification expires in <b>" + days + "</b>" + " days and " + "<b>" + hours + "</b>" + " hours " + "</p>";
+                    }
+                    // no date
+                    else {
+                        clearInterval(x);
+                        document.getElementById("certcoutdown").innerHTML = "<p>Please enter the expiry date of your professional certification.</p>";
                     }
                 }, 1000);
-
-
             });
         </script>
 	<?php }

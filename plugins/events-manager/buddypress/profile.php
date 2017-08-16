@@ -202,25 +202,40 @@ if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
 
             <!-- calculate hours -->
 			<?php if ( bp_is_my_profile() ) { ?>
-                <div class="certhours">
-                    <input class="right" type="submit" value="Calculate My Hours"/>
-					<?php
-					// tally up the hours
-					$num = eypd_cumulative_hours( $user_hours );
-					echo "<p>Total Certificate Hours: ";
-					echo '<b>';
-					echo ( $num ) ? $num : '0';
-					echo '</b></p>';
-					?>
-                </div>
-                <!-- countdown to certificate expiry -->
-                <div class="certexpire">
-                    <p>Countdown:</p>
-                    <input id="expiry-date" value="Select date..." name="expiry-date" type="text"/>
-                    <div id="certcoutdown"><p>calculating...</p></div>
-                </div>
-			<?php } ?>
+            <div class="certhours">
+                <input class="right" type="submit" value="Calculate My Hours"/>
+				<?php
+				// tally up the hours
+				$num = eypd_cumulative_hours( $user_hours );
+				echo "<p>Total Certificate Hours: ";
+				echo '<b>';
+				echo ( $num ) ? $num : '0';
+				echo '</b></p>';
+				?>
+            </div>
         </form>
+        <!-- countdown to certificate expiry -->
+		<?php
+		// save new expiry date
+		if ( isset( $_POST['expiry-date'] ) ) {
+			$newdate = $_POST['expiry-date'];
+			// Update/Create User Meta
+			update_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', $newdate );
+		}
+		//get expiry date
+		$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
+		?>
+        <form id="eypd_countdown" class="eypd-countdown" action="" method="post">
+            <div class="certexpire">
+                <p>Keep track of when your professional certification expires.</p>
+                <input id="expiry-date" value="<?php if ( $cert_expires ) {
+					echo $cert_expires;
+				} else { ?>Select date...<?php } ?>" name="expiry-date"/>
+                <input class="right" type="submit" value="Save">
+                <div id="certcoutdown"><p>calculating...</p></div>
+            </div>
+        </form>
+		<?php } ?>
     </div>
 	<?php
 } else {
