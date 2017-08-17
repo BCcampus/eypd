@@ -1063,7 +1063,7 @@ function eypd_excel_export() {
 					$objPHPExcel->getActiveSheet()->SetCellValue( 'A' . $cell_count . '', $first_name );
 					$objPHPExcel->getActiveSheet()->SetCellValue( 'B' . $cell_count . '', $last_name );
 					$objPHPExcel->getActiveSheet()->SetCellValue( 'C' . $cell_count . '', $email );
-					$objPHPExcel->getActiveSheet()->SetCellValue( 'D' . $cell_count . '', $role[0] );
+					$objPHPExcel->getActiveSheet()->SetCellValue( 'D' . $cell_count . '', ucfirst($role[0]) );
 
 				}
 
