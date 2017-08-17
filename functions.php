@@ -1053,7 +1053,7 @@ function eypd_excel_export() {
 					$cell_count ++;
 
 					$user_meta  = get_user_meta( $user->ID );
-					$role       = $user->roles;
+					$role       =  implode(",", $user->roles);
 					$email      = $user->user_email;
 					$first_name = ( isset( $user_meta['first_name'][0] ) && $user_meta['first_name'][0] != '' ) ? $user_meta['first_name'][0] : '';
 					$last_name  = ( isset( $user_meta['last_name'][0] ) && $user_meta['last_name'][0] != '' ) ? $user_meta['last_name'][0] : '';
@@ -1063,7 +1063,7 @@ function eypd_excel_export() {
 					$objPHPExcel->getActiveSheet()->SetCellValue( 'A' . $cell_count . '', $first_name );
 					$objPHPExcel->getActiveSheet()->SetCellValue( 'B' . $cell_count . '', $last_name );
 					$objPHPExcel->getActiveSheet()->SetCellValue( 'C' . $cell_count . '', $email );
-					$objPHPExcel->getActiveSheet()->SetCellValue( 'D' . $cell_count . '', isset($role[0]) );
+					$objPHPExcel->getActiveSheet()->SetCellValue( 'D' . $cell_count . '', $role );
 
 				}
 
