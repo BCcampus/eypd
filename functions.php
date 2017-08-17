@@ -202,7 +202,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 6.2;
+	$eypd_version        = 6.3;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -324,8 +324,8 @@ function eypd_run_once() {
 		 * Changes to search for labels
 		 */
 		update_option( 'dbem_search_form_state_label', 'Province' );
-		update_option( 'dbem_search_form_text_label', 'Search by location' );
-		update_option( 'dbem_search_form_geo_label', 'Province' );
+		update_option( 'dbem_search_form_text_label', 'Search by topic or keyword' );
+		update_option( 'dbem_search_form_geo_label', 'Search by location' );
 		update_option( 'dbem_search_form_dates_label', 'Start Date' );
 		update_option( 'dbem_search_form_dates_separator', 'End Date' );
 
