@@ -996,9 +996,9 @@ add_action( 'wp_footer', 'eypd_datepicker_countdown', 10 );
 */
 
 
-add_action( 'admin_footer', 'wp_excel_export_button' );
+add_action( 'admin_footer', 'eypd_export_button' );
 
-function wp_excel_export_button() {
+function eypd_export_button() {
 	// add export button only on the event and users screen
 	$screen  = get_current_screen();
 	$allowed = array( 'edit-event', 'users' );
@@ -1014,9 +1014,9 @@ function wp_excel_export_button() {
 	<?php
 }
 
-add_action( 'admin_init', 'wp_excel_export' );
+add_action( 'admin_init', 'eypd_excel_export' );
 
-function wp_excel_export() {
+function eypd_excel_export() {
 	if ( ! empty( $_POST['edit-event'] ) || ! empty( $_POST['users'] ) ) {
 
 		if ( current_user_can( 'manage_options' ) ) {
