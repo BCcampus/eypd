@@ -202,7 +202,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 6.1;
+	$eypd_version        = 6.2;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -271,8 +271,8 @@ function eypd_run_once() {
 {has_bookings}
 #_BOOKINGFORM
 {/has_bookings}';
-$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p>
-<p><strong>Go to the <a href="' . get_site_url() . '">' . 'homepage</a> and use the search or map feature to find your event.</strong></p>';
+
+$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p> <p><strong>Go to the <a href="' . get_site_url() . '">' . 'homepage</a> and use the search or map feature to find your event.</strong></p>';
 
 	$loc_balloon_format = '<strong>#_LOCATIONNAME</strong><address>#_LOCATIONADDRESS<br>#_LOCATIONTOWN</address>
 #_LOCATIONNEXTEVENTS';
@@ -321,9 +321,13 @@ $success_message = '<p><strong>Congratulations! You have successfully submitted 
 			update_option( $yes, 1 );
 		}
 		/**
-		 * Changing state to province on search form
+		 * Changes to search for labels
 		 */
 		update_option( 'dbem_search_form_state_label', 'Province' );
+		update_option( 'dbem_search_form_text_label', 'Search by topic or keyword' );
+		update_option( 'dbem_search_form_geo_label', 'Search by location' );
+		update_option( 'dbem_search_form_dates_label', 'Start Date' );
+		update_option( 'dbem_search_form_dates_separator', 'End Date' );
 
 		/**
 		 * All events will be in Canada
@@ -734,5 +738,417 @@ function eypd_get_my_bookings_url() {
 		return $bp->events->link;
 	} else {
 		return "#";
+	}
+}
+
+/*
+|--------------------------------------------------------------------------
+| Customize TinyMCE and Media Panel
+|--------------------------------------------------------------------------
+|
+| For the edit-events and post-event pages only
+|
+
+*/
+
+/**
+ *  Add stylesheet to TinyMCE, allows us to style the content of the editor
+ */
+
+function eypd_format_TinyMCE( $in ) {
+	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
+		$in['content_css'] = get_stylesheet_directory_uri() . "/editor-style.css";
+
+		return $in;
+	}
+
+	return $in;
+}
+
+add_filter( 'tiny_mce_before_init', 'eypd_format_TinyMCE' );
+
+/**
+ * Hide images inserted in WYSIWYG, hide the editor tabs, hide toolbars and sidebars from Median Manager Panel
+ */
+function eypd_media_manager_style() {
+	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
+		echo "<style>.media-frame-menu, .media-sidebar, .attachment-filters, label[for=media-attachment-filters],label[for=media-attachment-date-filters], label[for=media-search-input],.media-frame input[type=search]{display:none;}</style>";
+		// hide editor tabs
+		if ( ! current_user_can( 'administrator' ) ) {
+			echo "<style>.wp-editor-tabs {display: none;}</style>";
+		}
+	}
+}
+
+add_action( 'wp_head', 'eypd_media_manager_style', 100 );
+
+/**
+ * Force visual editor as default
+ */
+function eypd_force_default_editor() {
+	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
+		return 'tinymce';
+	}
+}
+
+add_filter( 'wp_default_editor', 'eypd_force_default_editor' );
+
+/**
+ * Show only own items in media library panel
+ */
+
+function eypd_my_images_only( $query ) {
+	if ( $user_id = get_current_user_id() ) {
+		// exclude administrator
+		if ( ! current_user_can( 'administrator' ) ) {
+			$query['author'] = $user_id;
+		}
+	}
+
+	return $query;
+}
+
+add_filter( 'ajax_query_attachments_args', 'eypd_my_images_only' );
+
+/**
+ * Rename Add Media button
+ */
+
+function eypd_rename_media_button( $translation, $text ) {
+	if ( is_page( 'edit-events' ) | is_page( 'post-event' ) && 'Add Media' === $text ) {
+		return 'Add Banner Image';
+	}
+
+	return $translation;
+}
+
+add_filter( 'gettext', 'eypd_rename_media_button', 10, 2 );
+
+/**
+ * Rename items in media panel
+ */
+
+function eypd_media_view_strings( $strings ) {
+	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
+		$strings ['insertMediaTitle'] = 'Add Banner Image (Recommended size: 1000px by 217px )';
+		$strings ['insertIntoPost']   = 'Add Banner Image';
+	}
+
+	return $strings;
+}
+
+add_filter( 'media_view_strings', 'eypd_media_view_strings' );
+
+/**
+ * Add a class to image html when inserted into TinyMCE
+ */
+
+function eypd_image_tag_class( $class ) {
+	$class .= ' banner';
+
+	return $class;
+}
+
+add_filter( 'get_image_tag_class', 'eypd_image_tag_class' );
+
+/*
+|--------------------------------------------------------------------------
+| Banner Image for events
+|--------------------------------------------------------------------------
+|
+| Use the image inserted into post as the banner image
+|
+|
+
+*/
+
+/**
+ * Control size and maintain proportion of event images
+ */
+function eypd_control_banner() {
+	if ( is_singular( 'event' ) ) {
+		echo "<style>img.banner{height: auto; width: auto; max-width: 1000px; max-height: 217px;}</style>";
+	}
+}
+
+add_action( 'wp_head', 'eypd_control_banner', 100 );
+
+/**
+ * Sanitize and Save only the latest image inserted when creating or editing an event
+ */
+function eypd_one_image( $content ) {
+	// todo: make this only happen for event post types, when created/edited in front-end or backend
+	if ( $content ) {
+		$latest_img = '';
+		// find all images
+		preg_match_all( "/<img[^>]+\>/i", $content, $matches );
+		// get the latest image
+		if ( isset( $matches[0][0] ) ) {
+			$latest_img = $matches [0] [0];
+		}
+		// remove the rest
+		$content = preg_replace( "/<img[^>]+\>/i", "", $content );
+
+		// add the latest image
+		return $content . $latest_img;
+	}
+
+	return $content;
+}
+
+add_action( 'content_save_pre', 'eypd_one_image' );
+
+/**
+ * Get the image and display it before the content
+ */
+function eypd_banner_image( $content ) {
+// make sure we are on a single event page and that there's content
+	if ( $content && is_singular( 'event' ) ) {
+		$banner_img = '';
+		// find the image
+		preg_match_all( "/<img[^>]+\>/i", $content, $matches );
+		// set the banner image
+		if ( isset( $matches[0][0] ) ) {
+			$banner_img = $matches [0] [0];
+		}
+		// remove all images, just in case there's more than one
+		$content = preg_replace( "/<img[^>]+\>/i", "", $content );
+		// display banner image before the event info
+		echo '<p>' . $banner_img . '</p>';
+	}
+
+	return $content;
+}
+
+add_filter( 'the_content', 'eypd_banner_image' );
+
+function eypd_datepicker_countdown() {
+
+	// only if it's my own profile
+	if ( bp_is_my_profile() ) {
+		// get the cert expiry date
+		global $bp;
+		$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
+		?>
+        <!-- jQuery date picker as input for the countdown -->
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                $expirydate = '#expiry-date';   // input field where date picker will show up
+                jQuery($expirydate).datepicker('hide');
+                jQuery($expirydate).click(function () {
+
+                    jQuery($expirydate).datepicker({
+                        dateFormat: 'mm/dd/yy',
+                        changeMonth: true,
+                        changeYear: true
+                    });
+                    jQuery($expirydate).datepicker('show');
+                });
+                // end jQuery date picker
+
+                // countdown functionality
+                var countDownDate = new Date("<?php echo $cert_expires; ?>").getTime();
+
+                // set interval at 1 second to start countdown and check for changes
+                var x = setInterval(function () {
+
+                    // today's date and time
+                    var now = new Date().getTime();
+
+                    // distance between now and count down date
+                    var distance = countDownDate - now;
+
+                    // time calculations
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    // var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    // var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    // expired
+                    if (distance < 0) {
+                        clearInterval(x);
+                        document.getElementById("certcoutdown").innerHTML = "<p>Your certificate has expired</p>";
+                    }
+                    // date in the future
+                    else if (countDownDate) {
+                        clearInterval(x);
+                        document.getElementById("certcoutdown").innerHTML = "<p>Your professional certification expires in <b>" + days + "</b>" + " days and " + "<b>" + hours + "</b>" + " hours " + "</p>";
+                    }
+                    // no date
+                    else {
+                        clearInterval(x);
+                        document.getElementById("certcoutdown").innerHTML = "<p>Please enter the expiry date of your professional certification.</p>";
+                    }
+                }, 1000);
+            });
+        </script>
+	<?php }
+}
+
+add_action( 'wp_footer', 'eypd_datepicker_countdown', 10 );
+
+
+/*
+|--------------------------------------------------------------------------
+| Excel Export
+|--------------------------------------------------------------------------
+|
+| Adds button to edit.php and users.php screens which exports user and event data
+|
+|
+
+*/
+
+
+add_action( 'admin_footer', 'eypd_export_button' );
+
+function eypd_export_button() {
+	// add export button only on the event and users screen
+	$screen  = get_current_screen();
+	$allowed = array( 'edit-event', 'users' );
+	if ( ! in_array( $screen->id, $allowed ) ) {
+		return;
+	}
+	?>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $('.tablenav.top .clear, .tablenav.bottom .clear').before('<form action="#" method="POST"><input type="hidden" id="wp_excel_export" name="<?php echo $screen->id; ?>" value="1" /><input class="button button-primary export_button" style="margin-top:3px;" type="submit" value="<?php esc_attr_e( 'Export to Excel' );?>" /></form>');
+        });
+    </script>
+	<?php
+}
+
+add_action( 'admin_init', 'eypd_excel_export' );
+
+function eypd_excel_export() {
+	if ( ! empty( $_POST['edit-event'] ) || ! empty( $_POST['users'] ) ) {
+
+		if ( current_user_can( 'manage_options' ) ) {
+
+			// PHPExcel
+			include( get_stylesheet_directory() . '/PHPExcel.php' );
+			include( get_stylesheet_directory() . '/PHPExcel/Writer/Excel2007.php' );
+
+			// Create a new PHPExcel object
+			$objPHPExcel = new PHPExcel();
+
+			// User data 
+			if ( isset( $_POST['users'] ) ) {
+
+				// User args
+				$args = array(
+					'order'   => 'ASC',
+					'orderby' => 'display_name',
+					'fields'  => 'all',
+				);
+
+				// User Query
+				$wp_users     = get_users( $args );
+				$cell_count = 1;
+
+				// Set up column labels
+				$objPHPExcel->getActiveSheet()->SetCellValue( 'A1', esc_html__( 'First Name' ) );
+				$objPHPExcel->getActiveSheet()->SetCellValue( 'B1', esc_html__( 'Last Name' ) );
+				$objPHPExcel->getActiveSheet()->SetCellValue( 'C1', esc_html__( 'Email' ) );
+				$objPHPExcel->getActiveSheet()->SetCellValue( 'D1', esc_html__( 'User Role' ) );
+
+				// Get the data we want from each user
+				foreach ( $wp_users as $user ) {
+					$cell_count ++;
+
+					$user_meta  = get_user_meta( $user->ID );
+					$role       =  implode(",", $user->roles);
+					$email      = $user->user_email;
+					$first_name = ( isset( $user_meta['first_name'][0] ) && $user_meta['first_name'][0] != '' ) ? $user_meta['first_name'][0] : '';
+					$last_name  = ( isset( $user_meta['last_name'][0] ) && $user_meta['last_name'][0] != '' ) ? $user_meta['last_name'][0] : '';
+
+					// Add the user data to the appropriate column
+					$objPHPExcel->setActiveSheetIndex( 0 );
+					$objPHPExcel->getActiveSheet()->SetCellValue( 'A' . $cell_count . '', $first_name );
+					$objPHPExcel->getActiveSheet()->SetCellValue( 'B' . $cell_count . '', $last_name );
+					$objPHPExcel->getActiveSheet()->SetCellValue( 'C' . $cell_count . '', $email );
+					$objPHPExcel->getActiveSheet()->SetCellValue( 'D' . $cell_count . '', $role );
+
+				}
+
+				// Set document properties
+				$objPHPExcel->getProperties()->setTitle( esc_html__( 'Users' ) );
+				$objPHPExcel->getProperties()->setSubject( esc_html__( 'all users' ) );
+				$objPHPExcel->getProperties()->setDescription( esc_html__( 'Export of all users' ) );
+
+				// Rename sheet
+				$objPHPExcel->getActiveSheet()->setTitle( esc_html__( 'Users' ) );
+
+				// Rename file
+				header( 'Content-Disposition: attachment;filename="users.xlsx"' );
+
+			}
+
+			// Event data
+			if ( isset( $_POST['edit-event'] ) ) {
+
+				// Event args
+				$args = array(
+					'post_type' => 'event'
+				);
+
+                // Event Query
+				$query        = new WP_Query( $args );
+				$posts        = $query->posts;
+				$cell_count = 1;
+
+				// Set up column labels
+				$objPHPExcel->getActiveSheet()->SetCellValue( 'A1', esc_html__( 'Event Title' ) );
+				$objPHPExcel->getActiveSheet()->SetCellValue( 'B1', esc_html__( 'Owner' ) );
+				$objPHPExcel->getActiveSheet()->SetCellValue( 'C1', esc_html__( 'Status' ) );
+				$objPHPExcel->getActiveSheet()->SetCellValue( 'D1', esc_html__( 'Published date' ) );
+
+				// Get the data we want from each event
+				foreach ( $posts as $post ) {
+					$cell_count ++;
+
+					$title     = $post->post_title;
+					$date      = $post->post_date;
+					$status    = $post->post_status;
+					$author_id = $post->post_author;;
+					$author   = get_the_author_meta( 'display_name', $author_id );
+					$location = get_post_meta( $post->ID, 'location', true );
+
+					// Add the event data to the appropriate column
+					$objPHPExcel->getActiveSheet()->SetCellValue( 'A' . $cell_count . '', $title );
+					$objPHPExcel->getActiveSheet()->SetCellValue( 'B' . $cell_count . '', $author );
+					$objPHPExcel->getActiveSheet()->SetCellValue( 'C' . $cell_count . '', $status );
+					$objPHPExcel->getActiveSheet()->SetCellValue( 'D' . $cell_count . '', $date );
+
+				}
+
+				// Set document properties
+				$objPHPExcel->getProperties()->setTitle( esc_html__( 'Events' ) );
+				$objPHPExcel->getProperties()->setSubject( esc_html__( 'all events' ) );
+				$objPHPExcel->getProperties()->setDescription( esc_html__( 'Export of all events' ) );
+
+				// Rename sheet
+				$objPHPExcel->getActiveSheet()->setTitle( esc_html__( 'Events' ) );
+
+				// Rename file
+				header( 'Content-Disposition: attachment;filename="events.xlsx"' );
+
+			}
+
+			// Set column data auto width
+			for ( $col = 'A'; $col !== 'E'; $col ++ ) {
+				$objPHPExcel->getActiveSheet()->getColumnDimension( $col )->setAutoSize( true );
+			}
+
+		}
+
+		header( 'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' );
+		header( 'Cache-Control: max-age=0' );
+
+		// Save Excel file
+		$objWriter = PHPExcel_IOFactory::createWriter( $objPHPExcel, 'Excel2007' );
+		$objWriter->save( 'php://output' );
+
+		exit();
 	}
 }
