@@ -987,7 +987,6 @@ function eypd_datepicker_countdown() {
 
 add_action( 'wp_footer', 'eypd_datepicker_countdown', 10 );
 
-
 /*
 |--------------------------------------------------------------------------
 | Excel Export
@@ -999,40 +998,60 @@ add_action( 'wp_footer', 'eypd_datepicker_countdown', 10 );
 
 */
 
+add_action( 'admin_init', 'eypd_PHPExcel_check' );
+
+function eypd_PHPExcel_check() {
+	// Look for PHPExcel
+	$phpexcel = '/vendor/phpoffice/phpexcel/Classes';
+	if ( file_exists( get_stylesheet_directory() . $phpexcel ) ) {
+		// Get PHPExcel files
+		include( get_stylesheet_directory() . $phpexcel . '/PHPExcel.php' );
+		include( get_stylesheet_directory() . $phpexcel . '/PHPExcel/Writer/Excel2007.php' );
+	} else {
+		// Remind to install PHPExcel, on the user and event screens only
+		add_action( 'admin_notices', function () {
+			$screen = get_current_screen();
+			$remind = array( 'edit-event', 'users' );
+			if ( in_array( $screen->id, $remind ) ) {
+				echo '<div id="message" class="notice notice-warning is-dismissible"><p>' . __( '<b>' . 'PHPExcel ' . '</b>' . 'was not found, please run composer install if you wish to export user and event data. ' ) . '</p></div>';
+			}
+		} );
+	}
+}
 
 add_action( 'admin_footer', 'eypd_export_button' );
 
 function eypd_export_button() {
-	// add export button only on the event and users screen
-	$screen  = get_current_screen();
-	$allowed = array( 'edit-event', 'users' );
-	if ( ! in_array( $screen->id, $allowed ) ) {
-		return;
+	// only show the export button if PHPExcel exists
+	if ( file_exists( get_stylesheet_directory() . '/vendor/phpoffice/phpexcel/Classes/PHPExcel.php' ) ) {
+		// add export button only on the event and users screen
+		$screen  = get_current_screen();
+		$allowed = array( 'edit-event', 'users' );
+		if ( ! in_array( $screen->id, $allowed ) ) {
+			return;
+		}
+		?>
+        <script type="text/javascript">
+            jQuery(document).ready(function ($) {
+                $('.tablenav.top .clear, .tablenav.bottom .clear').before('<form action="#" method="POST"><input type="hidden" id="wp_excel_export" name="<?php echo $screen->id; ?>" value="1" /><input class="button button-primary export_button" style="margin-top:3px;" type="submit" value="<?php esc_attr_e( 'Export to Excel' );?>" /></form>');
+            });
+        </script>
+		<?php
 	}
-	?>
-    <script type="text/javascript">
-        jQuery(document).ready(function ($) {
-            $('.tablenav.top .clear, .tablenav.bottom .clear').before('<form action="#" method="POST"><input type="hidden" id="wp_excel_export" name="<?php echo $screen->id; ?>" value="1" /><input class="button button-primary export_button" style="margin-top:3px;" type="submit" value="<?php esc_attr_e( 'Export to Excel' );?>" /></form>');
-        });
-    </script>
-	<?php
 }
 
 add_action( 'admin_init', 'eypd_excel_export' );
 
 function eypd_excel_export() {
+
 	if ( ! empty( $_POST['edit-event'] ) || ! empty( $_POST['users'] ) ) {
 
 		if ( current_user_can( 'manage_options' ) ) {
 
-			// PHPExcel
-			include( get_stylesheet_directory() . '/PHPExcel.php' );
-			include( get_stylesheet_directory() . '/PHPExcel/Writer/Excel2007.php' );
-
 			// Create a new PHPExcel object
 			$objPHPExcel = new PHPExcel();
 
-			// User data 
+			// User data
 			if ( isset( $_POST['users'] ) ) {
 
 				// User args
@@ -1043,7 +1062,7 @@ function eypd_excel_export() {
 				);
 
 				// User Query
-				$wp_users     = get_users( $args );
+				$wp_users   = get_users( $args );
 				$cell_count = 1;
 
 				// Set up column labels
@@ -1057,7 +1076,7 @@ function eypd_excel_export() {
 					$cell_count ++;
 
 					$user_meta  = get_user_meta( $user->ID );
-					$role       =  implode(",", $user->roles);
+					$role       = implode( ",", $user->roles );
 					$email      = $user->user_email;
 					$first_name = ( isset( $user_meta['first_name'][0] ) && $user_meta['first_name'][0] != '' ) ? $user_meta['first_name'][0] : '';
 					$last_name  = ( isset( $user_meta['last_name'][0] ) && $user_meta['last_name'][0] != '' ) ? $user_meta['last_name'][0] : '';
@@ -1092,9 +1111,9 @@ function eypd_excel_export() {
 					'post_type' => 'event'
 				);
 
-                // Event Query
-				$query        = new WP_Query( $args );
-				$posts        = $query->posts;
+				// Event Query
+				$query      = new WP_Query( $args );
+				$posts      = $query->posts;
 				$cell_count = 1;
 
 				// Set up column labels
