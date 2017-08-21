@@ -272,7 +272,7 @@ function eypd_run_once() {
 #_BOOKINGFORM
 {/has_bookings}';
 
-$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p> <p><strong>Go to the <a href="' . get_site_url() . '">' . 'homepage</a> and use the search or map feature to find your event.</strong></p>';
+	$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p> <p><strong>Go to the <a href="' . get_site_url() . '">' . 'homepage</a> and use the search or map feature to find your event.</strong></p>';
 
 	$loc_balloon_format = '<strong>#_LOCATIONNAME</strong><address>#_LOCATIONADDRESS<br>#_LOCATIONTOWN</address>
 #_LOCATIONNEXTEVENTS';
@@ -865,6 +865,7 @@ add_filter( 'get_image_tag_class', 'eypd_image_tag_class' );
 /**
  * Control size and maintain proportion of event images
  */
+
 function eypd_control_banner() {
 	if ( is_singular( 'event' ) ) {
 		echo "<style>img.banner{height: auto; width: auto; max-width: 1000px; max-height: 217px;}</style>";
@@ -876,6 +877,7 @@ add_action( 'wp_head', 'eypd_control_banner', 100 );
 /**
  * Sanitize and Save only the latest image inserted when creating or editing an event
  */
+
 function eypd_one_image( $content ) {
 	// todo: make this only happen for event post types, when created/edited in front-end or backend
 	if ( $content ) {
@@ -901,6 +903,7 @@ add_action( 'content_save_pre', 'eypd_one_image' );
 /**
  * Get the image and display it before the content
  */
+
 function eypd_banner_image( $content ) {
 // make sure we are on a single event page and that there's content
 	if ( $content && is_singular( 'event' ) ) {
@@ -921,6 +924,10 @@ function eypd_banner_image( $content ) {
 }
 
 add_filter( 'the_content', 'eypd_banner_image' );
+
+/**
+ * Date picker and countdown
+ */
 
 function eypd_datepicker_countdown() {
 
@@ -998,32 +1005,33 @@ add_action( 'wp_footer', 'eypd_datepicker_countdown', 10 );
 
 */
 
-add_action( 'admin_init', 'eypd_PHPExcel_check' );
+add_action( 'admin_init', 'eypd_dependencies_check' );
 
-function eypd_PHPExcel_check() {
-	// Look for PHPExcel
-	$phpexcel = '/vendor/phpoffice/phpexcel/Classes';
-	if ( file_exists( get_stylesheet_directory() . $phpexcel ) ) {
-		// Get PHPExcel files
-		include( get_stylesheet_directory() . $phpexcel . '/PHPExcel.php' );
-		include( get_stylesheet_directory() . $phpexcel . '/PHPExcel/Writer/Excel2007.php' );
+/**
+ * Check for dependencies, add admin notice
+ */
+
+function eypd_dependencies_check() {
+
+	if ( file_exists( $composer = get_stylesheet_directory() . '/vendor/autoload.php' ) ) {
+		include( $composer );
 	} else {
-		// Remind to install PHPExcel, on the user and event screens only
+		// Remind to install dependencies
 		add_action( 'admin_notices', function () {
-			$screen = get_current_screen();
-			$remind = array( 'edit-event', 'users' );
-			if ( in_array( $screen->id, $remind ) ) {
-				echo '<div id="message" class="notice notice-warning is-dismissible"><p>' . __( '<b>' . 'PHPExcel ' . '</b>' . 'was not found, please run composer install if you wish to export user and event data. ' ) . '</p></div>';
-			}
+			echo '<div id="message" class="notice notice-warning is-dismissible"><p>' . __( 'EYPD theme dependency missing, please run composer install. ' ) . '</p></div>';
 		} );
 	}
 }
 
 add_action( 'admin_footer', 'eypd_export_button' );
 
+/**
+ * Adds the 'Export to Excel' button on users and events admin screens
+ */
+
 function eypd_export_button() {
 	// only show the export button if PHPExcel exists
-	if ( file_exists( get_stylesheet_directory() . '/vendor/phpoffice/phpexcel/Classes/PHPExcel.php' ) ) {
+	if ( class_exists( 'PHPExcel' ) ) {
 		// add export button only on the event and users screen
 		$screen  = get_current_screen();
 		$allowed = array( 'edit-event', 'users' );
@@ -1041,6 +1049,10 @@ function eypd_export_button() {
 }
 
 add_action( 'admin_init', 'eypd_excel_export' );
+
+/**
+ * Gets and exports the user and event data
+ */
 
 function eypd_excel_export() {
 
