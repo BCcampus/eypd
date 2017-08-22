@@ -993,6 +993,7 @@ function eypd_datepicker_countdown() {
 }
 
 add_action( 'wp_footer', 'eypd_datepicker_countdown', 10 );
+
 /*
 |--------------------------------------------------------------------------
 | Excel Export
