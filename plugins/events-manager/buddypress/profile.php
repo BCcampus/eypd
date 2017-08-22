@@ -153,6 +153,7 @@ if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
 				$count = 0;
 				// save number of hours in the users profile
 				$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
+
 				foreach ( $EM_Bookings
 
 				as $EM_Booking ) {
@@ -161,7 +162,6 @@ if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
 					continue;
 				}
 				$EM_Event = $EM_Booking->get_event();
-
 				$event_id = $past_ids[ $count ]; ?>
                 <tr>
                     <td><?php echo $EM_Event->output( "#_EVENTDATES<br/>#_EVENTTIMES" ); ?></td>

@@ -272,7 +272,7 @@ function eypd_run_once() {
 #_BOOKINGFORM
 {/has_bookings}';
 
-	$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p> <p><strong>Go to the <a href="' . get_site_url() . '">' . 'homepage</a> and use the search or map feature to find your event.</strong></p>';
+$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p> <p><strong>Go to the <a href="' . get_site_url() . '">' . 'homepage</a> and use the search or map feature to find your event.</strong></p>';
 
 	$loc_balloon_format = '<strong>#_LOCATIONNAME</strong><address>#_LOCATIONADDRESS<br>#_LOCATIONTOWN</address>
 #_LOCATIONNEXTEVENTS';
@@ -928,7 +928,7 @@ add_filter( 'the_content', 'eypd_banner_image' );
 /**
  * Date picker and countdown
  */
-
+  
 function eypd_datepicker_countdown() {
 
 	// only if it's my own profile
@@ -993,7 +993,6 @@ function eypd_datepicker_countdown() {
 }
 
 add_action( 'wp_footer', 'eypd_datepicker_countdown', 10 );
-
 /*
 |--------------------------------------------------------------------------
 | Excel Export
@@ -1049,6 +1048,7 @@ function eypd_export_button() {
 }
 
 add_action( 'admin_init', 'eypd_excel_export' );
+
 
 /**
  * Gets and exports the user and event data
@@ -1122,7 +1122,7 @@ function eypd_excel_export() {
 				$args = array(
 					'post_type' => 'event'
 				);
-
+        
 				// Event Query
 				$query      = new WP_Query( $args );
 				$posts      = $query->posts;
