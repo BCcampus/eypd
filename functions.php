@@ -272,7 +272,7 @@ function eypd_run_once() {
 #_BOOKINGFORM
 {/has_bookings}';
 
-$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p> <p><strong>Go to the <a href="' . get_site_url() . '">' . 'homepage</a> and use the search or map feature to find your event.</strong></p>';
+	$success_message = '<p><strong>Congratulations! You have successfully submitted your training event.</strong></p> <p><strong>Go to the <a href="' . get_site_url() . '">' . 'homepage</a> and use the search or map feature to find your event.</strong></p>';
 
 	$loc_balloon_format = '<strong>#_LOCATIONNAME</strong><address>#_LOCATIONADDRESS<br>#_LOCATIONTOWN</address>
 #_LOCATIONNEXTEVENTS';
@@ -928,7 +928,7 @@ add_filter( 'the_content', 'eypd_banner_image' );
 /**
  * Date picker and countdown
  */
-  
+
 function eypd_datepicker_countdown() {
 
 	// only if it's my own profile
@@ -1033,15 +1033,21 @@ function eypd_export_button() {
 	// only show the export button if PHPExcel exists
 	if ( class_exists( 'PHPExcel' ) ) {
 		// add export button only on the event and users screen
-		$screen  = get_current_screen();
-		$allowed = array( 'edit-event', 'users' );
+		$screen      = get_current_screen();
+		$allowed     = array( 'edit-event', 'users' );
+		$unique_name = '';
 		if ( ! in_array( $screen->id, $allowed ) ) {
 			return;
+		}
+		if ( $screen->id == 'users' ) {
+			$unique_name = 'users_export';
+		} elseif ( $screen->id == 'edit-event' ) {
+			$unique_name = 'events_export';
 		}
 		?>
         <script type="text/javascript">
             jQuery(document).ready(function ($) {
-                $('.tablenav.top .clear, .tablenav.bottom .clear').before('<form action="#" method="POST"><input type="hidden" id="wp_excel_export" name="<?php echo $screen->id; ?>" value="1" /><input class="button button-primary export_button" style="margin-top:3px;" type="submit" value="<?php esc_attr_e( 'Export to Excel' );?>" /></form>');
+                $('.tablenav.top .clear, .tablenav.bottom .clear').before('<form action="#" method="POST"><input type="hidden" id="wp_excel_export" name="<?php echo $unique_name; ?>" value="1" /><input class="button button-primary export_button" style="margin-top:3px;" type="submit" value="<?php esc_attr_e( 'Export to Excel' );?>" /></form>');
             });
         </script>
 		<?php
@@ -1057,7 +1063,8 @@ add_action( 'admin_init', 'eypd_excel_export' );
 
 function eypd_excel_export() {
 
-	if ( ! empty( $_POST['edit-event'] ) || ! empty( $_POST['users'] ) ) {
+	if ( ! empty( $_POST['users_export'] ) || ! empty( $_POST['events_export'] ) ) {
+
 
 		if ( current_user_can( 'manage_options' ) ) {
 
@@ -1065,7 +1072,7 @@ function eypd_excel_export() {
 			$objPHPExcel = new PHPExcel();
 
 			// User data
-			if ( isset( $_POST['users'] ) ) {
+			if ( isset( $_POST['users_export'] ) ) {
 
 				// User args
 				$args = array(
@@ -1117,13 +1124,13 @@ function eypd_excel_export() {
 			}
 
 			// Event data
-			if ( isset( $_POST['edit-event'] ) ) {
+			if ( isset( $_POST['events_export'] ) ) {
 
 				// Event args
 				$args = array(
 					'post_type' => 'event'
 				);
-        
+
 				// Event Query
 				$query      = new WP_Query( $args );
 				$posts      = $query->posts;
