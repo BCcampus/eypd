@@ -1065,6 +1065,7 @@ function eypd_excel_export() {
 
 	if ( ! empty( $_POST['users_export'] ) || ! empty( $_POST['events_export'] ) ) {
 
+
 		if ( current_user_can( 'manage_options' ) ) {
 
 			// Create a new PHPExcel object
