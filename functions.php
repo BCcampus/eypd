@@ -589,19 +589,19 @@ add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items' );
 function eypd_close_popover() {
 	if ( ! is_user_logged_in() ) {
 		?>
-		<script type="text/javascript">
+        <script type="text/javascript">
 
-			jQuery(document).ready(function ($) {
-				$('[data-toggle="popover"],[data-original-title]').popover();
-				$(document).on('click', function (e) {
-					$('[data-toggle="popover"],[data-original-title]').each(function () {
-						if (!$(this).is(e.target)) {
-							$(this).popover('hide').data('bs.popover').inState.click = false
-						}
-					});
-				});
-			});
-		</script>
+            jQuery(document).ready(function ($) {
+                $('[data-toggle="popover"],[data-original-title]').popover();
+                $(document).on('click', function (e) {
+                    $('[data-toggle="popover"],[data-original-title]').each(function () {
+                        if (!$(this).is(e.target)) {
+                            $(this).popover('hide').data('bs.popover').inState.click = false
+                        }
+                    });
+                });
+            });
+        </script>
 		<?php
 	}
 }
@@ -936,58 +936,58 @@ function eypd_datepicker_countdown() {
 		global $bp;
 		$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
 		?>
-		<!-- jQuery date picker as input for the countdown -->
-		<script type="text/javascript">
-			jQuery(document).ready(function () {
-				$expirydate = '#expiry-date';   // input field where date picker will show up
-				jQuery($expirydate).datepicker('hide');
-				jQuery($expirydate).click(function () {
+        <!-- jQuery date picker as input for the countdown -->
+        <script type="text/javascript">
+            jQuery(document).ready(function () {
+                $expirydate = '#expiry-date';   // input field where date picker will show up
+                jQuery($expirydate).datepicker('hide');
+                jQuery($expirydate).click(function () {
 
-					jQuery($expirydate).datepicker({
-						dateFormat: 'mm/dd/yy',
-						changeMonth: true,
-						changeYear: true
-					});
-					jQuery($expirydate).datepicker('show');
-				});
-				// end jQuery date picker
+                    jQuery($expirydate).datepicker({
+                        dateFormat: 'mm/dd/yy',
+                        changeMonth: true,
+                        changeYear: true
+                    });
+                    jQuery($expirydate).datepicker('show');
+                });
+                // end jQuery date picker
 
-				// countdown functionality
-				var countDownDate = new Date("<?php echo $cert_expires; ?>").getTime();
+                // countdown functionality
+                var countDownDate = new Date("<?php echo $cert_expires; ?>").getTime();
 
-				// set interval at 1 second to start countdown and check for changes
-				var x = setInterval(function () {
+                // set interval at 1 second to start countdown and check for changes
+                var x = setInterval(function () {
 
-					// today's date and time
-					var now = new Date().getTime();
+                    // today's date and time
+                    var now = new Date().getTime();
 
-					// distance between now and count down date
-					var distance = countDownDate - now;
+                    // distance between now and count down date
+                    var distance = countDownDate - now;
 
-					// time calculations
-					var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-					var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-					// var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-					// var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    // time calculations
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    // var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    // var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-					// expired
-					if (distance < 0) {
-						clearInterval(x);
-						document.getElementById("certcoutdown").innerHTML = "<p>Your certificate has expired</p>";
-					}
-					// date in the future
-					else if (countDownDate) {
-						clearInterval(x);
-						document.getElementById("certcoutdown").innerHTML = "<p>Your professional certification expires in <b>" + days + "</b>" + " days and " + "<b>" + hours + "</b>" + " hours " + "</p>";
-					}
-					// no date
-					else {
-						clearInterval(x);
-						document.getElementById("certcoutdown").innerHTML = "<p>Please enter the expiry date of your professional certification.</p>";
-					}
-				}, 1000);
-			});
-		</script>
+                    // expired
+                    if (distance < 0) {
+                        clearInterval(x);
+                        document.getElementById("certcoutdown").innerHTML = "<p>Your certificate has expired</p>";
+                    }
+                    // date in the future
+                    else if (countDownDate) {
+                        clearInterval(x);
+                        document.getElementById("certcoutdown").innerHTML = "<p>Your professional certification expires in <b>" + days + "</b>" + " days and " + "<b>" + hours + "</b>" + " hours " + "</p>";
+                    }
+                    // no date
+                    else {
+                        clearInterval(x);
+                        document.getElementById("certcoutdown").innerHTML = "<p>Please enter the expiry date of your professional certification.</p>";
+                    }
+                }, 1000);
+            });
+        </script>
 	<?php }
 }
 
@@ -1044,11 +1044,11 @@ function eypd_export_button() {
 			$unique_name = 'events_export';
 		}
 		?>
-		<script type="text/javascript">
-			jQuery(document).ready(function ($) {
-				$('.tablenav.top .clear, .tablenav.bottom .clear').before('<form action="#" method="POST"><input type="hidden" id="wp_excel_export" name="<?php echo $unique_name; ?>" value="1" /><input class="button button-primary export_button" style="margin-top:3px;" type="submit" value="<?php esc_attr_e( 'Export to Excel' );?>" /></form>');
-			});
-		</script>
+        <script type="text/javascript">
+            jQuery(document).ready(function ($) {
+                $('.tablenav.top .clear, .tablenav.bottom .clear').before('<form action="#" method="POST"><input type="hidden" id="wp_excel_export" name="<?php echo $unique_name; ?>" value="1" /><input class="button button-primary export_button" style="margin-top:3px;" type="submit" value="<?php esc_attr_e( 'Export to Excel' );?>" /></form>');
+            });
+        </script>
 		<?php
 	}
 }
@@ -1147,8 +1147,7 @@ function eypd_excel_export() {
 					$title     = $post->post_title;
 					$date      = $post->post_date;
 					$status    = $post->post_status;
-					$author_id = $post->post_author;
-					;
+					$author_id = $post->post_author;;
 					$author   = get_the_author_meta( 'display_name', $author_id );
 					$location = get_post_meta( $post->ID, 'location', true );
 

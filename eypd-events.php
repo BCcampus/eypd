@@ -48,7 +48,7 @@ function eypd_content( $page_content ) {
 			$edit_locations_page_id,
 			$my_bookings_page_id,
 			$tags_page_id,
-	) )
+		) )
 	) {
 		$content = apply_filters( 'em_content_pre', '', $page_content );
 		if ( empty( $content ) ) {

@@ -557,7 +557,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 				//quick shortcut for quick html form manipulation
 				ob_start();
 				?>
-				<option value=''><?php echo get_option( 'dbem_search_form_states_label' ) ?></option>
+                <option value=''><?php echo get_option( 'dbem_search_form_states_label' ) ?></option>
 				<?php
 				foreach ( $results as $result ) {
 					echo "<option>{$result}</option>";
@@ -588,7 +588,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 				//quick shortcut for quick html form manipulation
 				ob_start();
 				?>
-				<option value=''><?php echo get_option( 'dbem_search_form_towns_label' ); ?></option>
+                <option value=''><?php echo get_option( 'dbem_search_form_towns_label' ); ?></option>
 				<?php
 				foreach ( $results as $result ) {
 					echo "<option>$result</option>";
@@ -612,7 +612,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 				//quick shortcut for quick html form manipulation
 				ob_start();
 				?>
-				<option value=''><?php echo get_option( 'dbem_search_form_regions_label' ); ?></option>
+                <option value=''><?php echo get_option( 'dbem_search_form_regions_label' ); ?></option>
 				<?php
 				foreach ( $results as $result ) {
 					echo "<option>{$result->value}</option>";
@@ -711,7 +711,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 			}
 			//reiterate loop
 			$EM_Bookings_Table->offset += $EM_Bookings_Table->limit;
-			$EM_Bookings = $EM_Bookings_Table->get_bookings();
+			$EM_Bookings               = $EM_Bookings_Table->get_bookings();
 		}
 		fclose( $handle );
 		exit();
