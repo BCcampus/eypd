@@ -1,7 +1,7 @@
 <?php
 /*
 |--------------------------------------------------------------------------
-| Parent theme 
+| Parent theme
 |--------------------------------------------------------------------------
 |
 | enqueue parent and child theme
@@ -53,7 +53,7 @@ include( get_stylesheet_directory() . '/eypd-events.php' );
 | Events Manager
 |--------------------------------------------------------------------------
 |
-| Creates a new scope for the events manager short code, and then registers it with events manager. 
+| Creates a new scope for the events manager short code, and then registers it with events manager.
 | It will only lists events with a date greater than today's.
 |
 |
@@ -73,7 +73,7 @@ function my_em_scope_conditions( $conditions, $args ) {
 add_filter( 'em_get_scopes', 'my_em_scopes', 1, 1 );
 function my_em_scopes( $scopes ) {
 	$my_scopes = array(
-		'after-today' => 'After Today'
+		'after-today' => 'After Today',
 	);
 
 	return $scopes + $my_scopes;
@@ -106,7 +106,6 @@ function eypd_load_scripts() {
 
 	wp_enqueue_script( 'jquery-ui-draggable' );
 	wp_enqueue_script( 'markerclusterer', $template_dir . '/assets/js/markerclusterer.js' );
-
 
 	$script_deps = array(
 		'jquery'                 => 'jquery',
@@ -377,13 +376,13 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 
 	if ( 'events-manager' == $domain ) {
 		$modify = array(
-			"State/County:"                                                                  => "Province:",
-			"Details"                                                                        => "Event Description and Objectives",
-			"Category:"                                                                      => "Category",
-			"Submit %s"                                                                      => "Post %s",
-			"You must log in to view and manage your events."                                => "You are using this site in the role as a Learner. Learners may search for, share, and print events. Only Organizers may post and edit events.",
-			"You are currently viewing your public page, this is what other users will see." => "This is your professional development activity page - a personal record of your training events, events you plan on </br> attending, and record of professional development hours you have accumulated. <p>To officially register for a professional development event you must contact the agency responsible for the training event.</p>",
-			"Events"                                                                         => "myEYPD",
+			'State/County:'                                                                  => 'Province:',
+			'Details'                                                                        => 'Event Description and Objectives',
+			'Category:'                                                                      => 'Category',
+			'Submit %s'                                                                      => 'Post %s',
+			'You must log in to view and manage your events.'                                => 'You are using this site in the role as a Learner. Learners may search for, share, and print events. Only Organizers may post and edit events.',
+			'You are currently viewing your public page, this is what other users will see.' => 'This is your professional development activity page - a personal record of your training events, events you plan on </br> attending, and record of professional development hours you have accumulated. <p>To officially register for a professional development event you must contact the agency responsible for the training event.</p>',
+			'Events'                                                                         => 'myEYPD',
 		);
 	}
 
@@ -447,16 +446,16 @@ function eypd_event_output( $post_id = 0, $data = array() ) {
  *
  * @return mixed|string
  */
-function eypd_event_etc_output( $input = "" ) {
+function eypd_event_etc_output( $input = '' ) {
 	$output = $input;
-	preg_match_all( "/<li class=\"category-(\d+)\">/", $input, $output_array );
+	preg_match_all( '/<li class="category-(\d+)">/', $input, $output_array );
 	foreach ( $output_array[1] as $index => $post_id ) {
 		$cats       = wp_get_object_terms( $post_id, 'event-categories' );
-		$cat_output = $space = "";
+		$cat_output = $space = '';
 		foreach ( $cats as $cat ) {
 			$c          = get_category( $cat );
-			$cat_output .= $space . "cat_" . str_replace( "-", "_", $c->slug );
-			$space      = " ";
+			$cat_output .= $space . 'cat_' . str_replace( '-', '_', $c->slug );
+			$space      = ' ';
 		}
 		$new_classes = "<li class=\"$cat_output\">";
 		$output      = str_replace( $output_array[0][ $index ], $new_classes, $output );
@@ -514,7 +513,7 @@ function eypd_admin_bar_render() {
 			'title'  => 'myEYPD',
 			'href'   => $profileurl,
 			'parent' => 'user-actions',
-			'meta'   => array( 'class' => 'my-profile-page' )
+			'meta'   => array( 'class' => 'my-profile-page' ),
 		) );
 
 		//add logout link after my profile link, and redirect to homepage after logout
@@ -524,7 +523,7 @@ function eypd_admin_bar_render() {
 			'title'  => 'Logout',
 			'href'   => $logouturl,
 			'parent' => 'user-actions',
-			'meta'   => array( 'class' => 'my-logout-link' )
+			'meta'   => array( 'class' => 'my-logout-link' ),
 		) );
 
 		// maintain a way for admins to access the dashboard
@@ -535,8 +534,8 @@ function eypd_admin_bar_render() {
 				'title' => 'Dashboard',
 				'href'  => $url,
 				'meta'  => array(
-					'class' => 'my-toolbar-page'
-				)
+					'class' => 'my-toolbar-page',
+				),
 			) );
 		}
 	}
@@ -590,19 +589,19 @@ add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items' );
 function eypd_close_popover() {
 	if ( ! is_user_logged_in() ) {
 		?>
-        <script type="text/javascript">
+		<script type="text/javascript">
 
-            jQuery(document).ready(function ($) {
-                $('[data-toggle="popover"],[data-original-title]').popover();
-                $(document).on('click', function (e) {
-                    $('[data-toggle="popover"],[data-original-title]').each(function () {
-                        if (!$(this).is(e.target)) {
-                            $(this).popover('hide').data('bs.popover').inState.click = false
-                        }
-                    });
-                });
-            });
-        </script>
+			jQuery(document).ready(function ($) {
+				$('[data-toggle="popover"],[data-original-title]').popover();
+				$(document).on('click', function (e) {
+					$('[data-toggle="popover"],[data-original-title]').each(function () {
+						if (!$(this).is(e.target)) {
+							$(this).popover('hide').data('bs.popover').inState.click = false
+						}
+					});
+				});
+			});
+		</script>
 		<?php
 	}
 }
@@ -630,11 +629,11 @@ function eypd_validate_attributes() {
 	}
 
 	if ( empty( $EM_Event->event_attributes['Professional Development Certificate'] ) ) {
-		$EM_Event->add_error( sprintf( __( "%s is required.", 'early-years' ), __( 'Professional Development Certificate', 'early-years' ) ) );
+		$EM_Event->add_error( sprintf( __( '%s is required.', 'early-years' ), __( 'Professional Development Certificate', 'early-years' ) ) );
 	}
 
 	if ( empty( $EM_Event->event_attributes['Registration Fee'] ) ) {
-		$EM_Event->add_error( sprintf( __( "%s is required.", 'early-years' ), __( 'Registration Fee', 'early-years' ) ) );
+		$EM_Event->add_error( sprintf( __( '%s is required.', 'early-years' ), __( 'Registration Fee', 'early-years' ) ) );
 	}
 
 	return $EM_Event;
@@ -650,21 +649,21 @@ add_action( 'em_event_validate', 'eypd_validate_attributes' );
 
 function eypd_profile_field_modals() {
 
-// check xprofile is activated
+	// check xprofile is activated
 	if ( bp_is_active( 'xprofile' ) ) {
 
 		$bp_field_name = bp_get_the_profile_field_name();
 
-// replace content of $field_description to enable use of modals
+		// replace content of $field_description to enable use of modals
 		switch ( $bp_field_name ) {
 
-			case "Agreement Terms:":
+			case 'Agreement Terms:':
 				$field_description = '<a href="#terms" data-toggle="modal">Terms and Conditions</a>';
 
 				return $field_description;
 				break;
 
-			case "Position/Role":
+			case 'Position/Role':
 				$field_description = '<a href="#role" data-toggle="modal">What’s the difference between Learner and Organizer?</a>';
 
 				return $field_description;
@@ -737,7 +736,7 @@ function eypd_get_my_bookings_url() {
 		//get member url
 		return $bp->events->link;
 	} else {
-		return "#";
+		return '#';
 	}
 }
 
@@ -757,7 +756,7 @@ function eypd_get_my_bookings_url() {
 
 function eypd_format_TinyMCE( $in ) {
 	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
-		$in['content_css'] = get_stylesheet_directory_uri() . "/editor-style.css";
+		$in['content_css'] = get_stylesheet_directory_uri() . '/editor-style.css';
 
 		return $in;
 	}
@@ -772,10 +771,10 @@ add_filter( 'tiny_mce_before_init', 'eypd_format_TinyMCE' );
  */
 function eypd_media_manager_style() {
 	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
-		echo "<style>.media-frame-menu, .media-sidebar, .attachment-filters, label[for=media-attachment-filters],label[for=media-attachment-date-filters], label[for=media-search-input],.media-frame input[type=search]{display:none;}</style>";
+		echo '<style>.media-frame-menu, .media-sidebar, .attachment-filters, label[for=media-attachment-filters],label[for=media-attachment-date-filters], label[for=media-search-input],.media-frame input[type=search]{display:none;}</style>';
 		// hide editor tabs
 		if ( ! current_user_can( 'administrator' ) ) {
-			echo "<style>.wp-editor-tabs {display: none;}</style>";
+			echo '<style>.wp-editor-tabs {display: none;}</style>';
 		}
 	}
 }
@@ -868,7 +867,7 @@ add_filter( 'get_image_tag_class', 'eypd_image_tag_class' );
 
 function eypd_control_banner() {
 	if ( is_singular( 'event' ) ) {
-		echo "<style>img.banner{height: auto; width: auto; max-width: 1000px; max-height: 217px;}</style>";
+		echo '<style>img.banner{height: auto; width: auto; max-width: 1000px; max-height: 217px;}</style>';
 	}
 }
 
@@ -883,13 +882,13 @@ function eypd_one_image( $content ) {
 	if ( $content ) {
 		$latest_img = '';
 		// find all images
-		preg_match_all( "/<img[^>]+\>/i", $content, $matches );
+		preg_match_all( '/<img[^>]+\>/i', $content, $matches );
 		// get the latest image
 		if ( isset( $matches[0][0] ) ) {
 			$latest_img = $matches [0] [0];
 		}
 		// remove the rest
-		$content = preg_replace( "/<img[^>]+\>/i", "", $content );
+		$content = preg_replace( '/<img[^>]+\>/i', '', $content );
 
 		// add the latest image
 		return $content . $latest_img;
@@ -905,17 +904,17 @@ add_action( 'content_save_pre', 'eypd_one_image' );
  */
 
 function eypd_banner_image( $content ) {
-// make sure we are on a single event page and that there's content
+	// make sure we are on a single event page and that there's content
 	if ( $content && is_singular( 'event' ) ) {
 		$banner_img = '';
 		// find the image
-		preg_match_all( "/<img[^>]+\>/i", $content, $matches );
+		preg_match_all( '/<img[^>]+\>/i', $content, $matches );
 		// set the banner image
 		if ( isset( $matches[0][0] ) ) {
 			$banner_img = $matches [0] [0];
 		}
 		// remove all images, just in case there's more than one
-		$content = preg_replace( "/<img[^>]+\>/i", "", $content );
+		$content = preg_replace( '/<img[^>]+\>/i', '', $content );
 		// display banner image before the event info
 		echo '<p>' . $banner_img . '</p>';
 	}
@@ -937,58 +936,58 @@ function eypd_datepicker_countdown() {
 		global $bp;
 		$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
 		?>
-        <!-- jQuery date picker as input for the countdown -->
-        <script type="text/javascript">
-            jQuery(document).ready(function () {
-                $expirydate = '#expiry-date';   // input field where date picker will show up
-                jQuery($expirydate).datepicker('hide');
-                jQuery($expirydate).click(function () {
+		<!-- jQuery date picker as input for the countdown -->
+		<script type="text/javascript">
+			jQuery(document).ready(function () {
+				$expirydate = '#expiry-date';   // input field where date picker will show up
+				jQuery($expirydate).datepicker('hide');
+				jQuery($expirydate).click(function () {
 
-                    jQuery($expirydate).datepicker({
-                        dateFormat: 'mm/dd/yy',
-                        changeMonth: true,
-                        changeYear: true
-                    });
-                    jQuery($expirydate).datepicker('show');
-                });
-                // end jQuery date picker
+					jQuery($expirydate).datepicker({
+						dateFormat: 'mm/dd/yy',
+						changeMonth: true,
+						changeYear: true
+					});
+					jQuery($expirydate).datepicker('show');
+				});
+				// end jQuery date picker
 
-                // countdown functionality
-                var countDownDate = new Date("<?php echo $cert_expires; ?>").getTime();
+				// countdown functionality
+				var countDownDate = new Date("<?php echo $cert_expires; ?>").getTime();
 
-                // set interval at 1 second to start countdown and check for changes
-                var x = setInterval(function () {
+				// set interval at 1 second to start countdown and check for changes
+				var x = setInterval(function () {
 
-                    // today's date and time
-                    var now = new Date().getTime();
+					// today's date and time
+					var now = new Date().getTime();
 
-                    // distance between now and count down date
-                    var distance = countDownDate - now;
+					// distance between now and count down date
+					var distance = countDownDate - now;
 
-                    // time calculations
-                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    // var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    // var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+					// time calculations
+					var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+					var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+					// var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+					// var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                    // expired
-                    if (distance < 0) {
-                        clearInterval(x);
-                        document.getElementById("certcoutdown").innerHTML = "<p>Your certificate has expired</p>";
-                    }
-                    // date in the future
-                    else if (countDownDate) {
-                        clearInterval(x);
-                        document.getElementById("certcoutdown").innerHTML = "<p>Your professional certification expires in <b>" + days + "</b>" + " days and " + "<b>" + hours + "</b>" + " hours " + "</p>";
-                    }
-                    // no date
-                    else {
-                        clearInterval(x);
-                        document.getElementById("certcoutdown").innerHTML = "<p>Please enter the expiry date of your professional certification.</p>";
-                    }
-                }, 1000);
-            });
-        </script>
+					// expired
+					if (distance < 0) {
+						clearInterval(x);
+						document.getElementById("certcoutdown").innerHTML = "<p>Your certificate has expired</p>";
+					}
+					// date in the future
+					else if (countDownDate) {
+						clearInterval(x);
+						document.getElementById("certcoutdown").innerHTML = "<p>Your professional certification expires in <b>" + days + "</b>" + " days and " + "<b>" + hours + "</b>" + " hours " + "</p>";
+					}
+					// no date
+					else {
+						clearInterval(x);
+						document.getElementById("certcoutdown").innerHTML = "<p>Please enter the expiry date of your professional certification.</p>";
+					}
+				}, 1000);
+			});
+		</script>
 	<?php }
 }
 
@@ -1045,11 +1044,11 @@ function eypd_export_button() {
 			$unique_name = 'events_export';
 		}
 		?>
-        <script type="text/javascript">
-            jQuery(document).ready(function ($) {
-                $('.tablenav.top .clear, .tablenav.bottom .clear').before('<form action="#" method="POST"><input type="hidden" id="wp_excel_export" name="<?php echo $unique_name; ?>" value="1" /><input class="button button-primary export_button" style="margin-top:3px;" type="submit" value="<?php esc_attr_e( 'Export to Excel' );?>" /></form>');
-            });
-        </script>
+		<script type="text/javascript">
+			jQuery(document).ready(function ($) {
+				$('.tablenav.top .clear, .tablenav.bottom .clear').before('<form action="#" method="POST"><input type="hidden" id="wp_excel_export" name="<?php echo $unique_name; ?>" value="1" /><input class="button button-primary export_button" style="margin-top:3px;" type="submit" value="<?php esc_attr_e( 'Export to Excel' );?>" /></form>');
+			});
+		</script>
 		<?php
 	}
 }
@@ -1064,7 +1063,6 @@ add_action( 'admin_init', 'eypd_excel_export' );
 function eypd_excel_export() {
 
 	if ( ! empty( $_POST['users_export'] ) || ! empty( $_POST['events_export'] ) ) {
-
 
 		if ( current_user_can( 'manage_options' ) ) {
 
@@ -1096,7 +1094,7 @@ function eypd_excel_export() {
 					$cell_count ++;
 
 					$user_meta  = get_user_meta( $user->ID );
-					$role       = implode( ",", $user->roles );
+					$role       = implode( ',', $user->roles );
 					$email      = $user->user_email;
 					$first_name = ( isset( $user_meta['first_name'][0] ) && $user_meta['first_name'][0] != '' ) ? $user_meta['first_name'][0] : '';
 					$last_name  = ( isset( $user_meta['last_name'][0] ) && $user_meta['last_name'][0] != '' ) ? $user_meta['last_name'][0] : '';
@@ -1128,7 +1126,7 @@ function eypd_excel_export() {
 
 				// Event args
 				$args = array(
-					'post_type' => 'event'
+					'post_type' => 'event',
 				);
 
 				// Event Query
@@ -1149,7 +1147,8 @@ function eypd_excel_export() {
 					$title     = $post->post_title;
 					$date      = $post->post_date;
 					$status    = $post->post_status;
-					$author_id = $post->post_author;;
+					$author_id = $post->post_author;
+					;
 					$author   = get_the_author_meta( 'display_name', $author_id );
 					$location = get_post_meta( $post->ID, 'location', true );
 
@@ -1178,7 +1177,6 @@ function eypd_excel_export() {
 			for ( $col = 'A'; $col !== 'E'; $col ++ ) {
 				$objPHPExcel->getActiveSheet()->getColumnDimension( $col )->setAutoSize( true );
 			}
-
 		}
 
 		header( 'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' );
