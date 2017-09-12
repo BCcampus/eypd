@@ -1,7 +1,7 @@
 <?php
 /*
 |--------------------------------------------------------------------------
-| Parent theme 
+| Parent theme
 |--------------------------------------------------------------------------
 |
 | enqueue parent and child theme
@@ -53,7 +53,7 @@ include( get_stylesheet_directory() . '/eypd-events.php' );
 | Events Manager
 |--------------------------------------------------------------------------
 |
-| Creates a new scope for the events manager short code, and then registers it with events manager. 
+| Creates a new scope for the events manager short code, and then registers it with events manager.
 | It will only lists events with a date greater than today's.
 |
 |
@@ -73,7 +73,7 @@ function my_em_scope_conditions( $conditions, $args ) {
 add_filter( 'em_get_scopes', 'my_em_scopes', 1, 1 );
 function my_em_scopes( $scopes ) {
 	$my_scopes = array(
-		'after-today' => 'After Today'
+		'after-today' => 'After Today',
 	);
 
 	return $scopes + $my_scopes;
@@ -106,7 +106,6 @@ function eypd_load_scripts() {
 
 	wp_enqueue_script( 'jquery-ui-draggable' );
 	wp_enqueue_script( 'markerclusterer', $template_dir . '/assets/js/markerclusterer.js' );
-
 
 	$script_deps = array(
 		'jquery'                 => 'jquery',
@@ -377,13 +376,13 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 
 	if ( 'events-manager' == $domain ) {
 		$modify = array(
-			"State/County:"                                                                  => "Province:",
-			"Details"                                                                        => "Event Description and Objectives",
-			"Category:"                                                                      => "Category",
-			"Submit %s"                                                                      => "Post %s",
-			"You must log in to view and manage your events."                                => "You are using this site in the role as a Learner. Learners may search for, share, and print events. Only Organizers may post and edit events.",
-			"You are currently viewing your public page, this is what other users will see." => "This is your professional development activity page - a personal record of your training events, events you plan on </br> attending, and record of professional development hours you have accumulated. <p>To officially register for a professional development event you must contact the agency responsible for the training event.</p>",
-			"Events"                                                                         => "myEYPD",
+			'State/County:'                                                                  => 'Province:',
+			'Details'                                                                        => 'Event Description and Objectives',
+			'Category:'                                                                      => 'Category',
+			'Submit %s'                                                                      => 'Post %s',
+			'You must log in to view and manage your events.'                                => 'You are using this site in the role as a Learner. Learners may search for, share, and print events. Only Organizers may post and edit events.',
+			'You are currently viewing your public page, this is what other users will see.' => 'This is your professional development activity page - a personal record of your training events, events you plan on </br> attending, and record of professional development hours you have accumulated. <p>To officially register for a professional development event you must contact the agency responsible for the training event.</p>',
+			'Events'                                                                         => 'myEYPD',
 		);
 	}
 
@@ -447,16 +446,16 @@ function eypd_event_output( $post_id = 0, $data = array() ) {
  *
  * @return mixed|string
  */
-function eypd_event_etc_output( $input = "" ) {
+function eypd_event_etc_output( $input = '' ) {
 	$output = $input;
-	preg_match_all( "/<li class=\"category-(\d+)\">/", $input, $output_array );
+	preg_match_all( '/<li class="category-(\d+)">/', $input, $output_array );
 	foreach ( $output_array[1] as $index => $post_id ) {
 		$cats       = wp_get_object_terms( $post_id, 'event-categories' );
-		$cat_output = $space = "";
+		$cat_output = $space = '';
 		foreach ( $cats as $cat ) {
 			$c          = get_category( $cat );
-			$cat_output .= $space . "cat_" . str_replace( "-", "_", $c->slug );
-			$space      = " ";
+			$cat_output .= $space . 'cat_' . str_replace( '-', '_', $c->slug );
+			$space      = ' ';
 		}
 		$new_classes = "<li class=\"$cat_output\">";
 		$output      = str_replace( $output_array[0][ $index ], $new_classes, $output );
@@ -514,7 +513,7 @@ function eypd_admin_bar_render() {
 			'title'  => 'myEYPD',
 			'href'   => $profileurl,
 			'parent' => 'user-actions',
-			'meta'   => array( 'class' => 'my-profile-page' )
+			'meta'   => array( 'class' => 'my-profile-page' ),
 		) );
 
 		//add logout link after my profile link, and redirect to homepage after logout
@@ -524,7 +523,7 @@ function eypd_admin_bar_render() {
 			'title'  => 'Logout',
 			'href'   => $logouturl,
 			'parent' => 'user-actions',
-			'meta'   => array( 'class' => 'my-logout-link' )
+			'meta'   => array( 'class' => 'my-logout-link' ),
 		) );
 
 		// maintain a way for admins to access the dashboard
@@ -535,8 +534,8 @@ function eypd_admin_bar_render() {
 				'title' => 'Dashboard',
 				'href'  => $url,
 				'meta'  => array(
-					'class' => 'my-toolbar-page'
-				)
+					'class' => 'my-toolbar-page',
+				),
 			) );
 		}
 	}
@@ -632,11 +631,11 @@ function eypd_validate_attributes() {
 	}
 
 	if ( empty( $EM_Event->event_attributes['Professional Development Certificate'] ) ) {
-		$EM_Event->add_error( sprintf( __( "%s is required.", 'early-years' ), __( 'Professional Development Certificate', 'early-years' ) ) );
+		$EM_Event->add_error( sprintf( __( '%s is required.', 'early-years' ), __( 'Professional Development Certificate', 'early-years' ) ) );
 	}
 
 	if ( empty( $EM_Event->event_attributes['Registration Fee'] ) ) {
-		$EM_Event->add_error( sprintf( __( "%s is required.", 'early-years' ), __( 'Registration Fee', 'early-years' ) ) );
+		$EM_Event->add_error( sprintf( __( '%s is required.', 'early-years' ), __( 'Registration Fee', 'early-years' ) ) );
 	}
 
 	return $EM_Event;
@@ -652,21 +651,21 @@ add_action( 'em_event_validate', 'eypd_validate_attributes' );
 
 function eypd_profile_field_modals() {
 
-// check xprofile is activated
+	// check xprofile is activated
 	if ( bp_is_active( 'xprofile' ) ) {
 
 		$bp_field_name = bp_get_the_profile_field_name();
 
-// replace content of $field_description to enable use of modals
+		// replace content of $field_description to enable use of modals
 		switch ( $bp_field_name ) {
 
-			case "Agreement Terms:":
+			case 'Agreement Terms:':
 				$field_description = '<a href="#terms" data-toggle="modal">Terms and Conditions</a>';
 
 				return $field_description;
 				break;
 
-			case "Position/Role":
+			case 'Position/Role':
 				$field_description = '<a href="#role" data-toggle="modal">What’s the difference between Learner and Organizer?</a>';
 
 				return $field_description;
@@ -739,7 +738,7 @@ function eypd_get_my_bookings_url() {
 		//get member url
 		return $bp->events->link;
 	} else {
-		return "#";
+		return '#';
 	}
 }
 
@@ -759,7 +758,7 @@ function eypd_get_my_bookings_url() {
 
 function eypd_format_TinyMCE( $in ) {
 	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
-		$in['content_css'] = get_stylesheet_directory_uri() . "/editor-style.css";
+		$in['content_css'] = get_stylesheet_directory_uri() . '/editor-style.css';
 
 		return $in;
 	}
@@ -774,10 +773,10 @@ add_filter( 'tiny_mce_before_init', 'eypd_format_TinyMCE' );
  */
 function eypd_media_manager_style() {
 	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
-		echo "<style>.media-frame-menu, .media-sidebar, .attachment-filters, label[for=media-attachment-filters],label[for=media-attachment-date-filters], label[for=media-search-input],.media-frame input[type=search]{display:none;}</style>";
+		echo '<style>.media-frame-menu, .media-sidebar, .attachment-filters, label[for=media-attachment-filters],label[for=media-attachment-date-filters], label[for=media-search-input],.media-frame input[type=search]{display:none;}</style>';
 		// hide editor tabs
 		if ( ! current_user_can( 'administrator' ) ) {
-			echo "<style>.wp-editor-tabs {display: none;}</style>";
+			echo '<style>.wp-editor-tabs {display: none;}</style>';
 		}
 	}
 }
@@ -870,7 +869,7 @@ add_filter( 'get_image_tag_class', 'eypd_image_tag_class' );
 
 function eypd_control_banner() {
 	if ( is_singular( 'event' ) ) {
-		echo "<style>img.banner{height: auto; width: auto; max-width: 1000px; max-height: 217px;}</style>";
+		echo '<style>img.banner{height: auto; width: auto; max-width: 1000px; max-height: 217px;}</style>';
 	}
 }
 
@@ -885,13 +884,13 @@ function eypd_one_image( $content ) {
 	if ( $content ) {
 		$latest_img = '';
 		// find all images
-		preg_match_all( "/<img[^>]+\>/i", $content, $matches );
+		preg_match_all( '/<img[^>]+\>/i', $content, $matches );
 		// get the latest image
 		if ( isset( $matches[0][0] ) ) {
 			$latest_img = $matches [0] [0];
 		}
 		// remove the rest
-		$content = preg_replace( "/<img[^>]+\>/i", "", $content );
+		$content = preg_replace( '/<img[^>]+\>/i', '', $content );
 
 		// add the latest image
 		return $content . $latest_img;
@@ -907,17 +906,17 @@ add_action( 'content_save_pre', 'eypd_one_image' );
  */
 
 function eypd_banner_image( $content ) {
-// make sure we are on a single event page and that there's content
+	// make sure we are on a single event page and that there's content
 	if ( $content && is_singular( 'event' ) ) {
 		$banner_img = '';
 		// find the image
-		preg_match_all( "/<img[^>]+\>/i", $content, $matches );
+		preg_match_all( '/<img[^>]+\>/i', $content, $matches );
 		// set the banner image
 		if ( isset( $matches[0][0] ) ) {
 			$banner_img = $matches [0] [0];
 		}
 		// remove all images, just in case there's more than one
-		$content = preg_replace( "/<img[^>]+\>/i", "", $content );
+		$content = preg_replace( '/<img[^>]+\>/i', '', $content );
 		// display banner image before the event info
 		echo '<p>' . $banner_img . '</p>';
 	}
@@ -1067,7 +1066,6 @@ function eypd_excel_export() {
 
 	if ( ! empty( $_POST['users_export'] ) || ! empty( $_POST['events_export'] ) ) {
 
-
 		if ( current_user_can( 'manage_options' ) ) {
 
 			// Create a new PHPExcel object
@@ -1098,7 +1096,7 @@ function eypd_excel_export() {
 					$cell_count ++;
 
 					$user_meta  = get_user_meta( $user->ID );
-					$role       = implode( ",", $user->roles );
+					$role       = implode( ',', $user->roles );
 					$email      = $user->user_email;
 					$first_name = ( isset( $user_meta['first_name'][0] ) && $user_meta['first_name'][0] != '' ) ? $user_meta['first_name'][0] : '';
 					$last_name  = ( isset( $user_meta['last_name'][0] ) && $user_meta['last_name'][0] != '' ) ? $user_meta['last_name'][0] : '';
@@ -1130,7 +1128,7 @@ function eypd_excel_export() {
 
 				// Event args
 				$args = array(
-					'post_type' => 'event'
+					'post_type' => 'event',
 				);
 
 				// Event Query
@@ -1180,7 +1178,6 @@ function eypd_excel_export() {
 			for ( $col = 'A'; $col !== 'E'; $col ++ ) {
 				$objPHPExcel->getActiveSheet()->getColumnDimension( $col )->setAutoSize( true );
 			}
-
 		}
 
 		header( 'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' );

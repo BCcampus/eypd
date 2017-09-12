@@ -36,7 +36,7 @@ function eypd_content( $page_content ) {
 	//general defaults
 	$args         = array(
 		'owner'      => false,
-		'pagination' => 1
+		'pagination' => 1,
 	);
 	$args['ajax'] = isset( $args['ajax'] ) ? $args['ajax'] : ( ! defined( 'EM_AJAX' ) || EM_AJAX );
 	if ( ! post_password_required() && in_array( $post->ID, array(
@@ -47,7 +47,7 @@ function eypd_content( $page_content ) {
 			$edit_events_page_id,
 			$edit_locations_page_id,
 			$my_bookings_page_id,
-			$tags_page_id
+			$tags_page_id,
 		) )
 	) {
 		$content = apply_filters( 'em_content_pre', '', $page_content );
@@ -90,10 +90,10 @@ function eypd_content( $page_content ) {
 							$search_args = em_get_search_form_defaults();
 							echo "<div class='c-search'>";
 							em_locate_template( 'templates/events-search.php', true, array( 'args' => $search_args ) );
-							echo "</div>";
+							echo '</div>';
 						}
 						if ( ! empty( $args['ajax'] ) ) {
-							echo "</div>";
+							echo '</div>';
 						} //AJAX wrapper close
 					}
 				}
@@ -120,7 +120,7 @@ function eypd_content( $page_content ) {
 					} //AJAX wrapper open
 					em_locate_template( 'templates/locations-list.php', true, array( 'args' => $args ) );
 					if ( ! empty( $args['ajax'] ) ) {
-						echo "</div>";
+						echo '</div>';
 					} //AJAX wrapper close
 				}
 			} elseif ( $post->ID == $categories_page_id && $categories_page_id != 0 ) {
@@ -130,7 +130,7 @@ function eypd_content( $page_content ) {
 				} //AJAX wrapper open
 				em_locate_template( 'templates/categories-list.php', true, array( 'args' => $args ) );
 				if ( ! empty( $args['ajax'] ) ) {
-					echo "</div>";
+					echo '</div>';
 				} //AJAX wrapper close
 			} elseif ( $post->ID == $tags_page_id && $tags_page_id != 0 ) {
 				$args['limit'] = ! empty( $args['limit'] ) ? $args['limit'] : get_option( 'dbem_tags_default_limit' );
@@ -139,7 +139,7 @@ function eypd_content( $page_content ) {
 				} //AJAX wrapper open
 				em_locate_template( 'templates/tags-list.php', true, array( 'args' => $args ) );
 				if ( ! empty( $args['ajax'] ) ) {
-					echo "</div>";
+					echo '</div>';
 				} //AJAX wrapper close
 			} elseif ( $post->ID == $edit_events_page_id && $edit_events_page_id != 0 ) {
 				em_events_admin();

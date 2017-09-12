@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Infinity Theme: Post Thumbnail
  *
  * The Post Thumbnail Template part
- * 
+ *
  * @author Bowe Frankema <bowe@presscrew.com>
  * @link http://infinity.presscrew.com/
  * @copyright Copyright (C) 2010-2011 Bowe Frankema

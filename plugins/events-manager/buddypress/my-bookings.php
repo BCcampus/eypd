@@ -1,7 +1,7 @@
 <?php do_action( 'em_template_my_bookings_header' ); ?>
 <?php
 global $wpdb, $current_user, $EM_Notices, $EM_Person;
-if ( is_user_logged_in() ):
+if ( is_user_logged_in() ) :
 	$EM_Person = new EM_Person( get_current_user_id() );
 	$EM_Bookings = $EM_Person->get_bookings();
 	$bookings_count = count( $EM_Bookings->bookings );
@@ -17,9 +17,9 @@ if ( is_user_logged_in() ):
 	$offset = ( $page > 1 ) ? ( $page - 1 ) * $limit : 0;
 	echo $EM_Notices;
 	?>
-    <div class='em-my-bookings'>
+	<div class='em-my-bookings'>
 		<?php if ( $bookings_count >= $limit ) : ?>
-            <div class='tablenav'>
+			<div class='tablenav'>
 				<?php
 				if ( $bookings_count >= $limit ) {
 					$link         = em_add_get_params( $_SERVER['REQUEST_URI'], array( 'pno' => '%PAGE%' ), false ); //don't html encode, so em_paginate does its thing
@@ -27,23 +27,23 @@ if ( is_user_logged_in() ):
 					echo $bookings_nav;
 				}
 				?>
-                <div class="clear"></div>
-            </div>
+				<div class="clear"></div>
+			</div>
 		<?php endif; ?>
-        <div class="clear"></div>
+		<div class="clear"></div>
 
-		<?php if ( $bookings_count > 0 ): ?>
-            <div class='table-wrap'>
-                <table id='dbem-bookings-table' class='widefat post fixed'>
-                    <thead>
-                    <tr>
-                        <th class='manage-column' scope='col'><?php _e( 'Event', 'events-manager' ); ?></th>
-                        <th class='manage-column' scope='col'><?php _e( 'Date', 'events-manager' ); ?></th>
-                        <th class='manage-column' scope='col'><?php _e( 'Spaces', 'events-manager' ); ?></th>
-                        <th class='manage-column lastfix' scope='col'><?php _e( 'Status', 'events-manager' ); ?></th>
-                    </tr>
-                    </thead>
-                    <tbody>
+		<?php if ( $bookings_count > 0 ) : ?>
+			<div class='table-wrap'>
+				<table id='dbem-bookings-table' class='widefat post fixed'>
+					<thead>
+					<tr>
+						<th class='manage-column' scope='col'><?php _e( 'Event', 'events-manager' ); ?></th>
+						<th class='manage-column' scope='col'><?php _e( 'Date', 'events-manager' ); ?></th>
+						<th class='manage-column' scope='col'><?php _e( 'Spaces', 'events-manager' ); ?></th>
+						<th class='manage-column lastfix' scope='col'><?php _e( 'Status', 'events-manager' ); ?></th>
+					</tr>
+					</thead>
+					<tbody>
 					<?php
 					$rowno       = 0;
 					$event_count = 0;
@@ -54,32 +54,32 @@ if ( is_user_logged_in() ):
 						if ( ( $rowno < $limit || empty( $limit ) ) && ( $event_count >= $offset || $offset === 0 ) ) {
 							$rowno ++;
 							?>
-                            <tr>
-                                <td><?php echo $EM_Event->output( "#_EVENTLINK" ); ?></td>
-                                <td><?php echo date_i18n( get_option( 'dbem_date_format' ), $EM_Event->start ); ?></td>
-                                <td><?php echo $EM_Booking->get_spaces() ?></td>
-                                <td><?php echo $EM_Booking->get_status(); ?></td>
-                            </tr>
+							<tr>
+								<td><?php echo $EM_Event->output( '#_EVENTLINK' ); ?></td>
+								<td><?php echo date_i18n( get_option( 'dbem_date_format' ), $EM_Event->start ); ?></td>
+								<td><?php echo $EM_Booking->get_spaces() ?></td>
+								<td><?php echo $EM_Booking->get_status(); ?></td>
+							</tr>
 							<?php
 						}
 						do_action( 'em_my_bookings_booking_loop', $EM_Booking );
 						$event_count ++;
 					}
 					?>
-                    </tbody>
-                </table>
-            </div>
-		<?php else: ?>
+					</tbody>
+				</table>
+			</div>
+		<?php else : ?>
 			<?php _e( 'You do not have any bookings.', 'events-manager' ); ?>
 		<?php endif; ?>
 		<?php if ( ! empty( $bookings_nav ) && $bookings_count >= $limit ) : ?>
-            <div class='tablenav'>
+			<div class='tablenav'>
 				<?php echo $bookings_nav; ?>
-                <div class="clear"></div>
-            </div>
+				<div class="clear"></div>
+			</div>
 		<?php endif; ?>
-    </div>
+	</div>
 	<?php do_action( 'em_template_my_bookings_footer', $EM_Bookings ); ?>
-<?php else: ?>
-    <p><?php echo sprintf( __( 'Please <a href="%s">Log In</a> to view your bookings.', 'events-manager' ), site_url( 'wp-login.php?redirect_to=' . urlencode( get_permalink() ), 'login' ) ) ?></p>
+<?php else : ?>
+	<p><?php echo sprintf( __( 'Please <a href="%s">Log In</a> to view your bookings.', 'events-manager' ), site_url( 'wp-login.php?redirect_to=' . urlencode( get_permalink() ), 'login' ) ) ?></p>
 <?php endif; ?>
