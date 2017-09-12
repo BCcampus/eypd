@@ -752,18 +752,6 @@ function eypd_get_my_bookings_url() {
 */
 
 /**
- * Elevate contributor permissions to allow uploads via media manager
- */
-
-add_action( 'admin_init', 'eypd_contributor_upload' );
-function eypd_contributor_upload() {
-	if ( current_user_can( 'contributor' ) && ! current_user_can( 'upload_files' ) ) {
-		$role = get_role( 'contributor' );
-		$role->add_cap( 'upload_files' );
-	}
-}
-
-/**
  *  Add stylesheet to TinyMCE, allows us to style the content of the editor
  */
 
