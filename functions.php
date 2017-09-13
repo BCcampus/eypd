@@ -1132,7 +1132,7 @@ function eypd_excel_export() {
 				);
 
 				// Event Query
-				$posts      = get_posts($args);
+				$posts      = get_posts( $args );
 				$cell_count = 1;
 
 				// Set up column labels
