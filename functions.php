@@ -1132,8 +1132,7 @@ function eypd_excel_export() {
 				);
 
 				// Event Query
-				$query      = new WP_Query( $args );
-				$posts      = $query->posts;
+				$posts      = get_posts($args);
 				$cell_count = 1;
 
 				// Set up column labels
