@@ -1128,12 +1128,13 @@ function eypd_excel_export() {
 
 				// Event args
 				$args = array(
-					'post_type' => 'event',
+					'post_type'      => 'event',
+					'posts_per_page' => - 1,
+					'offset'         => 0,
 				);
 
 				// Event Query
-				$query      = new WP_Query( $args );
-				$posts      = $query->posts;
+				$posts      = get_posts( $args );
 				$cell_count = 1;
 
 				// Set up column labels
