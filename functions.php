@@ -1012,3 +1012,53 @@ function eypd_dependencies_check() {
 		} );
 	}
 }
+
+/**
+ * Remove capabilities from editors.
+ * will leave the ability to
+ * read
+ * delete_posts
+ * edit_posts
+ * upload_files
+ * edit_published_posts
+ * edit_others_posts
+ *
+ * Call the function when your plugin/theme is activated.
+ */
+function eypd_wpcodex_set_capabilities() {
+
+	// Get the role object.
+	$editor = get_role( 'editor' );
+
+	// A list of capabilities to remove from editors.
+	$caps = array(
+		'delete_others_pages',
+		'delete_others_posts',
+		'delete_pages',
+		'delete_private_pages',
+		'delete_private_posts',
+		'delete_published_pages',
+		'delete_published_posts',
+		'edit_others_pages',
+		'edit_pages',
+		'edit_private_pages',
+		'edit_private_posts',
+		'edit_published_pages',
+		'manage_categories',
+		'manage_links',
+		'moderate_comments',
+		'publish_pages',
+		'publish_posts',
+		'read_private_pages',
+		'read_private_posts',
+		'unfiltered_html',
+	);
+
+	foreach ( $caps as $cap ) {
+
+		// Remove the capability.
+		$editor->remove_cap( $cap );
+	}
+}
+
+add_action( 'init', 'eypd_wpcodex_set_capabilities' );
