@@ -132,6 +132,22 @@ function eypd_load_scripts() {
 		wp_enqueue_script( 'bootstrap-modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
 		wp_enqueue_style( 'bootstrap-modal-style', $template_dir . '/assets/styles/bootstrap.min.css' );
 	}
+
+	/**
+	 *  Banner image and TinyMCE customizations
+	 */
+	// Control size and maintain proportion of event images
+	if ( is_singular( 'event' ) ) {
+		wp_enqueue_style( 'banner', $template_dir . '/assets/styles/banner.css' );
+	}
+	// Hide images inserted in WYSIWYG, hide the editor tabs, hide toolbars and sidebars from Median Manager Panel
+	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
+		wp_enqueue_style( 'banner', $template_dir . '/assets/styles/hide-tinymce-items.css' );
+	} // hide editor tabs for non admins
+	if ( ! current_user_can( 'administrator' ) ) {
+		wp_enqueue_style( 'tabs', $template_dir . '/assets/styles/hide-editor-tab.css' );
+	}
+
 	// load styling for datepicker in myEYPD profile page only
 	if ( bp_is_my_profile() ) {
 		wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
@@ -769,21 +785,6 @@ function eypd_format_TinyMCE( $in ) {
 add_filter( 'tiny_mce_before_init', 'eypd_format_TinyMCE' );
 
 /**
- * Hide images inserted in WYSIWYG, hide the editor tabs, hide toolbars and sidebars from Median Manager Panel
- */
-function eypd_media_manager_style() {
-	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
-		echo '<style>.media-frame-menu, .media-sidebar, .attachment-filters, label[for=media-attachment-filters],label[for=media-attachment-date-filters], label[for=media-search-input],.media-frame input[type=search]{display:none;}</style>';
-		// hide editor tabs
-		if ( ! current_user_can( 'administrator' ) ) {
-			echo '<style>.wp-editor-tabs {display: none;}</style>';
-		}
-	}
-}
-
-add_action( 'wp_head', 'eypd_media_manager_style', 100 );
-
-/**
  * Force visual editor as default
  */
 function eypd_force_default_editor() {
@@ -862,18 +863,6 @@ add_filter( 'get_image_tag_class', 'eypd_image_tag_class' );
 |
 
 */
-
-/**
- * Control size and maintain proportion of event images
- */
-
-function eypd_control_banner() {
-	if ( is_singular( 'event' ) ) {
-		echo '<style>img.banner{height: auto; width: auto; max-width: 1000px; max-height: 217px;}</style>';
-	}
-}
-
-add_action( 'wp_head', 'eypd_control_banner', 100 );
 
 /**
  * Sanitize and Save only the latest image inserted when creating or editing an event
