@@ -1,4 +1,13 @@
 == Change Log ==
+= v0.9.5 (09/15/2017) =
+* coding standards and clean up
+* severe restrictions for editor role
+* dependency clean up
+* fix content links and footer menu
+* certification countdown fix
+* new search labels
+* php warnings clean up
+* media manager integration
 
 = v0.9.3 (05/12/2017) =
 * hide booking functionality from view
