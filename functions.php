@@ -1014,6 +1014,21 @@ function eypd_dependencies_check() {
 }
 
 /**
+ * Fires when there is an update to the web theme version
+ *
+ */
+function eypd_maybe_update_editor_role() {
+	$theme           = wp_get_theme();
+	$current_version = $theme->get( 'Version' );
+	$last_version    = get_option( 'eypd_theme_version' );
+	if ( version_compare( $current_version, $last_version ) > 0 ) {
+		eypd_wpcodex_set_capabilities();
+	}
+}
+
+add_action( 'init', 'eypd_maybe_update_editor_role' );
+
+/**
  * Remove capabilities from editors.
  * will leave the ability to
  * read
@@ -1060,5 +1075,3 @@ function eypd_wpcodex_set_capabilities() {
 		$editor->remove_cap( $cap );
 	}
 }
-
-add_action( 'init', 'eypd_wpcodex_set_capabilities' );
