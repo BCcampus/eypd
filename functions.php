@@ -1035,8 +1035,8 @@ add_action( 'init', 'eypd_maybe_update_editor_role' );
  * delete_posts
  * edit_posts
  * upload_files
- * edit_published_posts
- * edit_others_posts
+ * edit_published_pages
+ * edit_others_pages
  *
  * Call the function when your plugin/theme is activated.
  */
@@ -1054,11 +1054,11 @@ function eypd_wpcodex_set_capabilities() {
 		'delete_private_posts',
 		'delete_published_pages',
 		'delete_published_posts',
-		'edit_others_pages',
+		'edit_others_posts',
+		'edit_published_posts',
 		'edit_pages',
 		'edit_private_pages',
 		'edit_private_posts',
-		'edit_published_pages',
 		'manage_categories',
 		'manage_links',
 		'moderate_comments',
