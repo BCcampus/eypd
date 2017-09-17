@@ -1,0 +1,278 @@
+/*
+|--------------------------------------------------------------------------
+| Fonts
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto-Bold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "RobotoSlab";
+  src: url("../fonts/RobotoSlab-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Global
+|--------------------------------------------------------------------------
+|
+| Common, global elements
+|
+|
+*/
+@media screen and (max-width: 768px) {
+  html.no-js,
+  html.js {
+    margin-top: 46px !important;
+  }
+}
+
+body, body.theme-option {
+  background: none no-repeat;
+}
+
+body #content, body.theme-option #content {
+  background-color: #fff;
+}
+
+body {
+  border: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p, label, span.label {
+  font-family: "Roboto";
+  color: #333334;
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 32px;
+  line-height: 36px;
+}
+
+h2 {
+  font-size: 28px;
+  line-height: 32px;
+  font-family: "RobotoSlab";
+}
+
+h3 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+h4 {
+  font-size: 20px;
+  line-height: 24px;
+  text-transform: capitalize;
+}
+
+h5 {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: bold;
+}
+
+p, label, li, span.label {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  padding: 12.5px 15px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border: 1px solid #808284;
+  border-radius: 7.5px;
+  margin: 0;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 17px;
+  height: 17px;
+}
+
+select {
+  -webkit-appearance: none;
+  padding: 9px 15px;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border: 1px solid #808284;
+  border-radius: 7.5px;
+  background-image: url("../images/arrow-down.svg");
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  background-position-x: 95%;
+  background-position-y: 50%;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Global Classes
+|--------------------------------------------------------------------------
+|
+| Common elements with a bit of class
+|
+|
+*/
+html, body.home-page {
+  height: 100%;
+}
+
+body.home-page .top-wrap.row {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+#wrapper {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin: 0 !important;
+}
+
+h2.page-title, h2.post-title, h1.page-title, h1.post-title {
+  color: #333333;
+}
+
+.author-box, .category-box, .tag-box, .info-box, #sidebar, .activity-inner, div.activity-comments form.ac-form, .postthumb img, span.activity, h1#site-title, div#site-title, #inner-sidebar, .sidebar-activity-tabs ul li, div#subnav.item-list-tabs, #top-homepage, .fluid-width-video-wrapper, #bbpress-forums .bbp-breadcrumb, #bbpress-forums li.bbp-footer, .bbp-reply-header {
+  text-shadow: none;
+}
+
+#content-full {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.text-blue {
+  color: #068CC4;
+}
+
+.em-ticket-select {
+  background-size: 13px;
+}
+
+.row {
+  width: 100% !important;
+  margin: 0px !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.clear {
+  clear: both;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Lists
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+#sidebar ul {
+  list-style: none;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Tables
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+table.em-calendar thead {
+  font-weight: normal;
+}
+
+thead:first-child tr th {
+  color: inherit;
+}
+
+[class*="column"] + [class*="lastfix"]:last-child {
+  float: none;
+}
+
+.c-banner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 150px;
+  position: relative;
+  background-image: url("../images/background.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 480px) {
+  .c-banner {
+    height: 200px;
+  }
+}
+
+@media (min-width: 667px) {
+  .c-banner {
+    height: 250px;
+  }
+}
+
+@media (min-width: 768px) {
+  .c-banner {
+    background-size: contain;
+    background-repeat: repeat;
+  }
+}
+
+.c-banner__logo {
+  width: 80%;
+  margin: auto;
+  display: block;
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 667px) {
+  .c-banner__logo {
+    width: 600px;
+  }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Special
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+img.wp-smiley, img.emoji {
+  display: none !important;
+}

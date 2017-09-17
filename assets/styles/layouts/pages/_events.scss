@@ -1,0 +1,22 @@
+/**
+ * Control size and maintain proportion of event banner images
+ * only needed if is_singular( 'event' )
+ */
+img.banner {
+  height: auto;
+  width: auto;
+  max-width: 1000px;
+  max-height: 217px;
+}
+
+/**
+* Media Manager
+*
+* Hide images inserted in WYSIWYG,
+* the editor tabs, toolbars and sidebars
+*
+* on page 'edit-events' and 'post-events'
+*/
+.media-frame-menu, .media-sidebar, .attachment-filters, label[for=media-attachment-filters], label[for=media-attachment-date-filters], label[for=media-search-input], .media-frame input[type=search] {
+  display: none;
+}

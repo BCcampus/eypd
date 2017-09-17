@@ -7,8 +7,7 @@
 |
 |
 */
-
 /* Hides Region from location form */
-.em-location-data-region{
-    display: none;
+.em-location-data-region {
+  display: none;
 }

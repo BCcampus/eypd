@@ -1,0 +1,21 @@
+{
+  "name": "early-years",
+  "version": "0.9.5",
+  "scripts": {
+    "dev": "NODE_ENV=development webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "NODE_ENV=development webpack --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "NODE_ENV=production webpack --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bccampus/eypd.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bccampus/eypd/issues"
+  },
+  "devDependencies": {
+    "bootstrap": "^3.3.7",
+    "laravel-mix": "^1.4.2"
+  }
+}

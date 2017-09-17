@@ -17,7 +17,7 @@ infinity_get_header();
 
 ?>
 <div class="c-banner">
-	<img class="c-banner__logo" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-map.png"
+	<img class="c-banner__logo" src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/logo-map.png"
 		 alt="EYPD logo">
 </div>
 

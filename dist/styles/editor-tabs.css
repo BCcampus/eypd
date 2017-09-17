@@ -1,0 +1,12 @@
+/*
+|--------------------------------------------------------------------------
+| Editor tabs for toggle btwn 'Text' and 'Html'
+|--------------------------------------------------------------------------
+|
+| Related to front end Media Manager hack
+|
+|
+*/
+.wp-editor-tabs {
+  display: none;
+}
