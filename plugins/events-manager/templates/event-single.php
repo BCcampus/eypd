@@ -22,7 +22,7 @@ foreach ( $EM_Event->event_attributes as $key => $att ) {
 	if ( 0 === strcmp( 'Registration Link', $key ) ) {
 		echo "<p><b>{$key}</b><br><a href='{$att}'>{$att}</a></p>";
 	} else {
-		echo "<p><b>" . $key . "</b><br>" . $att . "</p>";
+		echo '<p><b>' . $key . '</b><br>' . $att . '</p>';
 	}
 };
 

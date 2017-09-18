@@ -1,7 +1,7 @@
 <?php
 /*
 |--------------------------------------------------------------------------
-| Parent theme 
+| Parent theme
 |--------------------------------------------------------------------------
 |
 | enqueue parent and child theme
@@ -53,7 +53,7 @@ include( get_stylesheet_directory() . '/eypd-events.php' );
 | Events Manager
 |--------------------------------------------------------------------------
 |
-| Creates a new scope for the events manager short code, and then registers it with events manager. 
+| Creates a new scope for the events manager short code, and then registers it with events manager.
 | It will only lists events with a date greater than today's.
 |
 |
@@ -73,7 +73,7 @@ function my_em_scope_conditions( $conditions, $args ) {
 add_filter( 'em_get_scopes', 'my_em_scopes', 1, 1 );
 function my_em_scopes( $scopes ) {
 	$my_scopes = array(
-		'after-today' => 'After Today'
+		'after-today' => 'After Today',
 	);
 
 	return $scopes + $my_scopes;
@@ -106,7 +106,6 @@ function eypd_load_scripts() {
 
 	wp_enqueue_script( 'jquery-ui-draggable' );
 	wp_enqueue_script( 'markerclusterer', $template_dir . '/assets/js/markerclusterer.js' );
-
 
 	$script_deps = array(
 		'jquery'                 => 'jquery',
@@ -377,13 +376,13 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 
 	if ( 'events-manager' == $domain ) {
 		$modify = array(
-			"State/County:"                                                                  => "Province:",
-			"Details"                                                                        => "Event Description and Objectives",
-			"Category:"                                                                      => "Category",
-			"Submit %s"                                                                      => "Post %s",
-			"You must log in to view and manage your events."                                => "You are using this site in the role as a Learner. Learners may search for, share, and print events. Only Organizers may post and edit events.",
-			"You are currently viewing your public page, this is what other users will see." => "This is your professional development activity page - a personal record of your training events, events you plan on </br> attending, and record of professional development hours you have accumulated. <p>To officially register for a professional development event you must contact the agency responsible for the training event.</p>",
-			"Events"                                                                         => "myEYPD",
+			'State/County:'                                                                  => 'Province:',
+			'Details'                                                                        => 'Event Description and Objectives',
+			'Category:'                                                                      => 'Category',
+			'Submit %s'                                                                      => 'Post %s',
+			'You must log in to view and manage your events.'                                => 'You are using this site in the role as a Learner. Learners may search for, share, and print events. Only Organizers may post and edit events.',
+			'You are currently viewing your public page, this is what other users will see.' => 'This is your professional development activity page - a personal record of your training events, events you plan on </br> attending, and record of professional development hours you have accumulated. <p>To officially register for a professional development event you must contact the agency responsible for the training event.</p>',
+			'Events'                                                                         => 'myEYPD',
 		);
 	}
 
@@ -447,16 +446,16 @@ function eypd_event_output( $post_id = 0, $data = array() ) {
  *
  * @return mixed|string
  */
-function eypd_event_etc_output( $input = "" ) {
+function eypd_event_etc_output( $input = '' ) {
 	$output = $input;
-	preg_match_all( "/<li class=\"category-(\d+)\">/", $input, $output_array );
+	preg_match_all( '/<li class="category-(\d+)">/', $input, $output_array );
 	foreach ( $output_array[1] as $index => $post_id ) {
 		$cats       = wp_get_object_terms( $post_id, 'event-categories' );
-		$cat_output = $space = "";
+		$cat_output = $space = '';
 		foreach ( $cats as $cat ) {
 			$c          = get_category( $cat );
-			$cat_output .= $space . "cat_" . str_replace( "-", "_", $c->slug );
-			$space      = " ";
+			$cat_output .= $space . 'cat_' . str_replace( '-', '_', $c->slug );
+			$space      = ' ';
 		}
 		$new_classes = "<li class=\"$cat_output\">";
 		$output      = str_replace( $output_array[0][ $index ], $new_classes, $output );
@@ -514,7 +513,7 @@ function eypd_admin_bar_render() {
 			'title'  => 'myEYPD',
 			'href'   => $profileurl,
 			'parent' => 'user-actions',
-			'meta'   => array( 'class' => 'my-profile-page' )
+			'meta'   => array( 'class' => 'my-profile-page' ),
 		) );
 
 		//add logout link after my profile link, and redirect to homepage after logout
@@ -524,7 +523,7 @@ function eypd_admin_bar_render() {
 			'title'  => 'Logout',
 			'href'   => $logouturl,
 			'parent' => 'user-actions',
-			'meta'   => array( 'class' => 'my-logout-link' )
+			'meta'   => array( 'class' => 'my-logout-link' ),
 		) );
 
 		// maintain a way for admins to access the dashboard
@@ -535,8 +534,8 @@ function eypd_admin_bar_render() {
 				'title' => 'Dashboard',
 				'href'  => $url,
 				'meta'  => array(
-					'class' => 'my-toolbar-page'
-				)
+					'class' => 'my-toolbar-page',
+				),
 			) );
 		}
 	}
@@ -566,23 +565,25 @@ add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
 
 
 // Filter wp_nav_menu() to add pop-overs to links in header menu
-function eypd_nav_menu_items() {
-	if ( is_user_logged_in() ) {
-		$nav = '<li class="home"><a href=' . home_url() . '/post-event>Post an Event</a></li>';
-		$nav .= '<li class="home"><a href=' . home_url() . '/edit-events>Edit Events</a></li>';
-		$nav .= '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
-	} else {
-		//add popover with a message, and login and sign-up links
-		$popover = '<li class="home"><a href="#" data-container="body"  role="button"  data-toggle="popover" data-placement="bottom" data-html="true" data-original-title="" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to ';
-		$nav     = $popover . 'post events.">Post an Event</a></li>';
-		$nav     .= $popover . 'edit your events.">Edit Event</a></li>';
-		$nav     .= $popover . ' view your events."><i>my</i>EYPD</a></li>';
+function eypd_nav_menu_items( $nav, $args ) {
+	if ( $args->theme_location == 'main-menu' ) {
+		if ( is_user_logged_in() ) {
+			$nav = '<li class="home"><a href=' . home_url() . '/post-event>Post an Event</a></li>';
+			$nav .= '<li class="home"><a href=' . home_url() . '/edit-events>Edit Events</a></li>';
+			$nav .= '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
+		} else {
+			//add popover with a message, and login and sign-up links
+			$popover = '<li class="home"><a href="#" data-container="body"  role="button"  data-toggle="popover" data-placement="bottom" data-html="true" data-original-title="" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to ';
+			$nav     = $popover . 'post events.">Post an Event</a></li>';
+			$nav     .= $popover . 'edit your events.">Edit Event</a></li>';
+			$nav     .= $popover . ' view your events."><i>my</i>EYPD</a></li>';
+		}
 	}
 
 	return $nav;
 }
 
-add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items' );
+add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items', 10, 2 );
 
 /**
  * this allows for multiple dismissible popovers, with clickable links, inside the popover data-content
@@ -630,11 +631,11 @@ function eypd_validate_attributes() {
 	}
 
 	if ( empty( $EM_Event->event_attributes['Professional Development Certificate'] ) ) {
-		$EM_Event->add_error( sprintf( __( "%s is required.", 'early-years' ), __( 'Professional Development Certificate', 'early-years' ) ) );
+		$EM_Event->add_error( sprintf( __( '%s is required.', 'early-years' ), __( 'Professional Development Certificate', 'early-years' ) ) );
 	}
 
 	if ( empty( $EM_Event->event_attributes['Registration Fee'] ) ) {
-		$EM_Event->add_error( sprintf( __( "%s is required.", 'early-years' ), __( 'Registration Fee', 'early-years' ) ) );
+		$EM_Event->add_error( sprintf( __( '%s is required.', 'early-years' ), __( 'Registration Fee', 'early-years' ) ) );
 	}
 
 	return $EM_Event;
@@ -650,21 +651,21 @@ add_action( 'em_event_validate', 'eypd_validate_attributes' );
 
 function eypd_profile_field_modals() {
 
-// check xprofile is activated
+	// check xprofile is activated
 	if ( bp_is_active( 'xprofile' ) ) {
 
 		$bp_field_name = bp_get_the_profile_field_name();
 
-// replace content of $field_description to enable use of modals
+		// replace content of $field_description to enable use of modals
 		switch ( $bp_field_name ) {
 
-			case "Agreement Terms:":
+			case 'Agreement Terms:':
 				$field_description = '<a href="#terms" data-toggle="modal">Terms and Conditions</a>';
 
 				return $field_description;
 				break;
 
-			case "Position/Role":
+			case 'Position/Role':
 				$field_description = '<a href="#role" data-toggle="modal">What’s the difference between Learner and Organizer?</a>';
 
 				return $field_description;
@@ -737,7 +738,7 @@ function eypd_get_my_bookings_url() {
 		//get member url
 		return $bp->events->link;
 	} else {
-		return "#";
+		return '#';
 	}
 }
 
@@ -757,7 +758,7 @@ function eypd_get_my_bookings_url() {
 
 function eypd_format_TinyMCE( $in ) {
 	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
-		$in['content_css'] = get_stylesheet_directory_uri() . "/editor-style.css";
+		$in['content_css'] = get_stylesheet_directory_uri() . '/editor-style.css';
 
 		return $in;
 	}
@@ -772,10 +773,10 @@ add_filter( 'tiny_mce_before_init', 'eypd_format_TinyMCE' );
  */
 function eypd_media_manager_style() {
 	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
-		echo "<style>.media-frame-menu, .media-sidebar, .attachment-filters, label[for=media-attachment-filters],label[for=media-attachment-date-filters], label[for=media-search-input],.media-frame input[type=search]{display:none;}</style>";
+		echo '<style>.media-frame-menu, .media-sidebar, .attachment-filters, label[for=media-attachment-filters],label[for=media-attachment-date-filters], label[for=media-search-input],.media-frame input[type=search]{display:none;}</style>';
 		// hide editor tabs
 		if ( ! current_user_can( 'administrator' ) ) {
-			echo "<style>.wp-editor-tabs {display: none;}</style>";
+			echo '<style>.wp-editor-tabs {display: none;}</style>';
 		}
 	}
 }
@@ -868,7 +869,7 @@ add_filter( 'get_image_tag_class', 'eypd_image_tag_class' );
 
 function eypd_control_banner() {
 	if ( is_singular( 'event' ) ) {
-		echo "<style>img.banner{height: auto; width: auto; max-width: 1000px; max-height: 217px;}</style>";
+		echo '<style>img.banner{height: auto; width: auto; max-width: 1000px; max-height: 217px;}</style>';
 	}
 }
 
@@ -883,13 +884,13 @@ function eypd_one_image( $content ) {
 	if ( $content ) {
 		$latest_img = '';
 		// find all images
-		preg_match_all( "/<img[^>]+\>/i", $content, $matches );
+		preg_match_all( '/<img[^>]+\>/i', $content, $matches );
 		// get the latest image
 		if ( isset( $matches[0][0] ) ) {
 			$latest_img = $matches [0] [0];
 		}
 		// remove the rest
-		$content = preg_replace( "/<img[^>]+\>/i", "", $content );
+		$content = preg_replace( '/<img[^>]+\>/i', '', $content );
 
 		// add the latest image
 		return $content . $latest_img;
@@ -905,17 +906,17 @@ add_action( 'content_save_pre', 'eypd_one_image' );
  */
 
 function eypd_banner_image( $content ) {
-// make sure we are on a single event page and that there's content
+	// make sure we are on a single event page and that there's content
 	if ( $content && is_singular( 'event' ) ) {
 		$banner_img = '';
 		// find the image
-		preg_match_all( "/<img[^>]+\>/i", $content, $matches );
+		preg_match_all( '/<img[^>]+\>/i', $content, $matches );
 		// set the banner image
 		if ( isset( $matches[0][0] ) ) {
 			$banner_img = $matches [0] [0];
 		}
 		// remove all images, just in case there's more than one
-		$content = preg_replace( "/<img[^>]+\>/i", "", $content );
+		$content = preg_replace( '/<img[^>]+\>/i', '', $content );
 		// display banner image before the event info
 		echo '<p>' . $banner_img . '</p>';
 	}
@@ -994,17 +995,6 @@ function eypd_datepicker_countdown() {
 
 add_action( 'wp_footer', 'eypd_datepicker_countdown', 10 );
 
-/*
-|--------------------------------------------------------------------------
-| Excel Export
-|--------------------------------------------------------------------------
-|
-| Adds button to edit.php and users.php screens which exports user and event data
-|
-|
-
-*/
-
 add_action( 'admin_init', 'eypd_dependencies_check' );
 
 /**
@@ -1023,171 +1013,65 @@ function eypd_dependencies_check() {
 	}
 }
 
-add_action( 'admin_footer', 'eypd_export_button' );
-
 /**
- * Adds the 'Export to Excel' button on users and events admin screens
+ * Fires when there is an update to the web theme version
+ *
  */
-
-function eypd_export_button() {
-	// only show the export button if PHPExcel exists
-	if ( class_exists( 'PHPExcel' ) ) {
-		// add export button only on the event and users screen
-		$screen      = get_current_screen();
-		$allowed     = array( 'edit-event', 'users' );
-		$unique_name = '';
-		if ( ! in_array( $screen->id, $allowed ) ) {
-			return;
-		}
-		if ( $screen->id == 'users' ) {
-			$unique_name = 'users_export';
-		} elseif ( $screen->id == 'edit-event' ) {
-			$unique_name = 'events_export';
-		}
-		?>
-        <script type="text/javascript">
-            jQuery(document).ready(function ($) {
-                $('.tablenav.top .clear, .tablenav.bottom .clear').before('<form action="#" method="POST"><input type="hidden" id="wp_excel_export" name="<?php echo $unique_name; ?>" value="1" /><input class="button button-primary export_button" style="margin-top:3px;" type="submit" value="<?php esc_attr_e( 'Export to Excel' );?>" /></form>');
-            });
-        </script>
-		<?php
+function eypd_maybe_update_editor_role() {
+	$theme           = wp_get_theme();
+	$current_version = $theme->get( 'Version' );
+	$last_version    = get_option( 'eypd_theme_version' );
+	if ( version_compare( $current_version, $last_version ) > 0 ) {
+		eypd_wpcodex_set_capabilities();
 	}
 }
 
-add_action( 'admin_init', 'eypd_excel_export' );
-
+add_action( 'init', 'eypd_maybe_update_editor_role' );
 
 /**
- * Gets and exports the user and event data
+ * Remove capabilities from editors.
+ * will leave the ability to
+ * read
+ * delete_posts
+ * edit_posts
+ * upload_files
+ * edit_published_pages
+ * edit_others_pages
+ *
+ * Call the function when your plugin/theme is activated.
  */
+function eypd_wpcodex_set_capabilities() {
 
-function eypd_excel_export() {
+	// Get the role object.
+	$editor = get_role( 'editor' );
 
-	if ( ! empty( $_POST['users_export'] ) || ! empty( $_POST['events_export'] ) ) {
+	// A list of capabilities to remove from editors.
+	$caps = array(
+		'delete_others_pages',
+		'delete_others_posts',
+		'delete_pages',
+		'delete_private_pages',
+		'delete_private_posts',
+		'delete_published_pages',
+		'delete_published_posts',
+		'edit_others_posts',
+		'edit_published_posts',
+		'edit_pages',
+		'edit_private_pages',
+		'edit_private_posts',
+		'manage_categories',
+		'manage_links',
+		'moderate_comments',
+		'publish_pages',
+		'publish_posts',
+		'read_private_pages',
+		'read_private_posts',
+		'unfiltered_html',
+	);
 
+	foreach ( $caps as $cap ) {
 
-		if ( current_user_can( 'manage_options' ) ) {
-
-			// Create a new PHPExcel object
-			$objPHPExcel = new PHPExcel();
-
-			// User data
-			if ( isset( $_POST['users_export'] ) ) {
-
-				// User args
-				$args = array(
-					'order'   => 'ASC',
-					'orderby' => 'display_name',
-					'fields'  => 'all',
-				);
-
-				// User Query
-				$wp_users   = get_users( $args );
-				$cell_count = 1;
-
-				// Set up column labels
-				$objPHPExcel->getActiveSheet()->SetCellValue( 'A1', esc_html__( 'First Name' ) );
-				$objPHPExcel->getActiveSheet()->SetCellValue( 'B1', esc_html__( 'Last Name' ) );
-				$objPHPExcel->getActiveSheet()->SetCellValue( 'C1', esc_html__( 'Email' ) );
-				$objPHPExcel->getActiveSheet()->SetCellValue( 'D1', esc_html__( 'User Role' ) );
-
-				// Get the data we want from each user
-				foreach ( $wp_users as $user ) {
-					$cell_count ++;
-
-					$user_meta  = get_user_meta( $user->ID );
-					$role       = implode( ",", $user->roles );
-					$email      = $user->user_email;
-					$first_name = ( isset( $user_meta['first_name'][0] ) && $user_meta['first_name'][0] != '' ) ? $user_meta['first_name'][0] : '';
-					$last_name  = ( isset( $user_meta['last_name'][0] ) && $user_meta['last_name'][0] != '' ) ? $user_meta['last_name'][0] : '';
-
-					// Add the user data to the appropriate column
-					$objPHPExcel->setActiveSheetIndex( 0 );
-					$objPHPExcel->getActiveSheet()->SetCellValue( 'A' . $cell_count . '', $first_name );
-					$objPHPExcel->getActiveSheet()->SetCellValue( 'B' . $cell_count . '', $last_name );
-					$objPHPExcel->getActiveSheet()->SetCellValue( 'C' . $cell_count . '', $email );
-					$objPHPExcel->getActiveSheet()->SetCellValue( 'D' . $cell_count . '', $role );
-
-				}
-
-				// Set document properties
-				$objPHPExcel->getProperties()->setTitle( esc_html__( 'Users' ) );
-				$objPHPExcel->getProperties()->setSubject( esc_html__( 'all users' ) );
-				$objPHPExcel->getProperties()->setDescription( esc_html__( 'Export of all users' ) );
-
-				// Rename sheet
-				$objPHPExcel->getActiveSheet()->setTitle( esc_html__( 'Users' ) );
-
-				// Rename file
-				header( 'Content-Disposition: attachment;filename="users.xlsx"' );
-
-			}
-
-			// Event data
-			if ( isset( $_POST['events_export'] ) ) {
-
-				// Event args
-				$args = array(
-					'post_type' => 'event'
-				);
-
-				// Event Query
-				$query      = new WP_Query( $args );
-				$posts      = $query->posts;
-				$cell_count = 1;
-
-				// Set up column labels
-				$objPHPExcel->getActiveSheet()->SetCellValue( 'A1', esc_html__( 'Event Title' ) );
-				$objPHPExcel->getActiveSheet()->SetCellValue( 'B1', esc_html__( 'Owner' ) );
-				$objPHPExcel->getActiveSheet()->SetCellValue( 'C1', esc_html__( 'Status' ) );
-				$objPHPExcel->getActiveSheet()->SetCellValue( 'D1', esc_html__( 'Published date' ) );
-
-				// Get the data we want from each event
-				foreach ( $posts as $post ) {
-					$cell_count ++;
-
-					$title     = $post->post_title;
-					$date      = $post->post_date;
-					$status    = $post->post_status;
-					$author_id = $post->post_author;;
-					$author   = get_the_author_meta( 'display_name', $author_id );
-					$location = get_post_meta( $post->ID, 'location', true );
-
-					// Add the event data to the appropriate column
-					$objPHPExcel->getActiveSheet()->SetCellValue( 'A' . $cell_count . '', $title );
-					$objPHPExcel->getActiveSheet()->SetCellValue( 'B' . $cell_count . '', $author );
-					$objPHPExcel->getActiveSheet()->SetCellValue( 'C' . $cell_count . '', $status );
-					$objPHPExcel->getActiveSheet()->SetCellValue( 'D' . $cell_count . '', $date );
-
-				}
-
-				// Set document properties
-				$objPHPExcel->getProperties()->setTitle( esc_html__( 'Events' ) );
-				$objPHPExcel->getProperties()->setSubject( esc_html__( 'all events' ) );
-				$objPHPExcel->getProperties()->setDescription( esc_html__( 'Export of all events' ) );
-
-				// Rename sheet
-				$objPHPExcel->getActiveSheet()->setTitle( esc_html__( 'Events' ) );
-
-				// Rename file
-				header( 'Content-Disposition: attachment;filename="events.xlsx"' );
-
-			}
-
-			// Set column data auto width
-			for ( $col = 'A'; $col !== 'E'; $col ++ ) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension( $col )->setAutoSize( true );
-			}
-
-		}
-
-		header( 'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' );
-		header( 'Cache-Control: max-age=0' );
-
-		// Save Excel file
-		$objWriter = PHPExcel_IOFactory::createWriter( $objPHPExcel, 'Excel2007' );
-		$objWriter->save( 'php://output' );
-
-		exit();
+		// Remove the capability.
+		$editor->remove_cap( $cap );
 	}
 }

@@ -22,8 +22,8 @@ function eypd_init_actions() {
 		$_REQUEST['em_ajax'] = true;
 	}
 
-//NOTE - No EM objects are globalized at this point, as we're hitting early init mode.
-//TODO Clean this up.... use a uniformed way of calling EM Ajax actions
+	//NOTE - No EM objects are globalized at this point, as we're hitting early init mode.
+	//TODO Clean this up.... use a uniformed way of calling EM Ajax actions
 	if ( ! empty( $_REQUEST['em_ajax'] ) || ! empty( $_REQUEST['em_ajax_action'] ) ) {
 		if ( isset( $_REQUEST['em_ajax_action'] ) && $_REQUEST['em_ajax_action'] == 'get_location' ) {
 			if ( isset( $_REQUEST['id'] ) ) {
@@ -172,7 +172,7 @@ function eypd_init_actions() {
 				$return = array(
 					'result'  => false,
 					'message' => $EM_Event->feedback_message,
-					'errors'  => $EM_Event->errors
+					'errors'  => $EM_Event->errors,
 				);
 			}
 			echo EM_Object::json_encode( $return );
@@ -202,7 +202,7 @@ function eypd_init_actions() {
 				$EM_Notices->add_error( $EM_Location->get_errors() );
 				$result = false;
 			}
-		} elseif ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == "location_delete" ) {
+		} elseif ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'location_delete' ) {
 			//delete location
 			//get object or objects
 			if ( ! empty( $_REQUEST['locations'] ) || ! empty( $_REQUEST['location_id'] ) ) {
@@ -222,22 +222,22 @@ function eypd_init_actions() {
 					$result = false;
 				}
 			}
-		} elseif ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == "locations_search" && ( ! empty( $_REQUEST['term'] ) || ! empty( $_REQUEST['q'] ) ) ) {
+		} elseif ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'locations_search' && ( ! empty( $_REQUEST['term'] ) || ! empty( $_REQUEST['q'] ) ) ) {
 			$results = array();
 			if ( is_user_logged_in() || ( get_option( 'dbem_events_anonymous_submissions' ) && user_can( get_option( 'dbem_events_anonymous_user' ), 'read_others_locations' ) ) ) {
-				$location_cond = ( is_user_logged_in() && ! current_user_can( 'read_others_locations' ) ) ? "AND location_owner=" . get_current_user_id() : '';
+				$location_cond = ( is_user_logged_in() && ! current_user_can( 'read_others_locations' ) ) ? 'AND location_owner=' . get_current_user_id() : '';
 				if ( ! is_user_logged_in() && get_option( 'dbem_events_anonymous_submissions' ) ) {
 					if ( ! user_can( get_option( 'dbem_events_anonymous_user' ), 'read_private_locations' ) ) {
-						$location_cond = " AND location_private=0";
+						$location_cond = ' AND location_private=0';
 					}
 				} elseif ( is_user_logged_in() && ! current_user_can( 'read_private_locations' ) ) {
-					$location_cond = " AND location_private=0";
+					$location_cond = ' AND location_private=0';
 				} elseif ( ! is_user_logged_in() ) {
-					$location_cond = " AND location_private=0";
+					$location_cond = ' AND location_private=0';
 				}
 				$location_cond = apply_filters( 'em_actions_locations_search_cond', $location_cond );
 				$term          = ( isset( $_REQUEST['term'] ) ) ? '%' . $wpdb->esc_like( wp_unslash( $_REQUEST['term'] ) ) . '%' : '%' . $wpdb->esc_like( wp_unslash( $_REQUEST['q'] ) ) . '%';
-				$sql           = $wpdb->prepare( "
+				$sql           = $wpdb->prepare( '
 SELECT
 location_id AS `id`,
 Concat( location_name )  AS `label`,
@@ -248,7 +248,7 @@ location_state AS `state`,
 location_region AS `region`,
 location_postcode AS `postcode`,
 location_country AS `country`
-FROM " . EM_LOCATIONS_TABLE . "
+FROM ' . EM_LOCATIONS_TABLE . "
 WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 ", $term );
 				$results       = $wpdb->get_results( $sql );
@@ -264,7 +264,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 			$return = array(
 				'result'  => false,
 				'message' => $EM_Location->feedback_message,
-				'errors'  => $EM_Notices->get_errors()
+				'errors'  => $EM_Notices->get_errors(),
 			);
 			echo EM_Object::json_encode( $return );
 			die();
@@ -286,7 +286,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 			'bookings_approve'   => 'approve',
 			'bookings_reject'    => 'reject',
 			'bookings_unapprove' => 'unapprove',
-			'bookings_delete'    => 'delete'
+			'bookings_delete'    => 'delete',
 		);
 		$result          = false;
 		$feedback        = '';
@@ -340,13 +340,13 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 				$EM_Booking = em_get_booking( array(
 					'person_id'      => get_current_user_id(),
 					'event_id'       => $EM_Event->event_id,
-					'booking_spaces' => 1
+					'booking_spaces' => 1,
 				) ); //new booking
 				$EM_Ticket  = $EM_Event->get_bookings()->get_tickets()->get_first();
 				//get first ticket in this event and book one place there. similar to getting the form values in EM_Booking::get_post_values()
 				$EM_Ticket_Booking                     = new EM_Ticket_Booking( array(
 					'ticket_id'             => $EM_Ticket->ticket_id,
-					'ticket_booking_spaces' => 1
+					'ticket_booking_spaces' => 1,
 				) );
 				$EM_Booking->tickets_bookings          = new EM_Tickets_Bookings();
 				$EM_Booking->tickets_bookings->booking = $EM_Ticket_Booking->booking = $EM_Booking;
@@ -447,9 +447,9 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 					if ( ! empty( $_REQUEST['send_email'] ) ) {
 						if ( $EM_Booking->email() ) {
 							if ( $EM_Booking->mails_sent > 0 ) {
-								$EM_Booking->feedback_message .= " " . __( 'Email Sent.', 'events-manager' );
+								$EM_Booking->feedback_message .= ' ' . __( 'Email Sent.', 'events-manager' );
 							} else {
-								$EM_Booking->feedback_message .= " " . _x( 'No emails to send for this booking.', 'bookings', 'events-manager' );
+								$EM_Booking->feedback_message .= ' ' . _x( 'No emails to send for this booking.', 'bookings', 'events-manager' );
 							}
 						} else {
 							$EM_Booking->feedback_message .= ' <span style="color:red">' . __( 'ERROR : Email Not Sent.', 'events-manager' ) . '</span>';
@@ -532,7 +532,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 			$return = array(
 				'result'  => false,
 				'message' => $EM_Booking->feedback_message,
-				'errors'  => $EM_Notices->get_errors()
+				'errors'  => $EM_Notices->get_errors(),
 			);
 			echo EM_Object::json_encode( apply_filters( 'em_action_' . $_REQUEST['action'], $return, $EM_Booking ) );
 		}
@@ -551,8 +551,8 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 			if ( ! empty( $_REQUEST['region'] ) ) {
 				$conds[] = $wpdb->prepare( "( location_region = '%s' )", $_REQUEST['region'] );
 			}
-			$cond    = ( count( $conds ) > 0 ) ? "AND " . implode( ' AND ', $conds ) : '';
-			$results = $wpdb->get_col( "SELECT DISTINCT location_state FROM " . EM_LOCATIONS_TABLE . " WHERE location_state IS NOT NULL AND location_state != '' $cond ORDER BY location_state" );
+			$cond    = ( count( $conds ) > 0 ) ? 'AND ' . implode( ' AND ', $conds ) : '';
+			$results = $wpdb->get_col( 'SELECT DISTINCT location_state FROM ' . EM_LOCATIONS_TABLE . " WHERE location_state IS NOT NULL AND location_state != '' $cond ORDER BY location_state" );
 			if ( $_REQUEST['return_html'] ) {
 				//quick shortcut for quick html form manipulation
 				ob_start();
@@ -582,8 +582,8 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 			if ( ! empty( $_REQUEST['state'] ) ) {
 				$conds[] = $wpdb->prepare( "(location_state = '%s' )", $_REQUEST['state'] );
 			}
-			$cond    = ( count( $conds ) > 0 ) ? "AND " . implode( ' AND ', $conds ) : '';
-			$results = $wpdb->get_col( "SELECT DISTINCT location_town FROM " . EM_LOCATIONS_TABLE . " WHERE location_town IS NOT NULL AND location_town != '' $cond  ORDER BY location_town" );
+			$cond    = ( count( $conds ) > 0 ) ? 'AND ' . implode( ' AND ', $conds ) : '';
+			$results = $wpdb->get_col( 'SELECT DISTINCT location_town FROM ' . EM_LOCATIONS_TABLE . " WHERE location_town IS NOT NULL AND location_town != '' $cond  ORDER BY location_town" );
 			if ( $_REQUEST['return_html'] ) {
 				//quick shortcut for quick html form manipulation
 				ob_start();
@@ -606,8 +606,8 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 			if ( ! empty( $_REQUEST['country'] ) ) {
 				$conds[] = $wpdb->prepare( "(location_country = '%s' )", $_REQUEST['country'] );
 			}
-			$cond    = ( count( $conds ) > 0 ) ? "AND " . implode( ' AND ', $conds ) : '';
-			$results = $wpdb->get_results( "SELECT DISTINCT location_region AS value FROM " . EM_LOCATIONS_TABLE . " WHERE location_region IS NOT NULL AND location_region != '' $cond  ORDER BY location_region" );
+			$cond    = ( count( $conds ) > 0 ) ? 'AND ' . implode( ' AND ', $conds ) : '';
+			$results = $wpdb->get_results( 'SELECT DISTINCT location_region AS value FROM ' . EM_LOCATIONS_TABLE . " WHERE location_region IS NOT NULL AND location_region != '' $cond  ORDER BY location_region" );
 			if ( $_REQUEST['return_html'] ) {
 				//quick shortcut for quick html form manipulation
 				ob_start();
@@ -672,9 +672,9 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 		//generate bookings export according to search request
 		$show_tickets      = ! empty( $_REQUEST['show_tickets'] );
 		$EM_Bookings_Table = new EM_Bookings_Table( $show_tickets );
-		header( "Content-Type: application/octet-stream; charset=utf-8" );
+		header( 'Content-Type: application/octet-stream; charset=utf-8' );
 		$file_name = ! empty( $EM_Event->event_slug ) ? $EM_Event->event_slug : get_bloginfo();
-		header( "Content-Disposition: Attachment; filename=" . sanitize_title( $file_name ) . "-bookings-export.csv" );
+		header( 'Content-Disposition: Attachment; filename=' . sanitize_title( $file_name ) . '-bookings-export.csv' );
 		do_action( 'em_csv_header_output' );
 		echo "\xEF\xBB\xBF"; // UTF-8 for MS Excel (a little hacky... but does the job)
 		if ( ! defined( 'EM_CSV_DISABLE_HEADERS' ) || ! EM_CSV_DISABLE_HEADERS ) {
@@ -692,7 +692,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 		//Rows
 		$EM_Bookings_Table->limit = 150; //if you're having server memory issues, try messing with this number
 		$EM_Bookings              = $EM_Bookings_Table->get_bookings();
-		$handle                   = fopen( "php://output", "w" );
+		$handle                   = fopen( 'php://output', 'w' );
 		fputcsv( $handle, $EM_Bookings_Table->get_headers( true ), $delimiter );
 		while ( ! empty( $EM_Bookings->bookings ) ) {
 			foreach ( $EM_Bookings->bookings as $EM_Booking ) {
@@ -711,7 +711,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 			}
 			//reiterate loop
 			$EM_Bookings_Table->offset += $EM_Bookings_Table->limit;
-			$EM_Bookings = $EM_Bookings_Table->get_bookings();
+			$EM_Bookings               = $EM_Bookings_Table->get_bookings();
 		}
 		fclose( $handle );
 		exit();
