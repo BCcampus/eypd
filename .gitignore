@@ -2,4 +2,5 @@
 .idea
 .sass-cache
 *.css.map
-vendor/
+vendor
+node_modules
