@@ -1075,3 +1075,32 @@ function eypd_wpcodex_set_capabilities() {
 		$editor->remove_cap( $cap );
 	}
 }
+
+/**
+ * Redirect user after successful login to the homepage.
+ * Administrators are redirected to the dashboard.
+ *
+ * @param string $redirect_to URL to redirect to.
+ * @param string $request URL the user is coming from.
+ * @param object $user Logged user's data.
+ *
+ * @return string
+ */
+
+function eypd_login_redirect( $redirect_to, $request, $user ) {
+	//is there a user to check?
+	if ( isset( $user->roles ) && is_array( $user->roles ) ) {
+		//check for admins
+		if ( in_array( 'administrator', $user->roles ) ) {
+			// redirect them to the dashboard
+			return get_admin_url();
+		} else {
+			// redirect them to the default place
+			return $redirect_to;
+		}
+	} else {
+		return $redirect_to;
+	}
+}
+
+add_filter( 'login_redirect', 'eypd_login_redirect', 10, 3 );
