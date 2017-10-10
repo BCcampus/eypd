@@ -1076,8 +1076,6 @@ function eypd_wpcodex_set_capabilities() {
 	}
 }
 
-add_action( 'init', 'eypd_gatekeeper' );
-
 /**
  * Redirect user after successful login to the homepage.
  * Administrators are redirected to the dashboard.
