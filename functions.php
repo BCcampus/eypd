@@ -142,6 +142,39 @@ add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
 
 /*
 |--------------------------------------------------------------------------
+| Login customization
+|--------------------------------------------------------------------------
+*/
+
+function eypd_login_style() {
+	wp_enqueue_style( 'custom-login', get_stylesheet_directory_uri() . '/login-style.css' );
+}
+
+add_action( 'login_enqueue_scripts', 'eypd_login_style' );
+
+function my_login_logo_url() {
+	return home_url();
+}
+
+add_filter( 'login_headerurl', 'my_login_logo_url' );
+
+function my_login_logo_url_title() {
+	return get_bloginfo( 'name' );
+}
+
+add_filter( 'login_headertitle', 'my_login_logo_url_title' );
+
+function the_login_message( $message ) {
+	if ( empty($message) ){
+		return "<p>Log in To Your EYPD Account</p>";
+	} else {
+		return $message;
+	}
+}
+add_filter( 'login_message', 'the_login_message' );
+
+/*
+|--------------------------------------------------------------------------
 | Excerpt
 |--------------------------------------------------------------------------
 |
