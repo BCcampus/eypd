@@ -1076,18 +1076,6 @@ function eypd_wpcodex_set_capabilities() {
 	}
 }
 
-/**
- * Only admins can visit dashboard, redirect others to homepage
- */
-
-function eypd_gatekeeper() {
-	if ( is_admin() && ! current_user_can( 'administrator' ) &&
-	     ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-		wp_redirect( home_url() );
-		exit;
-	}
-}
-
 add_action( 'init', 'eypd_gatekeeper' );
 
 /**
