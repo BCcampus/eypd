@@ -77,7 +77,10 @@ infinity_get_header();
 	do_action( 'open_home' );
 	?>
 
-	<h2 class="text-blue text-center">Explore the professional learning showcase</h2>
+	<?php
+	$events_posted = wp_count_posts( 'event' )->publish;
+	?>
+    <h2 class="text-blue text-center"><?php echo $events_posted ?> Training Events Currently Posted</h2>
 	<?php infinity_load_template( 'templates/featured-stories.php' ); ?>
 
 	<?php
