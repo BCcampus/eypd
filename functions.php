@@ -208,7 +208,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 6.2;
+	$eypd_version        = 6.3;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -318,6 +318,7 @@ function eypd_run_once() {
 		update_option( 'dbem_event_list_item_format_header', $format_event_list_header );
 		update_option( 'dbem_event_list_item_format_footer', $format_event_list_footer );
 		update_option( 'dbem_single_event_format', $single_event_format );
+		update_option( 'dbem_location_event_list_limit', 20 );
 
 		foreach ( $default_no as $no ) {
 			update_option( $no, 0 );
@@ -467,6 +468,8 @@ function eypd_event_etc_output( $input = '' ) {
 		$new_classes = "<li class=\"$cat_output\">";
 		$output      = str_replace( $output_array[0][ $index ], $new_classes, $output );
 	}
+    // remove pagination links
+	$output = preg_replace( '/<strong><span class=\"page-numbers(.*)<\/span>/i', '', $output );
 
 	return $output;
 }
