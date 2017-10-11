@@ -77,7 +77,7 @@ infinity_get_header();
 	do_action( 'open_home' );
 	?>
 
-	<h2 class="text-blue text-center">Explore the professional learning showcase</h2>
+    <h2 class="text-blue text-center"><a href="events"><?php eypd_display_count_events(); ?> Training Events Currently Posted</a></h2>
 	<?php infinity_load_template( 'templates/featured-stories.php' ); ?>
 
 	<?php

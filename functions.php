@@ -1085,3 +1085,12 @@ function eypd_wpcodex_set_capabilities() {
 		$editor->remove_cap( $cap );
 	}
 }
+
+/**
+ * counts and displays number of events
+ */
+function eypd_display_count_events() {
+	$events_posted = wp_count_posts( 'event' )->publish;
+
+	echo $events_posted;
+}
