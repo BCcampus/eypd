@@ -77,10 +77,7 @@ infinity_get_header();
 	do_action( 'open_home' );
 	?>
 
-	<?php
-	$events_posted = wp_count_posts( 'event' )->publish;
-	?>
-    <h2 class="text-blue text-center"><?php echo $events_posted ?> Training Events Currently Posted</h2>
+    <h2 class="text-blue text-center"><a href="events"><?php eypd_display_count_events(); ?> Training Events Currently Posted</a></h2>
 	<?php infinity_load_template( 'templates/featured-stories.php' ); ?>
 
 	<?php
