@@ -5,12 +5,9 @@
 .c-banner {
   display: flex;
   height: 150px;
-
   position: relative;
-
-  background-image: url('assets/images/background.jpg');
+  background-color: $color-blue-sail;
   background-size: cover;
-  background-repeat: no-repeat;
 
   @media (min-width: $xsmall) {
     height: 200px;
