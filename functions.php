@@ -148,6 +148,70 @@ add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
 
 /*
 |--------------------------------------------------------------------------
+| Login customization
+|--------------------------------------------------------------------------
+*/
+
+/**
+ * Custom stylesheet enqueued at login page
+ */
+function eypd_login_style() {
+	wp_enqueue_style( 'custom-login', get_stylesheet_directory_uri() . '/assets/styles/login.css' );
+}
+
+add_action( 'login_enqueue_scripts', 'eypd_login_style' );
+
+/**
+ * @return string
+ * Link logo image to our home_url instead of WordPress.org
+ */
+function eypd_logo_url() {
+	return home_url();
+}
+
+add_filter( 'login_headerurl', 'eypd_logo_url' );
+
+/**
+ * @return string
+ * Give the image our sites name
+ */
+function eypd_logo_url_title() {
+	return get_bloginfo( 'name' );
+}
+
+add_filter( 'login_headertitle', 'eypd_logo_url_title' );
+
+/**
+ *
+ * @param $message
+ *
+ * @return string
+ * Add custom text to login form
+ *
+ */
+function eypd_login_message( $message ) {
+	if ( empty( $message ) ) {
+		return "<p class='logintext'>Log in To Your EYPD Account</p>";
+	} else {
+		return $message;
+	}
+}
+
+add_filter( 'login_message', 'eypd_login_message' );
+
+/**
+ * Adds Sign Up button and Forgot lost password link
+ */
+function eypd_login_form() {
+	$html = '<p class="signuptext">New to EYPD?</p><p><a class ="button button-primary button-large signup" href="' . home_url() . '/sign-up" title="Sign Up">Sign Up</a></p>';
+	$html .= '&nbsp; &#45; &nbsp;<a class ="forgot" href="' . wp_lostpassword_url() . '" title="Lost Password">Forgot Password?</a>';
+
+	echo $html;
+}
+
+add_action( 'login_form', 'eypd_login_form' );
+/*
+|--------------------------------------------------------------------------
 | Excerpt
 |--------------------------------------------------------------------------
 |
