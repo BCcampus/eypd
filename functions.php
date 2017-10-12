@@ -124,13 +124,13 @@ function eypd_load_scripts() {
 	// load popover only for users who aren't logged in
 	if ( ! is_user_logged_in() ) {
 		wp_enqueue_script( 'initpopover', $template_dir . '/assets/js/initpopover.js' );
-		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/assets/js/bootstrap_popover.min.js', array(), null, true );
-		wp_enqueue_style( 'bootstrap-popover-style', $template_dir . '/assets/styles/bootstrap_popover.min.css' );
+		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', array(), null, true );
+		wp_enqueue_style( 'bootstrap-popover-style', $template_dir . '/dist/styles/bootstrap.min.css' );
 	}
 	// only sign up page has requirements for modals
 	if ( is_page( 'sign-up' ) ) {
-		wp_enqueue_script( 'bootstrap-modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
-		wp_enqueue_style( 'bootstrap-modal-style', $template_dir . '/assets/styles/bootstrap.min.css' );
+		wp_enqueue_script( 'bootstrap-modal', $template_dir . '/dist/scripts/bootstrap.min.js', array(), null, true );
+		wp_enqueue_style( 'bootstrap-modal-style', $template_dir . '/dist/styles/bootstrap.min.css' );
 	}
 	// load styling for datepicker in myEYPD profile page only
 	if ( bp_is_my_profile() ) {
@@ -138,7 +138,7 @@ function eypd_load_scripts() {
 	}
 
 	if ( is_front_page() ) {
-		wp_enqueue_script( 'pb-tabs', $template_dir . '/assets/js/tabs.js', array( 'jquery' ), null, false );
+		wp_enqueue_script( 'jquery-tabs', $template_dir . '/assets/js/tabs.js', array( 'jquery' ), null, false );
 		wp_enqueue_script( 'jquery-ui-tabs' );
 		wp_enqueue_style( 'jquery-ui', '//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css', array(), null, 'screen' );
 

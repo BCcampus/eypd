@@ -20,19 +20,22 @@
 */
 @font-face {
   font-family: "Roboto";
-  src: url("assets/fonts/Roboto-Regular.ttf") format("truetype");
+  src: url("dist/fonts/Roboto-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal; }
 @font-face {
   font-family: "Roboto";
-  src: url("assets/fonts/Roboto-Bold.ttf") format("truetype");
+  src: url("dist/fonts/Roboto-Bold.ttf") format("truetype");
   font-weight: 800;
   font-style: normal; }
 @font-face {
   font-family: "RobotoSlab";
-  src: url("assets/fonts/RobotoSlab-Regular.ttf") format("truetype");
+  src: url("dist/fonts/RobotoSlab-Regular.ttf") format("truetype");
   font-weight: 400;
   font-style: normal; }
+@font-face {
+  font-family: "Glyphicons";
+  src: url("dist/fonts/glyphicons-halflings-regular.ttf") format("truetype"); }
 /*
 |--------------------------------------------------------------------------
 | Global
@@ -931,5 +934,14 @@ a.em-button {
 
 #wp-admin-bar-my-account-buddypress li {
   padding-left: 20px !important; }
+
+#wpadminbar .quicklinks ul li#wp-admin-bar-bp-login a:before {
+  font-family: 'Glyphicons';
+  content: "\e161";
+  color: #fff; }
+#wpadminbar .quicklinks ul li#wp-admin-bar-bp-register a:before {
+  font-family: 'Glyphicons';
+  content: "\e162";
+  color: #fff; }
 
 /*# sourceMappingURL=style.css.map */

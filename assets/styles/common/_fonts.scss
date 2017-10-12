@@ -9,8 +9,11 @@
 */
 
 // Roboto
-@include font-face( 'Roboto', url('assets/fonts/Roboto-Regular.ttf'), 'truetype', 400, normal);
-@include font-face( 'Roboto', url('assets/fonts/Roboto-Bold.ttf'), 'truetype', 800, normal);
+@include font-face( 'Roboto', url('dist/fonts/Roboto-Regular.ttf'), 'truetype', 400, normal);
+@include font-face( 'Roboto', url('dist/fonts/Roboto-Bold.ttf'), 'truetype', 800, normal);
 
 // Roboto Slab
-@include font-face( 'RobotoSlab', url('assets/fonts/RobotoSlab-Regular.ttf'), 'truetype', 400, normal);
+@include font-face( 'RobotoSlab', url('dist/fonts/RobotoSlab-Regular.ttf'), 'truetype', 400, normal);
+
+// Bootstrap
+@include font-face ('Glyphicons', url('dist/fonts/glyphicons-halflings-regular.ttf'), 'truetype');
