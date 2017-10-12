@@ -1,0 +1,77 @@
+body {
+
+  &.login div#login {
+    background-color: $color-neutral-00;
+    border: 1px solid $color-gray;
+    margin-top: 10%;
+    padding-top: 20px;
+  }
+
+  &.login form {
+    box-shadow: none;
+    padding-bottom: 100px;
+  }
+
+  &.login div#login h1 a {
+    background-image: url("../images/eypd-logo-small.png");
+      background-size: 180px;
+    width: 180px;
+    height: 123px;
+  }
+
+  &.login div#login form#loginform {
+    padding-top: 0;
+    border-bottom: 0;
+  }
+
+  &.login div#login form#loginform p.submit input#wp-submit {
+    background-color: $color-blue-bright;
+    width: 100%;
+    border-radius: 20px;
+    border: 0;
+    text-shadow: none;
+    box-shadow: none;
+    margin-top: 20px;
+  }
+}
+
+a {
+
+  &.forgot {
+    color: $color-blue-bright;
+    text-decoration: none;
+  }
+
+  &.button.button-primary.button-large.signup {
+    background-color: $color-neutral-00;
+    position: absolute;
+    margin-top: 120px;
+    height: 29px;
+    width: 272px;
+    border-radius: 20px;
+    border: 1px solid $color-blue-bright;
+    text-shadow: none;
+    box-shadow: none;
+    text-align: center;
+    color: $color-blue-bright;
+    font-weight: bold;
+  }
+}
+
+.logintext, .signuptext {
+  text-align: center;
+  color: $color-gray-text;
+  font-size: 14px;
+}
+
+.signuptext {
+  position: absolute;
+  margin-top: 90px;
+  left: 0;
+  right: 0;
+  min-width: 100px;
+}
+
+.login #nav, .login #backtoblog {
+  display: none;
+}
