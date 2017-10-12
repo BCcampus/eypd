@@ -464,9 +464,8 @@ div.css-search,
   display: flex;
   height: 150px;
   position: relative;
-  background-image: url("assets/images/background.jpg");
-  background-size: cover;
-  background-repeat: no-repeat; }
+  background-color: #bee7fa;
+  background-size: cover; }
   @media (min-width: 480px) {
     .c-banner {
       height: 200px; } }
