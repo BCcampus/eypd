@@ -4,3 +4,4 @@
 *.css.map
 vendor
 node_modules
+dist

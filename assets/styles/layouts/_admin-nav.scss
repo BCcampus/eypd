@@ -73,3 +73,36 @@
 #wp-admin-bar-my-account-buddypress li {
   padding-left: $unit*4 !important;
 }
+
+#wpadminbar {
+
+  .quicklinks {
+
+    ul {
+
+      li#wp-admin-bar-bp-login {
+
+        a {
+
+          &:before {
+            font-family: 'Glyphicons';
+            content: "\e161";
+            color: $color-neutral-00;
+          }
+        }
+      }
+
+      li#wp-admin-bar-bp-register {
+
+        a {
+
+          &:before {
+            font-family: 'Glyphicons';
+            content: "\e162";
+            color: $color-neutral-00;
+          }
+        }
+      }
+    }
+  }
+}
