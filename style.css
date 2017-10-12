@@ -878,7 +878,7 @@ a.em-button {
   margin: 0px 0px 15px 15px; }
 
 #wpadminbar {
-  background-color: #E6E7E8;
+  background-color: #bee7fa;
   display: block !important; }
   @media screen and (max-width: 667px) {
     #wpadminbar {
@@ -893,7 +893,7 @@ a.em-button {
   #wp-toolbar ul li a, .base-menu ul li a {
     color: #333334 !important; }
     #wp-toolbar ul li a:hover, .base-menu ul li a:hover {
-      background-color: #E6E7E8 !important;
+      background-color: #bee7fa !important;
       color: #068CC4 !important; }
 
 #wp-toolbar > ul > li {
@@ -902,7 +902,7 @@ a.em-button {
     padding: 0 8px 0 7px !important; }
 
 #wp-admin-bar-my-account * {
-  background-color: #E6E7E8 !important; }
+  background-color: #bee7fa !important; }
 
 #wp-admin-bar-user-actions li a:hover span,
 #wp-admin-bar-user-actions li:hover a,
@@ -927,7 +927,7 @@ a.em-button {
 
 #wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus,
 #wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item:focus {
-  background: #E6E7E8; }
+  background: #bee7fa; }
 
 #wp-admin-bar-my-account-buddypress li {
   padding-left: 20px !important; }
