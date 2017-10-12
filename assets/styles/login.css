@@ -1,0 +1,61 @@
+/*
+Enqueued only for the login screen via the function eypd_login_style()
+ */
+body.login div#login {
+  background-color: #FFF;
+  border: 1px solid #CCC;
+  margin-top: 10%;
+  padding-top: 20px; }
+body.login form {
+  box-shadow: none;
+  padding-bottom: 100px; }
+body.login div#login h1 a {
+  background-image: url("../images/eypd-logo-small.png");
+  background-size: 130px;
+  width: 130px;
+  height: 90px; }
+body.login div#login form#loginform {
+  padding-top: 0;
+  border-bottom: 0; }
+body.login div#login form#loginform p.submit input#wp-submit {
+  background-color: #49B4F5;
+  width: 100%;
+  border-radius: 20px;
+  border: 0;
+  text-shadow: none;
+  box-shadow: none;
+  margin-top: 20px; }
+
+a.forgot {
+  color: #49B4F5;
+  text-decoration: none; }
+a.button.button-primary.button-large.signup {
+  background-color: #FFF;
+  position: absolute;
+  margin-top: 120px;
+  height: 29px;
+  width: 272px;
+  border-radius: 20px;
+  border: 1px solid #49B4F5;
+  text-shadow: none;
+  box-shadow: none;
+  text-align: center;
+  color: #49B4F5;
+  font-weight: bold; }
+
+.logintext, .signuptext {
+  text-align: center;
+  color: #72777C;
+  font-size: 14px; }
+
+.signuptext {
+  position: absolute;
+  margin-top: 90px;
+  left: 0;
+  right: 0;
+  min-width: 100px; }
+
+.login #nav, .login #backtoblog {
+  display: none; }
+
+/*# sourceMappingURL=login.css.map */

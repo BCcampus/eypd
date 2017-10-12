@@ -150,7 +150,7 @@ add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
  * Custom stylesheet enqueued at login page
  */
 function eypd_login_style() {
-	wp_enqueue_style( 'custom-login', get_stylesheet_directory_uri() . '/assets/styles/login-style.css' );
+	wp_enqueue_style( 'custom-login', get_stylesheet_directory_uri() . '/assets/styles/login.css' );
 }
 
 add_action( 'login_enqueue_scripts', 'eypd_login_style' );
