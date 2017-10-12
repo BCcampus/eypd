@@ -136,6 +136,13 @@ function eypd_load_scripts() {
 	if ( bp_is_my_profile() ) {
 		wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 	}
+
+	if ( is_front_page() ) {
+		wp_enqueue_script( 'pb-tabs', $template_dir . '/assets/js/tabs.js', array( 'jquery' ), null, false );
+		wp_enqueue_script( 'jquery-ui-tabs' );
+		wp_enqueue_style( 'jquery-ui', '//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css', array(), null, 'screen' );
+
+	}
 }
 
 add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
@@ -265,7 +272,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 6.2;
+	$eypd_version        = 6.3;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -375,6 +382,7 @@ function eypd_run_once() {
 		update_option( 'dbem_event_list_item_format_header', $format_event_list_header );
 		update_option( 'dbem_event_list_item_format_footer', $format_event_list_footer );
 		update_option( 'dbem_single_event_format', $single_event_format );
+		update_option( 'dbem_location_event_list_limit', 20 );
 
 		foreach ( $default_no as $no ) {
 			update_option( $no, 0 );
@@ -524,6 +532,8 @@ function eypd_event_etc_output( $input = '' ) {
 		$new_classes = "<li class=\"$cat_output\">";
 		$output      = str_replace( $output_array[0][ $index ], $new_classes, $output );
 	}
+    // remove pagination links
+	$output = preg_replace( '/<strong><span class=\"page-numbers(.*)<\/span>/i', '', $output );
 
 	return $output;
 }
@@ -1138,4 +1148,13 @@ function eypd_wpcodex_set_capabilities() {
 		// Remove the capability.
 		$editor->remove_cap( $cap );
 	}
+}
+
+/**
+ * counts and displays number of events
+ */
+function eypd_display_count_events() {
+	$events_posted = wp_count_posts( 'event' )->publish;
+
+	echo $events_posted;
 }

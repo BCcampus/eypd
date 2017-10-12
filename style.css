@@ -464,9 +464,8 @@ div.css-search,
   display: flex;
   height: 150px;
   position: relative;
-  background-image: url("assets/images/background.jpg");
-  background-size: cover;
-  background-repeat: no-repeat; }
+  background-color: #bee7fa;
+  background-size: cover; }
   @media (min-width: 480px) {
     .c-banner {
       height: 200px; } }
@@ -499,6 +498,71 @@ div.css-search,
 */
 img.wp-smiley, img.emoji {
   display: none !important; }
+
+/*
+|--------------------------------------------------------------------------
+| Tab Overrides
+|--------------------------------------------------------------------------
+|
+| base http://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css
+|
+|
+*/
+#tabs {
+  box-shadow: 2px 2px 2px #ddd;
+  border: 0px; }
+
+.ui-widget {
+  font-family: inherit;
+  font-size: inherit; }
+  .ui-widget .ui-widget-content {
+    border: none;
+    background: inherit;
+    color: inherit; }
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-button,
+.ui-button.ui-state-disabled:hover,
+.ui-button.ui-state-disabled:active {
+  border: none;
+  font-weight: lighter;
+  color: #333333; }
+
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,
+.ui-button:active,
+.ui-button.ui-state-active:hover {
+  background-color: #e6f4fb;
+  color: #333333;
+  border-top: solid 2px #068CC4; }
+
+.ui-state-active a,
+.ui-state-active a:link,
+.ui-state-active a:visited {
+  color: #333333; }
+
+.ui-widget-header {
+  background: #FFF;
+  border: none; }
+
+.ui-tabs,
+.ui-tabs-panel,
+.ui-tabs-nav {
+  padding: 0px; }
+
+.ui-tabs .ui-tabs-panel {
+  padding: .5rem; }
+.ui-tabs .ui-tabs-nav {
+  margin: 0px; }
+
+.ui-widget-content {
+  background: #F4F5F7; }
+  .ui-widget-content a {
+    color: #068CC4; }
 
 /*
 |--------------------------------------------------------------------------
@@ -814,7 +878,7 @@ a.em-button {
   margin: 0px 0px 15px 15px; }
 
 #wpadminbar {
-  background-color: #E6E7E8;
+  background-color: #bee7fa;
   display: block !important; }
   @media screen and (max-width: 667px) {
     #wpadminbar {
@@ -829,7 +893,7 @@ a.em-button {
   #wp-toolbar ul li a, .base-menu ul li a {
     color: #333334 !important; }
     #wp-toolbar ul li a:hover, .base-menu ul li a:hover {
-      background-color: #E6E7E8 !important;
+      background-color: #bee7fa !important;
       color: #068CC4 !important; }
 
 #wp-toolbar > ul > li {
@@ -838,7 +902,7 @@ a.em-button {
     padding: 0 8px 0 7px !important; }
 
 #wp-admin-bar-my-account * {
-  background-color: #E6E7E8 !important; }
+  background-color: #bee7fa !important; }
 
 #wp-admin-bar-user-actions li a:hover span,
 #wp-admin-bar-user-actions li:hover a,
@@ -863,7 +927,7 @@ a.em-button {
 
 #wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus,
 #wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item:focus {
-  background: #E6E7E8; }
+  background: #bee7fa; }
 
 #wp-admin-bar-my-account-buddypress li {
   padding-left: 20px !important; }

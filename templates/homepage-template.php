@@ -17,7 +17,7 @@ infinity_get_header();
 
 ?>
 <div class="c-banner">
-	<img class="c-banner__logo" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/logo-map.png"
+	<img class="c-banner__logo" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/eypd-logo-final.svg"
 		 alt="EYPD logo">
 </div>
 
@@ -32,11 +32,38 @@ infinity_get_header();
 <div class="c-map row">
 	<h2 class="text-blue text-center">Find training events near you</h2>
 	<div class="five columns">
-		<h3>Upcoming Events</h3>
-		<?php
-		$events_list = '[events_list scope="after-today" limit="3"]';
-		echo do_shortcode( $events_list );
-		?>
+
+        <!-- tabs start -->
+        <div id="tabs" class="ui-tabs ui-corner-all ui-widget ui-widget-content">
+
+            <ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+                <li role="tab" tabindex="1"><a
+                            href="#tabs-1"
+                            role="presentation"
+                            tabindex="-1"
+                            class="ui-tabs-anchor"
+                            id="ui-id-1">Upcoming Events</a>
+                </li>
+                <li role="tab" tabindex="2" aria-controls="tabs-2"><a href="#tabs-2" role="presentation" tabindex="-1"
+                                                                      class="ui-tabs-anchor" id="ui-id-2">Recently
+                        Posted</a></li>
+
+            </ul>
+            <div id="tabs-1">
+				<?php
+				$events_list = '[events_list scope="after-today" limit="4"]';
+				echo do_shortcode( $events_list );
+				?>
+            </div>
+            <div id="tabs-2">
+				<?php
+				$events_recent = '[events_list orderby="event_date_created" limit="4"]';
+				echo do_shortcode( $events_recent );
+				?>
+            </div>
+        </div>
+        <!-- tabs end -->
+
 	</div>
 	<div class="eleven columns">
 		<?php
@@ -50,7 +77,7 @@ infinity_get_header();
 	do_action( 'open_home' );
 	?>
 
-	<h2 class="text-blue text-center">Explore the professional learning showcase</h2>
+    <h2 class="text-blue text-center"><a href="events"><?php eypd_display_count_events(); ?> Training Events Currently Posted</a></h2>
 	<?php infinity_load_template( 'templates/featured-stories.php' ); ?>
 
 	<?php
