@@ -49,7 +49,7 @@
 body, body.theme-option {
   background: none no-repeat; }
   body #content, body.theme-option #content {
-    background-color: #fff; }
+    background-color: #FFF; }
 
 body {
   border: none; }
@@ -225,7 +225,7 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
 
 input.c-button.c--primary, input.button-primary, input.button {
   background: #068CC4;
-  color: #fff; }
+  color: #FFF; }
   input.c-button.c--primary:active, input.button-primary:active, input.button:active, input.c-button.c--primary:hover, input.button-primary:hover, input.button:hover, input.c-button.c--primary:focus, input.button-primary:focus, input.button:focus {
     background: #046993;
     outline: none;
@@ -526,7 +526,7 @@ img.wp-smiley, img.emoji {
   min-height: 70px;
   padding-top: 10px;
   padding-top: 10px;
-  background: #fff; }
+  background: #FFF; }
 
 /*
 |--------------------------------------------------------------------------
@@ -733,7 +733,7 @@ nav.main-menu {
 
 #powered-by {
   border-top: 1px solid #777777;
-  background-color: #fff;
+  background-color: #FFF;
   color: inherit;
   font-weight: normal;
   padding-top: 0; }

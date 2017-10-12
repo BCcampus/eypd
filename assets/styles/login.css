@@ -11,9 +11,9 @@ body.login form {
   padding-bottom: 100px; }
 body.login div#login h1 a {
   background-image: url("../images/eypd-logo-small.png");
-  background-size: 130px;
-  width: 130px;
-  height: 90px; }
+  background-size: 180px;
+  width: 180px;
+  height: 123px; }
 body.login div#login form#loginform {
   padding-top: 0;
   border-bottom: 0; }
