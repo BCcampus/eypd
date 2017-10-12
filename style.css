@@ -507,12 +507,11 @@ img.wp-smiley, img.emoji {
 | Tab Overrides
 |--------------------------------------------------------------------------
 |
-| base http://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css
+| base https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css
 |
 |
 */
 #tabs {
-  box-shadow: 2px 2px 2px #ddd;
   border: 0px; }
 
 .ui-widget {
@@ -549,7 +548,7 @@ a.ui-button:active,
   color: #333333; }
 
 .ui-widget-header {
-  background: #FFF;
+  background: #F4F5F7;
   border: none; }
 
 .ui-tabs,
@@ -567,6 +566,14 @@ a.ui-button:active,
   .ui-widget-content a {
     color: #068CC4; }
 
+@media (min-width: 768px) {
+  .ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+    padding: .3rem;
+    font-size: 0.9rem; } }
+@media (min-width: 1024px) {
+  .ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+    padding: .5em 1em;
+    font-size: 1rem; } }
 /*
 |--------------------------------------------------------------------------
 | Header

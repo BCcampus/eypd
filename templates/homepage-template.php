@@ -31,7 +31,7 @@ infinity_get_header();
 
 <div class="c-map row">
 	<h2 class="text-blue text-center">Find training events near you</h2>
-	<div class="five columns">
+	<div class="six columns">
 
         <!-- tabs start -->
         <div id="tabs" class="ui-tabs ui-corner-all ui-widget ui-widget-content">
@@ -65,7 +65,7 @@ infinity_get_header();
         <!-- tabs end -->
 
 	</div>
-	<div class="eleven columns">
+	<div class="ten columns">
 		<?php
 		infinity_load_template( 'templates/google-map.php' );
 		?>
