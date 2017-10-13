@@ -151,6 +151,9 @@ h2.page-title, h2.post-title, h1.page-title, h1.post-title {
 .text-blue {
   color: #068CC4; }
 
+.text-gray {
+  color: #777777; }
+
 .em-ticket-select {
   background-size: 13px; }
 
@@ -945,10 +948,10 @@ a.em-button {
 #wpadminbar .quicklinks ul li#wp-admin-bar-bp-login a:before {
   font-family: 'Glyphicons';
   content: "\e161";
-  color: #fff; }
+  color: #FFF; }
 #wpadminbar .quicklinks ul li#wp-admin-bar-bp-register a:before {
   font-family: 'Glyphicons';
   content: "\e162";
-  color: #fff; }
+  color: #FFF; }
 
 /*# sourceMappingURL=style.css.map */

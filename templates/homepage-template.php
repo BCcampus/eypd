@@ -69,7 +69,8 @@ infinity_get_header();
 		<?php
 		infinity_load_template( 'templates/google-map.php' );
 		?>
-	</div>
+        <h2 class="text-center"><a class="text-gray" href="events"><?php eypd_display_count_events(); ?> Training Events Currently Posted</a></h2>
+    </div>
 </div>
 <div id="content" role="main" class="column sixteen">
 	<?php
@@ -77,8 +78,8 @@ infinity_get_header();
 	do_action( 'open_home' );
 	?>
 
-    <h2 class="text-blue text-center"><a href="events"><?php eypd_display_count_events(); ?> Training Events Currently Posted</a></h2>
-	<?php infinity_load_template( 'templates/featured-stories.php' ); ?>
+    <h2 class="text-blue text-center">Explore the professional learning showcase</h2>
+    <?php infinity_load_template( 'templates/featured-stories.php' ); ?>
 
 	<?php
 	do_action( 'close_home' );

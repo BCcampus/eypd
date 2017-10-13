@@ -1153,7 +1153,15 @@ function eypd_wpcodex_set_capabilities() {
  * counts and displays number of events
  */
 function eypd_display_count_events() {
-	$events_posted = wp_count_posts( 'event' )->publish;
+	if ( class_exists( 'EM_Events' ) ) {
+		$results = EM_Events::get( array( 'scope' => 'future', 'array' => '' ) );
+	}
 
-	echo $events_posted;
+	if ( is_array( $results ) ) {
+		$num = count( $results );
+	} else {
+		$num = '';
+	}
+
+	echo $num;
 }
