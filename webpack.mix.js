@@ -27,6 +27,19 @@ mix.copy(`${assets}/fonts`, `${dist}/fonts`, false)
     .copy(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
     .copy(`${node}/bootstrap/js/popover.js`, `${dist}/scripts`)
 
+// Sass
+mix.sass(`${assets}/styles/main.scss`, `${dist}/styles/main.css`)
+
+// Options
+mix.options({
+    processCssUrls: false,
+});
+
+// Hash and version files in production.
+if (mix.inProduction()) {
+    mix.version();
+}
+
 // Full API
 // mix.js(src, output);
 // mix.react(src, output); <-- Identical to mix.js(), but registers React Babel compilation.
