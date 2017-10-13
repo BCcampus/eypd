@@ -13,5 +13,9 @@
   "dependencies": {
     "bootstrap": "3",
     "laravel-mix": "^1.5.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.13",
+    "browser-sync-webpack-plugin": "^1.2.0"
   }
 }

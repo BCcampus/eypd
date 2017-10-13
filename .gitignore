@@ -2,6 +2,6 @@
 .idea
 .sass-cache
 *.css.map
-vendor
-node_modules
+vendor/
+node_modules/
 dist/

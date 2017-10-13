@@ -1,23 +1,7 @@
 <?php
-/*
-|--------------------------------------------------------------------------
-| Parent theme
-|--------------------------------------------------------------------------
-|
-| enqueue parent and child theme
-|
-|
-*/
-function cbox_parent_theme_css() {
-	wp_enqueue_style( 'cbox-theme', get_template_directory_uri() . '/style.css' );
-	wp_enqueue_style( 'early-years', get_stylesheet_uri(), array( 'cbox-theme' ) );
-}
-
-add_action( 'wp_enqueue_scripts', 'cbox_parent_theme_css' );
 
 // remove from parent theme
 remove_action( 'wp_head', 'infinity_custom_favicon' );
-
 
 /*
 |--------------------------------------------------------------------------
@@ -100,6 +84,8 @@ add_action( 'admin_enqueue_scripts', 'eypd_admin_style' );
  */
 function eypd_load_scripts() {
 	$template_dir = get_stylesheet_directory_uri();
+
+	wp_enqueue_style( 'early-years', $template_dir . '/dist/styles/main.css', array( '@:dynamic'), '', 'screen' );
 
 	// toss Events Manager scripts and their dependencies
 	wp_dequeue_script( 'events-manager' );

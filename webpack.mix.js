@@ -13,20 +13,36 @@ let mix = require('laravel-mix');
 const assets = 'assets';
 const dist = 'dist';
 const node = 'node_modules';
+const temp = 'templates';
+const plugin = 'plugins';
 
 mix.setPublicPath(dist);
 
+// BrowserSync
+mix.browserSync({
+    host: 'localhost',
+    proxy: 'https://secure.test.ca/pd',
+    port: 3000,
+    files: [
+        `${temp}/**/*.php`,
+        `${plugin}/**/*.php`,
+        `${assets}/**/*.php`,
+        `${dist}/**/*.css`,
+        `${dist}/**/*.js`,
+    ],
+});
 
 // mix.js('src/app.js', 'dist/')
 //    .sass('src/app.scss', 'dist/');
 
 // Assets
-mix.copy(`${assets}/fonts`, `${dist}/fonts`, false)
-    .copy(`${node}/bootstrap/fonts`, `${dist}/fonts`, false)
+mix.copy(`${assets}/fonts`, `${dist}/fonts`)
+    .copy(`${node}/bootstrap/fonts`, `${dist}/fonts`)
     .copy(`${node}/bootstrap/dist/css/bootstrap.min.css`, `${dist}/styles`)
     .copy(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
     .copy(`${node}/bootstrap/js/popover.js`, `${dist}/scripts`)
     .copy(`${node}/bootstrap/js/tooltip.js`, `${dist}/scripts`)
+    .copy(`${assets}/images`, `${dist}/images`);
 
 
 // Sass
