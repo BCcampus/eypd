@@ -34,8 +34,9 @@
   font-weight: 400;
   font-style: normal; }
 @font-face {
-  font-family: "Glyphicons";
-  src: url("dist/fonts/glyphicons-halflings-regular.ttf") format("truetype"); }
+  font-family: 'Glyphicons';
+  src: url("dist/fonts/glyphicons-halflings-regular.eot");
+  src: url("dist/fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("dist/fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("dist/fonts/glyphicons-halflings-regular.woff") format("woff"), url("dist/fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("dist/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
 /*
 |--------------------------------------------------------------------------
 | Global
@@ -945,10 +946,10 @@ a.em-button {
 #wpadminbar .quicklinks ul li#wp-admin-bar-bp-login a:before {
   font-family: 'Glyphicons';
   content: "\e161";
-  color: #fff; }
+  color: #FFF; }
 #wpadminbar .quicklinks ul li#wp-admin-bar-bp-register a:before {
   font-family: 'Glyphicons';
   content: "\e162";
-  color: #fff; }
+  color: #FFF; }
 
 /*# sourceMappingURL=style.css.map */
