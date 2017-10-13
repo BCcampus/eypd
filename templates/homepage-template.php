@@ -57,7 +57,7 @@ infinity_get_header();
             </div>
             <div id="tabs-2">
 				<?php
-				$events_recent = '[events_list orderby="event_date_created" limit="4"]';
+				$events_recent = '[events_list orderby="event_date_created" order="DESC" limit="4"]';
 				echo do_shortcode( $events_recent );
 				?>
             </div>
