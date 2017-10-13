@@ -1151,6 +1151,8 @@ function eypd_wpcodex_set_capabilities() {
 
 /**
  * counts and displays number of events
+ * @see http://wp-events-plugin.com/documentation/advanced-usage/
+ *
  */
 function eypd_display_count_events() {
 	if ( class_exists( 'EM_Events' ) ) {
