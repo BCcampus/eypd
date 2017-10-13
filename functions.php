@@ -124,7 +124,8 @@ function eypd_load_scripts() {
 	// load popover only for users who aren't logged in
 	if ( ! is_user_logged_in() ) {
 		wp_enqueue_script( 'initpopover', $template_dir . '/assets/js/initpopover.js' );
-		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', array(), null, true );
+		wp_enqueue_script( 'bootstrap-tooltip', $template_dir . '/dist/scripts/tooltip.js', array(), null, true );
+		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', array('bootstrap-tooltip'), null, true );
 		wp_enqueue_style( 'bootstrap-popover-style', $template_dir . '/dist/styles/bootstrap.min.css' );
 	}
 	// only sign up page has requirements for modals
@@ -140,8 +141,7 @@ function eypd_load_scripts() {
 	if ( is_front_page() ) {
 		wp_enqueue_script( 'jquery-tabs', $template_dir . '/assets/js/tabs.js', array( 'jquery' ), null, false );
 		wp_enqueue_script( 'jquery-ui-tabs' );
-		wp_enqueue_style( 'jquery-ui', '//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css', array(), null, 'screen' );
-
+		wp_enqueue_style( 'jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', array(), null, 'screen' );
 	}
 }
 
@@ -1152,9 +1152,19 @@ function eypd_wpcodex_set_capabilities() {
 
 /**
  * counts and displays number of events
+ * @see http://wp-events-plugin.com/documentation/advanced-usage/
+ *
  */
 function eypd_display_count_events() {
-	$events_posted = wp_count_posts( 'event' )->publish;
+	if ( class_exists( 'EM_Events' ) ) {
+		$results = EM_Events::get( array( 'scope' => 'future', 'array' => '' ) );
+	}
 
-	echo $events_posted;
+	if ( is_array( $results ) ) {
+		$num = count( $results );
+	} else {
+		$num = '';
+	}
+
+	echo $num;
 }

@@ -31,7 +31,7 @@ infinity_get_header();
 
 <div class="c-map row">
 	<h2 class="text-blue text-center">Find training events near you</h2>
-	<div class="five columns">
+	<div class="six columns">
 
         <!-- tabs start -->
         <div id="tabs" class="ui-tabs ui-corner-all ui-widget ui-widget-content">
@@ -57,7 +57,7 @@ infinity_get_header();
             </div>
             <div id="tabs-2">
 				<?php
-				$events_recent = '[events_list orderby="event_date_created" limit="4"]';
+				$events_recent = '[events_list orderby="event_date_created" order="DESC" limit="4"]';
 				echo do_shortcode( $events_recent );
 				?>
             </div>
@@ -65,11 +65,12 @@ infinity_get_header();
         <!-- tabs end -->
 
 	</div>
-	<div class="eleven columns">
+	<div class="ten columns">
 		<?php
 		infinity_load_template( 'templates/google-map.php' );
 		?>
-	</div>
+        <h2 class="text-center"><a class="text-gray" href="events"><?php eypd_display_count_events(); ?> Training Events Currently Posted</a></h2>
+    </div>
 </div>
 <div id="content" role="main" class="column sixteen">
 	<?php
@@ -77,8 +78,8 @@ infinity_get_header();
 	do_action( 'open_home' );
 	?>
 
-    <h2 class="text-blue text-center"><a href="events"><?php eypd_display_count_events(); ?> Training Events Currently Posted</a></h2>
-	<?php infinity_load_template( 'templates/featured-stories.php' ); ?>
+    <h2 class="text-blue text-center">Explore the professional learning showcase</h2>
+    <?php infinity_load_template( 'templates/featured-stories.php' ); ?>
 
 	<?php
 	do_action( 'close_home' );
