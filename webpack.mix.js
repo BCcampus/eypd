@@ -26,6 +26,8 @@ mix.copy(`${assets}/fonts`, `${dist}/fonts`, false)
     .copy(`${node}/bootstrap/dist/css/bootstrap.min.css`, `${dist}/styles`)
     .copy(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
     .copy(`${node}/bootstrap/js/popover.js`, `${dist}/scripts`)
+    .copy(`${node}/bootstrap/js/tooltip.js`, `${dist}/scripts`)
+
 
 // Full API
 // mix.js(src, output);
