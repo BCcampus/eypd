@@ -27,6 +27,7 @@ mix.browserSync({
         `${temp}/**/*.php`,
         `${plugin}/**/*.php`,
         `${assets}/**/*.php`,
+        `*.php`,
         `${dist}/**/*.css`,
         `${dist}/**/*.js`,
     ],

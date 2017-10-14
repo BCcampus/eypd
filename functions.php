@@ -1,5 +1,9 @@
 <?php
 
+add_action( 'wp_enqueue_scripts', function () {
+	wp_enqueue_style( 'early-years', get_stylesheet_directory_uri() . '/dist/styles/main.css', array( '@:dynamic' ), '', 'screen' );
+}, 10 );
+
 // remove from parent theme
 remove_action( 'wp_head', 'infinity_custom_favicon' );
 
@@ -85,8 +89,6 @@ add_action( 'admin_enqueue_scripts', 'eypd_admin_style' );
 function eypd_load_scripts() {
 	$template_dir = get_stylesheet_directory_uri();
 
-	wp_enqueue_style( 'early-years', $template_dir . '/dist/styles/main.css', array( '@:dynamic'), '', 'screen' );
-
 	// toss Events Manager scripts and their dependencies
 	wp_dequeue_script( 'events-manager' );
 
@@ -127,7 +129,7 @@ function eypd_load_scripts() {
 	if ( is_front_page() ) {
 		wp_enqueue_script( 'jquery-tabs', $template_dir . '/assets/js/tabs.js', array( 'jquery' ), null, false );
 		wp_enqueue_script( 'jquery-ui-tabs' );
-		wp_enqueue_style( 'jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', array(), null, 'screen' );
+		wp_enqueue_style( 'jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', array(''), null, 'screen' );
 	}
 }
 
@@ -674,7 +676,7 @@ add_filter( 'wp_head', 'eypd_close_popover', 11 );
  * Add favicon
  */
 function eypd_favicon_link() {
-	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/assets/images/favicon.ico" />' . "\n";
+	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/dist/images/favicon.ico" />' . "\n";
 }
 
 add_action( 'wp_head', 'eypd_favicon_link' );
