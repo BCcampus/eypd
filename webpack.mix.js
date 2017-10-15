@@ -33,9 +33,6 @@ mix.browserSync({
     ],
 });
 
-// mix.js('src/app.js', 'dist/')
-//    .sass('src/app.scss', 'dist/');
-
 // Assets
 mix.copy(`${assets}/fonts`, `${dist}/fonts`)
     .copy(`${node}/bootstrap/fonts`, `${dist}/fonts`)

@@ -52,8 +52,14 @@ include( get_stylesheet_directory() . '/eypd-events.php' );
 |
 */
 
-add_filter( 'em_events_build_sql_conditions', 'my_em_scope_conditions', 1, 2 );
-function my_em_scope_conditions( $conditions, $args ) {
+/**
+ *
+ * @param $conditions
+ * @param $args
+ *
+ * @return mixed
+ */
+function eypd_em_scope_conditions( $conditions, $args ) {
 	if ( ! empty( $args['scope'] ) && $args['scope'] == 'after-today' ) {
 		$current_date        = date( 'Y-m-d', current_time( 'timestamp' ) );
 		$conditions['scope'] = " (event_start_date > CAST('$current_date' AS DATE))";
@@ -61,16 +67,23 @@ function my_em_scope_conditions( $conditions, $args ) {
 
 	return $conditions;
 }
+add_filter( 'em_events_build_sql_conditions', 'eypd_em_scope_conditions', 1, 2 );
 
 
-add_filter( 'em_get_scopes', 'my_em_scopes', 1, 1 );
-function my_em_scopes( $scopes ) {
+/**
+ *
+ * @param $scopes
+ *
+ * @return array
+ */
+function eypd_em_scopes( $scopes ) {
 	$my_scopes = array(
 		'after-today' => 'After Today',
 	);
 
 	return $scopes + $my_scopes;
 }
+add_filter( 'em_get_scopes', 'eypd_em_scopes', 1, 1 );
 
 /*
 |--------------------------------------------------------------------------
