@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * need our stylesheet to fire later than the rest
+ * in order for: now your base are belong to us
+ * infinity theme behaves differently than you would expect parent themes to act
+ */
 add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style( 'early-years', get_stylesheet_directory_uri() . '/dist/styles/main.css', array( '@:dynamic' ), '', 'screen' );
 }, 10 );
@@ -129,7 +134,7 @@ function eypd_load_scripts() {
 	if ( is_front_page() ) {
 		wp_enqueue_script( 'jquery-tabs', $template_dir . '/assets/js/tabs.js', array( 'jquery' ), null, false );
 		wp_enqueue_script( 'jquery-ui-tabs' );
-		wp_enqueue_style( 'jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', array(''), null, 'screen' );
+		//wp_enqueue_style( 'jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', array(''), null, 'screen' );
 	}
 }
 

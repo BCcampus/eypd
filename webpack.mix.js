@@ -40,11 +40,12 @@ mix.browserSync({
 mix.copy(`${assets}/fonts`, `${dist}/fonts`)
     .copy(`${node}/bootstrap/fonts`, `${dist}/fonts`)
     .copy(`${node}/bootstrap/dist/css/bootstrap.min.css`, `${dist}/styles`)
-    .copy(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
-    .copy(`${node}/bootstrap/js/popover.js`, `${dist}/scripts`)
-    .copy(`${node}/bootstrap/js/tooltip.js`, `${dist}/scripts`)
     .copy(`${assets}/images`, `${dist}/images`);
 
+// compiled Javascript
+mix.js(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
+    .js(`${node}/bootstrap/js/popover.js`, `${dist}/scripts`)
+    .js(`${node}/bootstrap/js/tooltip.js`, `${dist}/scripts`)
 
 // Sass
 mix.sass(`${assets}/styles/main.scss`, `${dist}/styles/main.css`)
