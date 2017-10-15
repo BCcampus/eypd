@@ -19,6 +19,11 @@ add_action( 'wp_enqueue_scripts', function () {
 }, 11 );
 
 /**
+ * back end, front end parity
+ */
+add_editor_style( get_stylesheet_directory_uri() . '/dist/styles/main.css' );
+
+/**
  * Load our scripts
  */
 add_action( 'wp_enqueue_scripts', function () {
@@ -46,7 +51,7 @@ add_action( 'wp_enqueue_scripts', function () {
 
 	// load popover only for users who aren't logged in
 	if ( ! is_user_logged_in() ) {
-		wp_enqueue_script( 'initpopover', $template_dir . '/dist/scripts/initpopover.js' );
+		wp_enqueue_script( 'initpopover', $template_dir . '/dist/scripts/initpopover.js', array(), null, false );
 		wp_enqueue_script( 'bootstrap-tooltip', $template_dir . '/dist/scripts/tooltip.js', array(), null, true );
 		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', array( 'bootstrap-tooltip' ), null, true );
 		wp_enqueue_style( 'bootstrap-popover-style', $template_dir . '/dist/styles/bootstrap.min.css' );
@@ -848,18 +853,15 @@ function eypd_get_my_bookings_url() {
 /**
  *  Add stylesheet to TinyMCE, allows us to style the content of the editor
  */
-
-function eypd_format_TinyMCE( $in ) {
+add_filter( 'tiny_mce_before_init', function ( $in ) {
 	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
-		$in['content_css'] = get_stylesheet_directory_uri() . '/editor-style.css';
+		$in['content_css'] = get_stylesheet_directory_uri() . '/dist/styles/tinymce.css';
 
 		return $in;
 	}
 
 	return $in;
-}
-
-add_filter( 'tiny_mce_before_init', 'eypd_format_TinyMCE' );
+} );
 
 /**
  * Force visual editor as default
@@ -875,7 +877,6 @@ add_filter( 'wp_default_editor', 'eypd_force_default_editor' );
 /**
  * Show only own items in media library panel
  */
-
 function eypd_my_images_only( $query ) {
 	if ( $user_id = get_current_user_id() ) {
 		// exclude administrator
