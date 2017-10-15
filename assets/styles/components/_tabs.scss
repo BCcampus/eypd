@@ -30,6 +30,19 @@
     font-weight: lighter;
     color: $color-black-mineshaft;
   }
+  .ui-state-hover,
+  .ui-widget-content .ui-state-hover,
+  .ui-widget-header .ui-state-hover,
+  .ui-state-focus,
+  .ui-widget-content .ui-state-focus,
+  .ui-widget-header .ui-state-focus {
+    border: 0;
+    background: $color-gray-mercury;
+    font-weight: normal;
+    a {
+      color: $color-gray-boulder;
+    }
+  }
 
   .ui-state-active,
   .ui-widget-content .ui-state-active,
@@ -70,7 +83,7 @@
     }
   }
 
-  .ui-widget-content {
+  &.ui-widget-content {
     background: $color-neutral-10;
 
     a {
