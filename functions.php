@@ -1,4 +1,13 @@
 <?php
+/*
+|--------------------------------------------------------------------------
+| Scripts and Styles
+|--------------------------------------------------------------------------
+|
+| early years look, feel, functionality
+|
+|
+*/
 
 /**
  * need our stylesheet to fire later than the rest
@@ -8,6 +17,73 @@
 add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style( 'early-years', get_stylesheet_directory_uri() . '/dist/styles/main.css', array( '@:dynamic' ), '', 'screen' );
 }, 11 );
+
+/**
+ * Load our scripts
+ */
+add_action( 'wp_enqueue_scripts', function () {
+	$template_dir = get_stylesheet_directory_uri();
+
+	// toss Events Manager scripts and their dependencies
+	wp_dequeue_script( 'events-manager' );
+
+	wp_enqueue_script( 'jquery-ui-draggable' );
+	wp_enqueue_script( 'markerclusterer', $template_dir . '/dist/scripts/markerclusterer.js' );
+
+	$script_deps = array(
+		'jquery'                 => 'jquery',
+		'jquery-ui-core'         => 'jquery-ui-core',
+		'jquery-ui-widget'       => 'jquery-ui-widget',
+		'jquery-ui-position'     => 'jquery-ui-position',
+		'jquery-ui-sortable'     => 'jquery-ui-sortable',
+		'jquery-ui-datepicker'   => 'jquery-ui-datepicker',
+		'jquery-ui-autocomplete' => 'jquery-ui-autocomplete',
+		'jquery-ui-dialog'       => 'jquery-ui-dialog',
+		'markerclusterer'        => 'markerclusterer',
+	);
+	wp_enqueue_script( 'events-manager', $template_dir . '/dist/scripts/events-manager.js', array_values( $script_deps ), EM_VERSION );
+	wp_enqueue_script( 'tinyscrollbar', $template_dir . '/dist/scripts/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
+
+	// load popover only for users who aren't logged in
+	if ( ! is_user_logged_in() ) {
+		wp_enqueue_script( 'initpopover', $template_dir . '/dist/scripts/initpopover.js' );
+		wp_enqueue_script( 'bootstrap-tooltip', $template_dir . '/dist/scripts/tooltip.js', array(), null, true );
+		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', array( 'bootstrap-tooltip' ), null, true );
+		wp_enqueue_style( 'bootstrap-popover-style', $template_dir . '/dist/styles/bootstrap.min.css' );
+	}
+	// only sign up page has requirements for modals
+	if ( is_page( 'sign-up' ) ) {
+		wp_enqueue_script( 'bootstrap-modal', $template_dir . '/dist/scripts/bootstrap.min.js', array(), null, true );
+		wp_enqueue_style( 'bootstrap-modal-style', $template_dir . '/dist/styles/bootstrap.min.css' );
+	}
+	// load styling for datepicker in myEYPD profile page only
+	if ( bp_is_my_profile() ) {
+		wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+	}
+
+	if ( is_front_page() ) {
+		wp_enqueue_script( 'jquery-tabs', $template_dir . '/dist/scripts/tabs.js', array( 'jquery' ), null, false );
+		wp_enqueue_script( 'jquery-ui-tabs' );
+	}
+
+	if ( is_singular( 'event' ) ) {
+		wp_enqueue_style( 'banner', $template_dir . '/dist/styles/event.css' );
+	}
+}, 10 );
+
+/*
+|--------------------------------------------------------------------------
+| Admin Styles
+|--------------------------------------------------------------------------
+|
+| for admin pages only
+|
+|
+*/
+
+add_action( 'admin_enqueue_scripts', function(){
+	wp_enqueue_style( 'eypd_admin_css', get_stylesheet_directory_uri() . '/dist/styles/admin.css', false, false, 'screen' );
+} );
 
 // remove from parent theme
 remove_action( 'wp_head', 'infinity_custom_favicon' );
@@ -87,73 +163,6 @@ add_filter( 'em_get_scopes', 'eypd_em_scopes', 1, 1 );
 
 /*
 |--------------------------------------------------------------------------
-| Admin Styles
-|--------------------------------------------------------------------------
-|
-| for admin pages only
-|
-|
-*/
-
-add_action( 'admin_enqueue_scripts', function(){
-	wp_enqueue_style( 'eypd_admin_css', get_stylesheet_directory_uri() . '/dist/styles/admin.css', false, false, 'screen' );
-} );
-
-/**
- * Load our scripts
- */
-add_action( 'wp_enqueue_scripts', function () {
-	$template_dir = get_stylesheet_directory_uri();
-
-	// toss Events Manager scripts and their dependencies
-	wp_dequeue_script( 'events-manager' );
-
-	wp_enqueue_script( 'jquery-ui-draggable' );
-	wp_enqueue_script( 'markerclusterer', $template_dir . '/assets/js/markerclusterer.js' );
-
-	$script_deps = array(
-		'jquery'                 => 'jquery',
-		'jquery-ui-core'         => 'jquery-ui-core',
-		'jquery-ui-widget'       => 'jquery-ui-widget',
-		'jquery-ui-position'     => 'jquery-ui-position',
-		'jquery-ui-sortable'     => 'jquery-ui-sortable',
-		'jquery-ui-datepicker'   => 'jquery-ui-datepicker',
-		'jquery-ui-autocomplete' => 'jquery-ui-autocomplete',
-		'jquery-ui-dialog'       => 'jquery-ui-dialog',
-		'markerclusterer'        => 'markerclusterer',
-	);
-	wp_enqueue_script( 'events-manager', $template_dir . '/assets/js/events-manager.js', array_values( $script_deps ), EM_VERSION );
-	wp_enqueue_script( 'tinyscrollbar', $template_dir . '/assets/js/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
-
-	// load popover only for users who aren't logged in
-	if ( ! is_user_logged_in() ) {
-		wp_enqueue_script( 'initpopover', $template_dir . '/assets/js/initpopover.js' );
-		wp_enqueue_script( 'bootstrap-tooltip', $template_dir . '/dist/scripts/tooltip.js', array(), null, true );
-		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', array( 'bootstrap-tooltip' ), null, true );
-		wp_enqueue_style( 'bootstrap-popover-style', $template_dir . '/dist/styles/bootstrap.min.css' );
-	}
-	// only sign up page has requirements for modals
-	if ( is_page( 'sign-up' ) ) {
-		wp_enqueue_script( 'bootstrap-modal', $template_dir . '/dist/scripts/bootstrap.min.js', array(), null, true );
-		wp_enqueue_style( 'bootstrap-modal-style', $template_dir . '/dist/styles/bootstrap.min.css' );
-	}
-	// load styling for datepicker in myEYPD profile page only
-	if ( bp_is_my_profile() ) {
-		wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
-	}
-
-	if ( is_front_page() ) {
-		wp_enqueue_script( 'jquery-tabs', $template_dir . '/assets/js/tabs.js', array( 'jquery' ), null, false );
-		wp_enqueue_script( 'jquery-ui-tabs' );
-	}
-
-	if ( is_singular( 'event' ) ) {
-		wp_enqueue_style( 'banner', $template_dir . '/dist/styles/event.css' );
-	}
-}, 10 );
-
-/*
-|--------------------------------------------------------------------------
 | Login customization
 |--------------------------------------------------------------------------
 |
@@ -174,22 +183,18 @@ add_action( 'login_enqueue_scripts', function () {
  *
  * @return string|void
  */
-function eypd_logo_url() {
+add_filter( 'login_headerurl', function () {
 	return home_url();
-}
-
-add_filter( 'login_headerurl', 'eypd_logo_url' );
+} );
 
 /**
  * Give the image our sites name
  *
  * @return string|void
  */
-function eypd_logo_url_title() {
+add_filter( 'login_headertitle', function (){
 	return get_bloginfo( 'name' );
-}
-
-add_filter( 'login_headertitle', 'eypd_logo_url_title' );
+} );
 
 /**
  * Add custom text to login form
