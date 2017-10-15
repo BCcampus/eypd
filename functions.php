@@ -7,7 +7,7 @@
  */
 add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style( 'early-years', get_stylesheet_directory_uri() . '/dist/styles/main.css', array( '@:dynamic' ), '', 'screen' );
-}, 10 );
+}, 11 );
 
 // remove from parent theme
 remove_action( 'wp_head', 'infinity_custom_favicon' );
@@ -94,17 +94,15 @@ add_filter( 'em_get_scopes', 'eypd_em_scopes', 1, 1 );
 |
 |
 */
-function eypd_admin_style() {
-	wp_register_style( 'eypd_admin_css', get_stylesheet_directory_uri() . '/assets/styles/admin.css', false, false, 'screen' );
-	wp_enqueue_style( 'eypd_admin_css' );
-}
 
-add_action( 'admin_enqueue_scripts', 'eypd_admin_style' );
+add_action( 'admin_enqueue_scripts', function(){
+	wp_enqueue_style( 'eypd_admin_css', get_stylesheet_directory_uri() . '/dist/styles/admin.css', false, false, 'screen' );
+} );
 
 /**
  * Load our scripts
  */
-function eypd_load_scripts() {
+add_action( 'wp_enqueue_scripts', function () {
 	$template_dir = get_stylesheet_directory_uri();
 
 	// toss Events Manager scripts and their dependencies
@@ -131,7 +129,7 @@ function eypd_load_scripts() {
 	if ( ! is_user_logged_in() ) {
 		wp_enqueue_script( 'initpopover', $template_dir . '/assets/js/initpopover.js' );
 		wp_enqueue_script( 'bootstrap-tooltip', $template_dir . '/dist/scripts/tooltip.js', array(), null, true );
-		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', array('bootstrap-tooltip'), null, true );
+		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', array( 'bootstrap-tooltip' ), null, true );
 		wp_enqueue_style( 'bootstrap-popover-style', $template_dir . '/dist/styles/bootstrap.min.css' );
 	}
 	// only sign up page has requirements for modals
@@ -147,30 +145,34 @@ function eypd_load_scripts() {
 	if ( is_front_page() ) {
 		wp_enqueue_script( 'jquery-tabs', $template_dir . '/assets/js/tabs.js', array( 'jquery' ), null, false );
 		wp_enqueue_script( 'jquery-ui-tabs' );
-		//wp_enqueue_style( 'jquery-ui', '//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css', array(''), null, 'screen' );
 	}
-}
 
-add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
+	if ( is_singular( 'event' ) ) {
+		wp_enqueue_style( 'banner', $template_dir . '/dist/styles/event.css' );
+	}
+}, 10 );
 
 /*
 |--------------------------------------------------------------------------
 | Login customization
 |--------------------------------------------------------------------------
+|
+|
+|
+|
 */
 
 /**
  * Custom stylesheet enqueued at login page
  */
-function eypd_login_style() {
-	wp_enqueue_style( 'custom-login', get_stylesheet_directory_uri() . '/assets/styles/login.css' );
-}
-
-add_action( 'login_enqueue_scripts', 'eypd_login_style' );
+add_action( 'login_enqueue_scripts', function () {
+	wp_enqueue_style( 'custom-login', get_stylesheet_directory_uri() . '/dist/styles/login.css' );
+} );
 
 /**
- * @return string
  * Link logo image to our home_url instead of WordPress.org
+ *
+ * @return string|void
  */
 function eypd_logo_url() {
 	return home_url();
@@ -179,8 +181,9 @@ function eypd_logo_url() {
 add_filter( 'login_headerurl', 'eypd_logo_url' );
 
 /**
- * @return string
  * Give the image our sites name
+ *
+ * @return string|void
  */
 function eypd_logo_url_title() {
 	return get_bloginfo( 'name' );
@@ -189,12 +192,11 @@ function eypd_logo_url_title() {
 add_filter( 'login_headertitle', 'eypd_logo_url_title' );
 
 /**
+ * Add custom text to login form
  *
  * @param $message
  *
  * @return string
- * Add custom text to login form
- *
  */
 function eypd_login_message( $message ) {
 	if ( empty( $message ) ) {
@@ -217,6 +219,7 @@ function eypd_login_form() {
 }
 
 add_action( 'login_form', 'eypd_login_form' );
+
 /*
 |--------------------------------------------------------------------------
 | Excerpt

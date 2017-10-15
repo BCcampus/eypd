@@ -46,6 +46,10 @@ mix.js(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
 
 // Sass
 mix.sass(`${assets}/styles/main.scss`, `${dist}/styles/main.css`)
+    .sass(`${assets}/styles/login.scss`, `${dist}/styles/login.css`)
+    .sass(`${assets}/styles/admin.scss`, `${dist}/styles/admin.css`)
+    .sass(`${assets}/styles/event.scss`, `${dist}/styles/event.css`)
+
 
 // Options
 mix.options({
