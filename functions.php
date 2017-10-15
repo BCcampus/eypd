@@ -69,6 +69,11 @@ add_action( 'wp_enqueue_scripts', function () {
 	if ( is_singular( 'event' ) ) {
 		wp_enqueue_style( 'banner', $template_dir . '/dist/styles/event.css' );
 	}
+
+	if ( is_page( 'edit-events' ) || is_page( 'post-event' ) ) {
+		wp_enqueue_style( 'media-manager', $template_dir . '/dist/styles/media.css' );
+	}
+
 }, 10 );
 
 /*
@@ -857,21 +862,6 @@ function eypd_format_TinyMCE( $in ) {
 add_filter( 'tiny_mce_before_init', 'eypd_format_TinyMCE' );
 
 /**
- * Hide images inserted in WYSIWYG, hide the editor tabs, hide toolbars and sidebars from Median Manager Panel
- */
-function eypd_media_manager_style() {
-	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
-		echo '<style>.media-frame-menu, .media-sidebar, .attachment-filters, label[for=media-attachment-filters],label[for=media-attachment-date-filters], label[for=media-search-input],.media-frame input[type=search]{display:none;}</style>';
-		// hide editor tabs
-		if ( ! current_user_can( 'administrator' ) ) {
-			echo '<style>.wp-editor-tabs {display: none;}</style>';
-		}
-	}
-}
-
-add_action( 'wp_head', 'eypd_media_manager_style', 100 );
-
-/**
  * Force visual editor as default
  */
 function eypd_force_default_editor() {
@@ -950,18 +940,6 @@ add_filter( 'get_image_tag_class', 'eypd_image_tag_class' );
 |
 
 */
-
-/**
- * Control size and maintain proportion of event images
- */
-
-function eypd_control_banner() {
-	if ( is_singular( 'event' ) ) {
-		echo '<style>img.banner{height: auto; width: auto; max-width: 1000px; max-height: 217px;}</style>';
-	}
-}
-
-add_action( 'wp_head', 'eypd_control_banner', 100 );
 
 /**
  * Sanitize and Save only the latest image inserted when creating or editing an event

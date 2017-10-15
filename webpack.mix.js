@@ -54,6 +54,7 @@ mix.sass(`${assets}/styles/main.scss`, `${dist}/styles/main.css`)
     .sass(`${assets}/styles/login.scss`, `${dist}/styles/login.css`)
     .sass(`${assets}/styles/admin.scss`, `${dist}/styles/admin.css`)
     .sass(`${assets}/styles/event.scss`, `${dist}/styles/event.css`)
+    .sass(`${assets}/styles/media.scss`, `${dist}/styles/media.css`)
 
 
 // Options
