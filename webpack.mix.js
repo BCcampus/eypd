@@ -13,21 +13,59 @@ let mix = require('laravel-mix');
 const assets = 'assets';
 const dist = 'dist';
 const node = 'node_modules';
+const temp = 'templates';
+const plugin = 'plugins';
 
 mix.setPublicPath(dist);
 
-
-// mix.js('src/app.js', 'dist/')
-//    .sass('src/app.scss', 'dist/');
+// BrowserSync
+mix.browserSync({
+    host: 'localhost',
+    proxy: 'https://secure.test.ca/pd',
+    port: 3000,
+    files: [
+        `${temp}/**/*.php`,
+        `${plugin}/**/*.php`,
+        `${assets}/**/*.php`,
+        `*.php`,
+        `${dist}/**/*.css`,
+        `${dist}/**/*.js`,
+    ],
+});
 
 // Assets
-mix.copy(`${assets}/fonts`, `${dist}/fonts`, false)
-    .copy(`${node}/bootstrap/fonts`, `${dist}/fonts`, false)
+mix.copy(`${assets}/fonts`, `${dist}/fonts`)
+    .copy(`${node}/bootstrap/fonts`, `${dist}/fonts`)
     .copy(`${node}/bootstrap/dist/css/bootstrap.min.css`, `${dist}/styles`)
-    .copy(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
-    .copy(`${node}/bootstrap/js/popover.js`, `${dist}/scripts`)
-    .copy(`${node}/bootstrap/js/tooltip.js`, `${dist}/scripts`)
+    .copy(`${assets}/images`, `${dist}/images`);
 
+// compiled Javascript
+mix.js(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
+    .js(`${node}/bootstrap/js/popover.js`, `${dist}/scripts`)
+    .js(`${node}/bootstrap/js/tooltip.js`, `${dist}/scripts`)
+    .js(`${assets}/js/tabs.js`, `${dist}/scripts`)
+    .js(`${assets}/js/initpopover.js`, `${dist}/scripts`)
+    .js(`${assets}/js/jquery.tinyscrollbar.min.js`, `${dist}/scripts`)
+    .js(`${assets}/js/events-manager.js`, `${dist}/scripts`)
+    .js(`${assets}/js/markerclusterer.js`, `${dist}/scripts`)
+
+// Sass
+mix.sass(`${assets}/styles/main.scss`, `${dist}/styles/main.css`)
+    .sass(`${assets}/styles/login.scss`, `${dist}/styles/login.css`)
+    .sass(`${assets}/styles/admin.scss`, `${dist}/styles/admin.css`)
+    .sass(`${assets}/styles/event.scss`, `${dist}/styles/event.css`)
+    .sass(`${assets}/styles/media.scss`, `${dist}/styles/media.css`)
+    .sass(`${assets}/styles/tinymce.scss`, `${dist}/styles/tinymce.css`)
+
+// Options
+mix.options({
+    processCssUrls: false,
+});
+
+// Hash and version files in production.
+if (mix.inProduction()) {
+    mix.version();
+}
 
 // Full API
 // mix.js(src, output);

@@ -1,0 +1,9 @@
+/**
+ * Control size and maintain proportion of event banner images, only needed if is_singular( 'event' )
+ */
+img.banner {
+  height: auto;
+  width: auto;
+  max-width: 1000px;
+  max-height: 217px;
+}

@@ -1011,7 +1011,7 @@ function em_maps_load_clusters(el) {
             var bounds = new google.maps.LatLngBounds(minLatLng, maxLatLng);
             maps[map_id].fitBounds(bounds);
 
-            var markerCluster = new MarkerClusterer(maps[map_id], maps_markers[map_id], {imagePath: 'wp-content/themes/early-years/assets/images/cluster/m'});
+            var markerCluster = new MarkerClusterer(maps[map_id], maps_markers[map_id], {imagePath: 'wp-content/themes/early-years/dist/images/cluster/m'});
 
             //Call a hook if exists
             jQuery(document).triggerHandler('em_maps_locations_hook', [maps[map_id], data, map_id]);
