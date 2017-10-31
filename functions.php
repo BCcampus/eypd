@@ -709,13 +709,14 @@ function eypd_close_popover() {
 add_filter( 'wp_head', 'eypd_close_popover', 11 );
 
 /**
- * Add favicon
+ * Add favicon, theme color, PWA manifest
  */
-function eypd_favicon_link() {
+add_action( 'wp_head', function () {
+    echo '<meta name="theme-color" content="#bee7fa"/>';
 	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/dist/images/favicon.ico" />' . "\n";
-}
+	echo '<link rel="manifest" href="' . get_stylesheet_directory_uri() . '/manifest.json">';
+} );
 
-add_action( 'wp_head', 'eypd_favicon_link' );
 
 /**
  * Validating that required attribute fields are not empty
