@@ -27,8 +27,8 @@
 			?>
 			<<?php echo $heading_tag; ?> id="icext" class="icext-feature icext-header-logo">
 			<a href="<?php echo home_url( '/' ); ?>" title="<?php bloginfo('name'); ?> - <?php bloginfo('description'); ?>">
-				<img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bcid-logo.png" width="101" height="92" alt="BC Provincial Government">
-				<img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logomark.png" width="135" height="92" alt="Early Years Professional Development">
+				<img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bcid-logo.webp" width="101" height="92" alt="BC Provincial Government">
+				<img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logomark.webp" width="135" height="92" alt="Early Years Professional Development">
 			</a>
 		</<?php echo $heading_tag; ?>>
 		<?php
