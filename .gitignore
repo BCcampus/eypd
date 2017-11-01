@@ -2,6 +2,10 @@
 .idea
 .sass-cache
 *.css.map
-vendor/
+!vendor
+vendor/*
+!vendor/autoload.php
+!vendor/composer
+!vendor/roots
 node_modules/
 dist/
