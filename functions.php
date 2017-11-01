@@ -1162,3 +1162,12 @@ function eypd_display_count_events() {
 
 	echo $num;
 }
+
+/**
+ * Allow users to upload webp
+ */
+add_filter( 'upload_mimes', function ( $mime_types ) {
+	$mime_types['webp'] = 'image/webp';
+
+	return $mime_types;
+} );
