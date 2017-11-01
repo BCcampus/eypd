@@ -33,6 +33,10 @@
     "src": "dist/images/pwa/eypd-192.webp",
     "sizes": "192x192",
     "type": "image/webp"
+  }, {
+    "src": "dist/images/pwa/eypd-512.webp",
+    "sizes": "512x512",
+    "type": "image/webp"
   }],
   "orientation": "portrait-primary"
 }
