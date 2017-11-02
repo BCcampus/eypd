@@ -59,5 +59,62 @@ wp_footer();
 	get_template_part( 'templates/terms-modal' );
 	get_template_part( 'templates/roles-modal' );
 } ?>
+<script>
+    window._wordpressConfig = {
+        templateUrl: new URL('<?php echo get_stylesheet_directory_uri();?>').toString(),
+        baseUrl: new URL('<?php echo site_url();?>').toString(),
+    };
+</script>
+<script>
+	<?php include( get_stylesheet_directory_uri() . '/dist/scripts/pwa/nomodule-safari.js' ); ?>
+</script>
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/system.js" nomodule></script>
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/custom-elements.js" defer></script>
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/import-polyfill.js" defer></script>
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/ric-polyfill.js" defer></script>
+<script src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/pubsubhub.js" defer></script>
+<?php
+$modules = array( 'pwp-view.js', 'lazyload.js' );
+foreach ( $modules as $module ):
+	?>
+    <script type="module"
+            src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/<?php echo $module; ?>"></script>
+	<?php
+endforeach;
+?>
+<script nomodule>
+	<?php echo json_encode( $modules );?>.reduce(
+        async (chain, module) => {
+            await chain;
+            return SystemJS.import(`<?php echo get_stylesheet_directory_uri();?>/dist/scripts/pwa/systemjs/${module}`);
+        },
+        Promise.resolve()
+    )
+</script>
+<script type="module" src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/router.js"></script>
+<script type="module" src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/lazyload.js"></script>
+<template class="lazyload">
+    <script src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/idb.js" defer></script>
+    <script src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/bg-sync-manager.js" defer></script>
+	<?php
+	$modules = array( 'install-sw.js', 'resource-updates.js', 'pwp-lazy-image.js', 'offline-articles.js' );
+	foreach ( $modules as $module ):
+		?>
+        <script type="module"
+                src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/<?php echo $module; ?>"></script>
+		<?php
+	endforeach;
+	?>
+    <script nomodule>
+		<?php echo json_encode( $modules );?>.reduce(
+            async (chain, module) => {
+                await chain;
+                return SystemJS.import(`<?php echo get_stylesheet_directory_uri();?>/dist/scripts/pwa/systemjs/${module}`);
+            },
+            Promise.resolve()
+        )
+    </script>
+
+</template>
 </body>
 </html>
