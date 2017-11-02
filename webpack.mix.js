@@ -37,7 +37,8 @@ mix.browserSync({
 mix.copy(`${assets}/fonts`, `${dist}/fonts`)
     .copy(`${node}/bootstrap/fonts`, `${dist}/fonts`)
     .copy(`${node}/bootstrap/dist/css/bootstrap.min.css`, `${dist}/styles`)
-    .copy(`${assets}/images`, `${dist}/images`);
+    .copy(`${assets}/images`, `${dist}/images`)
+    .copy(`${assets}/js/pwa`, `${dist}/scripts/pwa`)
 
 // compiled Javascript
 mix.js(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
@@ -48,6 +49,7 @@ mix.js(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
     .js(`${assets}/js/jquery.tinyscrollbar.min.js`, `${dist}/scripts`)
     .js(`${assets}/js/events-manager.js`, `${dist}/scripts`)
     .js(`${assets}/js/markerclusterer.js`, `${dist}/scripts`)
+
 
 // Sass
 mix.sass(`${assets}/styles/main.scss`, `${dist}/styles/main.css`)
