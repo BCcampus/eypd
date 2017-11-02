@@ -58,6 +58,7 @@ mix.sass(`${assets}/styles/main.scss`, `${dist}/styles/main.css`)
     .sass(`${assets}/styles/event.scss`, `${dist}/styles/event.css`)
     .sass(`${assets}/styles/media.scss`, `${dist}/styles/media.css`)
     .sass(`${assets}/styles/tinymce.scss`, `${dist}/styles/tinymce.css`)
+    .sass(`${assets}/styles/pwa.scss`, `${dist}/styles/pwa.css`)
 
 // Options
 mix.options({
