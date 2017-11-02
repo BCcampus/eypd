@@ -13,10 +13,7 @@ body {
   }
 
   &.login div#login h1 a {
-    background-image: url("../images/eypd-logo-small.png");
-      background-size: 180px;
-    width: 180px;
-    height: 123px;
+    display:none;
   }
 
   &.login div#login form#loginform {
@@ -74,4 +71,12 @@ a {
 
 .login #nav, .login #backtoblog {
   display: none;
+}
+
+p.login-logo img{
+  background-size: 180px;
+  width: 180px;
+  height: 123px;
+  display: block;
+  margin: 0 auto 25px;
 }

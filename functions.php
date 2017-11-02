@@ -119,7 +119,7 @@ add_action( 'wp_enqueue_scripts', function () {
 |
 */
 
-add_action( 'admin_enqueue_scripts', function(){
+add_action( 'admin_enqueue_scripts', function () {
 	wp_enqueue_style( 'eypd_admin_css', get_stylesheet_directory_uri() . '/dist/styles/admin.css', false, false, 'screen' );
 } );
 
@@ -181,6 +181,7 @@ function eypd_em_scope_conditions( $conditions, $args ) {
 
 	return $conditions;
 }
+
 add_filter( 'em_events_build_sql_conditions', 'eypd_em_scope_conditions', 1, 2 );
 
 
@@ -197,6 +198,7 @@ function eypd_em_scopes( $scopes ) {
 
 	return $scopes + $my_scopes;
 }
+
 add_filter( 'em_get_scopes', 'eypd_em_scopes', 1, 1 );
 
 /*
@@ -230,7 +232,7 @@ add_filter( 'login_headerurl', function () {
  *
  * @return string|void
  */
-add_filter( 'login_headertitle', function (){
+add_filter( 'login_headertitle', function () {
 	return get_bloginfo( 'name' );
 } );
 
@@ -243,7 +245,10 @@ add_filter( 'login_headertitle', function (){
  */
 function eypd_login_message( $message ) {
 	if ( empty( $message ) ) {
-		return "<p class='logintext'>Log in To Your EYPD Account</p>";
+		$imgdir = get_stylesheet_directory_uri();
+		$html   = '<p class="login-logo"><picture><source srcset="' . $imgdir . '/dist/images/eypd-logo-small.webp" type="image/webp"><source srcset="' . $imgdir . '/dist/images/eypd-logo-small.png"><img src="' . $imgdir . '/dist/images/eypd-logo-small.png" width="101" height="92" alt="BC Provincial Government"></picture></p>';
+		$html  .= '<p class="logintext">Log in To Your EYPD Account</p>';
+		echo $html;
 	} else {
 		return $message;
 	}
@@ -584,7 +589,7 @@ function eypd_event_etc_output( $input = '' ) {
 		$new_classes = "<li class=\"$cat_output\">";
 		$output      = str_replace( $output_array[0][ $index ], $new_classes, $output );
 	}
-    // remove pagination links
+	// remove pagination links
 	$output = preg_replace( '/<strong><span class=\"page-numbers(.*)<\/span>/i', '', $output );
 
 	return $output;
@@ -740,7 +745,7 @@ add_filter( 'wp_head', 'eypd_close_popover', 11 );
  * Add favicon, theme color, PWA manifest
  */
 add_action( 'wp_head', function () {
-    echo '<meta name="theme-color" content="#bee7fa"/>';
+	echo '<meta name="theme-color" content="#bee7fa"/>';
 	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/dist/images/favicon.ico" />' . "\n";
 	echo '<link rel="manifest" href="' . get_stylesheet_directory_uri() . '/manifest.json">';
 } );
