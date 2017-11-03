@@ -96,7 +96,7 @@ endforeach;
     <script src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/idb.js" defer></script>
     <script src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/bg-sync-manager.js" defer></script>
 	<?php
-	$modules = array( 'install-sw.js', 'resource-updates.js', 'pwp-lazy-image.js', 'offline-articles.js' );
+	$modules = array( 'install-sw.js', 'pwp-lazy-image.js', 'offline-articles.js' );
 	foreach ( $modules as $module ):
 		?>
         <script type="module"
