@@ -70,6 +70,7 @@ add_filter( 'script_loader_tag', function ( $tag, $handle, $src ) {
  * infinity theme behaves differently than you would expect parent themes to act
  */
 add_action( 'wp_enqueue_scripts', function () {
+	wp_enqueue_style( 'early-years', get_stylesheet_directory_uri() . '/dist/styles/main-critical.css', array( '@:dynamic' ), '', 'screen' );
 	wp_enqueue_style( 'early-years', get_stylesheet_directory_uri() . '/dist/styles/main.css', array( '@:dynamic' ), '', 'screen' );
 }, 11 );
 
