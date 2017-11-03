@@ -1,1 +1,0 @@
-System.register([],function(){'use strict';return{setters:[],execute:function(){(async function(){'serviceWorker'in navigator&&navigator.serviceWorker.register(`${_wordpressConfig.templateUrl}/sw.php`,{scope:'/'})})()}}});
