@@ -1,3 +1,0 @@
-importPolyfill(`${_wordpressConfig.templateUrl}/dist/scripts/pwa/pwp-notification.js`);let hasBeenPromptedForReload=!1;const coreItemDetectors=[/surmblog\/header.php$/i,/surmblog\/footer.php$/i];_pubsubhub.subscribe('resource_update',(a)=>{const b=new URL(a.name),c=coreItemDetectors.some((a)=>a.test(b.pathname)),d=b.pathname===new URL(location.href).pathname;(c||d)&&promptForReload()});function promptForReload(){if(hasBeenPromptedForReload)return;const a=document.createElement('pwp-notification');a.innerHTML=`
-    The contents of this page have been updated. Please <a href="javascript:location.reload()">reload</a>
-  `,document.body.appendChild(a),customElements.whenDefined('pwp-notification').then(()=>a.show()),hasBeenPromptedForReload=!0}

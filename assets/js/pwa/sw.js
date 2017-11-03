@@ -1,106 +1,102 @@
-importScripts(`${_wordpressConfig.templateUrl}/dist/scripts/pwa/transformstream.js`), importScripts(`${_wordpressConfig.templateUrl}/dist/scripts/pwa/idb.js`), importScripts(`${_wordpressConfig.templateUrl}/dist/scripts/pwa/pubsubhub.js`), importScripts(`${_wordpressConfig.templateUrl}/dist/scripts/pwa/bg-sync-manager.js`), importScripts(`${_wordpressConfig.templateUrl}/dist/scripts/pwa/analytics-sw.js`);
-const VERSION = '0.0.3407';
-self.oninstall = (a) => {
-    a.waitUntil(async function () {
-        const a = await caches.open('pwp');
-        return await a.addAll([`${_wordpressConfig.templateUrl}/header.php?fragment=true`, `${_wordpressConfig.templateUrl}/?fragment=true`, `${_wordpressConfig.templateUrl}/footer.php?fragment=true`, `${_wordpressConfig.templateUrl}/dist/styles/pwa.css`, `${_wordpressConfig.templateUrl}/dist/scripts/pwa/import-polyfill.js`, `${_wordpressConfig.templateUrl}/dist/scripts/pwa/analytics.js`, `${_wordpressConfig.templateUrl}/dist/scripts/pwa/ric-polyfill.js`, `${_wordpressConfig.templateUrl}/dist/scripts/pwa/pubsubhub.js`, `${_wordpressConfig.templateUrl}/dist/scripts/pwa/pwp-view.js`, `${_wordpressConfig.templateUrl}/dist/scripts/pwa/pwp-spinner.js`].map((a) => new Request(a, {credentials: 'include'}))), await Promise.all(['https://www.google-analytics.com/analytics.js'].map((a) => new Request(a, {mode: 'no-cors'})).map(async (b) => await a.put(b, (await fetch(b))))), self.skipWaiting()
-    }())
-}, self.onactivate = (a) => {
-    a.waitUntil(self.clients.claim())
-}, self.onfetch = (a) => {
-    if (isAnalyticsRequest(a)) return analytics(a);
-    if (isCommentRequest(a)) return postComment(a);
-    if (isCustomizerRequest(a) || isWpRequest(a)) return;
-    if (isFragmentRequest(a) || isAssetRequest(a) || isPluginRequest(a) || isCrossOriginRequest(a)) return a.respondWith(staleWhileRevalidate(a.request, a));
-    const b = new URL(a.request.url);
-    b.searchParams.append('fragment', 'true'), b.searchParams.delete('loadimages');
-    const c = [`${_wordpressConfig.templateUrl}/header.php?fragment=true`, b, `${_wordpressConfig.templateUrl}/footer.php?fragment=true`].map((b) => staleWhileRevalidate(new Request(b), a)), {readable: d, writable: e} = new TransformStream;
-    a.waitUntil(async function () {
-        needsSmallHeader(a) && (c[0] = async function () {
-            const a = await c[0], b = await a.text();
-            return new Response(b.replace('class="hero', 'class="hero single'))
-        }());
-        for (const a of c) {
-            const b = await a;
-            await b.body.pipeTo(e, {preventClose: !0})
-        }
-        e.getWriter().close()
-    }()), a.respondWith(new Response(d))
-}, self.onsync = (a) => {
-    switch (a.tag) {
-        case'test-tag-from-devtools':
-        case'comment-sync':
-        case'ga-sync':
-            _bgSyncManager.process(a);
-            break;
-        default:
-            console.error(`Unknown background sync: ${a.tag}`);
-    }
+/*
+ Copyright 2015 Google Inc. All Rights Reserved.
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ http://www.apache.org/licenses/LICENSE-2.0
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+*/
+
+'use strict';
+
+// Incrementing CACHE_VERSION will kick off the install event and force previously cached
+// resources to be cached again.
+const CACHE_VERSION = 1;
+let CURRENT_CACHES = {
+    offline: 'offline-v' + CACHE_VERSION
 };
+const OFFLINE_URL = 'offline.html';
 
-function needsSmallHeader(a) {
-    return '/' !== new URL(a.request.url).pathname
+function createCacheBustedRequest(url) {
+    let request = new Request(url, {cache: 'reload'});
+    // See https://fetch.spec.whatwg.org/#concept-request-mode
+    // This is not yet supported in Chrome as of M48, so we need to explicitly check to see
+    // if the cache: 'reload' option had any effect.
+    if ('cache' in request) {
+        return request;
+    }
+
+    // If {cache: 'reload'} didn't have any effect, append a cache-busting URL parameter instead.
+    let bustedUrl = new URL(url, self.location.href);
+    bustedUrl.search += (bustedUrl.search ? '&' : '') + 'cachebust=' + Date.now();
+    return new Request(bustedUrl);
 }
 
-function isCrossOriginRequest(a) {
-    return new URL(a.request.url).hostname !== new URL(_wordpressConfig.templateUrl).hostname
-}
+self.addEventListener('install', event => {
+    event.waitUntil(
+        // We can't use cache.add() here, since we want OFFLINE_URL to be the cache key, but
+        // the actual URL we end up requesting might include a cache-busting parameter.
+        fetch(createCacheBustedRequest(OFFLINE_URL)).then(function(response) {
+            return caches.open(CURRENT_CACHES.offline).then(function(cache) {
+                return cache.put(OFFLINE_URL, response);
+            });
+        })
+    );
+});
 
-function isFragmentRequest(a) {
-    return 'true' === new URL(a.request.url).searchParams.get('fragment')
-}
+self.addEventListener('activate', event => {
+    // Delete all caches that aren't named in CURRENT_CACHES.
+    // While there is only one cache in this example, the same logic will handle the case where
+    // there are multiple versioned caches.
+    let expectedCacheNames = Object.keys(CURRENT_CACHES).map(function(key) {
+        return CURRENT_CACHES[key];
+    });
 
-function isAssetRequest(a) {
-    return /(jpe?g|png|css|svg|js|woff)$/i.test(a.request.url) || a.request.url.endsWith('manifest.php')
-}
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => {
+                    if (expectedCacheNames.indexOf(cacheName) === -1) {
+                        // If this cache name isn't present in the array of "expected" cache names,
+                        // then delete it.
+                        console.log('Deleting out of date cache:', cacheName);
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+});
 
-function isPluginRequest(a) {
-    return new URL(a.request.url).pathname.startsWith('/wp-content/plugins')
-}
+self.addEventListener('fetch', event => {
+    // We only want to call event.respondWith() if this is a navigation request
+    // for an HTML page.
+    // request.mode of 'navigate' is unfortunately not supported in Chrome
+    // versions older than 49, so we need to include a less precise fallback,
+    // which checks for a GET request with an Accept: text/html header.
+    if (event.request.mode === 'navigate' ||
+        (event.request.method === 'GET' &&
+            event.request.headers.get('accept').includes('text/html'))) {
+        console.log('Handling fetch event for', event.request.url);
+        event.respondWith(
+            fetch(event.request).catch(error => {
+                // The catch is only triggered if fetch() throws an exception, which will most likely
+                // happen due to the server being unreachable.
+                // If fetch() returns a valid HTTP response with an response code in the 4xx or 5xx
+                // range, the catch() will NOT be called. If you need custom handling for 4xx or 5xx
+                // errors, see https://github.com/GoogleChrome/samples/tree/gh-pages/service-worker/fallback-response
+                console.log('Fetch failed; returning offline page instead.', error);
+                return caches.match(OFFLINE_URL);
+            })
+        );
+    }
 
-function isWpRequest(a) {
-    const b = new URL(a.request.url);
-    return b.pathname.startsWith('/wp-') && !b.pathname.startsWith('/wp-content')
-}
-
-function isCustomizerRequest(a) {
-    return new URL(a.request.url).searchParams.has('customize_changeset_uuid')
-}
-
-function isCommentRequest(a) {
-    return 'POST' === a.request.method && '/wp-comments-post.php' === new URL(a.request.url).pathname
-}
-
-async function staleWhileRevalidate(a, b) {
-    const c = fetch(a, {credentials: 'include'}).catch(() => {
-    }), d = caches.match(a);
-    b.waitUntil(async function () {
-        const e = await extractCacheName(a.url, b), f = await caches.open(e), g = await c, h = await d;
-        if (g && h) {
-            const b = g.headers.get('Etag') !== h.headers.get('Etag');
-            b && (await _pubsubhub.dispatch('resource_update', {name: a.url}))
-        }
-        g && f.put(a, g.clone())
-    }());
-    const e = await d;
-    if (e) return e.clone();
-    const f = await c;
-    if (f) return f.clone();
-    throw new Error(`Neither network nor cache had a response for ${a.url}`)
-}
-
-async function extractCacheName(a, b) {
-    if (a.startsWith(_wordpressConfig.templateUrl)) return 'pwp';
-    const c = await self.clients.get(b.clientId);
-    return c && (a = c.url), `pwp_pathid_${new URL(a).pathname.split('/').filter((a) => !!a).join('_')}`
-}
-
-function postComment(a) {
-    _bgSyncManager.supportsBackgroundSync && a.waitUntil(async function () {
-        const b = new URL(a.request.referrer);
-        a.respondWith(new Response(null, {
-            status: 302,
-            headers: {Location: b.pathname}
-        })), await _bgSyncManager.enqueue(a.request), await _bgSyncManager.trigger()
-    }())
-}
+    // If our if() condition is false, then this fetch handler won't intercept the request.
+    // If there are any other fetch handlers registered, they will get a chance to call
+    // event.respondWith(). If no fetch handlers call event.respondWith(), the request will be
+    // handled by the browser as if there were no service worker involvement.
+});
