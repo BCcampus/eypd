@@ -66,7 +66,7 @@ wp_footer();
    };
 </script>
 
-<script src="<?php echo get_stylesheet_directory_uri();?>/dist/scripts/pwa/register-sw.js"></script>
+<script src="<?php echo get_stylesheet_directory_uri();?>/register-sw.js"></script>
 
 </body>
 </html>
