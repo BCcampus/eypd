@@ -20,6 +20,6 @@
 ?>
 _wordpressConfig={templateUrl:`<?=get_stylesheet_directory_uri();?>`};
 <?
-  readfile('dist/scripts/pwa/sw.js');
+  readfile(get_stylesheet_directory_uri().'/dist/scripts/pwa/sw.js');
   eypd_etag_end();
 ?>
