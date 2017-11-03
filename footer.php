@@ -91,7 +91,6 @@ endforeach;
         Promise.resolve()
     )
 </script>
-<script type="module" src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/router.js"></script>
 <script type="module" src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/lazyload.js"></script>
 <template class="lazyload">
     <script src="<?php echo get_stylesheet_directory_uri(); ?>/dist/scripts/pwa/idb.js" defer></script>

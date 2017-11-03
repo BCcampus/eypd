@@ -26,19 +26,5 @@
     "standards": [
       "vendor/bin/phpcs --standard=phpcs.ruleset.xml *.php ."
     ]
-  },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/roots/soil"
-    }
-  ],
-  "extra": {
-    "installer-paths": {
-      "vendor/roots/soil": ["roots/soil"]
-    }
-  },
-  "require": {
-    "roots/soil": "^3.7"
   }
 }

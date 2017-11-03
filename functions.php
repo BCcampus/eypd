@@ -11,21 +11,48 @@
 if ( file_exists( $composer = __DIR__ . '/vendor/autoload.php' ) ) {
 	require_once( $composer );
 }
-if ( file_exists( $soil = __DIR__ . '/vendor/roots/soil/soil.php' ) ) {
-	require_once( $soil );
-}
 
 /*
 |--------------------------------------------------------------------------
-| Soil Plugin
+| Asynchronous loading js
 |--------------------------------------------------------------------------
 |
-| Theme agnostic functionality
-| https://github.com/roots/soil
+| to improve speed of page load
 |
 |
 */
-add_theme_support( 'soil-js-to-footer' );
+add_filter( 'script_loader_tag', function ( $tag, $handle, $src ) {
+	$async = array(
+		'jquery-migrate',
+		'jquery-ui-position',
+		'jquery-ui-widget',
+		'jquery-ui-draggable',
+		'jquery-ui-resizable',
+		'jquery-ui-mouse',
+		'jquery-ui-menu',
+		'jquery-ui-sortable',
+		'jquery-ui-datepicker',
+		'jquery-ui-autocomplete',
+		'jquery-ui-dialog',
+		'jquery-ui-button',
+		'wp-a11y',
+		'bp-widget-members',
+		'groups_widget_groups_list-js',
+		'bp-confirm',
+		'bp-jquery-query',
+		'events-manager',
+		'bp-jquery-cookie',
+		'dtheme-ajax-js',
+		'jquery-mobilemenu',
+		'jquery-fitvids',
+		'joyride',
+	);
+	if ( in_array( $handle, $async ) ) {
+		return "<script async type='text/javascript' src='{$src}'></script>" . "\n";
+	}
+
+	return $tag;
+}, 10, 3 );
 
 /*
 |--------------------------------------------------------------------------
@@ -59,9 +86,10 @@ add_action( 'wp_enqueue_scripts', function () {
 
 	// toss Events Manager scripts and their dependencies
 	wp_dequeue_script( 'events-manager' );
+	remove_action( 'close_body', 'cbox_theme_flex_slider_script' );
 
 	wp_enqueue_script( 'jquery-ui-draggable' );
-	wp_enqueue_script( 'markerclusterer', $template_dir . '/dist/scripts/markerclusterer.js' );
+	wp_enqueue_script( 'markerclusterer', $template_dir . '/dist/scripts/markerclusterer.js', array(), false, true );
 
 	$script_deps = array(
 		'jquery'                 => 'jquery',
@@ -79,9 +107,10 @@ add_action( 'wp_enqueue_scripts', function () {
 
 	// load popover only for users who aren't logged in
 	if ( ! is_user_logged_in() ) {
-		wp_enqueue_script( 'initpopover', $template_dir . '/dist/scripts/initpopover.js', array(), null, false );
 		wp_enqueue_script( 'bootstrap-tooltip', $template_dir . '/dist/scripts/tooltip.js', array(), null, true );
 		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', array( 'bootstrap-tooltip' ), null, true );
+		wp_enqueue_script( 'initpopover', $template_dir . '/dist/scripts/initpopover.js', array( 'bootstrap-popover' ), null, true );
+		wp_enqueue_script( 'popover-dismiss', $template_dir . '/dist/scripts/popover-dismiss.js', array( 'initpopover' ), null, true );
 		wp_enqueue_style( 'bootstrap-popover-style', $template_dir . '/dist/styles/bootstrap.min.css' );
 	}
 	// only sign up page has requirements for modals
@@ -95,7 +124,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	}
 
 	if ( is_front_page() ) {
-		wp_enqueue_script( 'jquery-tabs', $template_dir . '/dist/scripts/tabs.js', array( 'jquery' ), null, false );
+		wp_enqueue_script( 'jquery-tabs', $template_dir . '/dist/scripts/tabs.js', array( 'jquery' ), null, true );
 		wp_enqueue_script( 'jquery-ui-tabs' );
 	}
 
@@ -717,37 +746,13 @@ function eypd_nav_menu_items( $nav, $args ) {
 add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items', 10, 2 );
 
 /**
- * this allows for multiple dismissible popovers, with clickable links, inside the popover data-content
- */
-function eypd_close_popover() {
-	if ( ! is_user_logged_in() ) {
-		?>
-        <script type="text/javascript">
-
-            jQuery(document).ready(function ($) {
-                $('[data-toggle="popover"],[data-original-title]').popover();
-                $(document).on('click', function (e) {
-                    $('[data-toggle="popover"],[data-original-title]').each(function () {
-                        if (!$(this).is(e.target)) {
-                            $(this).popover('hide').data('bs.popover').inState.click = false
-                        }
-                    });
-                });
-            });
-        </script>
-		<?php
-	}
-}
-
-add_filter( 'wp_head', 'eypd_close_popover', 11 );
-
-/**
  * Add favicon, theme color, PWA manifest
  */
 add_action( 'wp_head', function () {
-	echo '<meta name="theme-color" content="#bee7fa"/>';
+	echo '<meta name="theme-color" content="#bee7fa"/>' . "\n";
 	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/dist/images/favicon.ico" />' . "\n";
 	echo '<link rel="manifest" href="' . get_stylesheet_directory_uri() . '/manifest.json">';
+
 } );
 
 
@@ -1204,3 +1209,32 @@ add_filter( 'upload_mimes', function ( $mime_types ) {
 
 	return $mime_types;
 } );
+
+function eypd_etag_start() {
+	global $etag_depth;
+
+	if ( $etag_depth == 0 ) {
+		ob_start();
+	}
+	$etag_depth ++;
+}
+
+function eypd_etag_end() {
+	global $etag_depth;
+	$etag_depth --;
+	if ( $etag_depth > 0 ) {
+		return;
+	}
+
+	$content = ob_get_clean();
+	$etag    = hash( 'sha256', $content );
+	$request = isset( $_SERVER['HTTP_IF_NONE_MATCH'] ) && $_SERVER['HTTP_IF_NONE_MATCH'];
+	if ( $etag == $request ) {
+		http_response_code( 304 );
+
+		return;
+	}
+
+	header( 'Etag: ' . $etag );
+	echo $content;
+}

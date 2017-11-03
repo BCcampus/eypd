@@ -14,12 +14,12 @@
 ?>
 <?
   require( ABSPATH . '/wp-load.php');
-  //etag_start();
+  eypd_etag_start();
   header('Service-Worker-Allowed: /');
   header('Content-Type: application/javascript');
 ?>
 _wordpressConfig={templateUrl:`<?=get_stylesheet_directory_uri();?>`};
 <?
   readfile('dist/scripts/pwa/sw.js');
-  //etag_end();
+  eypd_etag_end();
 ?>
