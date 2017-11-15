@@ -276,7 +276,7 @@ function eypd_login_message( $message ) {
 	if ( empty( $message ) ) {
 		$imgdir = get_stylesheet_directory_uri();
 		$html   = '<p class="login-logo"><picture><source srcset="' . $imgdir . '/dist/images/eypd-logo-small.webp" type="image/webp"><source srcset="' . $imgdir . '/dist/images/eypd-logo-small.png"><img src="' . $imgdir . '/dist/images/eypd-logo-small.png" width="101" height="92" alt="BC Provincial Government"></picture></p>';
-		$html  .= '<p class="logintext">Log in To Your EYPD Account</p>';
+		$html   .= '<p class="logintext">Log in To Your EYPD Account</p>';
 		echo $html;
 	} else {
 		return $message;
@@ -749,9 +749,10 @@ add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items', 10, 2 );
  * Add favicon, theme color, PWA manifest
  */
 add_action( 'wp_head', function () {
+    $manifest = eypd_get_manifest_path();
 	echo '<meta name="theme-color" content="#bee7fa"/>' . "\n";
 	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/dist/images/favicon.ico" />' . "\n";
-	echo '<link rel="manifest" href="' . get_stylesheet_directory_uri() . '/manifest.json">';
+	echo '<link rel="manifest" href="' . $manifest . '">';
 
 } );
 
@@ -1210,31 +1211,94 @@ add_filter( 'upload_mimes', function ( $mime_types ) {
 	return $mime_types;
 } );
 
-function eypd_etag_start() {
-	global $etag_depth;
+/*
+|--------------------------------------------------------------------------
+| PWA
+|--------------------------------------------------------------------------
+|
+| all functions required for pwa
+|
+|
+*/
 
-	if ( $etag_depth == 0 ) {
-		ob_start();
-	}
-	$etag_depth ++;
+define( 'EYPD_MANIFEST_ARG', 'manifest_json' );
+
+/**
+ *
+ */
+add_filter( 'query_vars', function ( $vars ) {
+	$vars[] = EYPD_MANIFEST_ARG;
+
+	return $vars;
+} );
+
+/**
+ * @return string
+ */
+function eypd_get_manifest_path(){
+    return add_query_arg( EYPD_MANIFEST_ARG, '1', site_url() );
 }
 
-function eypd_etag_end() {
-	global $etag_depth;
-	$etag_depth --;
-	if ( $etag_depth > 0 ) {
-		return;
+/**
+ *
+ */
+add_action( 'template_redirect', function () {
+	global $wp_query;
+	if ( $wp_query->get( EYPD_MANIFEST_ARG ) ) {
+		$theme_color = '#bee7fa';
+		$lang_dir    = ( is_rtl() ) ? 'rtl' : 'ltr';
+
+		$manifest    = array(
+			'start_url'        => get_bloginfo( 'wpurl' ),
+			'short_name'       => 'EYPD',
+			'name'             => get_bloginfo( 'name' ),
+			'description'      => get_bloginfo( 'description' ),
+			'display'          => 'standalone',
+			'background_color' => $theme_color,
+			'theme_color'      => $theme_color,
+			'dir'              => $lang_dir,
+			'lang'             => get_bloginfo( 'language' ),
+			'orientation'      => 'portrait-primary',
+			'icons'            => array(
+				array(
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-48.webp',
+					'sizes' => '48x48',
+					'type'  => 'image/webp'
+				),
+				array(
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-72.webp',
+					'sizes' => '72x72',
+					'type'  => 'image/webp'
+				),
+				array(
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-96.webp',
+					'sizes' => '96x96',
+					'type'  => 'image/webp'
+				),
+				array(
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-144.webp',
+					'sizes' => '144x144',
+					'type'  => 'image/webp'
+				),
+				array(
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-168.webp',
+					'sizes' => '168x168',
+					'type'  => 'image/webp'
+				),
+				array(
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-192.webp',
+					'sizes' => '192x192',
+					'type'  => 'image/webp'
+				),
+				array(
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-512.webp',
+					'sizes' => '512x512',
+					'type'  => 'image/webp'
+				),
+			)
+		);
+
+
+		wp_send_json( $manifest );
 	}
-
-	$content = ob_get_clean();
-	$etag    = hash( 'sha256', $content );
-	$request = isset( $_SERVER['HTTP_IF_NONE_MATCH'] ) && $_SERVER['HTTP_IF_NONE_MATCH'];
-	if ( $etag == $request ) {
-		http_response_code( 304 );
-
-		return;
-	}
-
-	header( 'Etag: ' . $etag );
-	echo $content;
-}
+}, 2 );
