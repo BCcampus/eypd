@@ -1,10 +1,9 @@
 var version = 'v1.1.0:';
 
 var offlineFundamentals = [
-    './',
-    + 'dist/scripts/bootstrap.min.js',
-    + 'dist/scripts/events-manager.js',
-    + 'offline.html'
+    'dist/scripts/bootstrap.min.js',
+    'dist/scripts/events-manager.js',
+    'offline.html'
 ];
 
 //Add core website files to cache during serviceworker installation
