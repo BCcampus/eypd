@@ -25,7 +25,6 @@ add_filter( 'script_loader_tag', function ( $tag, $handle, $src ) {
 	$async = array(
 		'jquery-migrate',
 		'jquery-ui-position',
-		'jquery-ui-widget',
 		'jquery-ui-draggable',
 		'jquery-ui-resizable',
 		'jquery-ui-mouse',
@@ -48,7 +47,7 @@ add_filter( 'script_loader_tag', function ( $tag, $handle, $src ) {
 		'joyride',
 	);
 	if ( in_array( $handle, $async ) ) {
-		return "<script async type='text/javascript' src='{$src}'></script>" . "\n";
+		return "<script defer type='text/javascript' src='{$src}'></script>" . "\n";
 	}
 
 	return $tag;
