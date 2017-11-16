@@ -1,0 +1,492 @@
+/*
+ Theme Name:   Early Years Professional Development
+ Description:  Child Theme of CBox (default theme for commons-in-a-box plugin) for the Early Years Professional Development Project
+ Author:       Maggie Caspar (design and development) Brad Payne, Alex Paredes (development)
+ Template:     cbox-theme
+ Version:      0.9.6
+ License:      GNU General Public License v2 or later
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+ Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
+ Text Domain:  early-years
+*/
+/*
+|--------------------------------------------------------------------------
+| Fonts
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal; }
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto-Bold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal; }
+@font-face {
+  font-family: "RobotoSlab";
+  src: url("../fonts/RobotoSlab-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal; }
+@font-face {
+  font-family: 'Glyphicons';
+  src: url("../fonts/glyphicons-halflings-regular.eot");
+  src: url("../fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg"); }
+/*
+|--------------------------------------------------------------------------
+| Global
+|--------------------------------------------------------------------------
+|
+| Common, global elements
+|
+|
+*/
+@media screen and (max-width: 768px) {
+  html.no-js,
+  html.js {
+    margin-top: 46px !important; } }
+body, body.theme-option {
+  background: none no-repeat; }
+  body #content, body.theme-option #content {
+    background-color: #FFF; }
+
+body {
+  border: none; }
+
+h1, h2, h3, h4, h5, h6, p, label, span.label {
+  font-family: "Roboto";
+  color: #333334;
+  font-weight: 400; }
+
+h1 {
+  font-size: 32px;
+  line-height: 36px; }
+
+h2 {
+  font-size: 28px;
+  line-height: 32px;
+  font-family: "RobotoSlab"; }
+
+h3 {
+  font-size: 20px;
+  line-height: 24px; }
+
+h4 {
+  font-size: 20px;
+  line-height: 24px;
+  text-transform: capitalize; }
+
+h5 {
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: bold; }
+
+p, label, li, span.label {
+  font-size: 16px;
+  line-height: 24px; }
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  padding: 12.5px 15px;
+  box-shadow: none;
+  border: 1px solid #808284;
+  border-radius: 7.5px;
+  margin: 0; }
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: 17px;
+  height: 17px; }
+
+select {
+  -webkit-appearance: none;
+  padding: 9px 15px;
+  box-shadow: none;
+  border: 1px solid #808284;
+  border-radius: 7.5px;
+  background-image: url("../images/arrow-down.svg");
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  background-position-x: 95%;
+  background-position-y: 50%; }
+
+/*
+|--------------------------------------------------------------------------
+| Global Classes
+|--------------------------------------------------------------------------
+|
+| Common elements with a bit of class
+|
+|
+*/
+html, body.home-page {
+  height: 100%; }
+
+body.home-page .top-wrap.row {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0; }
+
+#wrapper {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin: 0 !important; }
+
+h2.page-title, h2.post-title, h1.page-title, h1.post-title {
+  color: #333333; }
+
+.author-box, .category-box, .tag-box, .info-box, #sidebar, .activity-inner, div.activity-comments form.ac-form, .postthumb img, span.activity, h1#site-title, div#site-title, #inner-sidebar, .sidebar-activity-tabs ul li, div#subnav.item-list-tabs, #top-homepage, .fluid-width-video-wrapper, #bbpress-forums .bbp-breadcrumb, #bbpress-forums li.bbp-footer, .bbp-reply-header {
+  text-shadow: none; }
+
+#content-full {
+  max-width: 1024px;
+  margin: 0 auto; }
+
+.text-blue {
+  color: #068CC4; }
+
+.text-gray {
+  color: #777777; }
+
+.em-ticket-select {
+  background-size: 13px; }
+
+.row {
+  width: 100% !important;
+  margin: 0px !important; }
+
+.text-center {
+  text-align: center; }
+
+.clear {
+  clear: both; }
+
+/*
+|--------------------------------------------------------------------------
+| Map
+|--------------------------------------------------------------------------
+|
+| stylings for the google
+|
+|
+*/
+.c-map {
+  background-color: #F4F5F7;
+  padding: 30px 0;
+  margin-top: 30px; }
+  .c-map h2 {
+    margin-bottom: 30px; }
+
+/*
+|--------------------------------------------------------------------------
+| Nav
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+.main-menu ul a {
+  color: #4183C4; }
+  .main-menu ul a:hover {
+    background: none; }
+
+.base-menu ul li.current-cat a,
+.base-menu ul li.current_page_item a,
+.base-menu ul li.current-menu-item a {
+  background: none;
+  font-weight: normal; }
+
+.top-menu,
+.top-wrap .sub-menu,
+.item-list-tabs,
+thead:first-child tr th,
+thead:first-child tr td,
+.base-menu ul ul,
+.sidebar-activity-tabs ul li.current,
+.sidebar-activity-tabs ul li.selected,
+.docs .toggle-switch,
+.post-title:before,
+.doc-content-wrapper .toggle-switch,
+.mobile-menu-container,
+.info-box h3,
+#bbpress-forums li.bbp-header {
+  background: #E6E7E8;
+  border: none;
+  box-shadow: none; }
+
+.base-menu ul a, div.item-list-tabs ul li a, div.item-list-tabs ul li span, #footer-menu ul li a {
+  text-shadow: none;
+  font-weight: normal; }
+
+/****************************************
+	Main Menu buttons - Inside Header
+*****************************************/
+#logo-menu-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; }
+  @media (min-width: 768px) {
+    #logo-menu-wrap {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between; } }
+  #logo-menu-wrap h1 {
+    position: static !important; }
+  #logo-menu-wrap a {
+    width: auto !important; }
+
+#main-menu-wrap {
+  margin-top: 25px !important; }
+  @media (min-width: 768px) {
+    #main-menu-wrap {
+      margin: 0 !important;
+      padding: 0; } }
+
+nav.main-menu {
+  padding: 0 !important; }
+  @media (min-width: 768px) {
+    nav.main-menu {
+      padding-left: 45px; } }
+
+#main-menu-wrap .main-menu ul {
+  display: flex !important;
+  align-items: center;
+  padding: 0 10px 10px; }
+  @media (min-width: 768px) {
+    #main-menu-wrap .main-menu ul {
+      padding: 0; } }
+  #main-menu-wrap .main-menu ul a:hover span {
+    color: #046993; }
+  #main-menu-wrap .main-menu ul a {
+    font-size: 14px;
+    margin: 0;
+    color: #068CC4 !important; }
+    @media (min-width: 667px) {
+      #main-menu-wrap .main-menu ul a {
+        font-size: 16px; } }
+    @media (min-width: 840px) {
+      #main-menu-wrap .main-menu ul a {
+        font-size: 18px; } }
+
+#infinity-base .icext-feature {
+  position: static !important; }
+
+.mobile-menu-container {
+  display: none !important; }
+
+/*
+|--------------------------------------------------------------------------
+| Buttons
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+.c-button, #main-menu-wrap .main-menu ul li:first-child, .button-primary, .button {
+  min-width: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 10px 20px;
+  display: block;
+  border-radius: 0;
+  background: none;
+  border: 0;
+  border-radius: 7.5px;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: none;
+  font-family: "Roboto";
+  font-size: 18px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none; }
+
+input.c-button.c--primary, input.button-primary, input.button {
+  background: #068CC4;
+  color: #FFF; }
+  input.c-button.c--primary:active, input.button-primary:active, input.button:active, input.c-button.c--primary:hover, input.button-primary:hover, input.button:hover, input.c-button.c--primary:focus, input.button-primary:focus, input.button:focus {
+    background: #046993;
+    outline: none;
+    box-shadow: none;
+    border: none; }
+
+.c-button.c--ghost, #main-menu-wrap .main-menu ul li:first-child, .c--ghost.button-primary, .c--ghost.button {
+  padding: 5px; }
+  .c-button.c--ghost a:active, #main-menu-wrap .main-menu ul li:first-child a:active, .c--ghost.button-primary a:active, .c--ghost.button a:active, .c-button.c--ghost a:hover, #main-menu-wrap .main-menu ul li:first-child a:hover, .c--ghost.button-primary a:hover, .c--ghost.button a:hover, .c-button.c--ghost a:focus, #main-menu-wrap .main-menu ul li:first-child a:focus, .c--ghost.button-primary a:focus, .c--ghost.button a:focus {
+    color: #046993 !important; }
+
+/*
+|--------------------------------------------------------------------------
+| Header
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+#header {
+  padding: 0 !important;
+  height: auto !important;
+  border-bottom: 1px solid #E6E7E8; }
+  @media (min-width: 768px) {
+    #header {
+      padding: 20px !important; } }
+  #header h1 {
+    margin: 10px 10px 0; }
+    @media (min-width: 768px) {
+      #header h1 {
+        margin: 0; } }
+
+#header {
+  min-height: 70px;
+  padding-top: 10px;
+  padding-top: 10px;
+  background: #FFF; }
+
+#wpadminbar {
+  background-color: #bee7fa;
+  display: block !important; }
+  @media screen and (max-width: 667px) {
+    #wpadminbar {
+      position: fixed; } }
+
+#wp-admin-bar-root-default {
+  display: flex;
+  justify-content: flex-end; }
+
+#wp-toolbar, .base-menu {
+  padding: 0px; }
+  #wp-toolbar ul li a, .base-menu ul li a {
+    color: #333334 !important; }
+    #wp-toolbar ul li a:hover, .base-menu ul li a:hover {
+      background-color: #bee7fa !important;
+      color: #068CC4 !important; }
+
+#wp-toolbar > ul > li {
+  display: block !important; }
+  #wp-toolbar > ul > li a {
+    padding: 0 8px 0 7px !important; }
+
+#wp-admin-bar-my-account * {
+  background-color: #bee7fa !important; }
+
+#wp-admin-bar-user-actions li a:hover span,
+#wp-admin-bar-user-actions li:hover a,
+#wp-admin-bar-user-actions li a:hover {
+  color: #046993 !important; }
+
+.mobile-menu-container a.button {
+  background-color: transparent;
+  color: #333334;
+  box-shadow: none; }
+
+#logo-menu-wrap div a {
+  width: 200px; }
+  @media (min-width: 667px) {
+    #logo-menu-wrap div a {
+      width: auto; } }
+
+#wpadminbar #wp-admin-bar-my-account .ab-item {
+  text-indent: initial !important;
+  width: auto !important;
+  position: static !important; }
+
+#wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item:focus,
+#wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item:focus {
+  background: #bee7fa; }
+
+#wp-admin-bar-my-account-buddypress li {
+  padding-left: 20px !important; }
+
+#wpadminbar .quicklinks ul li#wp-admin-bar-bp-login a:before {
+  font-family: 'Glyphicons';
+  content: "\e161";
+  color: #FFF; }
+#wpadminbar .quicklinks ul li#wp-admin-bar-bp-register a:before {
+  font-family: 'Glyphicons';
+  content: "\e162";
+  color: #FFF; }
+
+/*
+|--------------------------------------------------------------------------
+| Footer
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+.footer-wrap {
+  background: #E2E2E1 !important;
+  color: #333334;
+  border: none;
+  box-shadow: none;
+  padding-top: 2rem; }
+  .footer-wrap a {
+    color: #333334; }
+    .footer-wrap a:hover {
+      color: #068CC4; }
+
+#powered-by {
+  border-top: 1px solid #777777;
+  background-color: #FFF;
+  color: inherit;
+  font-weight: normal;
+  padding-top: 0; }
+
+#footer .widget h4 {
+  color: inherit;
+  text-shadow: none;
+  border-bottom: 1 px solid #777777; }
+#footer .footer-widget {
+  color: inherit;
+  text-shadow: none; }
+#footer ul {
+  list-style: none;
+  padding-left: 0; }
+  #footer ul li ul {
+    margin-left: 20px; }
+#footer #copyright-info {
+  padding: 10px; }
+
+#filter-bar {
+  background-color: #ffffff;
+  background-origin: padding-box;
+  border-top-color: #7e95b0;
+  border-top-style: solid;
+  border-top-width: 1px;
+  bottom: 0;
+  box-shadow: 0 1px 1px #fff inset, 0 3px 7px rgba(0, 0, 0, 0.1) inset;
+  left: 0;
+  padding-bottom: 19px;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 19px;
+  width: 100%;
+  z-index: 2; }
+
+#filter-bar .container {
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  position: relative;
+  text-align: left;
+  width: 750px; }
+
+/*# sourceMappingURL=style-critical.css.map */

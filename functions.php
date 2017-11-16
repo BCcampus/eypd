@@ -69,8 +69,24 @@ add_filter( 'script_loader_tag', function ( $tag, $handle, $src ) {
  * infinity theme behaves differently than you would expect parent themes to act
  */
 add_action( 'wp_enqueue_scripts', function () {
+	wp_enqueue_style( 'early-years-critical-preloader', get_stylesheet_directory_uri() . '/dist/styles/main-critical.css', array( '@:dynamic' ), '', 'screen' );
+	wp_enqueue_style( 'early-years-critical', get_stylesheet_directory_uri() . '/dist/styles/main-critical.css', array( '@:dynamic' ), '', 'screen' );
 	wp_enqueue_style( 'early-years', get_stylesheet_directory_uri() . '/dist/styles/main.css', array( '@:dynamic' ), '', 'screen' );
 }, 11 );
+
+/**
+ * Filtert to add Preload attribute to critical css
+ */
+
+add_filter( 'style_loader_tag', 'add_noprefix_attribute', 10, 2 );
+
+function add_noprefix_attribute($link, $handle) {
+	if( $handle === 'early-years-critical-preloader' ) {
+		$styledir = get_stylesheet_directory_uri() . '/dist/styles/main-critical.css';
+		$link = '<link rel="preload" href="' . $styledir . '"as="style">';
+	}
+	return $link;
+}
 
 /**
  * back end, front end parity
