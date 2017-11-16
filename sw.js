@@ -1,102 +1,163 @@
-/*
- Copyright 2015 Google Inc. All Rights Reserved.
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
- http://www.apache.org/licenses/LICENSE-2.0
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
+var version = 'v1.1.0:';
 
-'use strict';
+var theme_path = 'wp-content/themes/early-years/';
 
-// Incrementing CACHE_VERSION will kick off the install event and force previously cached
-// resources to be cached again.
-const CACHE_VERSION = 1;
-let CURRENT_CACHES = {
-    offline: 'offline-v' + CACHE_VERSION
+var offlineFundamentals = [
+    './',
+    theme_path + 'dist/scripts/bootstrap.min.js',
+    theme_path + 'dist/scripts/events-manager.js',
+    theme_path + 'offline.html'
+];
+
+//Add core website files to cache during serviceworker installation
+var updateStaticCache = function() {
+    return caches.open(version + 'fundamentals').then(function(cache) {
+        return Promise.all(offlineFundamentals.map(function(value) {
+            var request = new Request(value);
+            var url = new URL(request.url);
+            if (url.origin != location.origin) {
+                request = new Request(value, {mode: 'no-cors'});
+            }
+            return fetch(request).then(function(response) {
+                var cachedCopy = response.clone();
+                return cache.put(request, cachedCopy);
+
+            });
+        }))
+    })
 };
-const OFFLINE_URL = 'offline.html';
 
-function createCacheBustedRequest(url) {
-    let request = new Request(url, {cache: 'reload'});
-    // See https://fetch.spec.whatwg.org/#concept-request-mode
-    // This is not yet supported in Chrome as of M48, so we need to explicitly check to see
-    // if the cache: 'reload' option had any effect.
-    if ('cache' in request) {
-        return request;
-    }
-
-    // If {cache: 'reload'} didn't have any effect, append a cache-busting URL parameter instead.
-    let bustedUrl = new URL(url, self.location.href);
-    bustedUrl.search += (bustedUrl.search ? '&' : '') + 'cachebust=' + Date.now();
-    return new Request(bustedUrl);
+//Clear caches with a different version number
+var clearOldCaches = function() {
+    return caches.keys().then(function(keys) {
+        return Promise.all(
+            keys
+                .filter(function (key) {
+                    return key.indexOf(version) != 0;
+                })
+                .map(function (key) {
+                    return caches.delete(key);
+                })
+        );
+    })
 }
 
-self.addEventListener('install', event => {
-    event.waitUntil(
-        // We can't use cache.add() here, since we want OFFLINE_URL to be the cache key, but
-        // the actual URL we end up requesting might include a cache-busting parameter.
-        fetch(createCacheBustedRequest(OFFLINE_URL)).then(function(response) {
-            return caches.open(CURRENT_CACHES.offline).then(function(cache) {
-                return cache.put(OFFLINE_URL, response);
-            });
-        })
-    );
-});
+/*
+	limits the cache
+	If cache has more than maxItems then it removes the first item in the cache
+*/
+var limitCache = function(cache, maxItems) {
+    cache.keys().then(function(items) {
+        if (items.length > maxItems) {
+            cache.delete(items[0]);
+        }
+    })
+}
 
-self.addEventListener('activate', event => {
-    // Delete all caches that aren't named in CURRENT_CACHES.
-    // While there is only one cache in this example, the same logic will handle the case where
-    // there are multiple versioned caches.
-    let expectedCacheNames = Object.keys(CURRENT_CACHES).map(function(key) {
-        return CURRENT_CACHES[key];
-    });
 
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames.map(cacheName => {
-                    if (expectedCacheNames.indexOf(cacheName) === -1) {
-                        // If this cache name isn't present in the array of "expected" cache names,
-                        // then delete it.
-                        console.log('Deleting out of date cache:', cacheName);
-                        return caches.delete(cacheName);
+/*
+	trims the cache
+	If cache has more than maxItems then it removes the excess items starting from the beginning
+*/
+var trimCache = function (cacheName, maxItems) {
+    caches.open(cacheName)
+        .then(function (cache) {
+            cache.keys()
+                .then(function (keys) {
+                    if (keys.length > maxItems) {
+                        cache.delete(keys[0])
+                            .then(trimCache(cacheName, maxItems));
                     }
-                })
-            );
+                });
+        });
+};
+
+
+//When the service worker is first added to a computer
+self.addEventListener("install", function(event) {
+    event.waitUntil(updateStaticCache()
+        .then(function() {
+            return self.skipWaiting();
         })
     );
+})
+
+self.addEventListener("message", function(event) {
+    var data = event.data;
+
+    //Send this command whenever many files are downloaded (ex: a page load)
+    if (data.command == "trimCache") {
+        trimCache(version + "pages", 25);
+        trimCache(version + "images", 10);
+        trimCache(version + "assets", 30);
+    }
 });
 
-self.addEventListener('fetch', event => {
-    // We only want to call event.respondWith() if this is a navigation request
-    // for an HTML page.
-    // request.mode of 'navigate' is unfortunately not supported in Chrome
-    // versions older than 49, so we need to include a less precise fallback,
-    // which checks for a GET request with an Accept: text/html header.
-    if (event.request.mode === 'navigate' ||
-        (event.request.method === 'GET' &&
-            event.request.headers.get('accept').includes('text/html'))) {
-        console.log('Handling fetch event for', event.request.url);
-        event.respondWith(
-            fetch(event.request).catch(error => {
-                // The catch is only triggered if fetch() throws an exception, which will most likely
-                // happen due to the server being unreachable.
-                // If fetch() returns a valid HTTP response with an response code in the 4xx or 5xx
-                // range, the catch() will NOT be called. If you need custom handling for 4xx or 5xx
-                // errors, see https://github.com/GoogleChrome/samples/tree/gh-pages/service-worker/fallback-response
-                console.log('Fetch failed; returning offline page instead.', error);
-                return caches.match(OFFLINE_URL);
-            })
-        );
+//Service worker handles networking
+self.addEventListener("fetch", function(event) {
+
+    //Fetch from network and cache
+    var fetchFromNetwork = function(response) {
+        var cacheCopy = response.clone();
+        if (event.request.headers.get('Accept').indexOf('text/html') != -1) {
+            caches.open(version + 'pages').then(function(cache) {
+                cache.put(event.request, cacheCopy).then(function() {
+                    limitCache(cache, 25);
+                })
+            });
+        } else if (event.request.headers.get('Accept').indexOf('image') != -1) {
+            caches.open(version + 'images').then(function(cache) {
+                cache.put(event.request, cacheCopy).then(function() {
+                    limitCache(cache, 10);
+                });
+            });
+        } else {
+            caches.open(version + 'assets').then(function add(cache) {
+                cache.put(event.request, cacheCopy);
+            });
+        }
+
+        return response;
     }
 
-    // If our if() condition is false, then this fetch handler won't intercept the request.
-    // If there are any other fetch handlers registered, they will get a chance to call
-    // event.respondWith(). If no fetch handlers call event.respondWith(), the request will be
-    // handled by the browser as if there were no service worker involvement.
+    //Fetch from network failed
+    var fallback = function() {
+        if (event.request.headers.get('Accept').indexOf('text/html') != -1) {
+            return caches.match(event.request).then(function (response) {
+                return response || caches.match(theme_path + 'offline.html');
+            })
+        }
+    }
+
+    //This service worker won't touch the admin area and preview pages
+    if (event.request.url.match(/wp-admin/) || event.request.url.match(/preview=true/)) {
+        return;
+    }
+
+    //This service worker won't touch non-get requests
+    if (event.request.method != 'GET') {
+        return;
+    }
+
+    //For HTML requests, look for file in network, then cache if network fails.
+    if (event.request.headers.get('Accept').indexOf('text/html') != -1) {
+        event.respondWith(fetch(event.request).then(fetchFromNetwork, fallback));
+        return;
+    }
+
+    //For non-HTML requests, look for file in cache, then network if no cache exists.
+    event.respondWith(
+        caches.match(event.request).then(function(cached) {
+            return cached || fetch(event.request).then(fetchFromNetwork, fallback);
+        })
+    )
+});
+
+//After the install event
+self.addEventListener("activate", function(event) {
+    event.waitUntil(clearOldCaches()
+        .then(function() {
+            return self.clients.claim();
+        })
+    );
 });
