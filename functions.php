@@ -1260,39 +1260,39 @@ add_action( 'template_redirect', function () {
 			'orientation'      => 'portrait-primary',
 			'icons'            => array(
 				array(
-					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-48.webp',
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-48.png',
 					'sizes' => '48x48',
-					'type'  => 'image/webp'
+					'type'  => 'image/png'
 				),
 				array(
-					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-72.webp',
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-72.png',
 					'sizes' => '72x72',
-					'type'  => 'image/webp'
+					'type'  => 'image/png'
 				),
 				array(
-					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-96.webp',
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-96.png',
 					'sizes' => '96x96',
-					'type'  => 'image/webp'
+					'type'  => 'image/png'
 				),
 				array(
-					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-144.webp',
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-144.png',
 					'sizes' => '144x144',
-					'type'  => 'image/webp'
+					'type'  => 'image/png'
 				),
 				array(
-					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-168.webp',
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-168.png',
 					'sizes' => '168x168',
-					'type'  => 'image/webp'
+					'type'  => 'image/png'
 				),
 				array(
-					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-192.webp',
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-192.png',
 					'sizes' => '192x192',
-					'type'  => 'image/webp'
+					'type'  => 'image/png'
 				),
 				array(
-					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-512.webp',
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-512.png',
 					'sizes' => '512x512',
-					'type'  => 'image/webp'
+					'type'  => 'image/png'
 				),
 			)
 		);
