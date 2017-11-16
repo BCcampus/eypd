@@ -357,7 +357,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 6.3;
+	$eypd_version        = 6.4;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -373,6 +373,7 @@ function eypd_run_once() {
 		'dbem_bookings_approval',
 		'dbem_bookings_double',
 		'dbem_bookings_login_form',
+		'dbem_search_form_geo',
 	);
 	$default_yes         = array(
 		'dbem_rsvp_enabled',
@@ -481,8 +482,9 @@ function eypd_run_once() {
 		 */
 		update_option( 'dbem_search_form_state_label', 'Province' );
 		update_option( 'dbem_search_form_text_label', 'Search by topic or keyword' );
-		update_option( 'dbem_search_form_geo_label', 'Search by location' );
-		update_option( 'dbem_search_form_dates_label', 'Start Date' );
+		update_option( 'dbem_search_form_dates_label', 'Search by Start Date' );
+		update_option( 'dbem_search_form_category_label', 'Search by Category' );
+		update_option( 'dbem_search_form_region_label', 'City/Community/Town' );
 		update_option( 'dbem_search_form_dates_separator', 'End Date' );
 
 		/**
