@@ -1,12 +1,10 @@
 var version = 'v1.1.0:';
 
-var theme_path = 'wp-content/themes/early-years/';
-
 var offlineFundamentals = [
     './',
-    theme_path + 'dist/scripts/bootstrap.min.js',
-    theme_path + 'dist/scripts/events-manager.js',
-    theme_path + 'offline.html'
+    + 'dist/scripts/bootstrap.min.js',
+    + 'dist/scripts/events-manager.js',
+    + 'offline.html'
 ];
 
 //Add core website files to cache during serviceworker installation
@@ -124,7 +122,7 @@ self.addEventListener("fetch", function(event) {
     var fallback = function() {
         if (event.request.headers.get('Accept').indexOf('text/html') != -1) {
             return caches.match(event.request).then(function (response) {
-                return response || caches.match(theme_path + 'offline.html');
+                return response || caches.match('offline.html');
             })
         }
     }
