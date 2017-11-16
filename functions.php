@@ -276,7 +276,7 @@ function eypd_login_message( $message ) {
 	if ( empty( $message ) ) {
 		$imgdir = get_stylesheet_directory_uri();
 		$html   = '<p class="login-logo"><picture><source srcset="' . $imgdir . '/dist/images/eypd-logo-small.webp" type="image/webp"><source srcset="' . $imgdir . '/dist/images/eypd-logo-small.png"><img src="' . $imgdir . '/dist/images/eypd-logo-small.png" width="101" height="92" alt="BC Provincial Government"></picture></p>';
-		$html  .= '<p class="logintext">Log in To Your EYPD Account</p>';
+		$html   .= '<p class="logintext">Log in To Your EYPD Account</p>';
 		echo $html;
 	} else {
 		return $message;
@@ -374,7 +374,7 @@ function eypd_run_once() {
 		'dbem_bookings_approval',
 		'dbem_bookings_double',
 		'dbem_bookings_login_form',
-        'dbem_search_form_geo',
+		'dbem_search_form_geo',
 	);
 	$default_yes         = array(
 		'dbem_rsvp_enabled',
