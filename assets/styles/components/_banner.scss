@@ -4,18 +4,11 @@
 
 .c-banner {
   display: flex;
-  height: 150px;
+  height: auto;
+  min-height: 250px;
   position: relative;
   background-color: $color-blue-sail;
   background-size: cover;
-
-  @media (min-width: $xsmall) {
-    height: 200px;
-  }
-
-  @media (min-width: $small) {
-    height: 250px;
-  }
 
   @media (min-width: $medium) {
     background-size: contain;
@@ -23,15 +16,38 @@
   }
 }
 
-.c-banner__logo {
-  width: 80%;
-  margin: auto;
-  display: block;
-
-  position: relative;
-  z-index: 10;
-
-  @media (min-width: $small) {
-      width: 600px;
+.eypd_logo {
+  padding: 0;
+  margin: 0;
+  @media (max-width: $small) {
+    width: 100%;
+    height: 250px;
+    margin-bottom:-60px;
+  }
+  @media (min-width: $medium) {
+    margin-top: 20px;
+    width: 225px;
   }
 }
+
+.eypd_logo_text {
+  margin-top: 20px;
+  width: 350px;
+
+  @media (max-width: $small) {
+    width: 100%;
+  }
+
+  @media (min-width: $medium) {
+    margin-top: 20px;
+    width: 375px;
+  }
+}
+
+@media (max-width: $small) {
+  #icext {
+    display: none;
+  }
+}
+
+
