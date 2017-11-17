@@ -59,14 +59,14 @@ wp_footer();
 	get_template_part( 'templates/terms-modal' );
 	get_template_part( 'templates/roles-modal' );
 } ?>
-<script>
- window._wordpressConfig = {
-       templateUrl: new URL('<?php echo get_stylesheet_directory_uri();?>').toString(),
-      baseUrl: new URL('<?php echo site_url();?>').toString(),
-   };
-</script>
 
-<script src="<?php echo get_stylesheet_directory_uri();?>/register-sw.js"></script>
+<script>
+    if (navigator.serviceWorker) {
+        navigator.serviceWorker.register('/abtf-pwa.js', {
+            scope: '/'
+        });
+    }
+</script>
 
 </body>
 </html>
