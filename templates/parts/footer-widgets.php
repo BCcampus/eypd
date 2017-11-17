@@ -23,7 +23,7 @@
                      alt="BC Provincial Office for the Early Years">
             </picture>
             <p>EYPD aims to support the B.C. Early Years sector by hosting, developing and evaluating a professional
-                development web portal. <a href="about-us">Learn more about EYPD</a></p>
+                development web portal. <a href="about-us" class="text-blue">Learn more about EYPD</a></p>
         </div>
 		<?php if ( is_active_sidebar( 'Footer Left' ) ) : ?>
             <!-- footer widgets -->
