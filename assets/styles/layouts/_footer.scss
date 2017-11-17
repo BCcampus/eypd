@@ -17,6 +17,10 @@
   a {
     color: $color-neutral-80;
 
+    &.text-blue{
+      color: $color-brand-blue;
+    }
+
     &:hover {
       color: $color-brand-blue;
     }
