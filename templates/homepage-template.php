@@ -17,21 +17,27 @@ infinity_get_header();
 
 ?>
 <div class="c-banner">
-	<img class="c-banner__logo" src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-final.svg"
-		 alt="EYPD logo">
+    <div class="container-fluid">
+        <img class="eypd_logo col-xs-6"
+             src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-final.svg"
+             alt="EYPD logo">
+        <img class="eypd_logo_text col-xs-6"
+             src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-final-text.svg"
+             alt="EYPD logo text">
+    </div>
 </div>
 
 <div class="row">
-	<div class="c-search">
-		<h2 class="text-blue text-center">Search for training events</h2>
-		<p class="text-center">Fill in one or more of the fields below</p>
+    <div class="c-search">
+        <h2 class="text-blue text-center">Search for training events</h2>
+        <p class="text-center">Fill in one or more of the fields below</p>
 		<?php echo do_shortcode( '[events_search]' ); ?>
-	</div>
+    </div>
 </div>
 
 <div class="c-map row">
-	<h2 class="text-blue text-center">Find training events near you</h2>
-	<div class="six columns">
+    <h2 class="text-blue text-center">Find training events near you</h2>
+    <div class="six columns">
 
         <!-- tabs start -->
         <div id="tabs" class="ui-tabs ui-corner-all ui-widget ui-widget-content">
@@ -64,12 +70,13 @@ infinity_get_header();
         </div>
         <!-- tabs end -->
 
-	</div>
-	<div class="ten columns">
+    </div>
+    <div class="ten columns">
 		<?php
 		infinity_load_template( 'templates/google-map.php' );
 		?>
-        <h2 class="text-center"><a class="text-gray" href="events"><?php eypd_display_count_events(); ?> Training Events Currently Posted</a></h2>
+        <h2 class="text-center"><a class="text-gray" href="events"><?php eypd_display_count_events(); ?> Training Events
+                Currently Posted</a></h2>
     </div>
 </div>
 <div id="content" role="main" class="column sixteen">
@@ -79,7 +86,7 @@ infinity_get_header();
 	?>
 
     <h2 class="text-blue text-center">Explore the professional learning showcase</h2>
-    <?php infinity_load_template( 'templates/featured-stories.php' ); ?>
+	<?php infinity_load_template( 'templates/featured-stories.php' ); ?>
 
 	<?php
 	do_action( 'close_home' );
