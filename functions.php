@@ -991,7 +991,7 @@ function eypd_one_image( $content ) {
 	// Globalize post object to access post_type
 	global $post;
 	// Set post_type if not null
-	$postType = $post->post_type;
+	$postType = isset($post->post_type);
 	// Only sanitize event post_type
 	if ( $content && $postType == 'event' ) {
 		$latest_img = '';
