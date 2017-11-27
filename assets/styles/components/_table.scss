@@ -18,3 +18,9 @@ thead:first-child tr th {
 [class*="column"] + [class*="lastfix"]:last-child {
   float: none;
 }
+
+@media (min-width: $small) {
+  table.widefat.events-table {
+    table-layout: fixed;
+  }
+}
