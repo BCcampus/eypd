@@ -16,14 +16,16 @@
 infinity_get_header();
 
 ?>
-<div class="c-banner">
-    <div class="container-fluid">
-        <img class="eypd_logo col-xs-6"
-             src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-final.svg"
-             alt="EYPD logo">
-        <img class="eypd_logo_text col-xs-6"
-             src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-final-text.svg"
-             alt="EYPD logo text">
+<div class="row">
+    <div class="c-banner">
+        <div class="center">
+            <img class="eypd_logo"
+                 src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-final.svg"
+                 alt="EYPD logo">
+            <img class="eypd_logo_text"
+                 src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-final-text.svg"
+                 alt="EYPD logo text">
+        </div>
     </div>
 </div>
 
@@ -79,7 +81,7 @@ infinity_get_header();
                 Currently Posted</a></h2>
     </div>
 </div>
-<div id="content" role="main" class="column sixteen">
+<div id="content" role="main" class="sixteen columns">
 	<?php
 	do_action( 'open_content' );
 	do_action( 'open_home' );
