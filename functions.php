@@ -750,7 +750,7 @@ add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items', 10, 2 );
  * Add favicon, theme color, PWA manifest
  */
 add_action( 'wp_head', function () {
-    $manifest = eypd_get_manifest_path();
+	$manifest = eypd_get_manifest_path();
 	echo '<meta name="theme-color" content="#bee7fa"/>' . "\n";
 	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/dist/images/favicon.ico" />' . "\n";
 	echo '<link rel="manifest" href="' . $manifest . '">';
@@ -988,8 +988,12 @@ add_filter( 'get_image_tag_class', 'eypd_image_tag_class' );
  */
 
 function eypd_one_image( $content ) {
-	// todo: make this only happen for event post types, when created/edited in front-end or backend
-	if ( $content ) {
+	// Globalize post object to access post_type
+	global $post;
+	// Set post_type if not null
+	$postType = $post->post_type;
+	// Only sanitize event post_type
+	if ( $content && $postType == 'event' ) {
 		$latest_img = '';
 		// find all images
 		preg_match_all( '/<img[^>]+\>/i', $content, $matches );
@@ -1236,8 +1240,8 @@ add_filter( 'query_vars', function ( $vars ) {
 /**
  * @return string
  */
-function eypd_get_manifest_path(){
-    return add_query_arg( EYPD_MANIFEST_ARG, '1', site_url() );
+function eypd_get_manifest_path() {
+	return add_query_arg( EYPD_MANIFEST_ARG, '1', site_url() );
 }
 
 /**
@@ -1249,7 +1253,7 @@ add_action( 'template_redirect', function () {
 		$theme_color = '#bee7fa';
 		$lang_dir    = ( is_rtl() ) ? 'rtl' : 'ltr';
 
-		$manifest    = array(
+		$manifest = array(
 			'start_url'        => get_bloginfo( 'wpurl' ),
 			'short_name'       => 'EYPD',
 			'name'             => get_bloginfo( 'name' ),
