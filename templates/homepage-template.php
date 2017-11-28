@@ -28,15 +28,11 @@ infinity_get_header();
         </div>
     </div>
 </div>
-
-<div class="row">
-    <div class="c-search">
-        <h2 class="text-blue text-center">Search for training events</h2>
-        <p class="text-center">Fill in one or more of the fields below</p>
-		<?php echo do_shortcode( '[events_search]' ); ?>
-    </div>
+<div class="c-search">
+    <h2 class="text-blue text-center">Search for training events</h2>
+    <p class="text-center">Fill in one or more of the fields below</p>
+	<?php echo do_shortcode( '[events_search]' ); ?>
 </div>
-
 <div class="c-map row">
     <h2 class="text-blue text-center">Find training events near you</h2>
     <div class="six columns">
