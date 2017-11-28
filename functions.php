@@ -750,7 +750,7 @@ add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items', 10, 2 );
  * Add favicon, theme color, PWA manifest
  */
 add_action( 'wp_head', function () {
-    $manifest = eypd_get_manifest_path();
+	$manifest = eypd_get_manifest_path();
 	echo '<meta name="theme-color" content="#bee7fa"/>' . "\n";
 	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/dist/images/favicon.ico" />' . "\n";
 	echo '<link rel="manifest" href="' . $manifest . '">';
@@ -787,7 +787,6 @@ add_action( 'em_event_validate', 'eypd_validate_attributes' );
  * Makes profile fields descriptions into modals,
  * content of modals are in eypd/templates/*-modal.php
  */
-
 function eypd_profile_field_modals() {
 
 	// check xprofile is activated
@@ -888,7 +887,6 @@ function eypd_get_my_bookings_url() {
 |
 | For the edit-events and post-event pages only
 |
-
 */
 
 /**
@@ -934,7 +932,6 @@ add_filter( 'ajax_query_attachments_args', 'eypd_my_images_only' );
 /**
  * Rename Add Media button
  */
-
 function eypd_rename_media_button( $translation, $text ) {
 	if ( is_page( 'edit-events' ) | is_page( 'post-event' ) && 'Add Media' === $text ) {
 		return 'Add Banner Image';
@@ -948,7 +945,6 @@ add_filter( 'gettext', 'eypd_rename_media_button', 10, 2 );
 /**
  * Rename items in media panel
  */
-
 function eypd_media_view_strings( $strings ) {
 	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
 		$strings ['insertMediaTitle'] = 'Add Banner Image (Recommended size: 1000px by 217px )';
@@ -963,7 +959,6 @@ add_filter( 'media_view_strings', 'eypd_media_view_strings' );
 /**
  * Add a class to image html when inserted into TinyMCE
  */
-
 function eypd_image_tag_class( $class ) {
 	$class .= ' banner';
 
@@ -980,64 +975,62 @@ add_filter( 'get_image_tag_class', 'eypd_image_tag_class' );
 | Use the image inserted into post as the banner image
 |
 |
-
 */
 
 /**
  * Sanitize and Save only the latest image inserted when creating or editing an event
  */
+add_action( 'content_save_pre', function ( $content ) {
+	$maybe_latest_img = '';
+	global $post;
 
-function eypd_one_image( $content ) {
-	// todo: make this only happen for event post types, when created/edited in front-end or backend
-	if ( $content ) {
-		$latest_img = '';
+	// Only sanitize event post_type
+	if ( ! empty( $content ) && 'event' === $post->post_type ) {
+
 		// find all images
 		preg_match_all( '/<img[^>]+\>/i', $content, $matches );
-		// get the latest image
+
+		// get one image, maybe the latest
 		if ( isset( $matches[0][0] ) ) {
-			$latest_img = $matches [0] [0];
+			$maybe_latest_img = $matches [0] [0];
 		}
-		// remove the rest
+
+		// remove all images
 		$content = preg_replace( '/<img[^>]+\>/i', '', $content );
 
-		// add the latest image
-		return $content . $latest_img;
 	}
 
-	return $content;
-}
-
-add_action( 'content_save_pre', 'eypd_one_image' );
+	return $maybe_latest_img . $content;
+} );
 
 /**
  * Get the image and display it before the content
  */
+add_filter( 'the_content', function ( $content ) {
+	$maybe_latest_img = '';
 
-function eypd_banner_image( $content ) {
 	// make sure we are on a single event page and that there's content
-	if ( $content && is_singular( 'event' ) ) {
-		$banner_img = '';
-		// find the image
+	if ( ! empty( $content ) && is_singular( 'event' ) ) {
+		$maybe_latest_img = '';
+
+		// find all images
 		preg_match_all( '/<img[^>]+\>/i', $content, $matches );
-		// set the banner image
+
+		// save one, maybe the latest
 		if ( isset( $matches[0][0] ) ) {
-			$banner_img = $matches [0] [0];
+			$maybe_latest_img = $matches [0] [0];
 		}
-		// remove all images, just in case there's more than one
+
+		// remove all images
 		$content = preg_replace( '/<img[^>]+\>/i', '', $content );
-		// display banner image before the event info
-		echo '<p>' . $banner_img . '</p>';
 	}
 
-	return $content;
-}
-
-add_filter( 'the_content', 'eypd_banner_image' );
+	return $maybe_latest_img . $content;
+} );
 
 /**
  * Date picker and countdown
  */
-
 function eypd_datepicker_countdown() {
 
 	// only if it's my own profile
@@ -1108,7 +1101,6 @@ add_action( 'admin_init', 'eypd_dependencies_check' );
 /**
  * Check for dependencies, add admin notice
  */
-
 function eypd_dependencies_check() {
 
 	if ( file_exists( $composer = get_stylesheet_directory() . '/vendor/autoload.php' ) ) {
@@ -1236,8 +1228,8 @@ add_filter( 'query_vars', function ( $vars ) {
 /**
  * @return string
  */
-function eypd_get_manifest_path(){
-    return add_query_arg( EYPD_MANIFEST_ARG, '1', site_url() );
+function eypd_get_manifest_path() {
+	return add_query_arg( EYPD_MANIFEST_ARG, '1', site_url() );
 }
 
 /**
@@ -1249,7 +1241,7 @@ add_action( 'template_redirect', function () {
 		$theme_color = '#bee7fa';
 		$lang_dir    = ( is_rtl() ) ? 'rtl' : 'ltr';
 
-		$manifest    = array(
+		$manifest = array(
 			'start_url'        => get_bloginfo( 'wpurl' ),
 			'short_name'       => 'EYPD',
 			'name'             => get_bloginfo( 'name' ),
