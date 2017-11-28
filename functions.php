@@ -110,11 +110,10 @@ add_action( 'wp_enqueue_scripts', function () {
 		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', array( 'bootstrap-tooltip' ), null, true );
 		wp_enqueue_script( 'initpopover', $template_dir . '/dist/scripts/initpopover.js', array( 'bootstrap-popover' ), null, true );
 		wp_enqueue_script( 'popover-dismiss', $template_dir . '/dist/scripts/popover-dismiss.js', array( 'initpopover' ), null, true );
-		wp_enqueue_style( 'bootstrap-popover-style', $template_dir . '/dist/styles/bootstrap.min.css' );
 	}
 
 	wp_enqueue_script( 'bootstrap-modal', $template_dir . '/dist/scripts/bootstrap.min.js', array(), null, true );
-	wp_enqueue_style( 'bootstrap-modal-style', $template_dir . '/dist/styles/bootstrap.min.css' );
+	wp_enqueue_style( 'bootstrap', $template_dir . '/dist/styles/bootstrap.min.css' );
 
 	// load styling for datepicker in myEYPD profile page only
 	if ( bp_is_my_profile() ) {
