@@ -112,11 +112,10 @@ add_action( 'wp_enqueue_scripts', function () {
 		wp_enqueue_script( 'popover-dismiss', $template_dir . '/dist/scripts/popover-dismiss.js', array( 'initpopover' ), null, true );
 		wp_enqueue_style( 'bootstrap-popover-style', $template_dir . '/dist/styles/bootstrap.min.css' );
 	}
-	// only sign up page has requirements for modals
-	if ( is_page( 'sign-up' ) ) {
-		wp_enqueue_script( 'bootstrap-modal', $template_dir . '/dist/scripts/bootstrap.min.js', array(), null, true );
-		wp_enqueue_style( 'bootstrap-modal-style', $template_dir . '/dist/styles/bootstrap.min.css' );
-	}
+
+	wp_enqueue_script( 'bootstrap-modal', $template_dir . '/dist/scripts/bootstrap.min.js', array(), null, true );
+	wp_enqueue_style( 'bootstrap-modal-style', $template_dir . '/dist/styles/bootstrap.min.css' );
+
 	// load styling for datepicker in myEYPD profile page only
 	if ( bp_is_my_profile() ) {
 		wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
@@ -750,7 +749,7 @@ add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items', 10, 2 );
  * Add favicon, theme color, PWA manifest
  */
 add_action( 'wp_head', function () {
-    $manifest = eypd_get_manifest_path();
+	$manifest = eypd_get_manifest_path();
 	echo '<meta name="theme-color" content="#bee7fa"/>' . "\n";
 	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/dist/images/favicon.ico" />' . "\n";
 	echo '<link rel="manifest" href="' . $manifest . '">';
@@ -1236,8 +1235,8 @@ add_filter( 'query_vars', function ( $vars ) {
 /**
  * @return string
  */
-function eypd_get_manifest_path(){
-    return add_query_arg( EYPD_MANIFEST_ARG, '1', site_url() );
+function eypd_get_manifest_path() {
+	return add_query_arg( EYPD_MANIFEST_ARG, '1', site_url() );
 }
 
 /**
@@ -1249,7 +1248,7 @@ add_action( 'template_redirect', function () {
 		$theme_color = '#bee7fa';
 		$lang_dir    = ( is_rtl() ) ? 'rtl' : 'ltr';
 
-		$manifest    = array(
+		$manifest = array(
 			'start_url'        => get_bloginfo( 'wpurl' ),
 			'short_name'       => 'EYPD',
 			'name'             => get_bloginfo( 'name' ),
