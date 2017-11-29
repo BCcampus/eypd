@@ -49,8 +49,6 @@ $args = ! empty( $args ) ? $args : array(); /* @var $args array */
                                 </button>
 							<?php endif; ?>
                         </div>
-                    </div>
-                </div>
 			<?php endif; ?>
 			<?php if ( ! empty( $args['show_advanced'] ) ): //show advanced fields, collapesed if the main form is shown, inline if not ?>
                 <div class="em-search-advanced" <?php if ( ! empty( $args['advanced_hidden'] ) ) {
@@ -94,6 +92,8 @@ $args = ! empty( $args ) ? $args : array(); /* @var $args array */
 			<?php endif; ?>
         </form>
     </div>
+</div>
+</div>
 	<?php if ( ! empty( $args['ajax'] ) ): ?>
         <div class='em-search-ajax'></div><?php endif; ?>
 </div>
