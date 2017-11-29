@@ -21,8 +21,15 @@ if ( file_exists( $composer = __DIR__ . '/vendor/autoload.php' ) ) {
 |
 |
 */
-add_filter( 'script_loader_tag', function ( $tag, $handle, $src ) {
-	$async = array(
+add_filter( /**
+ * @param $tag
+ * @param $handle
+ * @param $src
+ *
+ * @return string
+ */
+	'script_loader_tag', function ( $tag, $handle, $src ) {
+	$defer = [
 		'jquery-migrate',
 		'jquery-ui-position',
 		'jquery-ui-draggable',
@@ -34,20 +41,29 @@ add_filter( 'script_loader_tag', function ( $tag, $handle, $src ) {
 		'jquery-ui-autocomplete',
 		'jquery-ui-dialog',
 		'jquery-ui-button',
-		'wp-a11y',
-		'bp-widget-members',
-		'groups_widget_groups_list-js',
 		'bp-confirm',
 		'bp-jquery-query',
 		'events-manager',
-		'bp-jquery-cookie',
-		'dtheme-ajax-js',
 		'jquery-mobilemenu',
 		'jquery-fitvids',
+		'modal-video',
+	];
+
+	$async = [
+		'bp-jquery-cookie',
+		'dtheme-ajax-js',
+		'wp-a11y',
+		'bp-widget-members',
+		'groups_widget_groups_list-js',
 		'joyride',
-	);
-	if ( in_array( $handle, $async ) ) {
+	];
+
+	if ( in_array( $handle, $defer ) ) {
 		return "<script defer type='text/javascript' src='{$src}'></script>" . "\n";
+	}
+
+	if ( in_array( $handle, $async ) ) {
+		return "<script async type='text/javascript' src='{$src}'></script>" . "\n";
 	}
 
 	return $tag;
@@ -110,14 +126,13 @@ add_action( 'wp_enqueue_scripts', function () {
 		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', array( 'bootstrap-tooltip' ), null, true );
 		wp_enqueue_script( 'initpopover', $template_dir . '/dist/scripts/initpopover.js', array( 'bootstrap-popover' ), null, true );
 		wp_enqueue_script( 'popover-dismiss', $template_dir . '/dist/scripts/popover-dismiss.js', array( 'initpopover' ), null, true );
-		wp_enqueue_style( 'bootstrap-popover-style', $template_dir . '/dist/styles/bootstrap.min.css' );
 	}
-	// only sign up page has requirements for modals
-	if ( is_page( 'sign-up' ) ) {
-		wp_enqueue_script( 'bootstrap-modal', $template_dir . '/dist/scripts/bootstrap.min.js', array(), null, true );
-		wp_enqueue_style( 'bootstrap-modal-style', $template_dir . '/dist/styles/bootstrap.min.css' );
-	}
-	// load styling for datepicker in myEYPD profile page only
+
+	wp_enqueue_script( 'bootstrap-script', $template_dir . '/dist/scripts/bootstrap.min.js', array(), null, true );
+	wp_enqueue_style( 'bootstrap-style', $template_dir . '/dist/styles/bootstrap.min.css' );
+	wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', array( 'jquery' ), null, true );
+
+	// load styling for datepicker in myEYPD profile page onlys
 	if ( bp_is_my_profile() ) {
 		wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 	}
