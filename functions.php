@@ -114,8 +114,9 @@ add_action( 'wp_enqueue_scripts', function () {
 
 	wp_enqueue_script( 'bootstrap-modal', $template_dir . '/dist/scripts/bootstrap.min.js', array(), null, true );
 	wp_enqueue_style( 'bootstrap', $template_dir . '/dist/styles/bootstrap.min.css' );
+	wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js');
 
-	// load styling for datepicker in myEYPD profile page only
+	// load styling for datepicker in myEYPD profile page onlys
 	if ( bp_is_my_profile() ) {
 		wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 	}
