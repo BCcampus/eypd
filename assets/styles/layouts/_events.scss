@@ -41,6 +41,7 @@ a.em-button {
     margin-right: $unit*2;
   }
 }
+
 // move event location map over to the right
 .entry {
   .single-event-map {
@@ -48,4 +49,9 @@ a.em-button {
     clear: right;
     margin: 0px 0px 15px 15px;
   }
+}
+
+// remove evil edit hand
+a.post-edit-link {
+  display: none;
 }
