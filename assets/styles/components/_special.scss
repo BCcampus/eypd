@@ -11,3 +11,9 @@
 img.wp-smiley, img.emoji {
   display: none !important;
 }
+
+@media (max-width: $medium) {
+  .modal {
+    margin-top: 100px;
+  }
+}

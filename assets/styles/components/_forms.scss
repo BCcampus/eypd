@@ -140,3 +140,17 @@ div.time-picker li {
 .events-table th {
   color: $color-neutral-80 !important; //1
 }
+
+// Search form
+
+div.em-search-category.em-search-field {
+  margin-left: 0;
+}
+
+.c-search .em-search-text input, .c-search .em-search-geo input {
+  min-width: 200px;
+}
+
+select#category.em-events-search-category {
+  max-width: 50%;
+}

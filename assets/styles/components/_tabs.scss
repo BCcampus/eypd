@@ -1,0 +1,111 @@
+/*
+|--------------------------------------------------------------------------
+| Tab Overrides
+|--------------------------------------------------------------------------
+|
+| base https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css
+|
+|
+*/
+#tabs {
+  border: 0px;
+
+  &.ui-widget {
+    font-family: $font-family;
+    font-size: inherit;
+    .ui-widget-content {
+      border: none;
+      background: inherit;
+      color: inherit;
+    }
+  }
+
+  .ui-state-default,
+  .ui-widget-content .ui-state-default,
+  .ui-widget-header .ui-state-default,
+  .ui-button,
+  .ui-button.ui-state-disabled:hover,
+  .ui-button.ui-state-disabled:active {
+    border: none;
+    font-weight: lighter;
+    color: $color-black-mineshaft;
+  }
+  .ui-state-hover,
+  .ui-widget-content .ui-state-hover,
+  .ui-widget-header .ui-state-hover,
+  .ui-state-focus,
+  .ui-widget-content .ui-state-focus,
+  .ui-widget-header .ui-state-focus {
+    border: 0;
+    background: $color-gray-mercury;
+    font-weight: normal;
+    a {
+      color: $color-gray-boulder;
+    }
+  }
+
+  .ui-state-active,
+  .ui-widget-content .ui-state-active,
+  .ui-widget-header .ui-state-active,
+  a.ui-button:active,
+  .ui-button:active,
+  .ui-button.ui-state-active:hover {
+    background-color: $color-white-ice;
+    color: $color-black-mineshaft;
+    border-top: solid 2px $color-brand-blue;
+  }
+
+  .ui-state-active a,
+  .ui-state-active a:link,
+  .ui-state-active a:visited {
+    color: $color-black-mineshaft;
+  }
+
+  .ui-widget-header {
+    background: $color-neutral-10;
+    border: none;
+  }
+
+  .ui-tabs,
+  .ui-tabs-panel,
+  .ui-tabs-nav {
+    padding: 0px;
+  }
+
+  .ui-tabs {
+
+    .ui-tabs-panel {
+      padding: .5rem 0.1rem;
+    }
+
+    .ui-tabs-nav {
+      margin: 0px;
+    }
+  }
+
+  &.ui-widget-content {
+    background: $color-neutral-10;
+
+    a {
+      color: $color-brand-blue;
+    }
+  }
+
+}
+@media (min-width: $medium) {
+  #tabs {
+    .ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+      padding: .3rem;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@media (min-width: $large) {
+  #tabs {
+    .ui-tabs .ui-tabs-nav .ui-tabs-anchor {
+      padding: .5em 1em;
+      font-size: 1rem;
+    }
+  }
+}

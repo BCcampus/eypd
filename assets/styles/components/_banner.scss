@@ -4,37 +4,52 @@
 
 .c-banner {
   display: flex;
-  height: 150px;
-
+  height: auto;
   position: relative;
-
-  background-image: url('assets/images/background.jpg');
+  background-color: $color-blue-sail;
   background-size: cover;
-  background-repeat: no-repeat;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 
-  @media (min-width: $xsmall) {
-    height: 200px;
+  @media (max-width: $medium) {
+    min-height: 207px;
   }
 
-  @media (min-width: $small) {
-    height: 250px;
+  .center {
+    display: block;
+    margin: 0 auto;
+
+    img {
+      display: inline-block;
+      padding: 0;
+
+      &.eypd_logo {
+        width: 225px;
+        @media (max-width: $small) {
+          width: 100%;
+          max-height: 207px;
+        }
+
+      }
+
+      &.eypd_logo_text {
+        width: 375px;
+        @media (max-width: $small) {
+          width: 100%;
+          max-height: 207px;
+        }
+      }
+    }
   }
 
-  @media (min-width: $medium) {
-    background-size: contain;
-    background-repeat: repeat;
+}
+
+@media (max-width: $small) {
+  #icext {
+    display: none;
   }
 }
 
-.c-banner__logo {
-  width: 80%;
-  margin: auto;
-  display: block;
 
-  position: relative;
-  z-index: 10;
-
-  @media (min-width: $small) {
-      width: 600px;
-  }
-}

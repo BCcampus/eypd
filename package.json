@@ -1,0 +1,21 @@
+{
+  "name": "early-years",
+  "version": "0.9.6",
+  "description": "Custom Theme for the Early Years Professional Development Project",
+  "repository": "https://github.com/BCcampus/eypd.git",
+  "license": "GPL-2.0",
+  "scripts": {
+    "build": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "start": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "build:production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+  },
+  "dependencies": {
+    "bootstrap": "3",
+    "laravel-mix": "^1.5.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.13",
+    "browser-sync-webpack-plugin": "^1.2.0"
+  }
+}

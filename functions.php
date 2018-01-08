@@ -1,23 +1,173 @@
 <?php
 /*
 |--------------------------------------------------------------------------
-| Parent theme
+| Load Composer Dependencies
 |--------------------------------------------------------------------------
 |
-| enqueue parent and child theme
+|
 |
 |
 */
-function cbox_parent_theme_css() {
-	wp_enqueue_style( 'cbox-theme', get_template_directory_uri() . '/style.css' );
-	wp_enqueue_style( 'early-years', get_stylesheet_uri(), array( 'cbox-theme' ) );
+if ( file_exists( $composer = __DIR__ . '/vendor/autoload.php' ) ) {
+	require_once( $composer );
 }
 
-add_action( 'wp_enqueue_scripts', 'cbox_parent_theme_css' );
+/*
+|--------------------------------------------------------------------------
+| Asynchronous loading js
+|--------------------------------------------------------------------------
+|
+| to improve speed of page load
+|
+|
+*/
+add_filter( /**
+ * @param $tag
+ * @param $handle
+ * @param $src
+ *
+ * @return string
+ */
+	'script_loader_tag', function ( $tag, $handle, $src ) {
+	$defer = [
+		'jquery-migrate',
+		'jquery-ui-position',
+		'jquery-ui-draggable',
+		'jquery-ui-resizable',
+		'jquery-ui-mouse',
+		'jquery-ui-menu',
+		'jquery-ui-sortable',
+		'jquery-ui-datepicker',
+		'jquery-ui-autocomplete',
+		'jquery-ui-dialog',
+		'jquery-ui-button',
+		'bp-confirm',
+		'bp-jquery-query',
+		'events-manager',
+		'jquery-mobilemenu',
+		'jquery-fitvids',
+		'modal-video',
+	];
+
+	$async = [
+		'bp-jquery-cookie',
+		'dtheme-ajax-js',
+		'wp-a11y',
+		'bp-widget-members',
+		'groups_widget_groups_list-js',
+		'joyride',
+	];
+
+	if ( in_array( $handle, $defer ) ) {
+		return "<script defer type='text/javascript' src='{$src}'></script>" . "\n";
+	}
+
+	if ( in_array( $handle, $async ) ) {
+		return "<script async type='text/javascript' src='{$src}'></script>" . "\n";
+	}
+
+	return $tag;
+}, 10, 3 );
+
+/*
+|--------------------------------------------------------------------------
+| Scripts and Styles
+|--------------------------------------------------------------------------
+|
+| early years look, feel, functionality
+|
+|
+*/
+
+/**
+ * need our stylesheet to fire later than the rest
+ * in order for: now your base are belong to us
+ * infinity theme behaves differently than you would expect parent themes to act
+ */
+add_action( 'wp_enqueue_scripts', function () {
+	wp_enqueue_style( 'early-years', get_stylesheet_directory_uri() . '/dist/styles/main.css', array( '@:dynamic' ), '', 'screen' );
+}, 11 );
+
+/**
+ * back end, front end parity
+ */
+add_editor_style( get_stylesheet_directory_uri() . '/dist/styles/main.css' );
+
+/**
+ * Load our scripts
+ */
+add_action( 'wp_enqueue_scripts', function () {
+	$template_dir = get_stylesheet_directory_uri();
+
+	// toss Events Manager scripts and their dependencies
+	wp_dequeue_script( 'events-manager' );
+	remove_action( 'close_body', 'cbox_theme_flex_slider_script' );
+
+	wp_enqueue_script( 'jquery-ui-draggable' );
+	wp_enqueue_script( 'markerclusterer', $template_dir . '/dist/scripts/markerclusterer.js', array(), false, true );
+
+	$script_deps = array(
+		'jquery'                 => 'jquery',
+		'jquery-ui-core'         => 'jquery-ui-core',
+		'jquery-ui-widget'       => 'jquery-ui-widget',
+		'jquery-ui-position'     => 'jquery-ui-position',
+		'jquery-ui-sortable'     => 'jquery-ui-sortable',
+		'jquery-ui-datepicker'   => 'jquery-ui-datepicker',
+		'jquery-ui-autocomplete' => 'jquery-ui-autocomplete',
+		'jquery-ui-dialog'       => 'jquery-ui-dialog',
+		'markerclusterer'        => 'markerclusterer',
+	);
+	wp_enqueue_script( 'events-manager', $template_dir . '/dist/scripts/events-manager.js', array_values( $script_deps ), EM_VERSION );
+	wp_enqueue_script( 'tinyscrollbar', $template_dir . '/dist/scripts/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
+
+	// load popover only for users who aren't logged in
+	if ( ! is_user_logged_in() ) {
+		wp_enqueue_script( 'bootstrap-tooltip', $template_dir . '/dist/scripts/tooltip.js', array(), null, true );
+		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', array( 'bootstrap-tooltip' ), null, true );
+		wp_enqueue_script( 'initpopover', $template_dir . '/dist/scripts/initpopover.js', array( 'bootstrap-popover' ), null, true );
+		wp_enqueue_script( 'popover-dismiss', $template_dir . '/dist/scripts/popover-dismiss.js', array( 'initpopover' ), null, true );
+	}
+
+	wp_enqueue_script( 'bootstrap-script', $template_dir . '/dist/scripts/bootstrap.min.js', array(), null, true );
+	wp_enqueue_style( 'bootstrap-style', $template_dir . '/dist/styles/bootstrap.min.css' );
+	wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', array( 'jquery' ), null, true );
+
+	// load styling for datepicker in myEYPD profile page onlys
+	if ( bp_is_my_profile() ) {
+		wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+	}
+
+	if ( is_front_page() ) {
+		wp_enqueue_script( 'jquery-tabs', $template_dir . '/dist/scripts/tabs.js', array( 'jquery' ), null, true );
+		wp_enqueue_script( 'jquery-ui-tabs' );
+	}
+
+	if ( is_singular( 'event' ) ) {
+		wp_enqueue_style( 'banner', $template_dir . '/dist/styles/event.css' );
+	}
+
+	if ( is_page( 'edit-events' ) || is_page( 'post-event' ) ) {
+		wp_enqueue_style( 'media-manager', $template_dir . '/dist/styles/media.css' );
+	}
+
+}, 10 );
+
+/*
+|--------------------------------------------------------------------------
+| Admin Styles
+|--------------------------------------------------------------------------
+|
+| for admin pages only
+|
+|
+*/
+
+add_action( 'admin_enqueue_scripts', function () {
+	wp_enqueue_style( 'eypd_admin_css', get_stylesheet_directory_uri() . '/dist/styles/admin.css', false, false, 'screen' );
+} );
 
 // remove from parent theme
 remove_action( 'wp_head', 'infinity_custom_favicon' );
-
 
 /*
 |--------------------------------------------------------------------------
@@ -59,8 +209,14 @@ include( get_stylesheet_directory() . '/eypd-events.php' );
 |
 */
 
-add_filter( 'em_events_build_sql_conditions', 'my_em_scope_conditions', 1, 2 );
-function my_em_scope_conditions( $conditions, $args ) {
+/**
+ *
+ * @param $conditions
+ * @param $args
+ *
+ * @return mixed
+ */
+function eypd_em_scope_conditions( $conditions, $args ) {
 	if ( ! empty( $args['scope'] ) && $args['scope'] == 'after-today' ) {
 		$current_date        = date( 'Y-m-d', current_time( 'timestamp' ) );
 		$conditions['scope'] = " (event_start_date > CAST('$current_date' AS DATE))";
@@ -69,9 +225,16 @@ function my_em_scope_conditions( $conditions, $args ) {
 	return $conditions;
 }
 
+add_filter( 'em_events_build_sql_conditions', 'eypd_em_scope_conditions', 1, 2 );
 
-add_filter( 'em_get_scopes', 'my_em_scopes', 1, 1 );
-function my_em_scopes( $scopes ) {
+
+/**
+ *
+ * @param $scopes
+ *
+ * @return array
+ */
+function eypd_em_scopes( $scopes ) {
 	$my_scopes = array(
 		'after-today' => 'After Today',
 	);
@@ -79,66 +242,74 @@ function my_em_scopes( $scopes ) {
 	return $scopes + $my_scopes;
 }
 
+add_filter( 'em_get_scopes', 'eypd_em_scopes', 1, 1 );
+
 /*
 |--------------------------------------------------------------------------
-| Admin Styles
+| Login customization
 |--------------------------------------------------------------------------
 |
-| for admin pages only
+|
 |
 |
 */
-function eypd_admin_style() {
-	wp_register_style( 'eypd_admin_css', get_stylesheet_directory_uri() . '/assets/styles/admin.css', false, false, 'screen' );
-	wp_enqueue_style( 'eypd_admin_css' );
-}
-
-add_action( 'admin_enqueue_scripts', 'eypd_admin_style' );
 
 /**
- * Load our scripts
+ * Custom stylesheet enqueued at login page
  */
-function eypd_load_scripts() {
-	$template_dir = get_stylesheet_directory_uri();
+add_action( 'login_enqueue_scripts', function () {
+	wp_enqueue_style( 'custom-login', get_stylesheet_directory_uri() . '/dist/styles/login.css' );
+} );
 
-	// toss Events Manager scripts and their dependencies
-	wp_dequeue_script( 'events-manager' );
+/**
+ * Link logo image to our home_url instead of WordPress.org
+ *
+ * @return string|void
+ */
+add_filter( 'login_headerurl', function () {
+	return home_url();
+} );
 
-	wp_enqueue_script( 'jquery-ui-draggable' );
-	wp_enqueue_script( 'markerclusterer', $template_dir . '/assets/js/markerclusterer.js' );
+/**
+ * Give the image our sites name
+ *
+ * @return string|void
+ */
+add_filter( 'login_headertitle', function () {
+	return get_bloginfo( 'name' );
+} );
 
-	$script_deps = array(
-		'jquery'                 => 'jquery',
-		'jquery-ui-core'         => 'jquery-ui-core',
-		'jquery-ui-widget'       => 'jquery-ui-widget',
-		'jquery-ui-position'     => 'jquery-ui-position',
-		'jquery-ui-sortable'     => 'jquery-ui-sortable',
-		'jquery-ui-datepicker'   => 'jquery-ui-datepicker',
-		'jquery-ui-autocomplete' => 'jquery-ui-autocomplete',
-		'jquery-ui-dialog'       => 'jquery-ui-dialog',
-		'markerclusterer'        => 'markerclusterer',
-	);
-	wp_enqueue_script( 'events-manager', $template_dir . '/assets/js/events-manager.js', array_values( $script_deps ), EM_VERSION );
-	wp_enqueue_script( 'tinyscrollbar', $template_dir . '/assets/js/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
-
-	// load popover only for users who aren't logged in
-	if ( ! is_user_logged_in() ) {
-		wp_enqueue_script( 'initpopover', $template_dir . '/assets/js/initpopover.js' );
-		wp_enqueue_script( 'bootstrap-popover', $template_dir . '/assets/js/bootstrap_popover.min.js', array(), null, true );
-		wp_enqueue_style( 'bootstrap-popover-style', $template_dir . '/assets/styles/bootstrap_popover.min.css' );
-	}
-	// only sign up page has requirements for modals
-	if ( is_page( 'sign-up' ) ) {
-		wp_enqueue_script( 'bootstrap-modal', $template_dir . '/assets/js/bootstrap.min.js', array(), null, true );
-		wp_enqueue_style( 'bootstrap-modal-style', $template_dir . '/assets/styles/bootstrap.min.css' );
-	}
-	// load styling for datepicker in myEYPD profile page only
-	if ( bp_is_my_profile() ) {
-		wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+/**
+ * Add custom text to login form
+ *
+ * @param $message
+ *
+ * @return string
+ */
+function eypd_login_message( $message ) {
+	if ( empty( $message ) ) {
+		$imgdir = get_stylesheet_directory_uri();
+		$html   = '<p class="login-logo"><picture><source srcset="' . $imgdir . '/dist/images/eypd-logo-small.webp" type="image/webp"><source srcset="' . $imgdir . '/dist/images/eypd-logo-small.png"><img src="' . $imgdir . '/dist/images/eypd-logo-small.png" width="101" height="92" alt="BC Provincial Government"></picture></p>';
+		$html   .= '<p class="logintext">Log in To Your EYPD Account</p>';
+		echo $html;
+	} else {
+		return $message;
 	}
 }
 
-add_action( 'wp_enqueue_scripts', 'eypd_load_scripts', 9 );
+add_filter( 'login_message', 'eypd_login_message' );
+
+/**
+ * Adds Sign Up button and Forgot lost password link
+ */
+function eypd_login_form() {
+	$html = '<p class="signuptext">New to EYPD?</p><p><a class ="button button-primary button-large signup" href="' . home_url() . '/sign-up" title="Sign Up">Sign Up</a></p>';
+	$html .= '&nbsp; &#45; &nbsp;<a class ="forgot" href="' . wp_lostpassword_url() . '" title="Lost Password">Forgot Password?</a>';
+
+	echo $html;
+}
+
+add_action( 'login_form', 'eypd_login_form' );
 
 /*
 |--------------------------------------------------------------------------
@@ -201,7 +372,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 6.2;
+	$eypd_version        = 6.7;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -217,6 +388,7 @@ function eypd_run_once() {
 		'dbem_bookings_approval',
 		'dbem_bookings_double',
 		'dbem_bookings_login_form',
+		'dbem_search_form_geo',
 	);
 	$default_yes         = array(
 		'dbem_rsvp_enabled',
@@ -311,6 +483,7 @@ function eypd_run_once() {
 		update_option( 'dbem_event_list_item_format_header', $format_event_list_header );
 		update_option( 'dbem_event_list_item_format_footer', $format_event_list_footer );
 		update_option( 'dbem_single_event_format', $single_event_format );
+		update_option( 'dbem_location_event_list_limit', 20 );
 
 		foreach ( $default_no as $no ) {
 			update_option( $no, 0 );
@@ -323,9 +496,10 @@ function eypd_run_once() {
 		 * Changes to search for labels
 		 */
 		update_option( 'dbem_search_form_state_label', 'Province' );
-		update_option( 'dbem_search_form_text_label', 'Search by topic or keyword' );
-		update_option( 'dbem_search_form_geo_label', 'Search by location' );
-		update_option( 'dbem_search_form_dates_label', 'Start Date' );
+		update_option( 'dbem_search_form_text_label', 'Search by Topic, Keyword or Location' );
+		update_option( 'dbem_search_form_dates_label', 'Search by Start Date' );
+		update_option( 'dbem_search_form_category_label', 'Search by Category' );
+		update_option( 'dbem_search_form_town_label', 'City/Community/Town' );
 		update_option( 'dbem_search_form_dates_separator', 'End Date' );
 
 		/**
@@ -460,6 +634,8 @@ function eypd_event_etc_output( $input = '' ) {
 		$new_classes = "<li class=\"$cat_output\">";
 		$output      = str_replace( $output_array[0][ $index ], $new_classes, $output );
 	}
+	// remove pagination links
+	$output = preg_replace( '/<strong><span class=\"page-numbers(.*)<\/span>/i', '', $output );
 
 	return $output;
 }
@@ -586,38 +762,16 @@ function eypd_nav_menu_items( $nav, $args ) {
 add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items', 10, 2 );
 
 /**
- * this allows for multiple dismissible popovers, with clickable links, inside the popover data-content
+ * Add favicon, theme color, PWA manifest
  */
-function eypd_close_popover() {
-	if ( ! is_user_logged_in() ) {
-		?>
-        <script type="text/javascript">
+add_action( 'wp_head', function () {
+	$manifest = eypd_get_manifest_path();
+	echo '<meta name="theme-color" content="#bee7fa"/>' . "\n";
+	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/dist/images/favicon.ico" />' . "\n";
+	echo '<link rel="manifest" href="' . $manifest . '">';
 
-            jQuery(document).ready(function ($) {
-                $('[data-toggle="popover"],[data-original-title]').popover();
-                $(document).on('click', function (e) {
-                    $('[data-toggle="popover"],[data-original-title]').each(function () {
-                        if (!$(this).is(e.target)) {
-                            $(this).popover('hide').data('bs.popover').inState.click = false
-                        }
-                    });
-                });
-            });
-        </script>
-		<?php
-	}
-}
+} );
 
-add_filter( 'wp_head', 'eypd_close_popover', 11 );
-
-/**
- * Add favicon
- */
-function eypd_favicon_link() {
-	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/assets/images/favicon.ico" />' . "\n";
-}
-
-add_action( 'wp_head', 'eypd_favicon_link' );
 
 /**
  * Validating that required attribute fields are not empty
@@ -648,7 +802,6 @@ add_action( 'em_event_validate', 'eypd_validate_attributes' );
  * Makes profile fields descriptions into modals,
  * content of modals are in eypd/templates/*-modal.php
  */
-
 function eypd_profile_field_modals() {
 
 	// check xprofile is activated
@@ -749,39 +902,20 @@ function eypd_get_my_bookings_url() {
 |
 | For the edit-events and post-event pages only
 |
-
 */
 
 /**
  *  Add stylesheet to TinyMCE, allows us to style the content of the editor
  */
-
-function eypd_format_TinyMCE( $in ) {
+add_filter( 'tiny_mce_before_init', function ( $in ) {
 	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
-		$in['content_css'] = get_stylesheet_directory_uri() . '/editor-style.css';
+		$in['content_css'] = get_stylesheet_directory_uri() . '/dist/styles/tinymce.css';
 
 		return $in;
 	}
 
 	return $in;
-}
-
-add_filter( 'tiny_mce_before_init', 'eypd_format_TinyMCE' );
-
-/**
- * Hide images inserted in WYSIWYG, hide the editor tabs, hide toolbars and sidebars from Median Manager Panel
- */
-function eypd_media_manager_style() {
-	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
-		echo '<style>.media-frame-menu, .media-sidebar, .attachment-filters, label[for=media-attachment-filters],label[for=media-attachment-date-filters], label[for=media-search-input],.media-frame input[type=search]{display:none;}</style>';
-		// hide editor tabs
-		if ( ! current_user_can( 'administrator' ) ) {
-			echo '<style>.wp-editor-tabs {display: none;}</style>';
-		}
-	}
-}
-
-add_action( 'wp_head', 'eypd_media_manager_style', 100 );
+} );
 
 /**
  * Force visual editor as default
@@ -797,7 +931,6 @@ add_filter( 'wp_default_editor', 'eypd_force_default_editor' );
 /**
  * Show only own items in media library panel
  */
-
 function eypd_my_images_only( $query ) {
 	if ( $user_id = get_current_user_id() ) {
 		// exclude administrator
@@ -814,7 +947,6 @@ add_filter( 'ajax_query_attachments_args', 'eypd_my_images_only' );
 /**
  * Rename Add Media button
  */
-
 function eypd_rename_media_button( $translation, $text ) {
 	if ( is_page( 'edit-events' ) | is_page( 'post-event' ) && 'Add Media' === $text ) {
 		return 'Add Banner Image';
@@ -828,7 +960,6 @@ add_filter( 'gettext', 'eypd_rename_media_button', 10, 2 );
 /**
  * Rename items in media panel
  */
-
 function eypd_media_view_strings( $strings ) {
 	if ( is_page( 'edit-events' ) or is_page( 'post-event' ) ) {
 		$strings ['insertMediaTitle'] = 'Add Banner Image (Recommended size: 1000px by 217px )';
@@ -843,7 +974,6 @@ add_filter( 'media_view_strings', 'eypd_media_view_strings' );
 /**
  * Add a class to image html when inserted into TinyMCE
  */
-
 function eypd_image_tag_class( $class ) {
 	$class .= ' banner';
 
@@ -860,76 +990,62 @@ add_filter( 'get_image_tag_class', 'eypd_image_tag_class' );
 | Use the image inserted into post as the banner image
 |
 |
-
 */
-
-/**
- * Control size and maintain proportion of event images
- */
-
-function eypd_control_banner() {
-	if ( is_singular( 'event' ) ) {
-		echo '<style>img.banner{height: auto; width: auto; max-width: 1000px; max-height: 217px;}</style>';
-	}
-}
-
-add_action( 'wp_head', 'eypd_control_banner', 100 );
 
 /**
  * Sanitize and Save only the latest image inserted when creating or editing an event
  */
+add_action( 'content_save_pre', function ( $content ) {
+	$maybe_latest_img = '';
+	global $post;
 
-function eypd_one_image( $content ) {
-	// todo: make this only happen for event post types, when created/edited in front-end or backend
-	if ( $content ) {
-		$latest_img = '';
+	// Only sanitize event post_type
+	if ( ! empty( $content ) && 'event' === $post->post_type ) {
+
 		// find all images
 		preg_match_all( '/<img[^>]+\>/i', $content, $matches );
-		// get the latest image
+
+		// get one image, maybe the latest
 		if ( isset( $matches[0][0] ) ) {
-			$latest_img = $matches [0] [0];
+			$maybe_latest_img = $matches [0] [0];
 		}
-		// remove the rest
+
+		// remove all images
 		$content = preg_replace( '/<img[^>]+\>/i', '', $content );
 
-		// add the latest image
-		return $content . $latest_img;
 	}
 
-	return $content;
-}
-
-add_action( 'content_save_pre', 'eypd_one_image' );
+	return $maybe_latest_img . $content;
+} );
 
 /**
  * Get the image and display it before the content
  */
+add_filter( 'the_content', function ( $content ) {
+	$maybe_latest_img = '';
 
-function eypd_banner_image( $content ) {
 	// make sure we are on a single event page and that there's content
-	if ( $content && is_singular( 'event' ) ) {
-		$banner_img = '';
-		// find the image
+	if ( ! empty( $content ) && is_singular( 'event' ) ) {
+		$maybe_latest_img = '';
+
+		// find all images
 		preg_match_all( '/<img[^>]+\>/i', $content, $matches );
-		// set the banner image
+
+		// save one, maybe the latest
 		if ( isset( $matches[0][0] ) ) {
-			$banner_img = $matches [0] [0];
+			$maybe_latest_img = $matches [0] [0];
 		}
-		// remove all images, just in case there's more than one
+
+		// remove all images
 		$content = preg_replace( '/<img[^>]+\>/i', '', $content );
-		// display banner image before the event info
-		echo '<p>' . $banner_img . '</p>';
 	}
 
-	return $content;
-}
-
-add_filter( 'the_content', 'eypd_banner_image' );
+	return $maybe_latest_img . $content;
+} );
 
 /**
  * Date picker and countdown
  */
-
 function eypd_datepicker_countdown() {
 
 	// only if it's my own profile
@@ -1000,7 +1116,6 @@ add_action( 'admin_init', 'eypd_dependencies_check' );
 /**
  * Check for dependencies, add admin notice
  */
-
 function eypd_dependencies_check() {
 
 	if ( file_exists( $composer = get_stylesheet_directory() . '/vendor/autoload.php' ) ) {
@@ -1075,3 +1190,123 @@ function eypd_wpcodex_set_capabilities() {
 		$editor->remove_cap( $cap );
 	}
 }
+
+/**
+ * counts and displays number of events
+ * @see http://wp-events-plugin.com/documentation/advanced-usage/
+ *
+ */
+function eypd_display_count_events() {
+	if ( class_exists( 'EM_Events' ) ) {
+		$results = EM_Events::get( array( 'scope' => 'future', 'array' => '' ) );
+	}
+
+	if ( is_array( $results ) ) {
+		$num = count( $results );
+	} else {
+		$num = '';
+	}
+
+	echo $num;
+}
+
+/**
+ * Allow users to upload webp
+ */
+add_filter( 'upload_mimes', function ( $mime_types ) {
+	$mime_types['webp'] = 'image/webp';
+
+	return $mime_types;
+} );
+
+/*
+|--------------------------------------------------------------------------
+| PWA
+|--------------------------------------------------------------------------
+|
+| all functions required for pwa
+|
+|
+*/
+
+define( 'EYPD_MANIFEST_ARG', 'manifest_json' );
+
+/**
+ *
+ */
+add_filter( 'query_vars', function ( $vars ) {
+	$vars[] = EYPD_MANIFEST_ARG;
+
+	return $vars;
+} );
+
+/**
+ * @return string
+ */
+function eypd_get_manifest_path() {
+	return add_query_arg( EYPD_MANIFEST_ARG, '1', site_url() );
+}
+
+/**
+ *
+ */
+add_action( 'template_redirect', function () {
+	global $wp_query;
+	if ( $wp_query->get( EYPD_MANIFEST_ARG ) ) {
+		$theme_color = '#bee7fa';
+		$lang_dir    = ( is_rtl() ) ? 'rtl' : 'ltr';
+
+		$manifest = array(
+			'start_url'        => get_bloginfo( 'wpurl' ),
+			'short_name'       => 'EYPD',
+			'name'             => get_bloginfo( 'name' ),
+			'description'      => get_bloginfo( 'description' ),
+			'display'          => 'standalone',
+			'background_color' => $theme_color,
+			'theme_color'      => $theme_color,
+			'dir'              => $lang_dir,
+			'lang'             => get_bloginfo( 'language' ),
+			'orientation'      => 'portrait-primary',
+			'icons'            => array(
+				array(
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-48.png',
+					'sizes' => '48x48',
+					'type'  => 'image/png'
+				),
+				array(
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-72.png',
+					'sizes' => '72x72',
+					'type'  => 'image/png'
+				),
+				array(
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-96.png',
+					'sizes' => '96x96',
+					'type'  => 'image/png'
+				),
+				array(
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-144.png',
+					'sizes' => '144x144',
+					'type'  => 'image/png'
+				),
+				array(
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-168.png',
+					'sizes' => '168x168',
+					'type'  => 'image/png'
+				),
+				array(
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-192.png',
+					'sizes' => '192x192',
+					'type'  => 'image/png'
+				),
+				array(
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-512.png',
+					'sizes' => '512x512',
+					'type'  => 'image/png'
+				),
+			)
+		);
+
+
+		wp_send_json( $manifest );
+	}
+}, 2 );

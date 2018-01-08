@@ -3,7 +3,7 @@
  Description:  Child Theme of CBox (default theme for commons-in-a-box plugin) for the Early Years Professional Development Project
  Author:       Maggie Caspar (design and development) Brad Payne, Alex Paredes (development)
  Template:     cbox-theme
- Version:      0.9.5
+ Version:      0.9.6
  License:      GNU General Public License v2 or later
  License URI:  http://www.gnu.org/licenses/gpl-2.0.html
  Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
@@ -25,9 +25,10 @@
 @import 'components/search';
 @import 'components/banner';
 @import 'components/special';
+@import 'components/tabs';
+@import 'components/nav';
 
 @import 'layouts/header';
-@import 'layouts/nav';
 @import 'layouts/posts';
 @import 'layouts/profile';
 @import 'layouts/sidebar';

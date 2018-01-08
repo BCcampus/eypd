@@ -1,6 +1,6 @@
 // Admin Bar
 #wpadminbar {
-  background-color: $color-neutral-20;
+  background-color: $color-blue-sail;
   display: block !important;
 
   @media screen and (max-width: $small){
@@ -19,7 +19,7 @@
   ul li a {
     color: $color-neutral-80 !important;
     &:hover {
-      background-color: $color-neutral-20 !important;
+      background-color: $color-blue-sail !important;
       color: $color-brand-blue !important;
     }
   }
@@ -34,7 +34,7 @@
 }
 
 #wp-admin-bar-my-account * {
-  background-color: $color-neutral-20 !important;
+  background-color: $color-blue-sail !important;
 }
 
 #wp-admin-bar-user-actions li a:hover span,
@@ -66,10 +66,43 @@
 #wpadminbar.nojq .quicklinks .ab-top-menu>li>.ab-item,
 #wpadminbar:not(.mobile) .ab-top-menu>li>.ab-item {
   &:focus {
-    background: $color-neutral-20;
+    background: $color-blue-sail;
   }
 }
 
 #wp-admin-bar-my-account-buddypress li {
   padding-left: $unit*4 !important;
+}
+
+#wpadminbar {
+
+  .quicklinks {
+
+    ul {
+
+      li#wp-admin-bar-bp-login {
+
+        a {
+
+          &:before {
+            font-family: 'Glyphicons';
+            content: "\e161";
+            color: $color-neutral-00;
+          }
+        }
+      }
+
+      li#wp-admin-bar-bp-register {
+
+        a {
+
+          &:before {
+            font-family: 'Glyphicons';
+            content: "\e162";
+            color: $color-neutral-00;
+          }
+        }
+      }
+    }
+  }
 }
