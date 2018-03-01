@@ -133,7 +133,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', array( 'jquery' ), null, true );
 
 	// load styling for datepicker in myEYPD profile page only
-	if ( function_exists( 'bp_is_my_profile()' ) ) {
+	if ( function_exists( 'bp_is_my_profile' ) ) {
 		if ( bp_is_my_profile() ) {
 			wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 		}
@@ -1051,7 +1051,7 @@ add_filter( 'the_content', function ( $content ) {
 function eypd_datepicker_countdown() {
 
 	// only if it's my own profile
-	if ( function_exists( 'bp_is_my_profile()' ) ) {
+	if ( function_exists( 'bp_is_my_profile' ) ) {
 		if ( bp_is_my_profile() ) {
 			// get the cert expiry date
 			global $bp;
