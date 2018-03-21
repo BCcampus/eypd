@@ -15,13 +15,14 @@
 
 global $bp, $EM_Notices;
 echo $EM_Notices;
+if ( bp_is_my_profile() ) {
+	echo '<h4>Subscribe to Event Notifications</h4>';
+	echo do_shortcode( '[cwp_notify]' );
+	echo "<hr>";
+}
+
 if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
 	?>
-    <h4>Subscribe to Event Notifications</h4>
-	<?php
-	echo do_shortcode( '[cwp_notify]' );
-	?>
-    <hr>
     <h4><?php _e( 'My Events', 'events-manager' ); ?></h4>
 	<?php
 	$args          = array(
