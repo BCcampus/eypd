@@ -117,7 +117,7 @@ add_action( 'wp_enqueue_scripts', function () {
 		'jquery-ui-dialog'       => 'jquery-ui-dialog',
 		'markerclusterer'        => 'markerclusterer',
 	);
-	wp_enqueue_script( 'events-manager', $template_dir . '/dist/scripts/events-manager.js', array_values( $script_deps ), EM_VERSION );
+	wp_enqueue_script( 'events-manager', $template_dir . '/dist/scripts/events-manager.js', array_values( $script_deps ), isset( $EM_VERSION ) );
 	wp_enqueue_script( 'tinyscrollbar', $template_dir . '/dist/scripts/jquery.tinyscrollbar.min.js', array( 'jquery' ), '1.0', true );
 
 	// load popover only for users who aren't logged in
@@ -132,9 +132,11 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_style( 'bootstrap-style', $template_dir . '/dist/styles/bootstrap.min.css' );
 	wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', array( 'jquery' ), null, true );
 
-	// load styling for datepicker in myEYPD profile page onlys
-	if ( bp_is_my_profile() ) {
-		wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+	// load styling for datepicker in myEYPD profile page only
+	if ( function_exists( 'bp_is_my_profile' ) ) {
+		if ( bp_is_my_profile() ) {
+			wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+		}
 	}
 
 	if ( is_front_page() ) {
@@ -1049,64 +1051,66 @@ add_filter( 'the_content', function ( $content ) {
 function eypd_datepicker_countdown() {
 
 	// only if it's my own profile
-	if ( bp_is_my_profile() ) {
-		// get the cert expiry date
-		global $bp;
-		$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
-		?>
-        <!-- jQuery date picker as input for the countdown -->
-        <script type="text/javascript">
-            jQuery(document).ready(function () {
-                $expirydate = '#expiry-date';   // input field where date picker will show up
-                jQuery($expirydate).datepicker('hide');
-                jQuery($expirydate).click(function () {
+	if ( function_exists( 'bp_is_my_profile' ) ) {
+		if ( bp_is_my_profile() ) {
+			// get the cert expiry date
+			global $bp;
+			$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
+			?>
+            <!-- jQuery date picker as input for the countdown -->
+            <script type="text/javascript">
+                jQuery(document).ready(function () {
+                    $expirydate = '#expiry-date';   // input field where date picker will show up
+                    jQuery($expirydate).datepicker('hide');
+                    jQuery($expirydate).click(function () {
 
-                    jQuery($expirydate).datepicker({
-                        dateFormat: 'mm/dd/yy',
-                        changeMonth: true,
-                        changeYear: true
+                        jQuery($expirydate).datepicker({
+                            dateFormat: 'mm/dd/yy',
+                            changeMonth: true,
+                            changeYear: true
+                        });
+                        jQuery($expirydate).datepicker('show');
                     });
-                    jQuery($expirydate).datepicker('show');
+                    // end jQuery date picker
+
+                    // countdown functionality
+                    var countDownDate = new Date("<?php echo $cert_expires; ?>").getTime();
+
+                    // set interval at 1 second to start countdown and check for changes
+                    var x = setInterval(function () {
+
+                        // today's date and time
+                        var now = new Date().getTime();
+
+                        // distance between now and count down date
+                        var distance = countDownDate - now;
+
+                        // time calculations
+                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        // var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        // var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                        // expired
+                        if (distance < 0) {
+                            clearInterval(x);
+                            document.getElementById("certcoutdown").innerHTML = "<p>Your certificate has expired</p>";
+                        }
+                        // date in the future
+                        else if (countDownDate) {
+                            clearInterval(x);
+                            document.getElementById("certcoutdown").innerHTML = "<p>Your professional certification expires in <b>" + days + "</b>" + " days and " + "<b>" + hours + "</b>" + " hours " + "</p>";
+                        }
+                        // no date
+                        else {
+                            clearInterval(x);
+                            document.getElementById("certcoutdown").innerHTML = "<p>Please enter the expiry date of your professional certification.</p>";
+                        }
+                    }, 1000);
                 });
-                // end jQuery date picker
-
-                // countdown functionality
-                var countDownDate = new Date("<?php echo $cert_expires; ?>").getTime();
-
-                // set interval at 1 second to start countdown and check for changes
-                var x = setInterval(function () {
-
-                    // today's date and time
-                    var now = new Date().getTime();
-
-                    // distance between now and count down date
-                    var distance = countDownDate - now;
-
-                    // time calculations
-                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    // var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    // var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                    // expired
-                    if (distance < 0) {
-                        clearInterval(x);
-                        document.getElementById("certcoutdown").innerHTML = "<p>Your certificate has expired</p>";
-                    }
-                    // date in the future
-                    else if (countDownDate) {
-                        clearInterval(x);
-                        document.getElementById("certcoutdown").innerHTML = "<p>Your professional certification expires in <b>" + days + "</b>" + " days and " + "<b>" + hours + "</b>" + " hours " + "</p>";
-                    }
-                    // no date
-                    else {
-                        clearInterval(x);
-                        document.getElementById("certcoutdown").innerHTML = "<p>Please enter the expiry date of your professional certification.</p>";
-                    }
-                }, 1000);
-            });
-        </script>
-	<?php }
+            </script>
+		<?php }
+	}
 }
 
 add_action( 'wp_footer', 'eypd_datepicker_countdown', 10 );
@@ -1201,7 +1205,7 @@ function eypd_display_count_events() {
 		$results = EM_Events::get( array( 'scope' => 'future', 'array' => '' ) );
 	}
 
-	if ( is_array( $results ) ) {
+	if ( is_array( isset( $results ) ) ) {
 		$num = count( $results );
 	} else {
 		$num = '';
