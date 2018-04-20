@@ -19,6 +19,9 @@ if ( bp_is_my_profile() ) {
 	echo '<h4>Subscribe to Event Notifications</h4>';
 	echo do_shortcode( '[cwp_notify]' );
 	echo "<hr>";
+
+	echo do_shortcode('[cwp_notify_em_cat]');
+	echo "<hr>";
 }
 
 if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
