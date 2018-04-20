@@ -1201,14 +1201,16 @@ function eypd_wpcodex_set_capabilities() {
  *
  */
 function eypd_display_count_events() {
+
+	$results = '';
+	$num = '0';
+
 	if ( class_exists( 'EM_Events' ) ) {
 		$results = EM_Events::get( array( 'scope' => 'future', 'array' => '' ) );
 	}
 
-	if ( is_array( isset( $results ) ) ) {
+	if ( is_array( $results ) ) {
 		$num = count( $results );
-	} else {
-		$num = '';
 	}
 
 	echo $num;
