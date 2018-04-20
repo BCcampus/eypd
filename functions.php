@@ -1057,8 +1057,8 @@ function eypd_datepicker_countdown() {
 			global $bp;
 			$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
 			?>
-            <!-- jQuery date picker as input for the countdown -->
-            <script type="text/javascript">
+			<!-- jQuery date picker as input for the countdown -->
+			<script type="text/javascript">
                 jQuery(document).ready(function () {
                     $expirydate = '#expiry-date';   // input field where date picker will show up
                     jQuery($expirydate).datepicker('hide');
@@ -1108,7 +1108,7 @@ function eypd_datepicker_countdown() {
                         }
                     }, 1000);
                 });
-            </script>
+			</script>
 		<?php }
 	}
 }
@@ -1201,14 +1201,16 @@ function eypd_wpcodex_set_capabilities() {
  *
  */
 function eypd_display_count_events() {
+
+	$results = '';
+	$num = '0';
+
 	if ( class_exists( 'EM_Events' ) ) {
 		$results = EM_Events::get( array( 'scope' => 'future', 'array' => '' ) );
 	}
 
-	if ( is_array( isset( $results ) ) ) {
+	if ( is_array( $results ) ) {
 		$num = count( $results );
-	} else {
-		$num = '';
 	}
 
 	echo $num;
