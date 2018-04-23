@@ -806,7 +806,7 @@ function eypd_custom_user_nav_item_screen() {
  */
 function eypd_custom_screen_content() {
 
-	echo 'the custom content, check to see if only the member can view.';
+	echo do_shortcode('[cwp_notify_em_user_cat]');
 
 }
 
