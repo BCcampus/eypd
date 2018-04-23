@@ -660,6 +660,16 @@ function et_fetch( $post_id = - 1, $ajax = true ) {
 add_action( 'wp_ajax_nopriv_cyop_lookup', 'et_fetch' );
 add_action( 'wp_ajax_cyop_lookup', 'et_fetch' );
 
+/*
+|--------------------------------------------------------------------------
+| Navigation
+|--------------------------------------------------------------------------
+|
+| Custom Navigation
+|
+|
+*/
+
 /**
  * remove links/menus from the admin bar,
  * if you are not an admin
@@ -743,7 +753,7 @@ add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
 
 
 // Filter wp_nav_menu() to add pop-overs to links in header menu
-function eypd_nav_menu_items( $nav, $args ) {
+add_filter( 'wp_nav_menu_items', function ( $nav, $args ) {
 	if ( $args->theme_location == 'main-menu' ) {
 		if ( is_user_logged_in() ) {
 			$nav = '<li class="home"><a href=' . home_url() . '/post-event>Post an Event</a></li>';
@@ -759,22 +769,56 @@ function eypd_nav_menu_items( $nav, $args ) {
 	}
 
 	return $nav;
-}
-
-add_filter( 'wp_nav_menu_items', 'eypd_nav_menu_items', 10, 2 );
+}, 10, 2 );
 
 /**
- * Add favicon, theme color, PWA manifest
+ * add Professional Interests to profile area
+ * ensure only the member whose page it is can see it
  */
-add_action( 'wp_head', function () {
-	$manifest = eypd_get_manifest_path();
-	echo '<meta name="theme-color" content="#bee7fa"/>' . "\n";
-	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/dist/images/favicon.ico" />' . "\n";
-	echo '<link rel="manifest" href="' . $manifest . '">';
+add_action( 'bp_setup_nav', function () {
 
-} );
+	$args = [
+		'name'                    => __( 'My Professional Interests', 'early-years' ),
+		'slug'                    => 'professional-interests',
+		'default_subnav_slug'     => 'prof-int',
+		'position'                => 50,
+		'show_for_displayed_user' => false,
+		'screen_function'         => 'eypd_custom_user_nav_item_screen',
+		'item_css_id'             => 'prof-int',
+		'site_admin_only'         => false,
+	];
+
+	bp_core_new_nav_item( $args );
+
+}, 11 );
 
 
+/**
+ *
+ */
+function eypd_custom_user_nav_item_screen() {
+	add_action( 'bp_template_content', 'eypd_custom_screen_content' );
+	bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
+}
+
+/**
+ * display content on professional interests page
+ */
+function eypd_custom_screen_content() {
+
+	echo 'the custom content, check to see if only the member can view.';
+
+}
+
+/*
+|--------------------------------------------------------------------------
+| Forms
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
 /**
  * Validating that required attribute fields are not empty
  */
@@ -1234,6 +1278,17 @@ add_filter( 'upload_mimes', function ( $mime_types ) {
 |
 |
 */
+
+/**
+ * Add favicon, theme color, PWA manifest
+ */
+add_action( 'wp_head', function () {
+	$manifest = eypd_get_manifest_path();
+	echo '<meta name="theme-color" content="#bee7fa"/>' . "\n";
+	echo '<link rel="shortcut icon" type="image/x-icon" href="' . get_stylesheet_directory_uri() . '/dist/images/favicon.ico" />' . "\n";
+	echo '<link rel="manifest" href="' . $manifest . '">';
+
+} );
 
 define( 'EYPD_MANIFEST_ARG', 'manifest_json' );
 

@@ -20,7 +20,7 @@ if ( bp_is_my_profile() ) {
 	echo do_shortcode( '[cwp_notify]' );
 	echo "<hr>";
 
-	echo do_shortcode('[cwp_notify_em_cat]');
+	echo do_shortcode( '[cwp_notify_em_cat]' );
 	echo "<hr>";
 }
 
