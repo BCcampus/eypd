@@ -47,6 +47,7 @@ add_filter( /**
 		'jquery-mobilemenu',
 		'jquery-fitvids',
 		'modal-video',
+        'bootstrap-accordion'
 	];
 
 	$async = [
@@ -136,6 +137,7 @@ add_action( 'wp_enqueue_scripts', function () {
 	if ( function_exists( 'bp_is_my_profile' ) ) {
 		if ( bp_is_my_profile() ) {
 			wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+			wp_enqueue_script( 'bootstrap-accordion', $template_dir . '/dist/scripts/accordion.js', array( 'jquery'), null, true );
 		}
 	}
 

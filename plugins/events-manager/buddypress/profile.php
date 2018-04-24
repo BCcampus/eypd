@@ -290,14 +290,3 @@ if ( bp_is_my_profile() ) {
 			<div id="certcoutdown"><p>calculating...</p></div>
 		</div>
 	</form> <?php } ?>
-
-<!-- change accordion icon on click  -->
-<script>
-    (function ($) {
-        $(document).ready(function () {
-            $('#future,#past').click(function () {
-                $(this).find('i').toggleClass('glyphicon-triangle-right').toggleClass('glyphicon-triangle-bottom');
-            });
-        });
-    })(jQuery);
-</script>
