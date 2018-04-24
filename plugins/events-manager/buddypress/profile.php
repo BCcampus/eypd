@@ -80,10 +80,10 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 <div id="accordion">
 	<div class="card">
 		<div class="card-header" id="headingOne">
-			<a class="btn collapsed" data-toggle="collapse" data-target="#collapseOne"
+			<a id="future" class="btn collapsed future" data-toggle="collapse" data-target="#collapseOne"
 			   aria-expanded="false" aria-controls="collapseOne">
 				<h4><?php _e( "Events I'm Attending (", 'events-manager' );
-					echo $future_count; ?>) <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+					echo $future_count; ?>) <i class="glyphicon glyphicon-triangle-right" aria-hidden="true"></i>
 				</h4>
 			</a>
 		</div>
@@ -161,10 +161,10 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 <div id="accordion">
 	<div class="card">
 		<div class="card-header" id="headingTwo">
-			<a class="btn collapsed" data-toggle="collapse" data-target="#collapseTwo"
+			<a id="past" class="btn collapsed" data-toggle="collapse" data-target="#collapseTwo"
 			   aria-expanded="false" aria-controls="collapseTwo">
 				<h4><?php _e( "Past Events I've Attended (", 'events-manager' );
-					echo $past_count; ?>) <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>
+					echo $past_count; ?>) <i class="glyphicon glyphicon-triangle-right" aria-hidden="true"></i>
 				</h4>
 			</a>
 		</div>
@@ -290,3 +290,14 @@ if ( bp_is_my_profile() ) {
 			<div id="certcoutdown"><p>calculating...</p></div>
 		</div>
 	</form> <?php } ?>
+
+<!-- change accordion icon on click  -->
+<script>
+    (function ($) {
+        $(document).ready(function () {
+            $('#future,#past').click(function () {
+                $(this).find('i').toggleClass('glyphicon-triangle-right').toggleClass('glyphicon-triangle-bottom');
+            });
+        });
+    })(jQuery);
+</script>
