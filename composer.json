@@ -24,7 +24,7 @@
       "@standards"
     ],
     "standards": [
-      "vendor/bin/phpcs --standard=phpcs.ruleset.xml *.php ."
+      "vendor/bin/phpcs --standard=phpcs.ruleset.xml ."
     ]
   }
 }
