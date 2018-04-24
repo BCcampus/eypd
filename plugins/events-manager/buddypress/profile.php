@@ -18,10 +18,10 @@ echo $EM_Notices;
 if ( bp_is_my_profile() ) {
 	echo '<h4>Subscribe to Event Notifications</h4>';
 	echo do_shortcode( '[cwp_notify]' );
-	echo "<hr>";
+	echo '<hr>';
 
 	echo do_shortcode( '[cwp_notify_em_cat]' );
-	echo "<hr>";
+	echo '<hr>';
 }
 
 if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
@@ -55,7 +55,7 @@ if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
 $past_ids    = [];
 $future_ids  = [];
 $EM_Person   = new EM_Person( $bp->displayed_user->id );
-$EM_Bookings = $EM_Person->get_bookings( FALSE, apply_filters( 'em_bp_attending_status', 1 ) );
+$EM_Bookings = $EM_Person->get_bookings( false, apply_filters( 'em_bp_attending_status', 1 ) );
 if ( count( $EM_Bookings->bookings ) > 0 ) {
 	$nonce = wp_create_nonce( 'booking_cancel' );
 
@@ -102,7 +102,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 							<th class="event-description" width="*">Upcoming Event</th>
 							<?php if ( is_user_logged_in() ) {
 								echo '<th class="event-delete">Delete this event from my profile</th>';
-							}
+}
 							?>
 							<th class="event-ical" width="*">Add to Calendar</th>
 						</tr>
@@ -126,7 +126,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 									if ( ! in_array( $EM_Booking->booking_status, array(
 											2,
 											3,
-										) ) && get_option( 'dbem_bookings_user_cancellation' ) && $EM_Event->get_bookings()->has_open_time()
+									) ) && get_option( 'dbem_bookings_user_cancellation' ) && $EM_Event->get_bookings()->has_open_time()
 									) {
 										$cancel_url  = em_add_get_params( $_SERVER['REQUEST_URI'], array(
 											'action'     => 'booking_cancel',
@@ -137,7 +137,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 									}
 									echo apply_filters( 'em_my_bookings_booking_actions', $cancel_link, $EM_Booking );
 									echo '</td>';
-								}
+}
 								?>
 								<td><?php echo $EM_Event->output( '#_EVENTICALLINK' ); ?></td>
 							</tr>
@@ -178,15 +178,15 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 								<thead>
 								<tr>
 									<th class='event-time'
-									    scope='col'><?php _e( 'Date/Time', 'events-manager' ); ?></th>
+										scope='col'><?php _e( 'Date/Time', 'events-manager' ); ?></th>
 									<th class='event-description'
-									    scope='col'><?php _e( 'Event Description', 'events-manager' ); ?></th>
+										scope='col'><?php _e( 'Event Description', 'events-manager' ); ?></th>
 									<th class='event-hours'
-									    scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
+										scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
 									<th class='event-attendance'
-									    scope='col'><?php _e( 'Attended', 'events-manager' ); ?></th>
+										scope='col'><?php _e( 'Attended', 'events-manager' ); ?></th>
 									<th class='event-attendance'
-									    scope='col'><?php _e( 'Did Not Attend', 'events-manager' ); ?></th>
+										scope='col'><?php _e( 'Did Not Attend', 'events-manager' ); ?></th>
 
 								</tr>
 								</thead>
@@ -195,17 +195,17 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 								$nonce = wp_create_nonce( 'eypd_cert_hours' );
 								$count = 0;
 								// save number of hours in the users profile
-								$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', TRUE );
+								$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
 
 								foreach ( $EM_Bookings
 
 								as $EM_Booking ) {
-								// skip over if it's not in the past
-								if ( ! in_array( $EM_Booking->event_id, $past_ids ) ) {
-									continue;
-								}
-								$EM_Event = $EM_Booking->get_event();
-								$event_id = $past_ids[ $count ]; ?>
+									// skip over if it's not in the past
+									if ( ! in_array( $EM_Booking->event_id, $past_ids ) ) {
+										continue;
+									}
+									$EM_Event = $EM_Booking->get_event();
+									$event_id = $past_ids[ $count ]; ?>
 								<tr>
 									<td><?php echo $EM_Event->output( '#_EVENTDATES<br/>#_EVENTTIMES' ); ?></td>
 									<td><?php echo $EM_Event->output( '#_EVENTLINK
@@ -216,26 +216,26 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 									<?php if ( bp_is_my_profile() ) { ?>
 									<td>
 										<input id="eypd-cert-hours-<?php echo $event_id; ?>"
-										       name=eypd_cert_hours[<?php echo $event_id; ?>]
-										       value="1"
-										       type='radio' <?php if ( ! isset( $user_hours[ $event_id ] ) ) {
-											$user_hours[ $event_id ] = '';
-										}
+											   name=eypd_cert_hours[<?php echo $event_id; ?>]
+											   value="1"
+											   type='radio' <?php if ( ! isset( $user_hours[ $event_id ] ) ) {
+													$user_hours[ $event_id ] = '';
+}
 										echo ( $user_hours[ $event_id ] || ! isset( $user_hours[ $event_id ] ) ) ? 'checked="checked"' : ''; ?> />
 									</td>
 
 									<td>
 										<input id="eypd-cert-hours-<?php echo $event_id; ?>"
-										       name=eypd_cert_hours[<?php echo $event_id; ?>]
-										       value="0"
-										       type='radio' <?php if ( ! isset( $user_hours[ $event_id ] ) ) {
-											$user_hours[ $event_id ] = '';
-										}
+											   name=eypd_cert_hours[<?php echo $event_id; ?>]
+											   value="0"
+											   type='radio' <?php if ( ! isset( $user_hours[ $event_id ] ) ) {
+													$user_hours[ $event_id ] = '';
+}
 										echo ( ! $user_hours[ $event_id ] ) ? 'checked="checked"' : ''; ?> />
 										<?php
 										$count ++;
-										}
-										}
+}
+								}
 										?>
 								</tbody>
 							</table>
@@ -277,7 +277,7 @@ if ( isset( $_POST['expiry-date'] ) ) {
 	update_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', $newdate );
 }
 //get expiry date
-$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', TRUE );
+$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
 if ( bp_is_my_profile() ) {
 	?>
 	<form id="eypd_countdown" class="eypd-countdown" action="" method="post">
@@ -285,7 +285,7 @@ if ( bp_is_my_profile() ) {
 			<p>Keep track of when your professional certification expires.</p>
 			<input id="expiry-date" value="<?php if ( $cert_expires ) {
 				echo $cert_expires;
-			} else { ?>Select date...<?php } ?>" name="expiry-date"/>
+} else { ?>Select date...<?php } ?>" name="expiry-date"/>
 			<input class="right" type="submit" value="Save">
 			<div id="certcoutdown"><p>calculating...</p></div>
 		</div>
