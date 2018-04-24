@@ -21,6 +21,9 @@ if ( bp_is_my_profile() ) {
 	echo '<hr>';
 
 	echo do_shortcode( '[cwp_notify_em_cat]' );
+	$user_id     = get_current_user_id();
+	$member_link = bp_core_get_userlink( $user_id, '', TRUE );
+	echo "<p><a href='{$member_link}professional-interests'>Recommend Events</a></p>";
 	echo '<hr>';
 }
 
