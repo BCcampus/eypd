@@ -47,7 +47,8 @@ add_filter( /**
 		'jquery-mobilemenu',
 		'jquery-fitvids',
 		'modal-video',
-        'bootstrap-accordion'
+        'bootstrap-accordion',
+        'd3'
 	];
 
 	$async = [
@@ -138,6 +139,7 @@ add_action( 'wp_enqueue_scripts', function () {
 		if ( bp_is_my_profile() ) {
 			wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 			wp_enqueue_script( 'bootstrap-accordion', $template_dir . '/dist/scripts/accordion.js', array( 'jquery'), null, true );
+			wp_enqueue_script( 'd3', $template_dir . '/dist/scripts/d3.js', array(), null, true );
 		}
 	}
 
