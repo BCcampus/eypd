@@ -933,6 +933,47 @@ function eypd_cumulative_hours( $ids ) {
 }
 
 /**
+ * Returns an array of events, with number of hours and categories
+ *
+ * @param $ids
+ *
+ * @return array|bool
+ */
+function eypd_hours_and_categories( $ids ) {
+	if ( ! is_array( $ids ) ) {
+		return false;
+	}
+	$cats = $events = [];
+	$i    = 0;
+
+	// input is radio buttons with boolean values
+	// true means they attended (default)
+	foreach ( $ids as $id => $bool ) {
+		if ( false == $bool ) {
+			continue;
+		}
+		$e          = em_get_event( $id );
+		$categories = wp_get_post_terms( $e->post_id, 'event-categories' );
+
+		if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
+			foreach ( $categories as $category ) {
+				$cats[] = $category->name;
+			}
+		}
+		foreach ( $e->event_attributes as $key => $val ) {
+			if ( 0 === strcmp( 'Professional Development Certificate Credit Hours', $key ) ) {
+				$events[ $i ]['hours']      = intval( $val );
+				$events[ $i ]['categories'] = $cats;
+				$events[ $i ]['name']       = $e->event_name;
+				$i ++;
+			}
+		}
+	}
+
+	return $events;
+}
+
+/**
  * URL to member profile
  */
 function eypd_get_my_bookings_url() {
