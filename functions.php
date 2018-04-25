@@ -974,6 +974,44 @@ function eypd_hours_and_categories( $ids ) {
 }
 
 /**
+ * @param array $data
+ *
+ * @return mixed|string|void
+ */
+function eypd_d3_array_to_json( array $data ) {
+	$cat = $result = [];
+	$i   = 0;
+
+	foreach ( $data as $event ) {
+
+		$unit = ( intval( $event['hours'] ) / count( $event['categories'] ) );
+
+		// events may have more than one category, in which case
+		// the total hours need to be shared between them
+		foreach ( $event['categories'] as $name ) {
+			if ( isset( $cat[ $name ] ) ) {
+				$cat[ $name ] = $cat[ $name ] + $unit;
+			} else {
+				$cat[ $name ] = $unit;
+			}
+		}
+		unset( $unit );
+
+	}
+
+	foreach ( $cat as $k => $v ) {
+		$result[ $i ]['label'] = $k;
+		$result[ $i ]['value'] = $v;
+		$i ++;
+	}
+
+	$json = json_encode( $result );
+
+	return $json;
+
+}
+
+/**
  * URL to member profile
  */
 function eypd_get_my_bookings_url() {
