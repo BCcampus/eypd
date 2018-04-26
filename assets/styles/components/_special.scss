@@ -23,3 +23,9 @@ img.wp-smiley, img.emoji {
   column-gap: 1rem;
   column-rule: 1px solid $color-gray-mercury;
 }
+
+@media (max-width: $small ){
+  .professional-interests{
+    column-count: 1;
+  }
+}
