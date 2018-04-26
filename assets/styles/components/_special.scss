@@ -17,3 +17,9 @@ img.wp-smiley, img.emoji {
     margin-top: 100px;
   }
 }
+
+.professional-interests{
+  column-count: 2;
+  column-gap: 1rem;
+  column-rule: 1px solid $color-gray-mercury;
+}
