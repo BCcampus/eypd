@@ -16,20 +16,23 @@
 global $bp, $EM_Notices;
 echo $EM_Notices;
 if ( bp_is_my_profile() ) {
-	echo '<h4>Subscribe to Event Notifications</h4>';
+	echo '<h3>Subscribe to Event Notifications</h3>';
 	echo do_shortcode( '[cwp_notify]' );
 	echo '<hr>';
 
+    echo '<h3>My Professional Interests</h3><h5>(Select one or more categories)</h5>';
+    echo '<div class="professional-interests">';
 	echo do_shortcode( '[cwp_notify_em_cat]' );
 	$user_id     = get_current_user_id();
 	$member_link = bp_core_get_userlink( $user_id, '', TRUE );
-	echo "<p><a href='{$member_link}professional-interests'>Recommend Events</a></p>";
+	echo '</div>';
+	echo "<a href='{$member_link}professional-interests'><input class='right button c-button' type='button' value='Recommend Events'/></a>";
 	echo '<hr>';
 }
 
 if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
 	?>
-	<h4><?php _e( 'My Events', 'events-manager' ); ?></h4>
+	<h3><?php _e( 'My Events', 'events-manager' ); ?></h3>
 	<?php
 	$args          = array(
 		'owner'         => $bp->displayed_user->id,
@@ -257,7 +260,9 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 
 <!-- calculate hours -->
 <?php if ( bp_is_my_profile() ) { ?>
-	<div class="certhours">
+	<hr>
+    <h3>My Certificate Hours</h3>
+    <div class="certhours">
 		<input class="right" type="submit" value="Calculate My Hours"/>
 		<?php
 		// tally up the hours
