@@ -28,10 +28,11 @@ if ( bp_is_my_profile() ) {
 	$cert_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
     $chart_data_array = eypd_hours_and_categories( $cert_hours );
     $chart_data_json = eypd_d3_array_to_json( $chart_data_array );
-//	echo "<pre>";
-//	print_r( $chart_data_json );
-//	echo "</pre>";
 
+    // Pass the data to donut.js
+	wp_localize_script( 'donut', 'donut_data', $chart_data_json);
+
+	echo '<div class="donut"></div>';
 	echo '<h4>Subscribe to Event Notifications</h4>';
 	echo do_shortcode( '[cwp_notify]' );
 	echo '<hr>';
