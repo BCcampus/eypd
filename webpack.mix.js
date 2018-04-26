@@ -38,7 +38,7 @@ mix.copy(`${assets}/fonts`, `${dist}/fonts`)
     .copy(`${node}/bootstrap/fonts`, `${dist}/fonts`)
     .copy(`${node}/bootstrap/dist/css/bootstrap.min.css`, `${dist}/styles`)
     .copy(`${assets}/images`, `${dist}/images`)
-    .js(`${node}/d3/dist/d3.min.js`, `${dist}/scripts`)
+    .copy(`${node}/d3/dist/d3.min.js`, `${dist}/scripts`)
 
 // compiled Javascript
 mix.js(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
