@@ -27,7 +27,7 @@ if ( bp_is_my_profile() ) {
     */
 	$cert_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
     $chart_data_array = eypd_hours_and_categories( $cert_hours );
-    $chart_data_json = eypd_d3_array_to_json( $chart_data_array );
+    $chart_data_json = eypd_d3_array( $chart_data_array );
 
     // Pass the data to donut.js
 	wp_localize_script( 'donut', 'donut_data', $chart_data_json);
@@ -309,4 +309,4 @@ if ( bp_is_my_profile() ) {
 			<input class="right" type="submit" value="Save">
 			<div id="certcoutdown"><p>calculating...</p></div>
 		</div>
-	</form> <?php } ?>
+	</form> <script src='https://d3js.org/d3.v5.js'></script><?php } ?>

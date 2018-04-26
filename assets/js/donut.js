@@ -1,16 +1,7 @@
 (function ($) {
     $(document).ready(function () {
 
-        var data = [{"label": "Cat 1", "value": 2},
-            {"label": "Cat 2", "value": 5},
-            {"label": "Cat 3", "value": 2},
-            {"label": "Cat 4", "value": 5},
-            {"label": "Cat 5", "value": 2},
-            {"label": "Cat 6", "value": 1},
-            {"label": "Cat 7", "value": 2},
-            {"label": "Cat 8", "value": 5},
-            {"label": "Cat 9", "value": 3}
-        ];
+        var data = donut_data;
 
         var pie = d3.pie()
             .value(function (d) {
