@@ -8,8 +8,8 @@ var pie = d3.pie()
 var slices = pie(data);
 
 var arc = d3.arc()
-    .innerRadius(50)
-    .outerRadius(90);
+    .innerRadius(80)
+    .outerRadius(140);
 
 // helper that returns a color based on an ID
 var color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -18,7 +18,7 @@ var svg = d3.select('.donut')
     .append('svg')
     .attr("class", "donut");
 var g = svg.append('g')
-    .attr('transform', 'translate(350, 120)');
+    .attr('transform', 'translate(400, 150)');
 
 var arcGraph = g.selectAll('path.slice')
     .data(slices)

@@ -26,8 +26,7 @@
   margin-bottom: $unit;
 }
 
-.donut{
-  min-width: 500px;
-  min-height: 500px;
-  padding-top:50px;
+#item-body > div.donut > svg{
+  min-width: 600px;
+  min-height: 300px;
 }
