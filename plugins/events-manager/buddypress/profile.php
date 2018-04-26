@@ -309,4 +309,4 @@ if ( bp_is_my_profile() ) {
 			<input class="right" type="submit" value="Save">
 			<div id="certcoutdown"><p>calculating...</p></div>
 		</div>
-	</form> <script src='https://d3js.org/d3.v5.js'></script><?php } ?>
+	</form> <?php } ?>

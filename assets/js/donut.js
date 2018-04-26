@@ -56,7 +56,7 @@
                 return color(d.data.label);
             })
             .attr('y', function (d, i) {
-                return 20 * (i + 1);
+                return 30 * (i + 1);
             });
     });
 })(jQuery);
