@@ -16,7 +16,24 @@
 global $bp, $EM_Notices;
 echo $EM_Notices;
 if ( bp_is_my_profile() ) {
-	echo '<h3>Subscribe to Event Notifications</h3>';
+    /*
+    |--------------------------------------------------------------------------
+    | D3 Chart
+    |--------------------------------------------------------------------------
+    |
+    | Provides data for d3 chart
+    |
+    |
+    */
+	$cert_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
+    $chart_data_array = eypd_hours_and_categories( $cert_hours );
+    $chart_data_json = eypd_d3_array( $chart_data_array );
+
+    // Pass the data to donut.js
+	wp_localize_script( 'donut', 'donut_data', $chart_data_json);
+
+	echo '<div class="donut"></div>';
+	echo '<h4>Subscribe to Event Notifications</h4>';
 	echo do_shortcode( '[cwp_notify]' );
 	echo '<hr>';
 

@@ -38,6 +38,7 @@ mix.copy(`${assets}/fonts`, `${dist}/fonts`)
     .copy(`${node}/bootstrap/fonts`, `${dist}/fonts`)
     .copy(`${node}/bootstrap/dist/css/bootstrap.min.css`, `${dist}/styles`)
     .copy(`${assets}/images`, `${dist}/images`)
+    .copy(`${node}/d3/dist/d3.min.js`, `${dist}/scripts`)
 
 // compiled Javascript
 mix.js(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
@@ -51,6 +52,7 @@ mix.js(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
     .js(`${assets}/js/markerclusterer.js`, `${dist}/scripts`)
     .js(`${assets}/js/modal-video.js`, `${dist}/scripts`)
     .js(`${assets}/js/accordion.js`, `${dist}/scripts`)
+    .js(`${assets}/js/donut.js`, `${dist}/scripts`)
 
 // Sass
 mix.sass(`${assets}/styles/main.scss`, `${dist}/styles/main.css`)

@@ -47,7 +47,9 @@ add_filter( /**
 		'jquery-mobilemenu',
 		'jquery-fitvids',
 		'modal-video',
-        'bootstrap-accordion'
+        'bootstrap-accordion',
+		'd3',
+		'donut',
 	];
 
 	$async = [
@@ -138,6 +140,8 @@ add_action( 'wp_enqueue_scripts', function () {
 		if ( bp_is_my_profile() ) {
 			wp_enqueue_style( 'jquery-style', 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
 			wp_enqueue_script( 'bootstrap-accordion', $template_dir . '/dist/scripts/accordion.js', array( 'jquery'), null, true );
+			wp_enqueue_script( 'd3', $template_dir . '/dist/scripts/d3.min.js', array(), null, true );
+			wp_enqueue_script( 'donut', $template_dir . '/dist/scripts/donut.js', array('d3'), null, true );
 		}
 	}
 
@@ -928,6 +932,83 @@ function eypd_cumulative_hours( $ids ) {
 	}
 
 	return intval( $total );
+}
+
+/**
+ * Returns an array of events, with number of hours and categories
+ *
+ * @param $ids
+ *
+ * @return array|bool
+ */
+function eypd_hours_and_categories( $ids ) {
+	if ( ! is_array( $ids ) ) {
+		return false;
+	}
+	$cats = $events = [];
+	$i    = 0;
+
+	// input is radio buttons with boolean values
+	// true means they attended (default)
+	foreach ( $ids as $id => $bool ) {
+		if ( false == $bool ) {
+			continue;
+		}
+		$e          = em_get_event( $id );
+		$categories = wp_get_post_terms( $e->post_id, 'event-categories' );
+
+		if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
+			foreach ( $categories as $category ) {
+				$cats[] = $category->name;
+			}
+		}
+		foreach ( $e->event_attributes as $key => $val ) {
+			if ( 0 === strcmp( 'Professional Development Certificate Credit Hours', $key ) ) {
+				$events[ $i ]['hours']      = intval( $val );
+				$events[ $i ]['categories'] = $cats;
+				$events[ $i ]['name']       = $e->event_name;
+				$i ++;
+			}
+		}
+	}
+
+	return $events;
+}
+
+/**
+ * @param array $data
+ *
+ * @return mixed|string
+ */
+function eypd_d3_array( array $data ) {
+	$cat = $result = [];
+	$i   = 0;
+
+	foreach ( $data as $event ) {
+
+		$unit = ( intval( $event['hours'] ) / count( $event['categories'] ) );
+
+		// events may have more than one category, in which case
+		// the total hours need to be shared between them
+		foreach ( $event['categories'] as $name ) {
+			if ( isset( $cat[ $name ] ) ) {
+				$cat[ $name ] = $cat[ $name ] + $unit;
+			} else {
+				$cat[ $name ] = $unit;
+			}
+		}
+		unset( $unit );
+
+	}
+
+	foreach ( $cat as $k => $v ) {
+		$result[ $i ]['label'] = $k;
+		$result[ $i ]['value'] = number_format( $v, 1 );
+		$i ++;
+	}
+
+	return $result;
+
 }
 
 /**
