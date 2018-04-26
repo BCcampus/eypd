@@ -1003,7 +1003,7 @@ function eypd_d3_array( array $data ) {
 
 	foreach ( $cat as $k => $v ) {
 		$result[ $i ]['label'] = $k;
-		$result[ $i ]['value'] = $v;
+		$result[ $i ]['value'] = number_format( $v, 1 );
 		$i ++;
 	}
 
