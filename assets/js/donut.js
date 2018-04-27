@@ -11,8 +11,16 @@ var arc = d3.arc()
     .innerRadius(80)
     .outerRadius(140);
 
+// Get the color values from our data
+var colors = [];
+data.forEach(function (value) {
+    colors.push(value.color);
+});
+
 // helper that returns a color based on an ID
-var color = d3.scaleOrdinal(d3.schemeCategory10);
+var color = d3.scaleOrdinal()
+//.range(colors);
+    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#556B44"]);
 
 var svg = d3.select('.donut')
     .append('svg')
