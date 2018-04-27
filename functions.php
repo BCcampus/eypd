@@ -980,31 +980,33 @@ function eypd_hours_and_categories( $ids ) {
  *
  * @return mixed|string
  */
-function eypd_d3_array( array $data ) {
+function eypd_d3_array( $data ) {
 	$cat = $result = [];
 	$i   = 0;
 
-	foreach ( $data as $event ) {
+	if ( is_array( $data ) ) {
+		foreach ( $data as $event ) {
 
-		$unit = ( intval( $event['hours'] ) / count( $event['categories'] ) );
+			$unit = ( intval( $event['hours'] ) / count( $event['categories'] ) );
 
-		// events may have more than one category, in which case
-		// the total hours need to be shared between them
-		foreach ( $event['categories'] as $name ) {
-			if ( isset( $cat[ $name ] ) ) {
-				$cat[ $name ] = $cat[ $name ] + $unit;
-			} else {
-				$cat[ $name ] = $unit;
+			// events may have more than one category, in which case
+			// the total hours need to be shared between them
+			foreach ( $event['categories'] as $name ) {
+				if ( isset( $cat[ $name ] ) ) {
+					$cat[ $name ] = $cat[ $name ] + $unit;
+				} else {
+					$cat[ $name ] = $unit;
+				}
 			}
+			unset( $unit );
+
 		}
-		unset( $unit );
 
-	}
-
-	foreach ( $cat as $k => $v ) {
-		$result[ $i ]['label'] = $k;
-		$result[ $i ]['value'] = number_format( $v, 1 );
-		$i ++;
+		foreach ( $cat as $k => $v ) {
+			$result[ $i ]['label'] = $k;
+			$result[ $i ]['value'] = number_format( $v, 1 );
+			$i ++;
+		}
 	}
 
 	return $result;
