@@ -12,7 +12,10 @@ suite of WordPress and BuddyPress plugins and themes for community communication
 - install the plugin [Events Manager](https://wordpress.org/plugins/events-manager/)
 - activate the bundled theme 'CBox Theme' which comes as part of `Commons in a Box`
 - activate this child theme 'Early Years'
-- install dependencies via the `composer install` command in your terminal
+
+## Developers 
+- install php dependencies via the `composer install` command in your terminal
+- install front-end dependencies via `yarn && yarn build` command in your terminal
 
 #### Purpose ####
 The main purpose of the child theme is to tie the locations of events generated from `Events Manager` to a map using Google API. 
