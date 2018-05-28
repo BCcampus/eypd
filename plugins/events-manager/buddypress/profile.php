@@ -249,9 +249,8 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
                         </table>
 						<?php
 					} else {
-						?>
-                        <p><?php _e( 'Not attending any events yet.', 'events-manager' ); ?></p>
-						<?php
+					    $events_url = get_site_url() . '/events';
+                        echo "<p>See no upcoming events? <a href='{$events_url}'>Browse Events</a></p>";
 					}
 
 					?>
@@ -355,7 +354,8 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
                         </div>
 						<?php
 					} else {
-						_e( 'No past events attended yet.', 'events-manager' );
+						$events_url = get_site_url() . '/events';
+						echo "<p>See no upcoming events? <a href='{$events_url}'>Browse Events</a></p>";
 					} ?>
                 </div>
             </div>
