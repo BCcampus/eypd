@@ -26,11 +26,9 @@ echo $EM_Notices;
 |
 */
 if ( bp_is_my_profile() ) { ?>
-    <hr>
-    <h4>My Certificate Hours</h4>
     <div class="certhours">
-        <input class="right" type="submit" value="Calculate My Hours"/>
 		<?php
+		$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
 		// tally up the hours
 		$num = eypd_cumulative_hours( $user_hours );
 		echo '<p>Total Certificate Hours: ';
@@ -39,7 +37,6 @@ if ( bp_is_my_profile() ) { ?>
 		echo '</b></p>';
 		?>
     </div>
-    </form>
 <?php } ?>
 
     <!-- countdown to certificate expiry -->
@@ -278,7 +275,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
                 <div class="card-body">
 					<?php
 					if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
-                        <div class='table-wrap'>
+                        < class='table-wrap'>
                             <form id="eypd_cert_hours" class="eypd-cert-hours"
                                   action="" method="post">
                                 <table id='dbem-bookings-table'
@@ -352,7 +349,12 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
                                        value="<?php echo $bp->displayed_user->id; ?>"/>
                                 <input type="hidden" name="action"
                                        value="eypd_cert_hours"/>
-                        </div>
+                                <?php
+                                if (bp_is_my_profile()){
+                                    echo '<input class="right" type="submit" value="Calculate My Hours"/>';
+                                }
+                                ?>
+                            </form></div>
 						<?php
 					} else {
 						_e( 'No past events attended yet.', 'events-manager' );
