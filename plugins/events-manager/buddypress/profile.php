@@ -26,15 +26,18 @@ echo $EM_Notices;
 |
 */
 if ( bp_is_my_profile() ) { ?>
+    <div class="bg-info at-a-glance">
     <div class="certhours">
 		<?php
 		$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
 		// tally up the hours
 		$num = eypd_cumulative_hours( $user_hours );
-		echo '<p>Total Certificate Hours: ';
-		echo '<b>';
+		$needed = ($num > 40 ) ? '0' : 40 - $num;
+
+		echo '<p><b>';
 		echo ( $num ) ? $num : '0';
-		echo '</b></p>';
+		echo '/40</b> certification hours <i>completed</i></p>';
+		echo '<p><b>' . $needed . '</b> certification hours <i>needed</i></p>';
 		?>
     </div>
 <?php } ?>
@@ -53,7 +56,6 @@ if ( bp_is_my_profile() ) {
 	?>
     <form id="eypd_countdown" class="eypd-countdown" action="" method="post">
         <div class="certexpire">
-            <p>Keep track of when your professional certification expires.</p>
             <input id="expiry-date" value="<?php if ( $cert_expires ) {
 				echo $cert_expires;
 			} else { ?>Select date...<?php } ?>" name="expiry-date"/>
@@ -61,6 +63,7 @@ if ( bp_is_my_profile() ) {
             <div id="certcoutdown"><p>calculating...</p></div>
         </div>
     </form>
+    </div>
     <hr> <?php }
 
 /*
