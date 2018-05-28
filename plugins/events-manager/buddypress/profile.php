@@ -275,7 +275,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
                 <div class="card-body">
 					<?php
 					if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
-                        < class='table-wrap'>
+                        <div class='table-wrap'>
                             <form id="eypd_cert_hours" class="eypd-cert-hours"
                                   action="" method="post">
                                 <table id='dbem-bookings-table'
