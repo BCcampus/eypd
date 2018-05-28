@@ -8,7 +8,7 @@ var pie = d3.pie()
 var slices = pie(data);
 
 var arc = d3.arc()
-    .innerRadius(80)
+    .innerRadius(55)
     .outerRadius(140);
 
 // helper that returns a color based on an ID
@@ -36,9 +36,13 @@ arcGraph.append("text")
     })
 
     .attr("dy", "0.35em")
-    .text(function (d) {
+
+// values in donut
+/*    .text(function (d) {
         return d.data.value
     });
+*/
+
 // building a legend
 svg.append('g')
     .attr('class', 'legend')
@@ -47,7 +51,7 @@ svg.append('g')
     .enter()
     .append('text')
     .text(function (d) {
-        return '• ' + d.data.label;
+        return d.data.value + ' - ' + d.data.label;
     })
     .attr('fill', function (d) {
         return color(d.data.label);
