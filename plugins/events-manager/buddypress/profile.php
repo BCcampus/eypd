@@ -26,20 +26,20 @@ echo $EM_Notices;
 |
 */
 if ( bp_is_my_profile() ) { ?>
-    <hr>
-    <h4>My Certificate Hours</h4>
+    <div class="bg-info at-a-glance">
     <div class="certhours">
-        <input class="right" type="submit" value="Calculate My Hours"/>
 		<?php
+		$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
 		// tally up the hours
 		$num = eypd_cumulative_hours( $user_hours );
-		echo '<p>Total Certificate Hours: ';
-		echo '<b>';
+		$needed = ($num > 40 ) ? '0' : 40 - $num;
+
+		echo '<p><b>';
 		echo ( $num ) ? $num : '0';
-		echo '</b></p>';
+		echo '/40</b> certification hours <i>completed</i></p>';
+		echo '<p><b>' . $needed . '</b> certification hours <i>needed</i></p>';
 		?>
     </div>
-    </form>
 <?php } ?>
 
     <!-- countdown to certificate expiry -->
@@ -56,7 +56,6 @@ if ( bp_is_my_profile() ) {
 	?>
     <form id="eypd_countdown" class="eypd-countdown" action="" method="post">
         <div class="certexpire">
-            <p>Keep track of when your professional certification expires.</p>
             <input id="expiry-date" value="<?php if ( $cert_expires ) {
 				echo $cert_expires;
 			} else { ?>Select date...<?php } ?>" name="expiry-date"/>
@@ -64,6 +63,7 @@ if ( bp_is_my_profile() ) {
             <div id="certcoutdown"><p>calculating...</p></div>
         </div>
     </form>
+    </div>
     <hr> <?php }
 
 /*
@@ -350,7 +350,12 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
                                        value="<?php echo $bp->displayed_user->id; ?>"/>
                                 <input type="hidden" name="action"
                                        value="eypd_cert_hours"/>
-                        </div>
+                                <?php
+                                if (bp_is_my_profile()){
+                                    echo '<input class="right" type="submit" value="Calculate My Hours"/>';
+                                }
+                                ?>
+                            </form></div>
 						<?php
 					} else {
 						$events_url = get_site_url() . '/events';
