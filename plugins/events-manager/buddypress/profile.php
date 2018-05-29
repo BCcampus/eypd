@@ -28,17 +28,17 @@ echo $EM_Notices;
 if ( bp_is_my_profile() ) { ?>
     <div class="bg-info at-a-glance">
     <div class="certhours">
-		<?php
-		$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
-		// tally up the hours
-		$num = eypd_cumulative_hours( $user_hours );
-		$needed = ($num > 40 ) ? '0' : 40 - $num;
+	    <?php
+	    $user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', TRUE );
+	    // tally up the hours
+	    $num    = eypd_cumulative_hours( $user_hours );
+	    $needed = ( $num > 40 ) ? '0' : 40 - $num;
 
-		echo '<p><b>';
-		echo ( $num ) ? $num : '0';
-		echo '/40</b> certification hours <i>completed</i></p>';
-		echo '<p><b>' . $needed . '</b> certification hours <i>needed</i></p>';
-		?>
+	    echo '<p><b>';
+	    echo ( $num ) ? $num : '0';
+	    echo '/40</b> certification hours <a href="#completed">completed</a></p>';
+	    echo '<p><b>' . $needed . '</b> certification hours <a href="#needed">needed</a></p>';
+	    ?>
     </div>
 <?php } ?>
 
@@ -51,7 +51,7 @@ if ( isset( $_POST['expiry-date'] ) ) {
 	update_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', $newdate );
 }
 //get expiry date
-$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
+$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', TRUE );
 if ( bp_is_my_profile() ) {
 	?>
     <form id="eypd_countdown" class="eypd-countdown" action="" method="post">
@@ -64,7 +64,7 @@ if ( bp_is_my_profile() ) {
         </div>
     </form>
     </div>
-    <hr> <?php }
+<?php }
 
 /*
 |--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ if ( bp_is_my_profile() ) {
 
 if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
 	?>
-    <h4><?php _e( 'My posted events', 'events-manager' ); ?></h4>
+    <h3 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?></h3>
 	<?php
 	$args          = [
 		'owner'         => $bp->displayed_user->id,
@@ -100,7 +100,6 @@ if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
         </p>
 		<?php
 	}
-	echo '<hr>';
 }
 
 /*
@@ -119,9 +118,8 @@ if ( bp_is_my_profile() ) {
 
 	// Pass the data to donut.js
 	wp_localize_script( 'donut', 'donut_data', $chart_data_json );
-	echo '<h4>Event summary</h4>';
+	echo '<h3 class="top-padding">Event summary</h3>';
 	echo '<div class="donut"></div>';
-	echo '<hr>';
 }
 
 /*
@@ -133,7 +131,7 @@ if ( bp_is_my_profile() ) {
 |
 |
 */
-echo '<h4>Training</h4>';
+echo '<h3 class="top-padding">Training</h3>';
 echo '<p>Adding an event to myEYPD does not confirm your registration, nor does deleting an event cancel your registration. To officially register for a professional development event you must contact the agency responsible for the training event.</p>';
 echo do_shortcode( '[cwp_notify]' );
 
@@ -170,6 +168,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 |
 */
 ?>
+    <a name="needed"></a>
     <div id="accordion">
         <div class="card">
             <div class="card-header" id="headingOne">
@@ -259,6 +258,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
         </div>
     </div>
     <!-- Past Events Only -->
+    <a name="completed"></a>
     <div id="accordion">
         <div class="card">
             <div class="card-header" id="headingTwo">
@@ -366,7 +366,6 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
             </div>
         </div>
     </div>
-    <hr>
 
 <?php
 /*
@@ -378,11 +377,10 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 |
 |
 */
-echo '<h4>Professional Interests</h4><h5>I\'m interested in learning about:</h5>';
+echo '<h3 class="top-padding">Professional Interests</h3><h5>I\'m interested in learning about:</h5>';
 echo '<div class="professional-interests">';
 echo do_shortcode( '[cwp_notify_em_cat]' );
 $user_id     = get_current_user_id();
 $member_link = bp_core_get_userlink( $user_id, '', true );
 echo '</div>';
 echo "<a href='{$member_link}professional-interests'><input class='right button c-button' type='button' value='Recommend Events'/></a>";
-echo '<hr>';
