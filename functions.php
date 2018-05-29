@@ -563,7 +563,7 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 			'Category:'                                                                      => 'Category',
 			'Submit %s'                                                                      => 'Post %s',
 			'You must log in to view and manage your events.'                                => 'You are using this site in the role as a Learner. Learners may search for, share, and print events. Only Organizers may post and edit events.',
-			'You are currently viewing your public page, this is what other users will see.' => 'This is your professional development activity page - a personal record of your training events, events you plan on </br> attending, and record of professional development hours you have accumulated. <p>To officially register for a professional development event you must contact the agency responsible for the training event.</p>',
+			'You are currently viewing your public page, this is what other users will see.' => '',
 			'Events'                                                                         => 'myEYPD',
 		);
 	}

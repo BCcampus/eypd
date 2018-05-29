@@ -134,6 +134,7 @@ if ( bp_is_my_profile() ) {
 |
 */
 echo '<h4>Training</h4>';
+echo '<p>Adding an event to myEYPD does not confirm your registration, nor does deleting an event cancel your registration. To officially register for a professional development event you must contact the agency responsible for the training event.</p>';
 echo do_shortcode( '[cwp_notify]' );
 
 $past_ids    = [];
