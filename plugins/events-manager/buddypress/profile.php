@@ -383,6 +383,7 @@ echo '<div class="professional-interests">';
 echo do_shortcode( '[cwp_notify_em_cat]' );
 $user_id     = get_current_user_id();
 $member_link = bp_core_get_userlink( $user_id, '', true );
+echo do_shortcode( '[contact-form-7 id="4014" title="Professional interest suggestion"]' );
 echo '</div>';
 echo "<a href='{$member_link}professional-interests'><input class='right button c-button' type='button' value='Recommend Events'/></a>";
 echo '<hr>';
