@@ -19,7 +19,7 @@ var svg = d3.select('.donut')
     .attr("class", "donut");
 
 var g = svg.append('g')
-    .attr('transform', 'translate(400, 150)');
+    .attr('transform', 'translate(200, 150)');
 
 var arcGraph = g.selectAll('path.slice')
     .data(slices)
@@ -59,4 +59,5 @@ svg.append('g')
     })
     .attr('y', function (d, i) {
         return 20 * (i + 1);
-    });
+    })
+    .attr('x', 400);
