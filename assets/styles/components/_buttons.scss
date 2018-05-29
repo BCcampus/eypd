@@ -14,7 +14,7 @@
   min-width: $tap-size;
   min-height: $tap-size;
   margin: 0;
-  padding: $unit*2 $unit*4;
+  padding: .5em 1.25em .6em;
   display: block;
 
   border-radius: 0;
@@ -29,7 +29,7 @@
   text-decoration: none;
   text-shadow: none;
   font-family: $font-family;
-  font-size: 18px;
+  font-size: $font-size - 2;
 
   cursor: pointer;
   user-select: none;
@@ -38,21 +38,27 @@
 
   appearance: none;
   -webkit-appearance: none;
-  -moz-appearance:    none;
+  -moz-appearance: none;
 }
 
-input.c-button.c--primary {
+input.c-button.c--primary, button {
   background: $color-brand-blue;
-
+  padding: .5em 1.25em .6em;
   color: $color-neutral-00;
-
+  font-size: $font-size - 2;
+  text-shadow: none;
+  border: none;
   &:active,
   &:hover,
   &:focus {
-      background: darken($color-brand-blue, 10%);
-      outline: none;
-      box-shadow: none;
-      border: none;
+    background: darken($color-brand-blue, 15%);
+    outline: none;
+    box-shadow: none;
+    border: none;
+    transition: all 0.3s ease-in-out;
+    padding: .5em 1.25em .6em;
+    color: $color-neutral-00;
+
   }
 }
 
