@@ -17,12 +17,14 @@ var color = d3.scaleOrdinal(d3.schemeCategory10);
 var svg = d3.select('.donut')
     .append('svg')
     .attr("class", "donut");
+
 var g = svg.append('g')
     .attr('transform', 'translate(400, 150)');
 
 var arcGraph = g.selectAll('path.slice')
     .data(slices)
     .enter();
+
 arcGraph.append('path')
     .attr('class', 'slice')
     .attr('d', arc)
@@ -34,7 +36,6 @@ arcGraph.append("text")
     .attr("transform", function (d) {
         return "translate(" + arc.centroid(d) + ")";
     })
-
     .attr("dy", "0.35em")
 
 // values in donut
@@ -51,11 +52,11 @@ svg.append('g')
     .enter()
     .append('text')
     .text(function (d) {
-        return d.data.value + ' - ' + d.data.label;
+        return d.data.value + ' hours - ' + d.data.label;
     })
     .attr('fill', function (d) {
         return color(d.data.label);
     })
     .attr('y', function (d, i) {
-        return 30 * (i + 1);
+        return 20 * (i + 1);
     });
