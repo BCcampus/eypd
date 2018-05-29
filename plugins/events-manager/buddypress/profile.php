@@ -64,7 +64,7 @@ if ( bp_is_my_profile() ) {
         </div>
     </form>
     </div>
-    <hr> <?php }
+<?php }
 
 /*
 |--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ if ( bp_is_my_profile() ) {
 
 if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
 	?>
-    <h4><?php _e( 'My posted events', 'events-manager' ); ?></h4>
+    <h3 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?></h3>
 	<?php
 	$args          = [
 		'owner'         => $bp->displayed_user->id,
@@ -100,7 +100,6 @@ if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
         </p>
 		<?php
 	}
-	echo '<hr>';
 }
 
 /*
@@ -119,9 +118,8 @@ if ( bp_is_my_profile() ) {
 
 	// Pass the data to donut.js
 	wp_localize_script( 'donut', 'donut_data', $chart_data_json );
-	echo '<h4>Event summary</h4>';
+	echo '<h3 class="top-padding">Event summary</h3>';
 	echo '<div class="donut"></div>';
-	echo '<hr>';
 }
 
 /*
@@ -133,7 +131,7 @@ if ( bp_is_my_profile() ) {
 |
 |
 */
-echo '<h4>Training</h4>';
+echo '<h3 class="top-padding">Training</h3>';
 echo '<p>Adding an event to myEYPD does not confirm your registration, nor does deleting an event cancel your registration. To officially register for a professional development event you must contact the agency responsible for the training event.</p>';
 echo do_shortcode( '[cwp_notify]' );
 
@@ -368,7 +366,6 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
             </div>
         </div>
     </div>
-    <hr>
 
 <?php
 /*
@@ -380,11 +377,10 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 |
 |
 */
-echo '<h4>Professional Interests</h4><h5>I\'m interested in learning about:</h5>';
+echo '<h3 class="top-padding">Professional Interests</h3><h5>I\'m interested in learning about:</h5>';
 echo '<div class="professional-interests">';
 echo do_shortcode( '[cwp_notify_em_cat]' );
 $user_id     = get_current_user_id();
 $member_link = bp_core_get_userlink( $user_id, '', true );
 echo '</div>';
 echo "<a href='{$member_link}professional-interests'><input class='right button c-button' type='button' value='Recommend Events'/></a>";
-echo '<hr>';
