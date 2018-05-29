@@ -28,17 +28,17 @@ echo $EM_Notices;
 if ( bp_is_my_profile() ) { ?>
     <div class="bg-info at-a-glance">
     <div class="certhours">
-		<?php
-		$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
-		// tally up the hours
-		$num = eypd_cumulative_hours( $user_hours );
-		$needed = ($num > 40 ) ? '0' : 40 - $num;
+	    <?php
+	    $user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', TRUE );
+	    // tally up the hours
+	    $num    = eypd_cumulative_hours( $user_hours );
+	    $needed = ( $num > 40 ) ? '0' : 40 - $num;
 
-		echo '<p><b>';
-		echo ( $num ) ? $num : '0';
-		echo '/40</b> certification hours <i>completed</i></p>';
-		echo '<p><b>' . $needed . '</b> certification hours <i>needed</i></p>';
-		?>
+	    echo '<p><b>';
+	    echo ( $num ) ? $num : '0';
+	    echo '/40</b> certification hours <a href="#completed">completed</a></p>';
+	    echo '<p><b>' . $needed . '</b> certification hours <a href="#needed">needed</a></p>';
+	    ?>
     </div>
 <?php } ?>
 
@@ -51,7 +51,7 @@ if ( isset( $_POST['expiry-date'] ) ) {
 	update_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', $newdate );
 }
 //get expiry date
-$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
+$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', TRUE );
 if ( bp_is_my_profile() ) {
 	?>
     <form id="eypd_countdown" class="eypd-countdown" action="" method="post">
@@ -170,6 +170,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 |
 */
 ?>
+    <a name="needed"></a>
     <div id="accordion">
         <div class="card">
             <div class="card-header" id="headingOne">
@@ -259,6 +260,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
         </div>
     </div>
     <!-- Past Events Only -->
+    <a name="completed"></a>
     <div id="accordion">
         <div class="card">
             <div class="card-header" id="headingTwo">
