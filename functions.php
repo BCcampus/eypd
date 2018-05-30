@@ -1569,7 +1569,7 @@ add_action( 'admin_menu', function () {
 		echo '<div class="wrap"><form action="options.php" method="post">';
 		settings_fields( 'eypd_options' );
 		do_settings_sections( 'eypd_options' );
-		submit_button( 'Send suggestion' );
+		submit_button();
 		echo '</form>';
 	} );
 
