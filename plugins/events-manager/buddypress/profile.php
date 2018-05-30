@@ -383,7 +383,39 @@ echo '<div class="professional-interests">';
 echo do_shortcode( '[cwp_notify_em_cat]' );
 $user_id     = get_current_user_id();
 $member_link = bp_core_get_userlink( $user_id, '', true );
-echo do_shortcode( '[contact-form-7 id="4014" title="Professional interest suggestion"]' );
+
+/*
+|--------------------------------------------------------------------------
+| Professional Interests Suggestion form
+|--------------------------------------------------------------------------
+|
+|  Looks for the suggestion form by title "Suggestion Form"
+|  Does nothing if contact form 7 plugin is not installed
+|
+*/
+
+if ( class_exists( 'WPCF7' ) ) {
+
+// get contact forms
+	$args     = array( 'post_type' => 'wpcf7_contact_form', 'posts_per_page' => - 1 );
+	$cf7Forms = get_posts( $args );
+
+// extract titles and ids
+	foreach ( $cf7Forms as $f ) {
+		$forms[] = [ 'Title' => $f->post_title, 'ID' => $f->ID ];
+	}
+
+// look for the form by title, get it's key
+	$key = 	array_search( 'Suggestion Forms', array_column( $forms, 'Title' ) );
+	// if exists do shortcode, use key to get the right values
+	if ( $key !== FALSE ) {
+		echo do_shortcode( "[contact-form-7 id='{$forms[$key]['ID']}' title='{$forms[$key]['Title']}']" );
+	} // friendly message for admin with instructions how to set up form
+	else if(current_user_can('activate_plugins')) {
+		echo "You can enable a form here by creating one named 'Suggestion Form'. This message is only visible to website admins.";
+	}
+}
+
 echo '</div>';
 echo "<a href='{$member_link}professional-interests'><input class='right button c-button' type='button' value='Recommend Events'/></a>";
 echo '<hr>';
