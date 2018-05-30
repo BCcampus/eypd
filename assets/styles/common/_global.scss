@@ -79,7 +79,6 @@ input[type="checkbox"],
 input[type="radio"] {
   width: 17px;
   height: 17px;
-  margin: 3px 3px 0;
 }
 
 select {
@@ -99,6 +98,7 @@ select {
 
 label {
   text-transform: none;
+  line-height: 1.5em;
 }
 
 
