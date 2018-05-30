@@ -406,13 +406,13 @@ if ( class_exists( 'WPCF7' ) ) {
 	}
 
 // look for the form by title, get it's key
-	$key = 	array_search( 'Suggestion Forms', array_column( $forms, 'Title' ) );
+	$key = 	array_search( 'Suggestion Form', array_column( $forms, 'Title' ) );
 	// if exists do shortcode, use key to get the right values
 	if ( $key !== FALSE ) {
 		echo do_shortcode( "[contact-form-7 id='{$forms[$key]['ID']}' title='{$forms[$key]['Title']}']" );
 	} // friendly message for admin with instructions how to set up form
 	else if(current_user_can('activate_plugins')) {
-		echo "You can enable a form here by creating one named 'Suggestion Form'. This message is only visible to website admins.";
+		echo "You can enable a form here by creating one in Contact Form 7 named 'Suggestion Form'. This message is only visible to website admins.";
 	}
 }
 
