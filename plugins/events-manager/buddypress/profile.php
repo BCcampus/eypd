@@ -394,9 +394,11 @@ echo "<a href='{$member_link}professional-interests'><input class='right button 
 |
 |
 */
-$options = get_option('eypd_settings');
-if (isset($options['contact_form_id']) && 0 !== $options['contact_form_id'] ){
-    $id = $options['contact_form_id'];
-    echo '<p class="top-padding">Don\'t see what you\'re looking for? Make a suggestion. If there\'s enough interest and workshop facilitators available, we\'ll update our calendar with new events.</p>';
-    echo do_shortcode("[contact-form-7 id='$id']");
+if ( bp_is_my_profile() ) {
+	$options = get_option( 'eypd_settings' );
+	if ( isset( $options['contact_form_id'] ) && 0 !== $options['contact_form_id'] ) {
+		$id = $options['contact_form_id'];
+		echo '<p class="top-padding">Don\'t see what you\'re looking for? Make a suggestion. If there\'s enough interest and workshop facilitators available, we\'ll update our calendar with new events.</p>';
+		echo do_shortcode( "[contact-form-7 id='$id']" );
+	}
 }
