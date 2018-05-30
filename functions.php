@@ -1272,12 +1272,11 @@ function eypd_datepicker_countdown() {
 
 add_action( 'wp_footer', 'eypd_datepicker_countdown', 10 );
 
-add_action( 'admin_init', 'eypd_dependencies_check' );
 
 /**
- * Check for dependencies, add admin notice
+ * check for dependencies
  */
-function eypd_dependencies_check() {
+add_action( 'admin_init', function () {
 
 	if ( file_exists( $composer = get_stylesheet_directory() . '/vendor/autoload.php' ) ) {
 		include $composer;
@@ -1285,11 +1284,11 @@ function eypd_dependencies_check() {
 		// Remind to install dependencies
 		add_action(
 			'admin_notices', function () {
-				echo '<div id="message" class="notice notice-warning is-dismissible"><p>' . __( 'EYPD theme dependency missing, please run composer install. ' ) . '</p></div>';
-			}
+			echo '<div id="message" class="notice notice-warning is-dismissible"><p>' . __( 'EYPD theme dependency missing, please run composer install. ' ) . '</p></div>';
+		}
 		);
 	}
-}
+} );
 
 /**
  * Fires when there is an update to the web theme version
@@ -1492,3 +1491,86 @@ add_action(
 		}
 	}, 2
 );
+
+/*
+|--------------------------------------------------------------------------
+| Theme Options Page
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+/**
+ * add options page section and fields
+ */
+add_action( 'admin_init', function () {
+	$page = $options = 'eypd_options';
+
+	register_setting(
+		$options,
+		'eypd_settings',
+		'eypd_sanitize'
+	);
+
+	add_settings_section(
+		$options . '_section',
+		__( 'General Settings', 'early-years' ),
+		'',
+		$page
+	);
+
+	add_settings_field(
+		'contact_form_id',
+		__( 'Contact form field ID', 'early-years' ),
+		'eypd_render_cf7',
+		$page,
+		$options . '_section'
+	);
+
+} );
+
+/**
+ * render the input field for the form
+ */
+function eypd_render_cf7() {
+	$options = get_option( 'eypd_settings' );
+
+	// add default
+	if ( ! isset( $options['contact_form_id'] ) ) {
+		$options['contact_form_id'] = '';
+	}
+
+	echo "<input type='text' name='eypd_settings[contact_form_id]' value='{$options['contact_form_id']}'>";
+
+}
+
+/**
+ * sanitize the input field from settings form
+ *
+ * @param $settings
+ *
+ * @return mixed
+ */
+function eypd_sanitize( $settings ) {
+
+	if ( isset( $settings['contact_form_id'] ) ) {
+		$settings['contact_form_id'] = absint( $settings['contact_form_id'] );
+	}
+
+	return $settings;
+}
+
+/**
+ * add theme options page
+ */
+add_action( 'admin_menu', function () {
+	add_submenu_page( 'themes.php', 'EYPD Options Page', 'EYPD Options', 'manage_options', 'eypd-options', function () {
+		echo '<div class="wrap"><form action="options.php" method="post">';
+		settings_fields( 'eypd_options' );
+		do_settings_sections( 'eypd_options' );
+		submit_button();
+		echo '</form>';
+	} );
+
+} );
