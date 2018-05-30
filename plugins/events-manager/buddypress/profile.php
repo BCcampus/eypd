@@ -384,3 +384,19 @@ $user_id     = get_current_user_id();
 $member_link = bp_core_get_userlink( $user_id, '', true );
 echo '</div>';
 echo "<a href='{$member_link}professional-interests'><input class='right button c-button' type='button' value='Recommend Events'/></a>";
+
+/*
+|--------------------------------------------------------------------------
+| Suggestions
+|--------------------------------------------------------------------------
+|
+| Send suggestions
+|
+|
+*/
+$options = get_option('eypd_settings');
+if (isset($options['contact_form_id']) && 0 !== $options['contact_form_id'] ){
+    $id = $options['contact_form_id'];
+    echo '<p class="top-padding">Don\'t see what you\'re looking for? Make a suggestion. If there\'s enough interest and workshop facilitators available, we\'ll update our calendar with new events.</p>';
+    echo do_shortcode("[contact-form-7 id='$id']");
+}
