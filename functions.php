@@ -1541,7 +1541,7 @@ function eypd_render_cf7() {
 		$options['contact_form_id'] = '';
 	}
 
-	echo "<input type='text' name='eypd_settings[contact_form_id]' value='{$options['contact_form_id']}'>";
+	echo "<input type='text' name='eypd_settings[contact_form_id]' value='{$options['contact_form_id']}'><small> A numeric value from a field ID in Contact Form 7</small>";
 
 }
 
