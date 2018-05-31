@@ -70,7 +70,6 @@ if ( empty( $_REQUEST['success'] ) ) {
 				   value="<?php echo esc_attr( $EM_Event->event_name, ENT_QUOTES ); ?>"/>
 			<br/>
 			<i><?php esc_html_e( 'The event name. Example: Birthday party', 'events-manager' ); ?></i>
-			<?php em_locate_template( 'forms/event/group.php', true ); ?>
 		</div>
 
 		<h3 class="event-form-when"><?php esc_html_e( 'When', 'events-manager' ); ?></h3>
