@@ -250,13 +250,20 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
         </div>
 
     <!-- Past Events, only displayed if there are any -->
+<?php
 
-	<?php if ($past_count > 0) { ?>
+// Get count of events user has selected as attended
+if ( bp_is_my_profile() ) {
+	$user_hours_meta = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', TRUE );
+	$attended        = array_count_values( $user_hours_meta );
+	( $attended['1'] === NULL ) ? $attended_count = '0' : $attended_count = $attended['1'];
+
+if ($past_count > 0) { ?>
     <a name="completed"></a>
     <div id="accordion">
 	    <div class="card">
 		    <h5><?php _e( "Past Events (", 'events-manager' );
-			    echo $past_count; ?>)
+			    echo  $attended_count . '/' . $past_count; ?>)
 		    </h5>
 
 		    <div class="card-header" id="headingTwo">
@@ -297,7 +304,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 									<?php
 									$nonce = wp_create_nonce( 'eypd_cert_hours' );
 									$count = 0;
-									// save number of hours in the users profile
+									// get number of hours in the users profile
 									$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
 
 									foreach ( $EM_Bookings
@@ -324,7 +331,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
                                                    type='radio' <?php if ( ! isset( $user_hours[ $event_id ] ) ) {
 												$user_hours[ $event_id ] = '';
 											}
-											echo ( $user_hours[ $event_id ] || ! isset( $user_hours[ $event_id ] ) ) ? 'checked="checked"' : ''; ?> />
+											echo ( $user_hours[ $event_id ] || ! isset( $user_hours[ $event_id ] ) ) ? 'checked="checked"'  : ''; ?> />
                                         </td>
 
                                         <td>
@@ -363,7 +370,10 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
             </div>
         </div>
     </div>
-	<?php } // end past events
+<?php } // end past events
+} // end bp_is_profile condition
+
+
 /*
 |--------------------------------------------------------------------------
 | Professional Interests
