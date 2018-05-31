@@ -260,21 +260,24 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
     <!-- Past Events Only -->
     <a name="completed"></a>
     <div id="accordion">
-        <div class="card">
-            <div class="card-header" id="headingTwo">
-                <a id="past" class="btn collapsed" data-toggle="collapse"
-                   data-target="#collapseTwo"
-                   aria-expanded="false" aria-controls="collapseTwo">
-                    <h5><?php _e( "Past Events (", 'events-manager' );
-						echo $past_count; ?>) <i
-                                class="glyphicon glyphicon-triangle-right"
-                                aria-hidden="true"></i>
-                    </h5>
-                </a>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                 data-parent="#accordion">
-                <div class="card-body">
+	    <div class="card">
+		    <h5><?php _e( "Past Events (", 'events-manager' );
+			    echo $past_count; ?>)
+		    </h5>
+
+		    <div class="card-header" id="headingTwo">
+			    <a id="past" class="btn collapsed" data-toggle="collapse"
+			       data-target="#collapseTwo"
+			       aria-expanded="false" aria-controls="collapseTwo">
+				    Expand to see all past events<i
+					    class="glyphicon glyphicon-triangle-right"
+					    aria-hidden="true"></i>
+			    </a>
+		    </div>
+
+		    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+	             data-parent="#accordion">
+		        <div class="card-body">
 					<?php
 					if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
                         <div class='table-wrap'>
