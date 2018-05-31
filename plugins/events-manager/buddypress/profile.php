@@ -172,18 +172,10 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
     <div id="accordion">
         <div class="card">
             <div class="card-header" id="headingOne">
-                <a id="future" class="btn collapsed future"
-                   data-toggle="collapse" data-target="#collapseOne"
-                   aria-expanded="false" aria-controls="collapseOne">
-                    <h5><?php _e( "Upcoming Events (", 'events-manager' );
-						echo $future_count; ?>) <i
-                                class="glyphicon glyphicon-triangle-right"
-                                aria-hidden="true"></i>
+                    <h5 class="future"><?php _e( "Upcoming Events (", 'events-manager' );
+						echo $future_count; ?>)
                     </h5>
-                </a>
             </div>
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-                 data-parent="#accordion">
                 <div class="card-body">
 
 					<?php
@@ -256,8 +248,10 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Past Events Only -->
+
+    <!-- Past Events, only displayed if there are any -->
+
+	<?php if ($past_count > 0) { ?>
     <a name="completed"></a>
     <div id="accordion">
 	    <div class="card">
@@ -369,8 +363,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
             </div>
         </div>
     </div>
-
-<?php
+	<?php } // end past events
 /*
 |--------------------------------------------------------------------------
 | Professional Interests
