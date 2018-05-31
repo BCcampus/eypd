@@ -78,7 +78,7 @@ if ( bp_is_my_profile() ) {
 
 if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
 	?>
-    <h3 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?></h3>
+    <h2 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?></h2>
 	<?php
 	$args          = [
 		'owner'         => $bp->displayed_user->id,
@@ -118,7 +118,7 @@ if ( bp_is_my_profile() ) {
 
 	// Pass the data to donut.js
 	wp_localize_script( 'donut', 'donut_data', $chart_data_json );
-	echo '<h3 class="top-padding">Event summary</h3>';
+	echo '<h2 class="top-padding">Event summary</h2>';
 	echo '<div class="donut"></div>';
 }
 
@@ -131,7 +131,7 @@ if ( bp_is_my_profile() ) {
 |
 |
 */
-echo '<h3 class="top-padding">Training</h3>';
+echo '<h2 class="top-padding">Training</h2>';
 echo '<p>Adding an event to myEYPD does not confirm your registration, nor does deleting an event cancel your registration. To officially register for a professional development event you must contact the agency responsible for the training event.</p>';
 echo do_shortcode( '[cwp_notify]' );
 
@@ -383,10 +383,28 @@ if ($past_count > 0) { ?>
 |
 |
 */
-echo '<h3 class="top-padding">Professional Interests</h3><h5>I\'m interested in learning about:</h5>';
+echo '<h2 class="top-padding">Professional Interests</h2><h5>I\'m interested in learning about:</h5>';
 echo '<div class="professional-interests">';
 echo do_shortcode( '[cwp_notify_em_cat]' );
 $user_id     = get_current_user_id();
 $member_link = bp_core_get_userlink( $user_id, '', true );
 echo '</div>';
 echo "<a href='{$member_link}professional-interests'><input class='right button c-button' type='button' value='Recommend Events'/></a>";
+
+/*
+|--------------------------------------------------------------------------
+| Suggestions
+|--------------------------------------------------------------------------
+|
+| Send suggestions
+|
+|
+*/
+if ( bp_is_my_profile() ) {
+	$options = get_option( 'eypd_settings' );
+	if ( isset( $options['contact_form_id'] ) && 0 !== $options['contact_form_id'] ) {
+		$id = $options['contact_form_id'];
+		echo '<p class="top-padding">Don\'t see what you\'re looking for? Make a suggestion. If there\'s enough interest and workshop facilitators available, we\'ll update our calendar with new events.</p>';
+		echo do_shortcode( "[contact-form-7 id='$id']" );
+	}
+}

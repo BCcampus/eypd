@@ -12,7 +12,6 @@
 
 .c-button {
   min-width: $tap-size;
-  min-height: $tap-size;
   margin: 0;
   padding: .5em 1.25em .6em;
   display: block;
@@ -43,11 +42,12 @@
 
 input.c-button.c--primary, button {
   background: $color-brand-blue;
-  padding: .5em 1.25em .6em;
+  padding: .6em 1.25em .5em;
   color: $color-neutral-00;
   font-size: $font-size - 2;
   text-shadow: none;
   border: none;
+  font-family: $font-family;
   &:active,
   &:hover,
   &:focus {
@@ -55,7 +55,7 @@ input.c-button.c--primary, button {
     outline: none;
     box-shadow: none;
     border: none;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
     padding: .5em 1.25em .6em;
     color: $color-neutral-00;
 
