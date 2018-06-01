@@ -172,9 +172,9 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
     <div id="accordion">
         <div class="card">
             <div class="card-header" id="headingOne">
-                    <h5 class="future"><?php _e( "Upcoming Events (", 'events-manager' );
+                    <h3 class="future"><?php _e( "Upcoming Events (", 'events-manager' );
 						echo $future_count; ?>)
-                    </h5>
+                    </h3>
             </div>
                 <div class="card-body">
 
@@ -262,9 +262,9 @@ if ($past_count > 0) { ?>
     <a name="completed"></a>
     <div id="accordion">
 	    <div class="card">
-		    <h5><?php _e( "Past Events (", 'events-manager' );
+		    <h3><?php _e( "Past Events (", 'events-manager' );
 			    echo  $attended_count . '/' . $past_count; ?>)
-		    </h5>
+		    </h3>
 
 		    <div class="card-header" id="headingTwo">
 			    <a id="past" class="btn collapsed" data-toggle="collapse"
