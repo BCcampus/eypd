@@ -172,18 +172,10 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
     <div id="accordion">
         <div class="card">
             <div class="card-header" id="headingOne">
-                <a id="future" class="btn collapsed future"
-                   data-toggle="collapse" data-target="#collapseOne"
-                   aria-expanded="false" aria-controls="collapseOne">
-                    <h5><?php _e( "Upcoming Events (", 'events-manager' );
-						echo $future_count; ?>) <i
-                                class="glyphicon glyphicon-triangle-right"
-                                aria-hidden="true"></i>
-                    </h5>
-                </a>
+                    <h3 class="future"><?php _e( "Upcoming Events (", 'events-manager' );
+						echo $future_count; ?>)
+                    </h3>
             </div>
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
-                 data-parent="#accordion">
                 <div class="card-body">
 
 					<?php
@@ -256,25 +248,37 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Past Events Only -->
+
+    <!-- Past Events, only displayed if there are any -->
+<?php
+
+// Get count of events user has selected as attended
+if ( bp_is_my_profile() ) {
+	$user_hours_meta = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', TRUE );
+	$attended        = array_count_values( $user_hours_meta );
+	( $attended['1'] === NULL ) ? $attended_count = '0' : $attended_count = $attended['1'];
+
+if ($past_count > 0) { ?>
     <a name="completed"></a>
     <div id="accordion">
-        <div class="card">
-            <div class="card-header" id="headingTwo">
-                <a id="past" class="btn collapsed" data-toggle="collapse"
-                   data-target="#collapseTwo"
-                   aria-expanded="false" aria-controls="collapseTwo">
-                    <h5><?php _e( "Past Events (", 'events-manager' );
-						echo $past_count; ?>) <i
-                                class="glyphicon glyphicon-triangle-right"
-                                aria-hidden="true"></i>
-                    </h5>
-                </a>
-            </div>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                 data-parent="#accordion">
-                <div class="card-body">
+	    <div class="card">
+		    <h3><?php _e( "Past Events (", 'events-manager' );
+			    echo  $attended_count . '/' . $past_count; ?>)
+		    </h3>
+
+		    <div class="card-header" id="headingTwo">
+			    <a id="past" class="btn collapsed" data-toggle="collapse"
+			       data-target="#collapseTwo"
+			       aria-expanded="false" aria-controls="collapseTwo">
+				    Expand to see all past events<i
+					    class="glyphicon glyphicon-triangle-right"
+					    aria-hidden="true"></i>
+			    </a>
+		    </div>
+
+		    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+	             data-parent="#accordion">
+		        <div class="card-body">
 					<?php
 					if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
                         <div class='table-wrap'>
@@ -300,7 +304,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
 									<?php
 									$nonce = wp_create_nonce( 'eypd_cert_hours' );
 									$count = 0;
-									// save number of hours in the users profile
+									// get number of hours in the users profile
 									$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
 
 									foreach ( $EM_Bookings
@@ -327,7 +331,7 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
                                                    type='radio' <?php if ( ! isset( $user_hours[ $event_id ] ) ) {
 												$user_hours[ $event_id ] = '';
 											}
-											echo ( $user_hours[ $event_id ] || ! isset( $user_hours[ $event_id ] ) ) ? 'checked="checked"' : ''; ?> />
+											echo ( $user_hours[ $event_id ] || ! isset( $user_hours[ $event_id ] ) ) ? 'checked="checked"'  : ''; ?> />
                                         </td>
 
                                         <td>
@@ -366,8 +370,10 @@ if ( count( $EM_Bookings->bookings ) > 0 ) {
             </div>
         </div>
     </div>
+<?php } // end past events
+} // end bp_is_profile condition
 
-<?php
+
 /*
 |--------------------------------------------------------------------------
 | Professional Interests
