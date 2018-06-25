@@ -1,4 +1,5 @@
 ### Early Years Professional Development Child Theme ###
+[![Build Status](https://travis-ci.com/BCcampus/eypd.svg?branch=dev)](https://travis-ci.com/BCcampus/eypd)
 
 #### About ####
 The Early Years Website is intended to support access and coordination of professional development opportunities for those who work in the early years sector in British Columbia.
