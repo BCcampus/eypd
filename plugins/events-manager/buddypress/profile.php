@@ -297,9 +297,9 @@ if ( bp_is_my_profile() ) { ?>
                                                 <th class='event-hours'
                                                     scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
                                                 <th class='event-attendance'
-                                                    scope='col'><?php _e( 'Attended', 'events-manager' ); ?></th>
+                                                    scope='col'><?php _e( 'Attended (' . $attended_count . ')', 'events-manager' ); ?></th>
                                                 <th class='event-attendance'
-                                                    scope='col'><?php _e( 'Did Not Attend', 'events-manager' ); ?></th>
+                                                    scope='col'><?php _e( 'Did Not Attend (' . ( $past_count - $attended_count ) . ')', 'events-manager' ); ?></th>
                                             </tr>
                                             </thead>
                                             <tbody>
