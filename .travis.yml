@@ -12,7 +12,7 @@ branches:
   - dev
   - "/\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
 env:
-- WP_VERSION=latest
+- WP_VERSION=latest TRAVIS_NODE_VERSION="6"
 cache:
   apt: true
   directories:
@@ -21,6 +21,7 @@ cache:
   - vendor
 before_install:
 - sudo apt-get -qq update
+- source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION && nvm use $TRAVIS_NODE_VERSION
 install:
 - node -v
 - npm install -g yarn
