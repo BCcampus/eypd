@@ -1,0 +1,51 @@
+language: php
+php:
+- 7.0.29
+- 7.1.18
+sudo: required
+notifications:
+  email:
+    on_success: never
+    on_failure: change
+branches:
+  only:
+  - dev
+  - "/\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
+env:
+- WP_VERSION=latest
+cache:
+  apt: true
+  directories:
+  - "$HOME/.composer/cache"
+  - node_modules
+  - vendor
+before_install:
+- sudo apt-get -qq update
+install:
+- composer install
+before_script:
+- if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.1" ]] && php -v | grep -q 'Xdebug'; then phpenv
+  config-rm xdebug.ini; fi
+- bash bin/install-wp-tests.sh eypd_test root '' localhost $WP_VERSION
+script:
+- vendor/bin/phpunit --configuration phpunit.xml
+before_deploy:
+- export TRAVIS_PROJECT_SLUG="$(basename $TRAVIS_BUILD_DIR)"
+- curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+- chmod +x wp-cli.phar
+- sudo mv wp-cli.phar /usr/local/bin/wp
+- wp package install wp-cli/dist-archive-command
+- composer install --no-dev --optimize-autoloader
+- cd ../
+- wp dist-archive $TRAVIS_PROJECT_SLUG $TRAVIS_BUILD_DIR/$TRAVIS_PROJECT_SLUG-$TRAVIS_TAG.zip
+- cd $TRAVIS_BUILD_DIR
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: XfcK3xMiLq0BjhCcoaidH4jadCTBKr7N3HZEhOSTYkvPAm/SsDg+kKIetPE3GefAlzITJXhOQov7V8rVwwXf8sV1rd0DRoPeO2xz7G+tGq4uf63saiV1iTgtl6hZO9QsKVmFk0wiXGkxRr00FlptUDMzqQ28TVYTDllPzx2YFlHbokH7dipkqelbudBFVUH9Tn4GYfUNpSzT98tVsNTVA8vTJb1Q48jXCavMNk3S8+jFc9dQXUMxd9hXtJdnfWO6vgcyNrRzXSkyu64opVdtlwjfuIGBjRaGIvcfkziEI9crG6FyyhPBfJMita0EHalN7qmBD31eVngpAwgWcW3MywLxQ+4b9fMcIJLR/rizbWxTK2ztLIeRn+aFhq0AJ8ntVbuz/K7/+BiZcXIlQh4yg0JS8dNaZG6fpdbUVAM3oPTEMn5FyngLIK0cSucClJ7wWX/TwemJ95vs/1cmi2YKGADGksPoxGWZyMUcq2W1PBXDP1Vt5BKZHMMFNjdDg62zfP0Dp8I5g3emJWjOu0afBM76k1oYo68FsImxkHAhOFprxLOzCYGAtNjvjmXX2RzNt/CYp+NwdyLbyMeET6hjpPlDYj7+0eYZmGjmIzojNRBiTJi0JX8je9QXGaO5C8U44O8Bu8e0NCXJcKI/z6MYZP+tOxeS6CfkNlQMe0KLTMg=
+  file: eypd-$TRAVIS_TAG.zip
+  on:
+    tags: true
+    repo: BCcampus/eypd
+    branch: dev

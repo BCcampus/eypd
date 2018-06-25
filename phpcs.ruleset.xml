@@ -27,7 +27,7 @@
     <rule ref="Generic.NamingConventions.UpperCaseConstantName"/>
 
     <!-- Disable Side Effects rule for bootstrapping file, extends WordPress core, cron scripts -->
-
+	<exclude-pattern>/bin/*</exclude-pattern>
     <exclude-pattern>/vendor/*</exclude-pattern>
 
 </ruleset>
