@@ -780,14 +780,16 @@ add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
 add_filter(
 	'wp_nav_menu_items', function ( $nav, $args ) {
 		if ( $args->theme_location == 'main-menu' ) {
+			// adds home link to mobile only using bootstraps responsive utilities class
+			$nav = '<li class="visible-xs-block home"><a href=' . home_url() . '>Home</a></li>';
 			if ( is_user_logged_in() ) {
-				$nav = '<li class="home"><a href=' . home_url() . '/post-event>Post an Event</a></li>';
+				$nav .= '<li class="home"><a href=' . home_url() . '/post-event>Post an Event</a></li>';
 				$nav .= '<li class="home"><a href=' . home_url() . '/edit-events>Edit Events</a></li>';
 				$nav .= '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
 			} else {
 				//add popover with a message, and login and sign-up links
 				$popover = '<li class="home"><a href="#" data-container="body"  role="button"  data-toggle="popover" data-placement="bottom" data-html="true" data-original-title="" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to ';
-				$nav     = $popover . 'post events.">Post an Event</a></li>';
+				$nav     .= $popover . 'post events.">Post an Event</a></li>';
 				$nav     .= $popover . 'edit your events.">Edit Event</a></li>';
 				$nav     .= $popover . ' view your events."><i>my</i>EYPD</a></li>';
 			}
