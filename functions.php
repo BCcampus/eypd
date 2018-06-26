@@ -1258,7 +1258,7 @@ function eypd_datepicker_countdown() {
 						// expired
 						if (distance < 0) {
 							clearInterval(x);
-							document.getElementById("certcoutdown").innerHTML = "<p>Your certificate has expired</p>";
+							document.getElementById("certcoutdown").innerHTML = "<p class='expired'>Your certificate has expired. Please update your account with a new expiry date.</p>";
 						}
 						// date in the future
 						else if (countDownDate) {
@@ -1268,7 +1268,7 @@ function eypd_datepicker_countdown() {
 						// no date
 						else {
 							clearInterval(x);
-							document.getElementById("certcoutdown").innerHTML = "<p>Please enter the expiry date of your professional certification.</p>";
+							document.getElementById("certcoutdown").innerHTML = "<p class='expired'>Please enter the expiry date of your professional certification.</p>";
 						}
 					}, 1000);
 				});
