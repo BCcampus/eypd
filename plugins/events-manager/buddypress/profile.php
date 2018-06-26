@@ -263,7 +263,7 @@ if ( bp_is_my_profile() ) { ?>
             <div id="accordion">
                 <div class="card">
                     <h3 class="top-padding"><?php _e( "Past Events (", 'events-manager' );
-						echo $attended_count . '/' . $past_count; ?>)
+						echo $attended_count . '/' . $past_count . ' attended'; ?>)
                     </h3>
 
                     <div class="card-header" id="headingTwo">
