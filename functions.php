@@ -8,7 +8,8 @@
 |
 |
 */
-if ( file_exists( $composer = __DIR__ . '/vendor/autoload.php' ) ) {
+$composer = __DIR__ . '/vendor/autoload.php';
+if ( file_exists( $composer ) ) {
 	include_once $composer;
 }
 
@@ -1274,23 +1275,6 @@ function eypd_datepicker_countdown() {
 
 add_action( 'wp_footer', 'eypd_datepicker_countdown', 10 );
 
-
-/**
- * check for dependencies
- */
-add_action( 'admin_init', function () {
-
-	if ( file_exists( $composer = get_stylesheet_directory() . '/vendor/autoload.php' ) ) {
-		include $composer;
-	} else {
-		// Remind to install dependencies
-		add_action(
-			'admin_notices', function () {
-			echo '<div id="message" class="notice notice-warning is-dismissible"><p>' . __( 'EYPD theme dependency missing, please run composer install. ' ) . '</p></div>';
-		}
-		);
-	}
-} );
 
 /**
  * Fires when there is an update to the web theme version
