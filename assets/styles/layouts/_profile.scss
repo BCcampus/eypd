@@ -20,12 +20,17 @@
   display: none;
 }
 
-#item-body > div.donut > svg{
+#item-body > div.donut > svg {
   min-width: 600px;
   min-height: 300px;
   width: 100%;
 }
 
-h3 .future  {
+h3 .future {
   padding: 6px 12px;
 }
+
+i.glyphicon.glyphicon-triangle-right, i.glyphicon.glyphicon-triangle-bottom {
+  pointer-events: none;
+}
+
