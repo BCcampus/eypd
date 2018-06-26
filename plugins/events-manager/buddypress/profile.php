@@ -56,6 +56,7 @@ if ( bp_is_my_profile() ) { ?>
         <form id="eypd_countdown" class="eypd-countdown" action=""
               method="post">
             <div class="certexpire">
+	            <label for="expiry-date">Certificate Expiration</label>
                 <input id="expiry-date" value="<?php if ( $cert_expires ) {
 					echo $cert_expires;
 				} else { ?>Select date...<?php } ?>" name="expiry-date"/>
