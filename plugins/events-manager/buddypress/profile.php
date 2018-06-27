@@ -119,7 +119,6 @@ if ( bp_is_my_profile() ) { ?>
 	$cert_hours       = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', TRUE );
 	$chart_data_array = eypd_hours_and_categories( $cert_hours );
 	$chart_data_json  = eypd_d3_array( $chart_data_array );
-
 	// Pass the data to donut.js
 	wp_localize_script( 'donut', 'donut_data', $chart_data_json );
 	$no_donut = get_stylesheet_directory_uri() . '/dist/images/donut_placeholder.png';
