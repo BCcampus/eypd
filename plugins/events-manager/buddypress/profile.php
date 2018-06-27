@@ -16,6 +16,9 @@
 global $bp, $EM_Notices;
 echo $EM_Notices;
 
+echo "<div class='row'><p class='desc col-md-8'>This is your professional development activity page - a personal record of your training events, events you plan on 
+attending, and record of professional development hours you have accumulated.</p></div>";
+
 /*
 |--------------------------------------------------------------------------
 | Certificate hours

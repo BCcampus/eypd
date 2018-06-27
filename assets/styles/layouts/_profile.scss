@@ -39,6 +39,15 @@ label[for=expiry-date] {
   padding-top: 15px;
 }
 
-#certcoutdown p.expired{
+#certcoutdown p.expired {
   color: red;
+}
+
+p.desc.col-md-8 {
+  padding-bottom: 1em;
+}
+
+.btn:active {
+  -webkit-box-shadow:none;
+          box-shadow:none;
 }
