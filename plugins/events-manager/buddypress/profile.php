@@ -194,6 +194,7 @@ if ( bp_is_my_profile() ) { ?>
 							<th class="event-description" width="*">Upcoming
 								Event
 							</th>
+							<th>Register Link</th>
 							<?php if ( is_user_logged_in() ) {
 								echo '<th class="event-delete">Delete this event from my profile</th>';
 }
@@ -215,7 +216,14 @@ if ( bp_is_my_profile() ) { ?>
 								<td><?php echo $EM_Event->output( '#_EVENTDATES<br/>#_EVENTTIMES' ); ?></td>
 								<td><?php echo $EM_Event->output( '#_EVENTLINK
                 {has_location}<br/><i>#_LOCATIONNAME, #_LOCATIONTOWN #_LOCATIONSTATE</i>{/has_location}' ); ?></td>
-
+								<?php
+								$attributes = $EM_Event->event_attributes;
+								if ( ! empty( $attributes['Registration Link'] ) ) {
+									$maybe_url = eypd_maybe_url( $attributes['Registration Link'] );
+								};
+								$link = ( $maybe_url ) ? "<a href='{$maybe_url}' target='_blank'>Registration Link</a>" : "<a href='{$EM_Event->guid}'>Contact Organizer to Register</a>";
+								?>
+								<td><?php echo $link; ?></td>
 								<?php if ( is_user_logged_in() ) {
 									echo '<td>';
 									$cancel_link = '';
