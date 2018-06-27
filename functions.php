@@ -210,8 +210,15 @@ if ( function_exists( 'em_content' ) ) {
 if ( function_exists( 'em_content' ) ) {
 	remove_filter( 'init', 'em_init_actions' );
 }
-require get_stylesheet_directory() . '/eypd-actions.php';
-require get_stylesheet_directory() . '/eypd-events.php';
+
+$eypd_actions = get_stylesheet_directory() . '/eypd-actions.php';
+$eypd_events  = get_stylesheet_directory() . '/eypd-events.php';
+if ( file_exists( $eypd_actions ) ) {
+	require $eypd_actions;
+}
+if ( file_exists( $eypd_events ) ) {
+	require $eypd_events;
+}
 
 /*
 |--------------------------------------------------------------------------
