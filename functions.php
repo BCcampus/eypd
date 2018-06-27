@@ -210,8 +210,15 @@ if ( function_exists( 'em_content' ) ) {
 if ( function_exists( 'em_content' ) ) {
 	remove_filter( 'init', 'em_init_actions' );
 }
-require get_stylesheet_directory() . '/eypd-actions.php';
-require get_stylesheet_directory() . '/eypd-events.php';
+
+$eypd_actions = get_stylesheet_directory() . '/eypd-actions.php';
+$eypd_events  = get_stylesheet_directory() . '/eypd-events.php';
+if ( file_exists( $eypd_actions ) ) {
+	require $eypd_actions;
+}
+if ( file_exists( $eypd_events ) ) {
+	require $eypd_events;
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -1576,3 +1583,29 @@ add_action(
 
 	}
 );
+
+/**
+ * Attempts to make a valid url from a string such as: url.ca
+ *
+ * @param $url
+ *
+ * @return bool|false|string
+ */
+function eypd_maybe_url( $url ) {
+	if ( is_null( $url ) ) {
+		return false;
+	}
+
+	$parts = wp_parse_url( $url );
+
+	// tries to ameliorate 'url.ca' as input to '//url.ca'
+	if ( ! isset( $parts['scheme'] ) && ! isset( $parts['host'] ) && isset( $parts['path'] ) ) {
+		if ( false !== strpos( $parts['path'], '.' ) ) {
+			$url = '//' . $parts['path'];
+		}
+	}
+
+	$valid = wp_http_validate_url( $url );
+
+	return $valid;
+}

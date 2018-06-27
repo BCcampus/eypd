@@ -29,10 +29,10 @@ attending, and the professional development hours you have accumulated.</p></div
 |
 */
 if ( bp_is_my_profile() ) { ?>
-    <div class="bg-info at-a-glance">
-    <div class="certhours">
+	<div class="bg-info at-a-glance">
+	<div class="certhours">
 		<?php
-		$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', TRUE );
+		$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
 		// tally up the hours
 		$num    = eypd_cumulative_hours( $user_hours );
 		$needed = ( $num > 40 ) ? '0' : 40 - $num;
@@ -42,10 +42,10 @@ if ( bp_is_my_profile() ) { ?>
 		echo '/40</b> certification hours <a href="#completed">completed</a></p>';
 		echo '<p><b>' . $needed . '</b> certification hours <a href="#needed">needed</a></p>';
 		?>
-    </div>
+	</div>
 
 
-    <!-- countdown to certificate expiry -->
+	<!-- countdown to certificate expiry -->
 	<?php
 	// save new expiry date
 	if ( isset( $_POST['expiry-date'] ) ) {
@@ -54,20 +54,20 @@ if ( bp_is_my_profile() ) { ?>
 		update_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', $newdate );
 	}
 	//get expiry date
-	$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', TRUE );
+	$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
 		?>
-        <form id="eypd_countdown" class="eypd-countdown" action=""
-              method="post">
-            <div class="certexpire">
-	            <label for="expiry-date">Certificate Expiration</label>
-                <input id="expiry-date" value="<?php if ( $cert_expires ) {
+		<form id="eypd_countdown" class="eypd-countdown" action=""
+			  method="post">
+			<div class="certexpire">
+				<label for="expiry-date">Certificate Expiration</label>
+				<input id="expiry-date" value="<?php if ( $cert_expires ) {
 					echo $cert_expires;
-				} else { ?>Select date...<?php } ?>" name="expiry-date"/>
-                <input class="right" type="submit" value="Save">
-                <div id="certcoutdown"><p>calculating...</p></div>
-            </div>
-        </form>
-        </div>
+} else { ?>Select date...<?php } ?>" name="expiry-date"/>
+				<input class="right" type="submit" value="Save">
+				<div id="certcoutdown"><p>calculating...</p></div>
+			</div>
+		</form>
+		</div>
 	<?php
 
 	/*
@@ -82,7 +82,7 @@ if ( bp_is_my_profile() ) { ?>
 
 	if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
 		?>
-        <h2 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?></h2>
+		<h2 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?></h2>
 		<?php
 		$args          = [
 			'owner'         => $bp->displayed_user->id,
@@ -97,26 +97,26 @@ if ( bp_is_my_profile() ) { ?>
 			echo EM_Events::output( $args );
 		} else {
 			?>
-            <p><?php _e( 'No Events', 'events-manager' ); ?>.
-				<?php if ( get_current_user_id() == $bp->displayed_user->id ) : ?>
-                    <a href="<?php echo home_url() . '/post-event'; ?>"><?php _e( 'Add Event', 'events-manager' ); ?></a>
+			<p><?php _e( 'No Events', 'events-manager' ); ?>.
+				<?php if ( get_current_user_id() === $bp->displayed_user->id ) : ?>
+					<a href="<?php echo home_url() . '/post-event'; ?>"><?php _e( 'Add Event', 'events-manager' ); ?></a>
 				<?php endif; ?>
-            </p>
+			</p>
 			<?php
 		}
 	}
 
-/*
-|--------------------------------------------------------------------------
-| D3 Chart
-|--------------------------------------------------------------------------
-|
-| Provides data for d3 chart
-|
-|
-*/
+	/*
+	|--------------------------------------------------------------------------
+	| D3 Chart
+	|--------------------------------------------------------------------------
+	|
+	| Provides data for d3 chart
+	|
+	|
+	*/
 
-	$cert_hours       = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', TRUE );
+	$cert_hours       = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
 	$chart_data_array = eypd_hours_and_categories( $cert_hours );
 	$chart_data_json  = eypd_d3_array( $chart_data_array );
 	// Pass the data to donut.js
@@ -141,7 +141,7 @@ if ( bp_is_my_profile() ) { ?>
 	$past_ids    = [];
 	$future_ids  = [];
 	$EM_Person   = new EM_Person( $bp->displayed_user->id );
-	$EM_Bookings = $EM_Person->get_bookings( FALSE, apply_filters( 'em_bp_attending_status', 1 ) );
+	$EM_Bookings = $EM_Person->get_bookings( false, apply_filters( 'em_bp_attending_status', 1 ) );
 	if ( count( $EM_Bookings->bookings ) > 0 ) {
 		$nonce = wp_create_nonce( 'booking_cancel' );
 
@@ -171,39 +171,40 @@ if ( bp_is_my_profile() ) { ?>
 	|
 	*/
 	?>
-    <a name="needed"></a>
-    <div id="accordion">
-        <div class="card">
-            <div class="card-header" id="headingOne">
-                <h3 class="future top-padding"><?php _e( "Upcoming Events (", 'events-manager' );
+	<a name="needed"></a>
+	<div id="accordion">
+		<div class="card">
+			<div class="card-header" id="headingOne">
+				<h3 class="future top-padding"><?php _e( 'Upcoming Events (', 'events-manager' );
 					echo $future_count; ?>)
-                </h3>
-            </div>
-            <div class="card-body">
+				</h3>
+			</div>
+			<div class="card-body">
 
 				<?php
 				// Future Events Only
 				if ( isset( $future_ids ) && count( $future_ids ) > 0 ) { ?>
 
-                    <table cellpadding="0" cellspacing="0"
-                           class="events-table">
-                        <thead>
-                        <tr>
-                            <th class="event-time" width="150">Date/Time
-                            </th>
-                            <th class="event-description" width="*">Upcoming
-                                Event
-                            </th>
+					<table cellpadding="0" cellspacing="0"
+						   class="events-table">
+						<thead>
+						<tr>
+							<th class="event-time" width="150">Date/Time
+							</th>
+							<th class="event-description" width="*">Upcoming
+								Event
+							</th>
+							<th>Register Link</th>
 							<?php if ( is_user_logged_in() ) {
 								echo '<th class="event-delete">Delete this event from my profile</th>';
-							}
+}
 							?>
-                            <th class="event-ical" width="*">Add to
-                                Calendar
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
+							<th class="event-ical" width="*">Add to
+								Calendar
+							</th>
+						</tr>
+						</thead>
+						<tbody>
 						<?php
 						foreach ( $EM_Bookings as $EM_Booking ) {
 							// skip over if it's not in the future
@@ -211,19 +212,26 @@ if ( bp_is_my_profile() ) { ?>
 								continue;
 							}
 							$EM_Event = $EM_Booking->get_event(); ?>
-                            <tr>
-                                <td><?php echo $EM_Event->output( '#_EVENTDATES<br/>#_EVENTTIMES' ); ?></td>
-                                <td><?php echo $EM_Event->output( '#_EVENTLINK
+							<tr>
+								<td><?php echo $EM_Event->output( '#_EVENTDATES<br/>#_EVENTTIMES' ); ?></td>
+								<td><?php echo $EM_Event->output( '#_EVENTLINK
                 {has_location}<br/><i>#_LOCATIONNAME, #_LOCATIONTOWN #_LOCATIONSTATE</i>{/has_location}' ); ?></td>
-
+								<?php
+								$attributes = $EM_Event->event_attributes;
+								if ( ! empty( $attributes['Registration Link'] ) ) {
+									$maybe_url = eypd_maybe_url( $attributes['Registration Link'] );
+								};
+								$link = ( $maybe_url ) ? "<a href='{$maybe_url}' target='_blank'>Registration Link</a>" : "<a href='{$EM_Event->guid}'>Contact Organizer to Register</a>";
+								?>
+								<td><?php echo $link; ?></td>
 								<?php if ( is_user_logged_in() ) {
 									echo '<td>';
 									$cancel_link = '';
 									if ( ! in_array( $EM_Booking->booking_status, [
 											2,
 											3,
-										] ) && get_option( 'dbem_bookings_user_cancellation' ) && $EM_Event->get_bookings()
-									                                                                       ->has_open_time()
+									] ) && get_option( 'dbem_bookings_user_cancellation' ) && $EM_Event->get_bookings()
+																										   ->has_open_time()
 									) {
 										$cancel_url  = em_add_get_params( $_SERVER['REQUEST_URI'], [
 											'action'     => 'booking_cancel',
@@ -234,145 +242,145 @@ if ( bp_is_my_profile() ) { ?>
 									}
 									echo apply_filters( 'em_my_bookings_booking_actions', $cancel_link, $EM_Booking );
 									echo '</td>';
-								}
+}
 								?>
-                                <td><?php echo $EM_Event->output( '#_EVENTICALLINK' ); ?></td>
-                            </tr>
+								<td><?php echo $EM_Event->output( '#_EVENTICALLINK' ); ?></td>
+							</tr>
 							<?php
 						} ?>
-                        </tbody>
-                    </table>
+						</tbody>
+					</table>
 					<?php
 				} else {
 					$events_url = get_site_url() . '/events';
 					echo "<p>See no upcoming events? <a href='{$events_url}'>Browse Events</a></p>";
 				}
 				?>
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
-    <!-- Past Events, only displayed if there are any -->
+	<!-- Past Events, only displayed if there are any -->
 	<?php
 
 	// Get count of events user has selected as attended
-		$user_hours_meta = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', TRUE );
+		$user_hours_meta = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
 		$attended        = array_count_values( $user_hours_meta );
-		( $attended['1'] === NULL ) ? $attended_count = '0' : $attended_count = $attended['1'];
+		( $attended['1'] === null ) ? $attended_count = '0' : $attended_count = $attended['1'];
 
-		if ( $past_count > 0 ) { ?>
-            <a name="completed"></a>
-            <div id="accordion">
-                <div class="card">
-                    <h3 class="top-padding"><?php _e( "Past Events (", 'events-manager' );
-						echo $attended_count . '/' . $past_count . ' attended'; ?>)
-                    </h3>
+	if ( $past_count > 0 ) { ?>
+			<a name="completed"></a>
+			<div id="accordion">
+				<div class="card">
+					<h3 class="top-padding"><?php _e( 'Past Events (', 'events-manager' );
+					echo $attended_count . '/' . $past_count . ' attended'; ?>)
+					</h3>
 
-                    <div class="card-header" id="headingTwo">
-                        <a id="past" class="btn collapsed"
-                           data-toggle="collapse"
-                           data-target="#collapseTwo"
-                           aria-expanded="false" aria-controls="collapseTwo">
-                            Expand to see all past events<i
-                                    class="glyphicon glyphicon-triangle-right"
-                                    aria-hidden="true"></i>
-                        </a>
-                    </div>
+					<div class="card-header" id="headingTwo">
+						<a id="past" class="btn collapsed"
+						   data-toggle="collapse"
+						   data-target="#collapseTwo"
+						   aria-expanded="false" aria-controls="collapseTwo">
+							Expand to see all past events<i
+									class="glyphicon glyphicon-triangle-right"
+									aria-hidden="true"></i>
+						</a>
+					</div>
 
-                    <div id="collapseTwo" class="collapse"
-                         aria-labelledby="headingTwo"
-                         data-parent="#accordion">
-                        <div class="card-body">
+					<div id="collapseTwo" class="collapse"
+						 aria-labelledby="headingTwo"
+						 data-parent="#accordion">
+						<div class="card-body">
 							<?php
 							if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
-                                <div class='table-wrap'>
-                                    <form id="eypd_cert_hours"
-                                          class="eypd-cert-hours"
-                                          action="" method="post">
-                                        <table id='dbem-bookings-table'
-                                               class='widefat post fixed'>
-                                            <thead>
-                                            <tr>
-                                                <th class='event-time'
-                                                    scope='col'><?php _e( 'Date/Time', 'events-manager' ); ?></th>
-                                                <th class='event-description'
-                                                    scope='col'><?php _e( 'Event Description', 'events-manager' ); ?></th>
-                                                <th class='event-hours'
-                                                    scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
-                                                <th class='event-attendance'
-                                                    scope='col'><?php _e( 'Attended (' . $attended_count . ')', 'events-manager' ); ?></th>
-                                                <th class='event-attendance'
-                                                    scope='col'><?php _e( 'Did Not Attend (' . ( $past_count - $attended_count ) . ')', 'events-manager' ); ?></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
+								<div class='table-wrap'>
+									<form id="eypd_cert_hours"
+										  class="eypd-cert-hours"
+										  action="" method="post">
+										<table id='dbem-bookings-table'
+											   class='widefat post fixed'>
+											<thead>
+											<tr>
+												<th class='event-time'
+													scope='col'><?php _e( 'Date/Time', 'events-manager' ); ?></th>
+												<th class='event-description'
+													scope='col'><?php _e( 'Event Description', 'events-manager' ); ?></th>
+												<th class='event-hours'
+													scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
+												<th class='event-attendance'
+													scope='col'><?php _e( 'Attended (' . $attended_count . ')', 'events-manager' ); ?></th>
+												<th class='event-attendance'
+													scope='col'><?php _e( 'Did Not Attend (' . ( $past_count - $attended_count ) . ')', 'events-manager' ); ?></th>
+											</tr>
+											</thead>
+											<tbody>
 											<?php
 											$nonce = wp_create_nonce( 'eypd_cert_hours' );
 											$count = 0;
 											// get number of hours in the users profile
-											$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', TRUE );
+											$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
 
 											foreach ( $EM_Bookings
 
 											as $EM_Booking ) {
-											// skip over if it's not in the past
-											if ( ! in_array( $EM_Booking->event_id, $past_ids ) ) {
-												continue;
-											}
-											$EM_Event = $EM_Booking->get_event();
-											$event_id = $past_ids[ $count ]; ?>
-                                            <tr>
-                                                <td><?php echo $EM_Event->output( '#_EVENTDATES<br/>#_EVENTTIMES' ); ?></td>
-                                                <td><?php echo $EM_Event->output( '#_EVENTLINK
+												// skip over if it's not in the past
+												if ( ! in_array( $EM_Booking->event_id, $past_ids ) ) {
+													continue;
+												}
+												$EM_Event = $EM_Booking->get_event();
+												$event_id = $past_ids[ $count ]; ?>
+											<tr>
+												<td><?php echo $EM_Event->output( '#_EVENTDATES<br/>#_EVENTTIMES' ); ?></td>
+												<td><?php echo $EM_Event->output( '#_EVENTLINK
                 {has_location}<br/><i>#_LOCATIONNAME, #_LOCATIONTOWN #_LOCATIONSTATE</i>{/has_location}' ); ?></td>
-                                                <td>
+												<td>
 													<?php echo $EM_Event->output( '#_ATT{Professional Development Certificate Credit Hours}' ); ?>
-                                                </td>
-                                                <td>
-                                                    <input id="eypd-cert-hours-<?php echo $event_id; ?>"
-                                                           name=eypd_cert_hours[<?php echo $event_id; ?>]
-                                                           value="1"
-                                                           type='radio' <?php if ( ! isset( $user_hours[ $event_id ] ) ) {
-														$user_hours[ $event_id ] = '';
-													}
+												</td>
+												<td>
+													<input id="eypd-cert-hours-<?php echo $event_id; ?>"
+														   name=eypd_cert_hours[<?php echo $event_id; ?>]
+														   value="1"
+														   type='radio' <?php if ( ! isset( $user_hours[ $event_id ] ) ) {
+																$user_hours[ $event_id ] = '';
+}
 													echo ( $user_hours[ $event_id ] || ! isset( $user_hours[ $event_id ] ) ) ? 'checked="checked"' : ''; ?> />
-                                                </td>
+												</td>
 
-                                                <td>
-                                                    <input id="eypd-cert-hours-<?php echo $event_id; ?>"
-                                                           name=eypd_cert_hours[<?php echo $event_id; ?>]
-                                                           value="0"
-                                                           type='radio' <?php if ( ! isset( $user_hours[ $event_id ] ) ) {
-														$user_hours[ $event_id ] = '';
-													}
+												<td>
+													<input id="eypd-cert-hours-<?php echo $event_id; ?>"
+														   name=eypd_cert_hours[<?php echo $event_id; ?>]
+														   value="0"
+														   type='radio' <?php if ( ! isset( $user_hours[ $event_id ] ) ) {
+																$user_hours[ $event_id ] = '';
+}
 													echo ( ! $user_hours[ $event_id ] ) ? 'checked="checked"' : ''; ?> />
 													<?php
 													$count ++;
 
-													}
+											}
 													?>
-                                            </tbody>
-                                        </table>
-                                        <input type="hidden" name="_wpnonce"
-                                               value="<?php echo $nonce; ?>"/>
-                                        <input type="hidden" name="user_id"
-                                               value="<?php echo $bp->displayed_user->id; ?>"/>
-                                        <input type="hidden" name="action"
-                                               value="eypd_cert_hours"/>
+											</tbody>
+										</table>
+										<input type="hidden" name="_wpnonce"
+											   value="<?php echo $nonce; ?>"/>
+										<input type="hidden" name="user_id"
+											   value="<?php echo $bp->displayed_user->id; ?>"/>
+										<input type="hidden" name="action"
+											   value="eypd_cert_hours"/>
 										<?php
 											echo '<input class="right" type="submit" value="Calculate My Hours"/>';
 										?>
-                                    </form>
-                                </div>
+									</form>
+								</div>
 								<?php
 							} else {
 								$events_url = get_site_url() . '/events';
 								echo "<p>See no past events? <a href='{$events_url}'>Browse Events</a></p>";
 							} ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
+						</div>
+					</div>
+				</div>
+			</div>
 		<?php } // end past events
 
 
@@ -389,7 +397,7 @@ if ( bp_is_my_profile() ) { ?>
 	echo '<div class="professional-interests">';
 	echo do_shortcode( '[cwp_notify_em_cat]' );
 	$user_id     = get_current_user_id();
-	$member_link = bp_core_get_userlink( $user_id, '', TRUE );
+	$member_link = bp_core_get_userlink( $user_id, '', true );
 	echo '</div>';
 	echo "<a href='{$member_link}professional-interests'><input class='right button c-button' type='button' value='Recommend Events'/></a>";
 
@@ -403,12 +411,11 @@ if ( bp_is_my_profile() ) { ?>
 	|
 	*/
 		$options = get_option( 'eypd_settings' );
-		if ( isset( $options['contact_form_id'] ) && 0 !== $options['contact_form_id'] ) {
-			$id = $options['contact_form_id'];
-			echo '<p class="top-padding">Don\'t see what you\'re looking for? Make a suggestion. If there\'s enough interest and workshop facilitators available, we\'ll update our calendar with new events.</p>';
-			echo do_shortcode( "[contact-form-7 id='$id']" );
-		}
-
+	if ( isset( $options['contact_form_id'] ) && 0 !== $options['contact_form_id'] ) {
+		$id = $options['contact_form_id'];
+		echo '<p class="top-padding">Don\'t see what you\'re looking for? Make a suggestion. If there\'s enough interest and workshop facilitators available, we\'ll update our calendar with new events.</p>';
+		echo do_shortcode( "[contact-form-7 id='$id']" );
+	}
 } else {
-    echo '<h3>Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a></h3>';
+	echo '<h3>Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a></h3>';
 }
