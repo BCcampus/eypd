@@ -1032,7 +1032,7 @@ function eypd_d3_array( $data ) {
 		}
 
 		foreach ( $cat as $k => $v ) {
-			$result[ $i ]['label'] = $k;
+			$result[ $i ]['label'] = html_entity_decode($k);
 			$result[ $i ]['value'] = number_format( $v, 1 );
 			$i ++;
 		}
