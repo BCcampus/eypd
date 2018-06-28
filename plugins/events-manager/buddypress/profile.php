@@ -272,8 +272,8 @@ if ( bp_is_my_profile() ) { ?>
 			<a name="completed"></a>
 			<div id="accordion">
 				<div class="card">
-					<h3 class="top-padding"><?php _e( 'Past Events (', 'events-manager' );
-					echo $attended_count . '/' . $past_count . ' attended'; ?>)
+					<h3 class="top-padding"><?php _e( 'Past Events ', 'events-manager' );
+					echo '<span class="text-small">(' . $attended_count . '/' . $past_count . ' attended)</span>'; ?>
 					</h3>
 
 					<div class="card-header" id="headingTwo">
