@@ -37,10 +37,10 @@ if ( bp_is_my_profile() ) { ?>
 		$num    = eypd_cumulative_hours( $user_hours );
 		$needed = ( $num > 40 ) ? '0' : 40 - $num;
 
-		echo '<p><b>';
+		echo '<p>You have <a href="#completed">completed</a> <b>';
 		echo ( $num ) ? $num : '0';
-		echo '/40</b> certification hours <a href="#completed">completed</a></p>';
-		echo '<p><b>' . $needed . '</b> certification hours <a href="#needed">needed</a></p>';
+		echo '/40</b> certification hours.</p>';
+		echo '<p>You <a href="#needed">need</a> <b>' . $needed . '</b> certification hours.</p>';
 		?>
 	</div>
 
