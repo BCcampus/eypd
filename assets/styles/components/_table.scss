@@ -33,11 +33,11 @@ thead:first-child tr td {
 }
 
 table {
-  thead{
+  thead {
     border-bottom: 2px solid $color-gray-elephant;
   }
   th, td {
-    padding: 1em 0;
+    padding: 1em 1em 1em 0;
     line-height: 1.4em;
     font-size: $font-size - 2;
     letter-spacing: 0.1px;
