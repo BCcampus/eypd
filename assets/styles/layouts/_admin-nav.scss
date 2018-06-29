@@ -3,7 +3,7 @@
   background-color: $color-blue-sail;
   display: block !important;
 
-  @media screen and (max-width: $small){
+  @media screen and (max-width: $small) {
     position: fixed;
   }
 }
@@ -25,7 +25,7 @@
   }
 }
 
-#wp-toolbar>ul>li {
+#wp-toolbar > ul > li {
   display: block !important;
 
   a {
@@ -39,7 +39,7 @@
 
 #wp-admin-bar-user-actions li a:hover span,
 #wp-admin-bar-user-actions li:hover a,
-#wp-admin-bar-user-actions li a:hover  {
+#wp-admin-bar-user-actions li a:hover {
   color: darken($color-brand-blue, 10%) !important;
 }
 
@@ -47,6 +47,10 @@
   background-color: transparent;
   color: $color-neutral-80;
   box-shadow: none;
+}
+
+#wpadminbar .quicklinks li#wp-admin-bar-my-account.with-avatar > a img {
+  position: initial;
 }
 
 #logo-menu-wrap div a {
@@ -63,8 +67,8 @@
   position: static !important;
 }
 
-#wpadminbar.nojq .quicklinks .ab-top-menu>li>.ab-item,
-#wpadminbar:not(.mobile) .ab-top-menu>li>.ab-item {
+#wpadminbar.nojq .quicklinks .ab-top-menu > li > .ab-item,
+#wpadminbar:not(.mobile) .ab-top-menu > li > .ab-item {
   &:focus {
     background: $color-blue-sail;
   }
