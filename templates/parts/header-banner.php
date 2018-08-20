@@ -48,6 +48,10 @@
 		do_action( 'close_header' );
 		?>
 </div>
+<?php
+$html = "<meta property='og:image' content='" . get_stylesheet_directory_uri() . "/dist/images/eypd-logo-final.svg'/>";
+echo $html;
+?>
 </header><!-- end header -->
 <?php
 // Load Sub Menu only if it's enabled
