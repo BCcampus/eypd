@@ -175,7 +175,7 @@ if ( bp_is_my_profile() ) { ?>
 	<div id="accordion">
 		<div class="card">
 			<div class="card-header" id="headingOne">
-				<h3 class="future top-padding"><?php _e( 'Upcoming Events (', 'events-manager' );
+				<h3 class="future top-padding"><?php _e( 'My Upcoming Events (', 'events-manager' );
 					echo $future_count; ?>)
 				</h3>
 			</div>
@@ -272,7 +272,7 @@ if ( bp_is_my_profile() ) { ?>
 			<a name="completed"></a>
 			<div id="accordion">
 				<div class="card">
-					<h3 class="top-padding"><?php _e( 'Past Events ', 'events-manager' );
+					<h3 class="top-padding"><?php _e( 'My Past Events ', 'events-manager' );
 					echo '<span class="text-small">(' . $attended_count . '/' . $past_count . ' attended)</span>'; ?>
 					</h3>
 
