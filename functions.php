@@ -794,6 +794,7 @@ add_filter(
 		if ( $args->theme_location == 'main-menu' ) {
 			// adds home link to mobile only using bootstraps responsive utilities class
 			$nav = '<li class="visible-xs-block home"><a href=' . home_url() . '>Home</a></li>';
+			$nav .= '<li class="home"><a href=' . home_url() . '/events>Find Events</a></li>';
 			if ( is_user_logged_in() ) {
 				$nav .= '<li class="home"><a href=' . home_url() . '/post-event>Post an Event</a></li>';
 				$nav .= '<li class="home"><a href=' . home_url() . '/edit-events>Edit Events</a></li>';
