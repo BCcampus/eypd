@@ -49,7 +49,7 @@
 		?>
 </div>
 <?php
-$html = "<meta property='og:image' content='" . get_stylesheet_directory_uri() . "/dist/images/eypd-logo-final.svg'/>";
+$html = "<meta property='og:image' content='" . get_stylesheet_directory_uri() . "/dist/images/eypd-logo.png'/>";
 echo $html;
 ?>
 </header><!-- end header -->
