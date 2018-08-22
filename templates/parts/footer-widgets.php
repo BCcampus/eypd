@@ -49,17 +49,23 @@
 		<?php endif; ?>
     </div>
 <?php endif; ?>
-<div class="row">
-    <div class="ten columns"></div>
-    <div class="widget six columns">
-        <h4>Funded by</h4>
-        <picture>
-            <source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.webp"
-                    type="image/webp">
-            <source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.png">
-            <img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.png" width="329"
-                 height="78" alt="BC Provincial Office for the Early Years">
-        </picture>
-    </div>
+<div class="row fb">
+	<div class="ten columns hidden-xs hidden-sm">
+		<span class="fb"><a target=_blank href="https://www.facebook.com/BCEYPD/"><img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/icon-facebook.svg"></a></span>
+	</div>
+	<div class="ten columns hidden-md hidden-lg">
+		<span class="fb"><a target=_blank href="https://www.facebook.com/BCEYPD/"><img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/icon-facebook.svg"></a></span>
+	</div>
+
+	<div class="widget six columns">
+		<h4>Funded by</h4>
+		<picture>
+			<source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.webp"
+			        type="image/webp">
+			<source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.png">
+			<img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.png" width="329"
+			     height="78" alt="BC Provincial Office for the Early Years">
+		</picture>
+	</div>
 </div>
 <div style="clear:both;"></div>

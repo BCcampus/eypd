@@ -88,3 +88,16 @@
   width: 750px;
 }
 
+#footer > div.row.fb {
+  position: relative;
+}
+
+#footer > div.row.fb > div.ten.columns.hidden-xs.hidden-sm {
+  position:absolute;
+  bottom:0;
+}
+
+#footer > div.row.fb > div.ten.columns.hidden-xs.hidden-sm > span > a > img, #footer > div.row.fb > div.ten.columns.hidden-md.hidden-lg > span > a > img {
+  height:35px;
+  margin-bottom:20px;
+}
