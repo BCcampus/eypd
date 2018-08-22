@@ -48,12 +48,6 @@
 		do_action( 'close_header' );
 		?>
 </div>
-<?php
-$html = "<meta property='og:image' content='" . get_stylesheet_directory_uri() . "/dist/images/eypd-logo.png'/>";
-$html .= "<meta property='og:image:alt' content='Early years professional development website logo.' />";
-$html .= "<meta property='og:description' content='Early years professional development website. Find trainning events near you.' />";
-echo $html;
-?>
 </header><!-- end header -->
 <?php
 // Load Sub Menu only if it's enabled
