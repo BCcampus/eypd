@@ -331,7 +331,7 @@ if ( bp_is_my_profile() ) { ?>
 
 											// add user submitted events to $user_events array as an object
 											if ( $user_submitted ) {
-												$obj = (object)['event_id' => '', 'event_start_date' => ''];
+												$obj = (object)['event_id' => '1', 'event_start_date' => ''];
 												foreach ( $user_submitted as $key => $value ) {
 													$obj->$key = $value;
 												}
@@ -345,11 +345,15 @@ if ( bp_is_my_profile() ) { ?>
 													continue;
 												}
 												$em_events[] = $EM_Booking->get_event();
-												$event_id    = $past_ids[ $count ];
 											}
 
-											// if user submitted events exist, merge
+											// if user submitted events exist, add to past ID array, and merge with events manager events
 											if ( $user_events ) {
+												// add user events to $past_ids array
+												foreach ($user_events as $event) {
+													$past_ids[] = $event->event_id;
+												}
+												// merge
 												$past_events = array_merge( $em_events, $user_events );
 											}
 
@@ -359,14 +363,17 @@ if ( bp_is_my_profile() ) { ?>
 											});
 
 											// Loop through all past events from events manager and user submitted
-											foreach ( $em_events as $event ) {
-											?>
+											foreach ( $past_events as $event ) {
+											$event_id    = $past_ids[ $count ];
+												// get the hours for each event
+											($event->{'event_attributes'}['Professional Development Certificate Credit Hours']) ? $hours = $event->{'event_attributes'}['Professional Development Certificate Credit Hours'] : $hours = 0;
+												?>
 											<tr>
-												<td><?php echo $event->output( '#_EVENTDATES<br/>#_EVENTTIMES' ); ?></td>
-												<td><?php echo $event->output( '#_EVENTLINK
-                {has_location}<br/><i>#_LOCATIONNAME, #_LOCATIONTOWN #_LOCATIONSTATE</i>{/has_location}' ); ?></td>
+												<td><?php echo $event->event_start_date . ' - ' . $event->event_end_date . '<br/>' . $event->start_time ?></td>
+												<td><?php echo'<a href="' . $event->guid . '">' . $event->event_name .'</a>';?>
+                                                </td>
 												<td>
-													<?php echo $event->output( '#_ATT{Professional Development Certificate Credit Hours}' ); ?>
+													<?php echo $hours ?>
 												</td>
 												<td>
 													<input id="eypd-cert-hours-<?php echo $event_id; ?>"
