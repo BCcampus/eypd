@@ -318,23 +318,55 @@ if ( bp_is_my_profile() ) { ?>
 											$nonce = wp_create_nonce( 'eypd_cert_hours' );
 											$count = 0;
 											// get number of hours in the users profile
-											$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
+											$user_hours  = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
+											$em_events   = []; // placeholder for events manager events
+											$user_events = []; // placeholder for user submitted events
+											$past_events = []; // placeholder for merged events manager and user submitted events
 
-											foreach ( $EM_Bookings
+											// gets all user submitted events
+											$user_submitted = [
+												'event_start_date' => 'Apr 13, 2018',
+												'event_id '        => 999
+											];
 
-											as $EM_Booking ) {
+											// add user submitted events to $user_events array as an object
+											if ( $user_submitted ) {
+												$obj = (object)['event_id' => '', 'event_start_date' => ''];
+												foreach ( $user_submitted as $key => $value ) {
+													$obj->$key = $value;
+												}
+												$user_events[] = &$obj;
+											}
+
+											// add all past events from events manager to $em_events array
+											foreach ( $EM_Bookings as $EM_Booking ) {
 												// skip over if it's not in the past
 												if ( ! in_array( $EM_Booking->event_id, $past_ids ) ) {
 													continue;
 												}
-												$EM_Event = $EM_Booking->get_event();
-												$event_id = $past_ids[ $count ]; ?>
+												$em_events[] = $EM_Booking->get_event();
+												$event_id    = $past_ids[ $count ];
+											}
+
+											// if user submitted events exist, merge
+											if ( $user_events ) {
+												$past_events = array_merge( $em_events, $user_events );
+											}
+
+											// sort by date
+											usort($past_events, function($a, $b) {
+												return strtotime($a->event_start_date) - strtotime($b->event_start_date);
+											});
+
+											// Loop through all past events from events manager and user submitted
+											foreach ( $em_events as $event ) {
+											?>
 											<tr>
-												<td><?php echo $EM_Event->output( '#_EVENTDATES<br/>#_EVENTTIMES' ); ?></td>
-												<td><?php echo $EM_Event->output( '#_EVENTLINK
+												<td><?php echo $event->output( '#_EVENTDATES<br/>#_EVENTTIMES' ); ?></td>
+												<td><?php echo $event->output( '#_EVENTLINK
                 {has_location}<br/><i>#_LOCATIONNAME, #_LOCATIONTOWN #_LOCATIONSTATE</i>{/has_location}' ); ?></td>
 												<td>
-													<?php echo $EM_Event->output( '#_ATT{Professional Development Certificate Credit Hours}' ); ?>
+													<?php echo $event->output( '#_ATT{Professional Development Certificate Credit Hours}' ); ?>
 												</td>
 												<td>
 													<input id="eypd-cert-hours-<?php echo $event_id; ?>"
@@ -359,6 +391,7 @@ if ( bp_is_my_profile() ) { ?>
 
 											}
 													?>
+												</td>
 											</tbody>
 										</table>
 										<input type="hidden" name="_wpnonce"
