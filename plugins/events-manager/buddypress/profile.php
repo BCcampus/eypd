@@ -139,7 +139,6 @@ if ( bp_is_my_profile() ) { ?>
 	echo do_shortcode( '[cwp_notify]' );
 
 	$past_ids      = [];
-	$past_ids_temp = [];
 	$future_ids    = [];
 	$EM_Person     = new EM_Person( $bp->displayed_user->id );
 	$EM_Bookings   = $EM_Person->get_bookings( false, apply_filters( 'em_bp_attending_status', 1 ) );
@@ -324,7 +323,8 @@ if ( bp_is_my_profile() ) { ?>
 
 											// gets all user submitted events
 											$user_submitted = [
-												'event_start_date' => '2018-4-13',
+												'event_name'        => 'User submitted event',
+												'event_start_date' => '2018-4-12',
 												'event_id'        => '09'
 											];
 
@@ -340,6 +340,7 @@ if ( bp_is_my_profile() ) { ?>
 
 											// if user submitted events exist, add to past array
 											if ( $user_events ) {
+												$past_ids_temp = [];
 												// add user events to $past array
 												foreach ($user_events as $event) {
 													$past_ids_temp = $event;
@@ -357,10 +358,11 @@ if ( bp_is_my_profile() ) { ?>
 											foreach ( $past as $event ) {
 												// get the hours for each event
 											($event->{'event_attributes'}['Professional Development Certificate Credit Hours']) ? $hours = $event->{'event_attributes'}['Professional Development Certificate Credit Hours'] : $hours = 0;
+											($event->guid)? $guid = '<a href="' . $event->guid . '">' . $event->event_name .'</a>' : $guid = $event->event_name;
 												?>
 											<tr>
 												<td><?php echo $event->event_start_date . ' - ' . $event->event_end_date . '<br/>' . $event->start_time ?></td>
-												<td><?php echo'<a href="' . $event->guid . '">' . $event->event_name .'</a>';?>
+												<td><?php echo $guid;?>
                                                 </td>
 												<td>
 													<?php echo $hours ?>
