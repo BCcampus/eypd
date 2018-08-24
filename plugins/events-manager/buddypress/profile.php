@@ -138,10 +138,11 @@ if ( bp_is_my_profile() ) { ?>
 	echo '<p>Adding an event to myEYPD does not confirm your registration, nor does deleting an event cancel your registration. To officially register for a professional development event you must contact the agency responsible for the training event.</p>';
 	echo do_shortcode( '[cwp_notify]' );
 
-	$past_ids    = [];
-	$future_ids  = [];
-	$EM_Person   = new EM_Person( $bp->displayed_user->id );
-	$EM_Bookings = $EM_Person->get_bookings( false, apply_filters( 'em_bp_attending_status', 1 ) );
+	$past_ids      = [];
+	$past_ids_temp = [];
+	$future_ids    = [];
+	$EM_Person     = new EM_Person( $bp->displayed_user->id );
+	$EM_Bookings   = $EM_Person->get_bookings( false, apply_filters( 'em_bp_attending_status', 1 ) );
 	if ( count( $EM_Bookings->bookings ) > 0 ) {
 		$nonce = wp_create_nonce( 'booking_cancel' );
 
@@ -151,14 +152,14 @@ if ( bp_is_my_profile() ) { ?>
 			$event_date = strtotime( $booking->event_start_date, time() );
 			$today      = time();
 
-			// separate past and future event_ids
+			// separate past and future events
 			if ( $today > $event_date ) {
-				$past_ids[] = $booking->event_id;
+				$past[] = $booking;
 			} elseif ( $today < $event_date ) {
 				$future_ids[] = $booking->event_id;
 			}
 		}
-		$past_count   = count( $past_ids );
+		$past_count   = count( $past );
 		$future_count = count( $future_ids );
 	}
 	/*
@@ -292,7 +293,7 @@ if ( bp_is_my_profile() ) { ?>
 						 data-parent="#accordion">
 						<div class="card-body">
 							<?php
-							if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
+							if ( isset( $past ) && count( $past ) > 0 ) { ?>
 								<div class='table-wrap'>
 									<form id="eypd_cert_hours"
 										  class="eypd-cert-hours"
@@ -319,52 +320,41 @@ if ( bp_is_my_profile() ) { ?>
 											$count = 0;
 											// get number of hours in the users profile
 											$user_hours  = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
-											$em_events   = []; // placeholder for events manager events
 											$user_events = []; // placeholder for user submitted events
-											$past_events = []; // placeholder for merged events manager and user submitted events
 
 											// gets all user submitted events
 											$user_submitted = [
-												'event_start_date' => 'Apr 13, 2018',
-												'event_id '        => 999
+												'event_start_date' => '2018-4-13',
+												'event_id'        => '09'
 											];
 
 											// add user submitted events to $user_events array as an object
 											if ( $user_submitted ) {
-												$obj = (object)['event_id' => '1', 'event_start_date' => ''];
+												$obj = (object)[];
 												foreach ( $user_submitted as $key => $value ) {
 													$obj->$key = $value;
 												}
 												$user_events[] = &$obj;
+												$wtf  = $obj->event_id;
 											}
 
-											// add all past events from events manager to $em_events array
-											foreach ( $EM_Bookings as $EM_Booking ) {
-												// skip over if it's not in the past
-												if ( ! in_array( $EM_Booking->event_id, $past_ids ) ) {
-													continue;
-												}
-												$em_events[] = $EM_Booking->get_event();
-											}
-
-											// if user submitted events exist, add to past ID array, and merge with events manager events
+											// if user submitted events exist, add to past array
 											if ( $user_events ) {
-												// add user events to $past_ids array
+												// add user events to $past array
 												foreach ($user_events as $event) {
-													$past_ids[] = $event->event_id;
+													$past_ids_temp = $event;
 												}
-												// merge
-												$past_events = array_merge( $em_events, $user_events );
+												// add new ids
+												$past[] = $past_ids_temp;
 											}
 
 											// sort by date
-											usort($past_events, function($a, $b) {
+											usort($past, function($a, $b) {
 												return strtotime($a->event_start_date) - strtotime($b->event_start_date);
 											});
 
-											// Loop through all past events from events manager and user submitted
-											foreach ( $past_events as $event ) {
-											$event_id    = $past_ids[ $count ];
+											// Loop through all past events
+											foreach ( $past as $event ) {
 												// get the hours for each event
 											($event->{'event_attributes'}['Professional Development Certificate Credit Hours']) ? $hours = $event->{'event_attributes'}['Professional Development Certificate Credit Hours'] : $hours = 0;
 												?>
@@ -376,23 +366,23 @@ if ( bp_is_my_profile() ) { ?>
 													<?php echo $hours ?>
 												</td>
 												<td>
-													<input id="eypd-cert-hours-<?php echo $event_id; ?>"
-														   name=eypd_cert_hours[<?php echo $event_id; ?>]
+													<input id="eypd-cert-hours-<?php echo $event->event_id; ?>"
+														   name=eypd_cert_hours[<?php echo $event->event_id; ?>]
 														   value="1"
-														   type='radio' <?php if ( ! isset( $user_hours[ $event_id ] ) ) {
-																$user_hours[ $event_id ] = '';
+														   type='radio' <?php if ( ! isset( $user_hours[ $event->event_id ] ) ) {
+																$user_hours[ $event->event_id ] = '';
 }
-													echo ( $user_hours[ $event_id ] || ! isset( $user_hours[ $event_id ] ) ) ? 'checked="checked"' : ''; ?> />
+													echo ( $user_hours[ $event->event_id ] || ! isset( $user_hours[ $event->event_id ] ) ) ? 'checked="checked"' : ''; ?> />
 												</td>
 
 												<td>
-													<input id="eypd-cert-hours-<?php echo $event_id; ?>"
-														   name=eypd_cert_hours[<?php echo $event_id; ?>]
+													<input id="eypd-cert-hours-<?php echo $event->event_id; ?>"
+														   name=eypd_cert_hours[<?php echo $event->event_id; ?>]
 														   value="0"
-														   type='radio' <?php if ( ! isset( $user_hours[ $event_id ] ) ) {
-																$user_hours[ $event_id ] = '';
+														   type='radio' <?php if ( ! isset( $user_hours[ $event->event_id ] ) ) {
+																$user_hours[ $event->event_id ] = '';
 }
-													echo ( ! $user_hours[ $event_id ] ) ? 'checked="checked"' : ''; ?> />
+													echo ( ! $user_hours[ $event->event_id ] ) ? 'checked="checked"' : ''; ?> />
 													<?php
 													$count ++;
 
