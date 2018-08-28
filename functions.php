@@ -1694,9 +1694,9 @@ function eypd_redirect_after_register() {
 	// redirect Organizers to edit events
 	if ( isset( $_POST['signup_username'] ) && ( $role ) ) {
 		if ( $role === 'Organizer' ) {
-			$html = '<b>Redirecting ... <meta http-equiv="refresh" content="0; URL=' . home_url() . '/edit-events/' . '" /> <a href=' . home_url() . '/edit-events/' . '>click here</a> if you are not automatically redirected.';
+			$html = '<b>Redirecting ... <meta http-equiv="refresh" content="0; URL=' . home_url() . '/edit-events/" /><a href=' . home_url() . '/edit-events/' . '>click here</a> if you are not automatically redirected.';
 		} else { // redirect to the homepage
-			$html = '<b>Redirecting ... <meta http-equiv="refresh" content="0; URL=' . home_url() . '" /> <a href=' . home_url() . '>click here</a> if you are not automatically redirected.';
+			$html = '<b>Redirecting ... <meta http-equiv="refresh" content="0; URL=' . home_url() . '/members/' . $_POST["signup_username"] . '/events/"/> <a href="' . home_url() . '/members/' . $_POST["signup_username"] . '/events/"/>click here</a> if you are not automatically redirected.';
 
 		}
 		echo $html;
