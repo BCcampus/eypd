@@ -1677,14 +1677,31 @@ function eypd_maybe_url( $url ) {
 }
 
 /**
- * Redirects a user to edit their profile after registration
+ * Redirects based on their role after registration when BP activation is skipped.
+ * The role value has to come from registration page $_POST, because user is not logged in yet, and
+ * field ID values on extended profiles differ on environments and can change
  * @return mixed
  */
 function eypd_redirect_after_register() {
-	if ( isset( $_POST['signup_username'] ) ) {
-		$profile_url = home_url() . '/members/' . $_POST['signup_username'] . '/profile/edit';
-		echo $html = '<b>Redirecting to profile ... <meta http-equiv="refresh" content="0; URL=' . $profile_url . '" /> <a href='.$profile_url . '>click here</a> if you are not automatically redirected.';
+
+	$needles = [ 'Learner', 'Organizer' ];
+	// figure out what role they selected at the registration page
+	$role_field_id = array_intersect( $needles, $_POST );
+	// set the role value
+	$role = reset( $role_field_id );
+	$html = '';
+
+	// redirect Organizers to edit events
+	if ( isset( $_POST['signup_username'] ) && ( $role ) ) {
+		if ( $role === 'Organizer' ) {
+			$html = '<b>Redirecting ... <meta http-equiv="refresh" content="0; URL=' . home_url() . '/edit-events/' . '" /> <a href=' . home_url() . '/edit-events/' . '>click here</a> if you are not automatically redirected.';
+		} else { // redirect to the homepage
+			$html = '<b>Redirecting ... <meta http-equiv="refresh" content="0; URL=' . home_url() . '" /> <a href=' . home_url() . '>click here</a> if you are not automatically redirected.';
+
+		}
+		echo $html;
 	}
+	//
 }
 
-add_action( 'bp_before_registration_confirmed', 'eypd_redirect_after_register' );
+add_action( 'bp_after_registration_confirmed', 'eypd_redirect_after_register' );
