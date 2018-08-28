@@ -1679,7 +1679,7 @@ function eypd_maybe_url( $url ) {
 /**
  * Redirects based on their role after registration when BP activation is skipped.
  * The role value has to come from registration page $_POST, because user is not logged in yet, and
- * field ID values on extended profiles differ on environments and can change
+ * field ID's on extended profiles differ on environments and can change
  * @return mixed
  */
 function eypd_redirect_after_register() {
@@ -1703,5 +1703,20 @@ function eypd_redirect_after_register() {
 	}
 	//
 }
-
 add_action( 'bp_after_registration_confirmed', 'eypd_redirect_after_register' );
+
+/**
+ * Adds new footer sidebar
+ */
+function eypd_widgets_init() {
+	register_sidebar( [
+		'name' => __( 'Footer Last', 'early-years' ),
+		'id' => 'sidebar-footer-last',
+		'description' => __( 'The last widget in the footer', 'early-years' ),
+		'before_widget' => '<article id="%1$s" class="widget %2$s">',
+		'after_widget' => '</article>',
+		'before_title' => '<h4>',
+		'after_title' => '</h4>'
+	] );
+}
+add_action( 'widgets_init', 'eypd_widgets_init' );

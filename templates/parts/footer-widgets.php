@@ -13,52 +13,47 @@
  */
 ?>
 <?php if ( is_active_sidebar( 'Footer Left' ) || is_active_sidebar( 'Footer Middle' ) || is_active_sidebar( 'Footer Right' ) ) : ?>
-    <div class="footer-widgets row">
-        <div class="seven columns">
-            <picture>
-                <source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-small.webp"
-                        type="image/webp">
-                <source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-small.png">
-                <img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-small.png"
-                     alt="BC Provincial Office for the Early Years">
-            </picture>
-            <p>EYPD aims to support the B.C. Early Years sector by hosting, developing and evaluating a professional
-                development web portal. <a href="about-us" class="text-blue">Learn more about EYPD</a></p>
-        </div>
+    <div class="footer-widgets row-fluid">
 		<?php if ( is_active_sidebar( 'Footer Left' ) ) : ?>
             <!-- footer widgets -->
-            <div class="three columns" id="footer-widget-left">
+            <div class="col-sm-2 col-sm-offset-1" id="footer-widget-left">
 				<?php
 				dynamic_sidebar( 'Footer Left' );
 				?>
             </div>
 		<?php endif; ?>
 		<?php if ( is_active_sidebar( 'Footer Middle' ) ) : ?>
-            <div class="three columns" id="footer-widget-middle">
+            <div class="col-sm-2" id="footer-widget-middle">
 				<?php
 				dynamic_sidebar( 'Footer Middle' );
 				?>
             </div>
 		<?php endif; ?>
 		<?php if ( is_active_sidebar( 'Footer Right' ) ) : ?>
-            <div class="three columns" id="footer-widget-right">
+            <div class="col-sm-2" id="footer-widget-right">
 				<?php
 				dynamic_sidebar( 'Footer Right' );
 				?>
             </div>
 		<?php endif; ?>
+	    <?php if ( is_active_sidebar( 'sidebar-footer-last' ) ) : ?>
+		    <div class="col-sm-3" id="footer-widget-last">
+			    <?php
+			    dynamic_sidebar( 'sidebar-footer-last' );
+			    ?>
+		    </div>
+	    <?php endif; ?>
+    <div class="col-sm-3">
+	    <h4 class="funded">Funded by</h4>
+	    <picture>
+		    <source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.webp"
+		            type="image/webp">
+		    <source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.png">
+		    <img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.png" width="329"
+		         height="78" alt="BC Provincial Office for the Early Years">
+	    </picture>
+
+    </div>
     </div>
 <?php endif; ?>
-<div class="row">
-	<div class="widget six columns">
-		<h4>Funded by</h4>
-		<picture>
-			<source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.webp"
-			        type="image/webp">
-			<source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.png">
-			<img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.png" width="329"
-			     height="78" alt="BC Provincial Office for the Early Years">
-		</picture>
-	</div>
-</div>
 <div style="clear:both;"></div>
