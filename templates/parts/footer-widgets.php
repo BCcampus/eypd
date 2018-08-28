@@ -49,14 +49,7 @@
 		<?php endif; ?>
     </div>
 <?php endif; ?>
-<div class="row fb">
-	<div class="ten columns hidden-xs hidden-sm">
-		<span class="fb"><a target=_blank href="https://www.facebook.com/BCEYPD/"><img height="35px" width="35px" src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/icon-facebook.svg"></a></span>
-	</div>
-	<div class="ten columns hidden-md hidden-lg">
-		<span class="fb"><a target=_blank href="https://www.facebook.com/BCEYPD/"><img height="35px" width="35px" src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/icon-facebook.svg"></a></span>
-	</div>
-
+<div class="row">
 	<div class="widget six columns">
 		<h4>Funded by</h4>
 		<picture>
