@@ -1683,7 +1683,7 @@ function eypd_maybe_url( $url ) {
 function eypd_redirect_after_register() {
 	if ( isset( $_POST['signup_username'] ) ) {
 		$profile_url = home_url() . '/members/' . $_POST['signup_username'] . '/profile/edit';
-		echo $html = '<b>Redirecting to profile ... <meta http-equiv="refresh" content="0; URL=' . $profile_url . '" />';
+		echo $html = '<b>Redirecting to profile ... <meta http-equiv="refresh" content="0; URL=' . $profile_url . '" /> <a href='.$profile_url . '>click here</a> if you are not automatically redirected.';
 	}
 }
 
