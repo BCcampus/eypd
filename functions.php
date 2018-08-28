@@ -593,6 +593,7 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 			'Register'                                                                                                                  => 'Sign Up',
 			'Email Address'                                                                                                             => 'Work Email Address',
 			'Registering for this site is easy. Just fill in the fields below, and we\'ll get a new account set up for you in no time.' => 'Fill in the fields below to register as an Organizer or a Learner. <b>Learner</b> — you are primarily looking for training events. <b>Organizer</b> — you are primarily posting training events on behalf of your organization.',
+			'You have successfully created your account! Please log in using the username and password you have just created.' => ''
 		];
 	}
 
@@ -1674,3 +1675,16 @@ function eypd_maybe_url( $url ) {
 
 	return $valid;
 }
+
+/**
+ * Redirects a user to edit their profile after registration
+ * @return mixed
+ */
+function eypd_redirect_after_register() {
+	if ( isset( $_POST['signup_username'] ) ) {
+		$profile_url = home_url() . '/members/' . $_POST['signup_username'] . '/profile/edit';
+		echo $html = '<b>Redirecting to profile ... <meta http-equiv="refresh" content="0; URL=' . $profile_url . '" />';
+	}
+}
+
+add_action( 'bp_before_registration_confirmed', 'eypd_redirect_after_register' );
