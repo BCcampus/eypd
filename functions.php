@@ -48,6 +48,7 @@ add_filter( /**
 			'jquery-mobilemenu',
 			'jquery-fitvids',
 			'modal-video',
+			'modal-hours',
 			'bootstrap-accordion',
 			'd3',
 			'donut',
@@ -147,6 +148,7 @@ add_action(
 				wp_enqueue_script( 'bootstrap-accordion', $template_dir . '/dist/scripts/accordion.js', [ 'jquery' ], null, true );
 				wp_enqueue_script( 'd3', $template_dir . '/dist/scripts/d3.min.js', [], null, true );
 				wp_enqueue_script( 'donut', $template_dir . '/dist/scripts/donut.js', [ 'd3' ], null, true );
+				wp_enqueue_script( 'modal-hours', $template_dir . '/dist/scripts/modal-hours.js', [ 'jquery' ], null, true );
 			}
 		}
 
@@ -1673,4 +1675,106 @@ function eypd_maybe_url( $url ) {
 	$valid = wp_http_validate_url( $url );
 
 	return $valid;
+}
+
+/**
+ * Redirects based on their role after registration when BP activation is skipped.
+ * The role value has to come from registration page $_POST, because user is not logged in yet, and
+ * field ID's on extended profiles differ on environments and can change
+ * @return mixed
+ */
+function eypd_redirect_after_register() {
+
+	$needles = [ 'Learner', 'Organizer' ];
+	// figure out what role they selected at the registration page
+	$role_field_id = array_intersect( $needles, $_POST );
+	// set the role value
+	$role = reset( $role_field_id );
+	$html = '';
+
+	// redirect Organizers to edit events
+	if ( isset( $_POST['signup_username'] ) && ( $role ) ) {
+		if ( $role === 'Organizer' ) {
+			$html = '<b>Redirecting ... <meta http-equiv="refresh" content="0; URL=' . home_url() . '/edit-events/" /><a href=' . home_url() . '/edit-events/' . '>click here</a> if you are not automatically redirected.';
+		} else { // redirect to the homepage
+			$html = '<b>Redirecting ... <meta http-equiv="refresh" content="0; URL=' . home_url() . '/members/' . $_POST["signup_username"] . '/events/"/> <a href="' . home_url() . '/members/' . $_POST["signup_username"] . '/events/"/>click here</a> if you are not automatically redirected.';
+
+		}
+		echo $html;
+	}
+}
+add_action( 'bp_after_registration_confirmed', 'eypd_redirect_after_register' );
+
+/**
+ * Adds new footer sidebar
+ */
+function eypd_widgets_init() {
+	register_sidebar( [
+		'name' => __( 'Footer Last', 'early-years' ),
+		'id' => 'sidebar-footer-last',
+		'description' => __( 'The last widget in the footer', 'early-years' ),
+		'before_widget' => '<article id="%1$s" class="widget %2$s">',
+		'after_widget' => '</article>',
+		'before_title' => '<h4>',
+		'after_title' => '</h4>'
+	] );
+}
+add_action( 'widgets_init', 'eypd_widgets_init' );
+
+/*
+|--------------------------------------------------------------------------
+| Add event modal
+|--------------------------------------------------------------------------
+|
+| Functionality for the modal in past events, lets users add their events
+|
+|
+*/
+
+// only need this functionality on the users own profile
+if ( bp_is_my_profile() ) {
+
+	/**
+	 *  AJAX handler to update/create user added events
+	 */
+	function eypd_add_user_event() {
+
+		// Check for nonce security
+		$nonce = $_POST['security'];
+		if ( ! wp_verify_nonce( $nonce, 'eypd_nonce' ) ) {
+			wp_send_json_error();
+		} else {
+
+			// get submitted values
+			$new_value = $_POST;
+			// get the user ID
+			$user_id = get_current_user_id();
+			// get existing values
+			$user_value = get_user_meta( $user_id, 'eypd_user_event' );
+
+			// The new value shouldn't match the stored value
+			if ( $user_value != $new_value ) {
+				$response = update_user_meta( $user_id, 'eypd_user_event', $new_value );
+				// send back the new value
+				wp_send_json_success( $response );
+			}
+		}
+		// stop execution afterward.
+		wp_die();
+	}
+
+	if ( is_admin() ) {
+		add_action( 'wp_ajax_add_event', 'eypd_add_user_event' );
+		add_action( 'wp_ajax_nopriv_add_event', 'eypd_add_user_event' );
+	}
+
+	/**
+	 * localize to define ajaxurl and nonce
+	 */
+	wp_localize_script(
+		'eypd-user-event', 'settings', [
+			'ajaxurl'  => admin_url( 'admin-ajax.php' ),
+			'security' => wp_create_nonce( 'eypd_nonce' ),
+		]
+	);
 }

@@ -54,10 +54,14 @@ do_action( 'close_main_wrap' );
 <?php
 do_action( 'close_body' );
 wp_footer();
-?>
-<?php if ( is_page( 'Sign Up' ) ) {
+
+// Bring in the modal templates
+if ( is_page( 'Sign Up' ) ) {
 	get_template_part( 'templates/terms-modal' );
 	get_template_part( 'templates/roles-modal' );
+}
+if ( bp_is_my_profile() ) {
+get_template_part( 'templates/hours-modal' );
 }
 get_template_part( 'templates/video-modal' );
 ?>

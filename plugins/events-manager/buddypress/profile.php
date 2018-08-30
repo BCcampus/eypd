@@ -410,6 +410,7 @@ if ( bp_is_my_profile() ) { ?>
 								echo "<p>See no past events? <a href='{$events_url}'>Browse Events</a></p>";
 							} ?>
 						</div>
+						<a href="#hours-modal" data-toggle="modal">Add an event I've attended</a>
 					</div>
 				</div>
 			</div>
