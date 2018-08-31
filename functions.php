@@ -1678,30 +1678,37 @@ function eypd_maybe_url( $url ) {
 
 /**
  * Redirects based on their role after registration when BP activation is skipped.
- * The role value has to come from registration page $_POST, because user is not logged in yet, and
- * field ID's on extended profiles differ on environments and can change
+ * The role value has to come from registration page $_POST, because user is not logged in yet
+ * Only works when the plugin bp-disable-activation-reloaded is activated
  * @return mixed
  */
 function eypd_redirect_after_register() {
+	/**
+	 * Detect plugin. For use on Front End only.
+	 */
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-	$needles = [ 'Learner', 'Organizer' ];
-	// figure out what role they selected at the registration page
-	$role_field_id = array_intersect( $needles, $_POST );
-	// set the role value
-	$role = reset( $role_field_id );
-	$html = '';
+	// check for plugin using plugin name
+	if ( is_plugin_active( 'bp-disable-activation-reloaded/bp-disable-activation-loader.php' ) ) {
+		//plugin is activated
+		$needles = [ 'Learner', 'Organizer' ];
+		// figure out what role they selected at the registration page
+		$role_field_id = array_intersect( $needles, $_POST );
+		// set the role value
+		$role = reset( $role_field_id );
+		$html = '';
 
-	// redirect Organizers to edit events
-	if ( isset( $_POST['signup_username'] ) && ( $role ) ) {
-		if ( $role === 'Organizer' ) {
-			$html = '<b>Redirecting ... <meta http-equiv="refresh" content="0; URL=' . home_url() . '/edit-events/" /><a href=' . home_url() . '/edit-events/' . '>click here</a> if you are not automatically redirected.';
-		} else { // redirect to the homepage
-			$html = '<b>Redirecting ... <meta http-equiv="refresh" content="0; URL=' . home_url() . '/members/' . $_POST["signup_username"] . '/events/"/> <a href="' . home_url() . '/members/' . $_POST["signup_username"] . '/events/"/>click here</a> if you are not automatically redirected.';
+		// redirect Organizers to edit events
+		if ( isset( $_POST['signup_username'] ) && ( $role ) ) {
+			if ( $role === 'Organizer' ) {
+				$html = '<b>Redirecting ... <meta http-equiv="refresh" content="0; URL=' . home_url() . '/edit-events/" /><a href=' . home_url() . '/edit-events/' . '>click here</a> if you are not automatically redirected.';
+			} else { // redirect to the homepage
+				$html = '<b>Redirecting ... <meta http-equiv="refresh" content="0; URL=' . home_url() . '/members/' . $_POST["signup_username"] . '/events/"/> <a href="' . home_url() . '/members/' . $_POST["signup_username"] . '/events/"/>click here</a> if you are not automatically redirected.';
 
+			}
+			echo $html;
 		}
-		echo $html;
 	}
-	//
 }
 add_action( 'bp_after_registration_confirmed', 'eypd_redirect_after_register' );
 
