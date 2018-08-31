@@ -59,6 +59,13 @@
     padding: $unit*2;
     text-align: left;
   }
+  & #footer-info{
+    padding:15px;
+  }
+  & #powered-by ul li {
+    display: inline;
+    margin-left: 20px;
+  }
 }
 
 #filter-bar {

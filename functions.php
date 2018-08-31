@@ -1720,3 +1720,11 @@ function eypd_widgets_init() {
 	] );
 }
 add_action( 'widgets_init', 'eypd_widgets_init' );
+
+/**
+ * Add copyright menu so it be managed in wp dashboard
+ */
+function eypd_copyright_menu() {
+	register_nav_menu('copyright-menu',__( 'Copyright Menu' ));
+}
+add_action( 'init', 'eypd_copyright_menu' );
