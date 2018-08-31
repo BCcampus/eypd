@@ -1,8 +1,8 @@
 jQuery(document).ready(function ($) {
 
-    $eventdate = '#event-date';   // input field where date picker will show up
+    var $eventdate = '#event_start_date';   // input field where date picker will show up
     $($eventdate).datepicker('hide');
-    $($eventdate).on('click', function(){
+    $($eventdate).on('click', function () {
 
         $($eventdate).datepicker({
             dateFormat: 'mm/dd/yy',
@@ -12,13 +12,36 @@ jQuery(document).ready(function ($) {
         $($eventdate).datepicker('show');
     });
 
-    $('#hours-modal').on('click', '.btn-save', function(){
+    $('#hours-modal').on('click', '.btn-save', function (e) {
 
-        // send the data back to php, so we can use it to create the new user meta, and re-calculate the hours
+        // get all the form values
+        var dataArray = $("#hours-form").serializeArray(),
+            dataObj = {};
+        // let's set the field name as the key
+        $(dataArray).each(function(i, field){
+            dataObj[field.name] = field.value;
+        });
 
-        location.reload(true); // reload the page to recalculate various items in the page, including the donut and past events table.
+        // Ajax data
+        var data = {
+            action: 'add_event',
+            security: settings.security,
+            formdata: dataObj
+        };
 
-        // if all is good, close the modal
-        $('#hours-modal').modal('hide');// close the modal
+        // Response
+        $.post(settings.ajaxurl, data, function (response) {
+
+            if (response.success === true) {
+
+                // show the success message
+                $('.hours-message').slideDown('slow').fadeOut('slow');
+
+            } else {
+
+                // show the error message
+                $('.hours-message-error').slideDown('slow').fadeOut('slow');
+            }
+        });
     });
 });

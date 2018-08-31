@@ -1736,17 +1736,18 @@ if ( bp_is_my_profile() ) {
 
 	/**
 	 *  AJAX handler to update/create user added events
+	 * todo: fix nonce, validate and sanitize input
 	 */
 	function eypd_add_user_event() {
-
+		/**
 		// Check for nonce security
 		$nonce = $_POST['security'];
 		if ( ! wp_verify_nonce( $nonce, 'eypd_nonce' ) ) {
 			wp_send_json_error();
 		} else {
-
-			// get submitted values
-			$new_value = $_POST;
+		 */
+			// get submitted form values
+			$form_data = $_POST['formdata'];
 			// get the user ID
 			$user_id = get_current_user_id();
 			// get existing values
@@ -1759,9 +1760,6 @@ if ( bp_is_my_profile() ) {
 				wp_send_json_success( $response );
 			}
 		}
-		// stop execution afterward.
-		wp_die();
-	}
 
 	if ( is_admin() ) {
 		add_action( 'wp_ajax_add_event', 'eypd_add_user_event' );
@@ -1777,4 +1775,24 @@ if ( bp_is_my_profile() ) {
 			'security' => wp_create_nonce( 'eypd_nonce' ),
 		]
 	);
+}
+
+/**
+ * Gets the even manager categories, used in hours-modal.php
+ * @return array|null|object
+ */
+function eypd_get_event_categories() {
+	global $wpdb;
+	$term = 'event-categories';
+
+	$results = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT {$wpdb->prefix}terms.name FROM {$wpdb->prefix}term_taxonomy
+					INNER JOIN {$wpdb->prefix}terms on ({$wpdb->prefix}term_taxonomy.term_id = {$wpdb->prefix}terms.term_id)
+					WHERE {$wpdb->prefix}term_taxonomy.taxonomy = %s
+					ORDER BY {$wpdb->prefix}terms.name ASC", $term
+		), ARRAY_A
+	);
+
+	return $results;
 }
