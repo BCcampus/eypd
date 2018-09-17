@@ -18,11 +18,19 @@ class EypdTest extends WP_UnitTestCase {
 		parent::tearDown();
 	}
 
+
 	/**
-	 * A single example test.
+	 *
 	 */
-	function test_sample() {
-		// Replace this with some actual testing code.
-		$this->assertTrue( true );
+	function test_maybe_url() {
+		$no_protocol = 'url.net';
+		$random      = 'random string';
+
+		$result_protocol = eypd_maybe_url( $no_protocol );
+		$result_random   = eypd_maybe_url( $random );
+
+		$this->assertFalse( $result_random );
+		$this->assertStringMatchesFormat( '//url.net', $result_protocol );
+
 	}
 }

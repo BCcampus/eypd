@@ -11,8 +11,15 @@ table.em-calendar thead {
   font-weight: normal;
 }
 
-thead:first-child tr th {
+thead:first-child tr th,
+thead:first-child tr td {
   color: inherit;
+  background-color: $color-neutral-00;
+  border: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  background-image: none;
+  padding-left: 0;
 }
 
 [class*="column"] + [class*="lastfix"]:last-child {
@@ -22,5 +29,20 @@ thead:first-child tr th {
 @media (min-width: $small) {
   table.widefat.events-table {
     table-layout: fixed;
+  }
+}
+
+table {
+  thead {
+    border-bottom: 2px solid $color-gray-elephant;
+  }
+  th, td {
+    padding: 1em 1em 1em 0;
+    line-height: 1.4em;
+    font-size: $font-size - 2;
+    letter-spacing: 0.1px;
+  }
+  td {
+    vertical-align: top;
   }
 }

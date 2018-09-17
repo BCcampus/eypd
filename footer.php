@@ -33,7 +33,8 @@ do_action( 'close_main_wrap' );
 				<?php echo infinity_option_get( 'infinity-core-options.footer-text' ); ?>
             </div>
             <div id="footer-info" class="column six">
-				<?php
+	            <?php
+	            wp_nav_menu( array( 'theme_location' => 'copyright-menu', 'container_class' => 'copyright-menu' ) );
 				// Load Footer Menu only if it's enabled
 				if ( current_theme_supports( 'infinity-footer-menu-setup' ) ) :
 					infinity_get_template_part( 'templates/parts/footer-menu', 'footer' );

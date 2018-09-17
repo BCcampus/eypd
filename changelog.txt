@@ -1,4 +1,14 @@
 == Change Log ==
+= v1.0.0 (06/28/2018) =
+* better dependency mgmt
+* theme options page
+* overhaul of myEYPD profile page
+* usability enhancements
+* coding standards
+* chart representation of certificate hours
+* custom-wp-notification integration
+* many enhancements and features
+
 = v0.9.5 (09/15/2017) =
 * coding standards and clean up
 * severe restrictions for editor role

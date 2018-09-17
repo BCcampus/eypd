@@ -17,7 +17,7 @@
   a {
     color: $color-neutral-80;
 
-    &.text-blue{
+    &.text-blue {
       color: $color-brand-blue;
     }
 
@@ -27,7 +27,7 @@
   }
 }
 
-#powered-by{
+#powered-by {
   border-top: 1px solid $color-gray-boulder;
   background-color: $color-neutral-00;
   color: inherit;
@@ -36,7 +36,7 @@
 }
 
 #footer {
-  .widget h4 {
+  .widget h4, .funded {
     color: $color-neutral-80;
     text-shadow: none;
     font-weight: bold;
@@ -55,9 +55,16 @@
       margin-left: 20px;
     }
   }
-  & #copyright-info{
+  & #copyright-info {
     padding: $unit*2;
     text-align: left;
+  }
+  & #footer-info{
+    padding:15px;
+  }
+  & #powered-by ul li {
+    display: inline;
+    margin-left: 20px;
   }
 }
 
@@ -87,4 +94,3 @@
   text-align: left;
   width: 750px;
 }
-

@@ -17,3 +17,20 @@ img.wp-smiley, img.emoji {
     margin-top: 100px;
   }
 }
+
+.professional-interests{
+  column-count: 1;
+  column-gap: 1rem;
+  column-rule: 1px solid $color-gray-mercury;
+}
+
+@media (max-width: $small ){
+  .professional-interests{
+    column-count: 1;
+  }
+}
+
+.at-a-glance{
+  padding: 1.5em;
+  border: 1px solid $color-blue-sail;
+}
