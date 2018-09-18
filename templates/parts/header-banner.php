@@ -9,7 +9,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPLv3 or later
  */
 ?>
-<div class="top-wrap row <?php do_action( 'top_wrap_class' ); ?>">
+<div class="top-wrap flex-row <?php do_action( 'top_wrap_class' ); ?>">
 	<?php
 	// Load Top Menu only if it's enabled
 	if ( current_theme_supports( 'infinity-top-menu-setup' ) ) :

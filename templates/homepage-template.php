@@ -16,7 +16,7 @@
 infinity_get_header();
 
 ?>
-<div class="row">
+<div class="flex-column">
     <div class="c-banner">
         <div class="center">
             <img class="eypd_logo"
