@@ -41,7 +41,7 @@ mix.copy(`${assets}/fonts`, `${dist}/fonts`)
 
 // compiled Javascript
 mix.js(`${node}/bootstrap/dist/js/bootstrap.js`, `${dist}/scripts`)
-    .js(`${node}/popper.js/dist/umd/popper.js`, `${dist}/scripts`)
+    .js(`${node}/popper.js/dist/popper.js`, `${dist}/scripts`)
     .js(`${node}/bootstrap/js/dist/tooltip.js`, `${dist}/scripts`)
     .js(`${assets}/js/tabs.js`, `${dist}/scripts`)
     .js(`${assets}/js/initpopover.js`, `${dist}/scripts`)
