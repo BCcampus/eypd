@@ -131,7 +131,7 @@ add_action(
 		// load popover only for users who aren't logged in
 		if ( ! is_user_logged_in() ) {
 			wp_enqueue_script( 'bootstrap-tooltip', $template_dir . '/dist/scripts/tooltip.js', [], null, true );
-			wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', [ 'bootstrap-tooltip' ], null, true );
+			wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popper.js', [ 'bootstrap-tooltip' ], null, true );
 			wp_enqueue_script( 'initpopover', $template_dir . '/dist/scripts/initpopover.js', [ 'bootstrap-popover' ], null, true );
 			wp_enqueue_script( 'popover-dismiss', $template_dir . '/dist/scripts/popover-dismiss.js', [ 'initpopover' ], null, true );
 		}
