@@ -16,8 +16,8 @@
 infinity_get_header();
 
 ?>
-<div class="flex-column">
-    <div class="c-banner">
+<div class="row">
+    <div class="c-banner row">
         <div class="center">
             <img class="eypd_logo"
                  src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-final.svg"

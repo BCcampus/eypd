@@ -45,7 +45,7 @@ do_action( 'open_container' );
 ?>
 
     <!-- start main wrap. the main-wrap div will be closed in the footer template -->
-<div class="main-wrap flex-row <?php do_action( 'main_wrap_class' ); ?>">
+<div class="main-wrap row <?php do_action( 'main_wrap_class' ); ?>">
 <?php
 do_action( 'open_main_wrap' );
 ?>
