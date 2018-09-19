@@ -40,8 +40,7 @@ mix.copy(`${assets}/fonts`, `${dist}/fonts`)
     .copy(`${node}/d3/dist/d3.min.js`, `${dist}/scripts`)
 
 // compiled Javascript
-mix.js(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
-    .js(`${node}/popper.js/dist/popper.js`, `${dist}/scripts`)
+mix.js(`${node}/bootstrap/dist/js/bootstrap.bundle.min.js`, `${dist}/scripts`)
     .js(`${node}/bootstrap/js/dist/tooltip.js`, `${dist}/scripts`)
     .js(`${assets}/js/tabs.js`, `${dist}/scripts`)
     .js(`${assets}/js/initpopover.js`, `${dist}/scripts`)

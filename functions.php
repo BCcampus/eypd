@@ -131,12 +131,11 @@ add_action(
 		// load popover only for users who aren't logged in
 		if ( ! is_user_logged_in() ) {
 			wp_enqueue_script( 'bootstrap-tooltip', $template_dir . '/dist/scripts/tooltip.js', [], null, true );
-			wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popper.js', [ 'bootstrap-tooltip' ], null, true );
-			wp_enqueue_script( 'initpopover', $template_dir . '/dist/scripts/initpopover.js', [ 'bootstrap-popover' ], null, true );
+			wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popper.js', [ 'bootstrap-script' ], null, true );
 			wp_enqueue_script( 'popover-dismiss', $template_dir . '/dist/scripts/popover-dismiss.js', [ 'initpopover' ], null, true );
 		}
 
-		wp_enqueue_script( 'bootstrap-script', $template_dir . '/dist/scripts/bootstrap.min.js', [], null, true );
+		wp_enqueue_script( 'bootstrap-script', $template_dir . '/dist/scripts/bootstrap.bundle.min.js', [], null, true );
 		wp_enqueue_style( 'bootstrap-style', $template_dir . '/dist/styles/bootstrap.min.css' );
 		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery' ], null, true );
 
