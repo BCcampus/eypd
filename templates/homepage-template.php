@@ -34,43 +34,40 @@ infinity_get_header();
 	<?php echo do_shortcode( '[events_search]' ); ?>
 </div>
 <div class="c-map row">
-    <h2 class="text-blue text-center">Find training events near you</h2>
-    <div class="six columns">
+	<div class="row justify-content-center align-self-center">
+		<h2 class="text-blue">Find training events near you</h2>
+	</div>
+	    <!-- tabs start -->
+	    <div id="tabs" class="col-sm-6">
+		    <ul class="nav nav-tabs" id="myTab" role="tablist">
+			    <li class="nav-item">
+				    <a class="nav-link active" id="upcoming-tab" data-toggle="tab" href="#upcoming" role="tab"
+				       aria-controls="home" aria-selected="true">Upcoming Events</a>
+			    </li>
+			    <li class="nav-item">
+				    <a class="nav-link" id="recent-tab" data-toggle="tab" href="#recent" role="tab"
+				       aria-controls="profile" aria-selected="false">Recently Posted</a>
+			    </li>
+		    </ul>
+		    <div class="tab-content" id="myTabContent">
+			    <div class="tab-pane fade show active" id="upcoming" role="tabpanel" aria-labelledby="upcoming-tab">
+				    <?php
+				    $events_list = '[events_list scope="after-today" limit="4"]';
+				    echo do_shortcode( $events_list );
+				    ?>
+			    </div>
+			    <div class="tab-pane fade" id="recent" role="tabpanel" aria-labelledby="recent-tab">
+				    <?php
+				    // documentation http://wp-events-plugin.com/documentation/event-search-attributes/event-location-grouping-ordering/
+				    $events_recent = '[events_list orderby="event_date_created" order="DESC" groupby="location_id" groupby_orderby="event_date_created" groupby_order="DESC" limit="4"]';
+				    echo do_shortcode( $events_recent );
+				    ?>
+			    </div>
+		    </div>
+	    </div>
+	<!-- tabs end -->
 
-        <!-- tabs start -->
-        <div id="tabs" class="ui-tabs ui-corner-all ui-widget ui-widget-content">
-
-            <ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-                <li role="tab" tabindex="1"><a
-                            href="#tabs-1"
-                            role="presentation"
-                            tabindex="-1"
-                            class="ui-tabs-anchor"
-                            id="ui-id-1">Upcoming Events</a>
-                </li>
-                <li role="tab" tabindex="2" aria-controls="tabs-2"><a href="#tabs-2" role="presentation" tabindex="-1"
-                                                                      class="ui-tabs-anchor" id="ui-id-2">Recently
-                        Posted</a></li>
-
-            </ul>
-            <div id="tabs-1">
-				<?php
-				$events_list = '[events_list scope="after-today" limit="4"]';
-				echo do_shortcode( $events_list );
-				?>
-            </div>
-            <div id="tabs-2">
-				<?php
-				// documentation http://wp-events-plugin.com/documentation/event-search-attributes/event-location-grouping-ordering/
-				$events_recent = '[events_list orderby="event_date_created" order="DESC" groupby="location_id" groupby_orderby="event_date_created" groupby_order="DESC" limit="4"]';
-				echo do_shortcode( $events_recent );
-				?>
-            </div>
-        </div>
-        <!-- tabs end -->
-
-    </div>
-    <div class="ten columns">
+    <div class="col-sm-6">
 		<?php
 		infinity_load_template( 'templates/google-map.php' );
 		?>
