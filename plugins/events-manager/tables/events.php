@@ -96,9 +96,11 @@ if ( ! empty( $show_add_new ) && current_user_can( 'edit_events' ) ) {
 						</th>
 						*/ ?>
 					<th><?php _e( 'Name', 'events-manager' ); ?></th>
-					<th>&nbsp;</th>
 					<th><?php _e( 'Location', 'events-manager' ); ?></th>
-					<th colspan="2"><?php _e( 'Date and time', 'events-manager' ); ?></th>
+					<th><?php _e( 'Date and time', 'events-manager' ); ?></th>
+					<th>&nbsp;</th>
+					<th>&nbsp;</th>
+					<th>&nbsp;</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -135,23 +137,6 @@ if ( ! empty( $show_add_new ) && current_user_can( 'edit_events' ) ) {
 								<a class="row-title"
 								   href="<?php echo esc_url( $EM_Event->get_edit_url() ); ?>"><?php echo esc_html( $EM_Event->event_name ); ?></a>
 							</strong>
-							<div class="row-actions">
-								<?php if ( current_user_can( 'delete_events' ) ) : ?>
-									<span class="trash"><a href="<?php echo esc_url( add_query_arg( array(
-											'action'   => 'event_delete',
-											'event_id' => $EM_Event->event_id,
-											'_wpnonce' => wp_create_nonce( 'event_delete_' . $EM_Event->event_id ),
-									) ) ); ?>"
-														   class="em-event-delete"><?php _e( 'Delete', 'events-manager' ); ?></a></span>
-								<?php endif; ?>
-							</div>
-						</td>
-						<td>
-							<a href="<?php echo $EM_Event->duplicate_url(); ?>"
-							   title="<?php _e( 'Duplicate this event', 'events-manager' ); ?>">
-								<strong>+</strong>
-							</a>
-						</td>
 						<td>
 							<?php echo $location_summary; ?>
 						</td>
@@ -167,6 +152,24 @@ if ( ! empty( $show_add_new ) && current_user_can( 'edit_events' ) ) {
 								echo get_option( 'dbem_event_all_day_message' );
 							}
 							?>
+						</td>
+						<td>
+							<div class="row-actions">
+								<?php if ( current_user_can( 'delete_events' ) ) : ?>
+									<span class="trash"><a href="<?php echo esc_url( add_query_arg( array(
+											'action'   => 'event_delete',
+											'event_id' => $EM_Event->event_id,
+											'_wpnonce' => wp_create_nonce( 'event_delete_' . $EM_Event->event_id ),
+									) ) ); ?>"
+														   class="em-event-delete"><?php _e( 'Delete', 'events-manager' ); ?></a></span>
+								<?php endif; ?>
+							</div>
+						</td>
+						<td>
+							<a href="<?php echo $EM_Event->duplicate_url(); ?>"
+							   title="<?php _e( 'Duplicate this event', 'events-manager' ); ?>">
+							   Duplicate Event
+							</a>
 						</td>
 						<td>
 							<?php
