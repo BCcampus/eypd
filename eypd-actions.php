@@ -15,7 +15,7 @@
  * @copyright Copyright Marcus Sykes
  */
 
-function eypd_init_actions() {
+add_action( 'init', function () {
 	global $wpdb, $EM_Notices, $EM_Event;
 
 	update_option( 'dbem_location_event_list_item_format', '<li class="category-#_EVENTPOSTID">#_EVENTLINK - #_EVENTDATES - #_EVENTTIMES</li>', true );
@@ -417,11 +417,11 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 %s LIMIT 10', EM_LOCATIO
 					$EM_Booking = em_get_booking( $booking_id );
 					$result     = $EM_Booking->$action();
 					$results[]  = $result;
-					if ( ! in_array( false, $results ) && ! $result ) {
+					if ( ! in_array( false, $results, true ) && ! $result ) {
 						$feedback = $EM_Booking->feedback_message;
 					}
 				}
-				$result = ! in_array( false, $results );
+				$result = ! in_array( false, $results, true );
 			} elseif ( is_object( $EM_Booking ) ) {
 				$result   = $EM_Booking->$action();
 				$feedback = $EM_Booking->feedback_message;
@@ -720,9 +720,12 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 %s LIMIT 10', EM_LOCATIO
 		fputcsv( $handle, $EM_Bookings_Table->get_headers( true ), $delimiter );
 		while ( ! empty( $EM_Bookings->bookings ) ) {
 			foreach ( $EM_Bookings->bookings as $EM_Booking ) {
-				//Display all values
-				/* @var $EM_Booking EM_Booking */
-				/* @var $EM_Ticket_Booking EM_Ticket_Booking */
+				/**
+				 * Display all values
+				 *
+				 * @var $EM_Booking EM_Booking
+				 * @var $EM_Ticket_Booking EM_Ticket_Booking
+				 */
 				if ( $show_tickets ) {
 					foreach ( $EM_Booking->get_tickets_bookings()->tickets_bookings as $EM_Ticket_Booking ) {
 						$row = $EM_Bookings_Table->get_row_csv( $EM_Ticket_Booking );
@@ -753,6 +756,4 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 %s LIMIT 10', EM_LOCATIO
 		wp_redirect( em_wp_get_referer() );
 
 	}
-}
-
-add_action( 'init', 'eypd_init_actions', 10 );
+}, 10 );

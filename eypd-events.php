@@ -20,7 +20,7 @@
  *
  * @return mixed|void
  */
-function eypd_content( $page_content ) {
+add_filter( 'the_content', function ( $page_content ) {
 	global $post, $wpdb, $wp_query, $EM_Event, $EM_Location, $EM_Category;
 	if ( empty( $post ) ) {
 		return $page_content;
@@ -48,7 +48,7 @@ function eypd_content( $page_content ) {
 			$edit_locations_page_id,
 			$my_bookings_page_id,
 			$tags_page_id,
-	] )
+	], true )
 	) {
 		$content = apply_filters( 'em_content_pre', '', $page_content );
 		if ( empty( $content ) ) {
@@ -69,7 +69,7 @@ function eypd_content( $page_content ) {
 						em_locate_template( 'templates/events-calendar.php', true, [ 'args' => $args ] );
 					} else {
 						//Intercept search request, if defined
-						if ( ! empty( $_REQUEST['action'] ) && ( $_REQUEST['action'] == 'search_events' || $_REQUEST['action'] == 'search_events_grouped' ) ) {
+						if ( ! empty( $_REQUEST['action'] ) && ( $_REQUEST['action'] === 'search_events' || $_REQUEST['action'] === 'search_events_grouped' ) ) {
 							$args = EM_Events::get_post_search( array_merge( $args, $_REQUEST ) );
 						}
 						if ( empty( $args['scope'] ) ) {
@@ -105,7 +105,7 @@ function eypd_content( $page_content ) {
 					em_locate_template( 'templates/location-single.php', true, [ 'args' => $args ] );
 				} else {
 					//Intercept search request, if defined
-					if ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'search_locations' ) {
+					if ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] === 'search_locations' ) {
 						$args = EM_Locations::get_post_search( array_merge( $args, $_REQUEST ) );
 					}
 					if ( get_option( 'dbem_locations_page_search_form' ) ) {
@@ -168,6 +168,4 @@ function eypd_content( $page_content ) {
 	}
 
 	return $page_content;
-}
-
-add_filter( 'the_content', 'eypd_content' );
+} );

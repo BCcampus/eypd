@@ -54,7 +54,12 @@
 		<exclude-pattern>/functions.php</exclude-pattern>
 		<exclude-pattern>/eypd-actions.php</exclude-pattern>
 		<exclude-pattern>/eypd-events.php</exclude-pattern>
-
+	</rule>
+	<rule ref="WordPress.PHP.StrictComparisons.LooseComparison">
+		<exclude-pattern>/eypd-events.php</exclude-pattern>
+		<exclude-pattern>/eypd-actions.php</exclude-pattern>
+<exclude-pattern>/plugins/events-manager/forms/event/location.php</exclude-pattern>
+		<exclude-pattern>/plugins/events-manager/placeholders/bookingform.php</exclude-pattern>
 	</rule>
 
 </ruleset>

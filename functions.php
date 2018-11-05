@@ -240,16 +240,14 @@ if ( file_exists( $eypd_events ) ) {
  *
  * @return mixed
  */
-function eypd_em_scope_conditions( $conditions, $args ) {
+add_filter( 'em_events_build_sql_conditions', function ( $conditions, $args ) {
 	if ( ! empty( $args['scope'] ) && $args['scope'] === 'after-today' ) {
 		$current_date        = date( 'Y-m-d', current_time( 'timestamp' ) );
 		$conditions['scope'] = " (event_start_date > CAST('$current_date' AS DATE))";
 	}
 
 	return $conditions;
-}
-
-add_filter( 'em_events_build_sql_conditions', 'eypd_em_scope_conditions', 1, 2 );
+}, 1, 2 );
 
 
 /**
@@ -258,15 +256,13 @@ add_filter( 'em_events_build_sql_conditions', 'eypd_em_scope_conditions', 1, 2 )
  *
  * @return array
  */
-function eypd_em_scopes( $scopes ) {
+add_filter( 'em_get_scopes', function ( $scopes ) {
 	$my_scopes = [
 		'after-today' => 'After Today',
 	];
 
 	return $scopes + $my_scopes;
-}
-
-add_filter( 'em_get_scopes', 'eypd_em_scopes', 1, 1 );
+}, 1, 1 );
 
 /*
 |--------------------------------------------------------------------------
@@ -316,7 +312,7 @@ add_filter(
  *
  * @return string
  */
-function eypd_login_message( $message ) {
+add_filter( 'login_message', function ( $message ) {
 	if ( empty( $message ) ) {
 		$imgdir = get_stylesheet_directory_uri();
 		$html   = '<p class="login-logo"><picture><source srcset="' . $imgdir . '/dist/images/eypd-logo-small.webp" type="image/webp"><source srcset="' . $imgdir . '/dist/images/eypd-logo-small.png"><img src="' . $imgdir . '/dist/images/eypd-logo-small.png" width="101" height="92" alt="BC Provincial Government"></picture></p>';
@@ -325,21 +321,17 @@ function eypd_login_message( $message ) {
 	} else {
 		return $message;
 	}
-}
-
-add_filter( 'login_message', 'eypd_login_message' );
+} );
 
 /**
  * Adds Sign Up button and Forgot lost password link
  */
-function eypd_login_form() {
+add_action( 'login_form', function () {
 	$html = '<p class="signuptext">New to EYPD?</p><p><a class ="button button-primary button-large signup" href="' . home_url() . '/sign-up" title="Sign Up">Sign Up</a></p>';
 	$html .= '&nbsp; &#45; &nbsp;<a class ="forgot" href="' . wp_lostpassword_url() . '" title="Lost Password">Forgot Password?</a>';
 
 	echo $html;
-}
-
-add_action( 'login_form', 'eypd_login_form' );
+} );
 
 /*
 |--------------------------------------------------------------------------
@@ -356,13 +348,11 @@ add_action( 'login_form', 'eypd_login_form' );
  *
  * @return string
  */
-function eypd_read_more( $more ) {
+add_filter( 'excerpt_more', function ( $more ) {
 	global $post;
 
 	return ' <a href="' . get_the_permalink( $post->ID ) . '">...[Read full article]</a>';
-}
-
-add_filter( 'excerpt_more', 'eypd_read_more' );
+} );
 
 /*
 |--------------------------------------------------------------------------
