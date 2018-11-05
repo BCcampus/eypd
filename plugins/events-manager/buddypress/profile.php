@@ -48,12 +48,12 @@ if ( bp_is_my_profile() ) { ?>
 	<!-- countdown to certificate expiry -->
 	<?php
 	// save new expiry date
-	if ( isset( $_POST['expiry-date'] ) ) {
+	if ( isset( $_POST['expiry-date'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'wpnonce_eypd_countdown' ) ) {
 		$newdate = $_POST['expiry-date'];
 		// Update/Create User Meta
 		update_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', $newdate );
 	}
-	//get expiry date
+	// get expiry date
 	$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
 		?>
 		<form id="eypd_countdown" class="eypd-countdown" action=""
@@ -64,6 +64,7 @@ if ( bp_is_my_profile() ) { ?>
 					echo $cert_expires;
 } else { ?>Select date...<?php } ?>" name="expiry-date"/>
 				<input class="right" type="submit" value="Save">
+				<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'wpnonce_eypd_countdown' ); ?>"/>
 				<div id="certcoutdown"><p>calculating...</p></div>
 			</div>
 		</form>
@@ -130,7 +131,7 @@ if ( bp_is_my_profile() ) { ?>
 	| Training
 	|--------------------------------------------------------------------------
 	|
-	|
+	| training data
 	|
 	|
 	*/
@@ -308,9 +309,9 @@ if ( bp_is_my_profile() ) { ?>
 												<th class='event-hours'
 													scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
 												<th class='event-attendance'
-													scope='col'><?php _e( 'Attended (' . $attended_count . ')', 'events-manager' ); ?></th>
+													scope='col'><?php echo "Attended (' {$attended_count} ')"; ?></th>
 												<th class='event-attendance'
-													scope='col'><?php _e( 'Did Not Attend (' . ( $past_count - $attended_count ) . ')', 'events-manager' ); ?></th>
+													scope='col'><?php echo "Did Not Attend (' ( {$past_count} - {$attended_count} ) ')"; ?></th>
 											</tr>
 											</thead>
 											<tbody>
@@ -324,7 +325,7 @@ if ( bp_is_my_profile() ) { ?>
 
 											as $EM_Booking ) {
 												// skip over if it's not in the past
-												if ( ! in_array( $EM_Booking->event_id, $past_ids ) ) {
+												if ( ! in_array( $EM_Booking->event_id, $past_ids, false ) ) {
 													continue;
 												}
 												$EM_Event = $EM_Booking->get_event();

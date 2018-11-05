@@ -1,5 +1,5 @@
-<?php do_action( 'em_template_my_bookings_header' ); ?>
 <?php
+do_action( 'em_template_my_bookings_header' );
 global $wpdb, $current_user, $EM_Notices, $EM_Person;
 if ( is_user_logged_in() ) :
 	$EM_Person = new EM_Person( get_current_user_id() );
@@ -7,7 +7,7 @@ if ( is_user_logged_in() ) :
 	$bookings_count = count( $EM_Bookings->bookings );
 	if ( $bookings_count > 0 ) {
 		//Get events here in one query to speed things up
-		$event_ids = array();
+		$event_ids = [];
 		foreach ( $EM_Bookings as $EM_Booking ) {
 			$event_ids[] = $EM_Booking->event_id;
 		}
@@ -22,7 +22,7 @@ if ( is_user_logged_in() ) :
 			<div class='tablenav'>
 				<?php
 				if ( $bookings_count >= $limit ) {
-					$link         = em_add_get_params( $_SERVER['REQUEST_URI'], array( 'pno' => '%PAGE%' ), false ); //don't html encode, so em_paginate does its thing
+					$link         = em_add_get_params( $_SERVER['REQUEST_URI'], [ 'pno' => '%PAGE%' ], false ); //don't html encode, so em_paginate does its thing
 					$bookings_nav = em_paginate( $link, $bookings_count, $limit, $page );
 					echo $bookings_nav;
 				}
@@ -49,7 +49,9 @@ if ( is_user_logged_in() ) :
 					$event_count = 0;
 					$nonce       = wp_create_nonce( 'booking_cancel' );
 					foreach ( $EM_Bookings as $EM_Booking ) {
-						/* @var $EM_Booking EM_Booking */
+						/**
+						 * @var $EM_Booking EM_Booking
+						 */
 						$EM_Event = $EM_Booking->get_event();
 						if ( ( $rowno < $limit || empty( $limit ) ) && ( $event_count >= $offset || $offset === 0 ) ) {
 							$rowno ++;
