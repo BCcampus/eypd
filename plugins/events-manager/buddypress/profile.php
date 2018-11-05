@@ -48,12 +48,12 @@ if ( bp_is_my_profile() ) { ?>
 	<!-- countdown to certificate expiry -->
 	<?php
 	// save new expiry date
-	if ( isset( $_POST['expiry-date'] ) ) {
+	if ( isset( $_POST['expiry-date'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'wpnonce_eypd_countdown' ) ) {
 		$newdate = $_POST['expiry-date'];
 		// Update/Create User Meta
 		update_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', $newdate );
 	}
-	//get expiry date
+	// get expiry date
 	$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
 		?>
 		<form id="eypd_countdown" class="eypd-countdown" action=""
@@ -64,6 +64,7 @@ if ( bp_is_my_profile() ) { ?>
 					echo $cert_expires;
 } else { ?>Select date...<?php } ?>" name="expiry-date"/>
 				<input class="right" type="submit" value="Save">
+				<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'wpnonce_eypd_countdown' ); ?>"/>
 				<div id="certcoutdown"><p>calculating...</p></div>
 			</div>
 		</form>
