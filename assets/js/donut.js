@@ -1,5 +1,14 @@
 var data = donut_data;
 
+//Sum the event hours
+var totalHours =  d3.nest()
+	.rollup(function(g) {
+		return d3.format(".2f")(d3.sum(g, function (d) {
+			return d.value;
+		}));
+	})
+	.entries(data);
+
 var pie = d3.pie()
     .value(function (d) {
         return d.value
@@ -38,11 +47,19 @@ arcGraph.append("text")
     })
     .attr("dy", "0.35em")
 
-// values in donut
-/*    .text(function (d) {
-        return d.data.value
-    });
-*/
+//Add label to the middle of the donut for total even hours
+var label = g.append("text")
+	.attr("class", "donut-label");
+
+label.append("tspan")
+	.attr("x", 0)
+	.attr("dy", "-.2em")
+	.text(totalHours + " hours");
+
+label.append("tspan")
+	.attr("x", 0)
+	.attr("dy", "1.1em")
+	.text("complete");
 
 // building a legend
 svg.append('g')
