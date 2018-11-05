@@ -62,11 +62,11 @@ add_filter( /**
 			'joyride',
 		];
 
-		if ( in_array( $handle, $defer ) ) {
+		if ( in_array( $handle, $defer, true ) ) {
 			return "<script defer type='text/javascript' src='{$src}'></script>" . "\n";
 		}
 
-		if ( in_array( $handle, $async ) ) {
+		if ( in_array( $handle, $async, true ) ) {
 			return "<script async type='text/javascript' src='{$src}'></script>" . "\n";
 		}
 
@@ -186,8 +186,10 @@ remove_action( 'wp_head', 'infinity_custom_favicon' );
 
 /*
 |--------------------------------------------------------------------------
-| Common
+| Common Stuff
 |--------------------------------------------------------------------------
+|
+|
 |
 |
 */
@@ -239,7 +241,7 @@ if ( file_exists( $eypd_events ) ) {
  * @return mixed
  */
 function eypd_em_scope_conditions( $conditions, $args ) {
-	if ( ! empty( $args['scope'] ) && $args['scope'] == 'after-today' ) {
+	if ( ! empty( $args['scope'] ) && $args['scope'] === 'after-today' ) {
 		$current_date        = date( 'Y-m-d', current_time( 'timestamp' ) );
 		$conditions['scope'] = " (event_start_date > CAST('$current_date' AS DATE))";
 	}
@@ -576,7 +578,7 @@ add_action( 'wp_loaded', 'eypd_run_once' );
  */
 function eypd_terminology_modify( $translated, $original, $domain ) {
 
-	if ( 'events-manager' == $domain ) {
+	if ( 'events-manager' === $domain ) {
 		$modify = [
 			'State/County:'                                                                  => 'Province:',
 			'Details'                                                                        => 'Event Description and Objectives',
@@ -588,12 +590,12 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 		];
 	}
 
-	if ( 'buddypress' == $domain ) {
+	if ( 'buddypress' === $domain ) {
 		$modify = [
 			'Register'                                                                                                                  => 'Sign Up',
 			'Email Address'                                                                                                             => 'Work Email Address',
 			'Registering for this site is easy. Just fill in the fields below, and we\'ll get a new account set up for you in no time.' => 'Fill in the fields below to register as an Organizer or a Learner. <b>Learner</b> — you are primarily looking for training events. <b>Organizer</b> — you are primarily posting training events on behalf of your organization.',
-			'You have successfully created your account! Please log in using the username and password you have just created.' => ''
+			'You have successfully created your account! Please log in using the username and password you have just created.' => '',
 		];
 	}
 
@@ -677,7 +679,7 @@ function eypd_event_etc_output( $input = '' ) {
  * @param bool $ajax
  */
 function et_fetch( $post_id = - 1, $ajax = true ) {
-	if ( $ajax == true ) {
+	if ( $ajax === true ) {
 		$output = eypd_event_output( $post_id );
 		echo json_encode( $output ); //encode into JSON format and output
 		die(); //stop "0" from being output
@@ -792,7 +794,7 @@ add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
 // Filter wp_nav_menu() to add pop-overs to links in header menu
 add_filter(
 	'wp_nav_menu_items', function ( $nav, $args ) {
-		if ( $args->theme_location == 'main-menu' ) {
+		if ( $args->theme_location === 'main-menu' ) {
 			// adds home link to mobile only using bootstraps responsive utilities class
 			$nav = '<li class="visible-xs-block home"><a href=' . home_url() . '>Home</a></li>';
 			$nav .= '<li class="home"><a href=' . home_url() . '/events>Find Events</a></li>';
@@ -838,7 +840,7 @@ add_action(
 
 
 /**
- *
+ * custom navigation
  */
 function eypd_custom_user_nav_item_screen() {
 	add_action( 'bp_template_content', 'eypd_custom_screen_content' );
@@ -856,7 +858,7 @@ function eypd_custom_screen_content() {
 
 /*
 |--------------------------------------------------------------------------
-| Forms
+| Forms n' stuff
 |--------------------------------------------------------------------------
 |
 |
@@ -915,9 +917,9 @@ function eypd_fb_opengraph() {
 		if ( has_post_thumbnail( $post->ID ) ) {
 			$img_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
 		}
-		if ( $excerpt = $post->post_excerpt ) {
+		if ( $post->post_excerpt ) {
 			$excerpt = strip_tags( $post->post_excerpt );
-			$excerpt = str_replace( "", "'", $excerpt );
+			$excerpt = str_replace( '', "'", $excerpt );
 		} else {
 			$excerpt = get_bloginfo( 'description' );
 		}
@@ -929,18 +931,17 @@ function eypd_fb_opengraph() {
 		<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>"/>
 		<meta property="og:image" content="<?php echo $img_src; ?>"/>
 		<?php  }
-		if ( is_page() ) {
-			if ( has_post_thumbnail( $post->ID ) ) {
-				$img_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
-			} ?>
+	if ( is_page() ) {
+		if ( has_post_thumbnail( $post->ID ) ) {
+			$img_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
+		} ?>
 			<meta property="og:title" content="<?php echo the_title(); ?>"/>
 			<meta property="og:description" content="<?php echo get_bloginfo( 'description' ); ?>"/>
 			<meta property="og:type" content="page"/>
 			<meta property="og:url" content="<?php echo get_page_link(); ?>"/>
 			<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>"/>
 			<meta property="og:image" content="<?php echo $img_src; ?>"/>
-		<?php }
-	  else { ?>
+		<?php } else { ?>
 		<meta property="og:title" content="<?php echo get_bloginfo( 'name' ); ?>"/>
 		<meta property="og:description" content="<?php echo get_bloginfo( 'description' ); ?>"/>
 		<meta property="og:type" content="website"/>
@@ -1022,7 +1023,7 @@ function eypd_cumulative_hours( $ids ) {
 	// input is radio buttons with boolean values
 	// true means they attended (default)
 	foreach ( $ids as $id => $bool ) {
-		if ( false == $bool ) {
+		if ( false === $bool ) {
 			continue;
 		}
 		$e = em_get_event( $id );
@@ -1053,7 +1054,7 @@ function eypd_hours_and_categories( $ids ) {
 	// input is radio buttons with boolean values
 	// true means they attended (default)
 	foreach ( $ids as $id => $bool ) {
-		if ( false == $bool ) {
+		if ( false === $bool ) {
 			continue;
 		}
 		$e          = em_get_event( $id );
@@ -1105,7 +1106,7 @@ function eypd_d3_array( $data ) {
 		}
 
 		foreach ( $cat as $k => $v ) {
-			$result[ $i ]['label'] = html_entity_decode($k);
+			$result[ $i ]['label'] = html_entity_decode( $k );
 			$result[ $i ]['value'] = number_format( $v, 1 );
 			$i ++;
 		}
@@ -1167,11 +1168,10 @@ add_filter( 'wp_default_editor', 'eypd_force_default_editor' );
  * Show only own items in media library panel
  */
 function eypd_my_images_only( $query ) {
-	if ( $user_id = get_current_user_id() ) {
+	 $user_id = get_current_user_id();
 		// exclude administrator
-		if ( ! current_user_can( 'administrator' ) ) {
-			$query['author'] = $user_id;
-		}
+	if ( ! current_user_can( 'administrator' ) ) {
+		$query['author'] = $user_id;
 	}
 
 	return $query;
@@ -1687,7 +1687,7 @@ function eypd_widgets_init() {
 		'before_widget' => '<article id="%1$s" class="widget %2$s">',
 		'after_widget' => '</article>',
 		'before_title' => '<h4>',
-		'after_title' => '</h4>'
+		'after_title' => '</h4>',
 	] );
 }
 add_action( 'widgets_init', 'eypd_widgets_init' );
@@ -1696,6 +1696,6 @@ add_action( 'widgets_init', 'eypd_widgets_init' );
  * Add copyright menu so it be managed in wp dashboard
  */
 function eypd_copyright_menu() {
-	register_nav_menu('copyright-menu',__( 'Copyright Menu' ));
+	register_nav_menu( 'copyright-menu',__( 'Copyright Menu' ) );
 }
 add_action( 'init', 'eypd_copyright_menu' );

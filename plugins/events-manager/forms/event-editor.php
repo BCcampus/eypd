@@ -44,7 +44,7 @@ if ( empty( $_REQUEST['success'] ) ) {
 }
 ?>
 <form enctype='multipart/form-data' id="event-form" method="post"
-	  action="<?php echo esc_url( add_query_arg( array( 'success' => null ) ) ); ?>">
+	  action="<?php echo esc_url( add_query_arg( [ 'success' => null ] ) ); ?>">
 	<div class="wrap">
 		<?php do_action( 'em_front_event_form_header' ); ?>
 		<?php if ( get_option( 'dbem_events_anonymous_submissions' ) && ! is_user_logged_in() ) : ?>
@@ -99,7 +99,7 @@ if ( empty( $_REQUEST['success'] ) ) {
 		<div class="inside event-form-details">
 			<div class="event-editor">
 				<?php if ( get_option( 'dbem_events_form_editor' ) && function_exists( 'wp_editor' ) ) : ?>
-					<?php wp_editor( $EM_Event->post_content, 'em-editor-content', array( 'textarea_name' => 'content' ) ); ?>
+					<?php wp_editor( $EM_Event->post_content, 'em-editor-content', [ 'textarea_name' => 'content' ] ); ?>
 				<?php else : ?>
 					<textarea name="content" rows="10"
 							  style="width:100%"><?php echo $EM_Event->post_content ?></textarea>

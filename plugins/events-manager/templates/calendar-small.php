@@ -53,9 +53,9 @@
 				<?php endif; ?>
 			</td>
 			<?php
-			//create a new row once we reach the end of a table collumn
-			$col_count = ( $col_count == $col_max ) ? 1 : $col_count + 1;
-			echo ( $col_count == 1 && $count < $cal_count ) ? '</tr><tr>' : '';
+			//create a new row once we reach the end of a table column
+			$col_count = ( $col_count === $col_max ) ? 1 : $col_count + 1;
+			echo ( $col_count === 1 && $count < $cal_count ) ? '</tr><tr>' : '';
 			$count ++;
 		}
 		?>
