@@ -10,13 +10,13 @@
  */
 
 global $post;
-$args    = array(
+$args    = [
 	'posts_per_page' => 2,
 	'category_name'  => 'Homepage',
 	'post_status'    => 'publish',
 	'order'          => 'DESC',
 	'post__in'       => get_option( 'sticky_posts' ),
-);
+];
 $myposts = get_posts( $args );
 foreach ( $myposts as $post ) : setup_postdata( $post );
 	?>
