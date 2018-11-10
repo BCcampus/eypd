@@ -35,15 +35,15 @@ mix.browserSync({
 
 // Assets
 mix.copy(`${assets}/fonts`, `${dist}/fonts`)
-    .copy(`${node}/bootstrap/fonts`, `${dist}/fonts`)
-    .copy(`${node}/bootstrap/dist/css/bootstrap.min.css`, `${dist}/styles`)
+    .copy(`${node}/bootstrap/dist/css/bootstrap.css`, `${dist}/styles`)
     .copy(`${assets}/images`, `${dist}/images`)
     .copy(`${node}/d3/dist/d3.min.js`, `${dist}/scripts`)
 
 // compiled Javascript
 mix.js(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
-    .js(`${node}/bootstrap/js/popover.js`, `${dist}/scripts`)
-    .js(`${node}/bootstrap/js/tooltip.js`, `${dist}/scripts`)
+	.js(`${node}/popper.js/dist/umd/popper.min.js`, `${dist}/scripts`)
+	.js(`${node}/bootstrap/js/dist/popover.js`, `${dist}/scripts`)
+	.js(`${node}/bootstrap/js/dist/tooltip.js`, `${dist}/scripts`)
     .js(`${assets}/js/tabs.js`, `${dist}/scripts`)
     .js(`${assets}/js/initpopover.js`, `${dist}/scripts`)
     .js(`${assets}/js/popover-dismiss.js`, `${dist}/scripts`)
