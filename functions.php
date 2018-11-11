@@ -139,7 +139,6 @@ add_action(
 			wp_enqueue_script( 'initpopover', $template_dir . '/dist/scripts/initpopover.js', [ 'bootstrap-popover' ], null, true );
 			wp_enqueue_script( 'popover-dismiss', $template_dir . '/dist/scripts/popover-dismiss.js', [ 'initpopover' ], null, true );
 		}
-		
 		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery' ], null, true );
 
 		// load styling for datepicker in myEYPD profile page only
