@@ -124,7 +124,7 @@ if ( bp_is_my_profile() ) { ?>
 	wp_localize_script( 'donut', 'donut_data', $chart_data_json );
 	$no_donut = get_stylesheet_directory_uri() . '/dist/images/donut_placeholder.png';
 	echo '<h2 class="top-padding">Event summary</h2>';
-	echo ( $chart_data_json ) ? '<div class="donut"></div>' : "<div class='no-donut'><img alt='graphical representation of completed certificate hours' src={$no_donut}></div>";
+	echo ( $chart_data_json ) ? '<div class="row"><div class="donut column"><svg viewBox="0 0 300 300"></svg></div><div class="donut-legend column end"></div></div>' : "<div class='no-donut'><img alt='graphical representation of completed certificate hours' src={$no_donut}></div>";
 
 	/*
 	|--------------------------------------------------------------------------

@@ -4,14 +4,14 @@ var data = donut_data;
 var totalHours =  d3.nest()
 	.rollup(function(g) {
 		return d3.format(".2f")(d3.sum(g, function (d) {
-			return d.value;
+			return parseFloat(d.value.replace(/,/g, ''));
 		}));
 	})
 	.entries(data);
 
 var pie = d3.pie()
     .value(function (d) {
-        return d.value
+        return parseFloat(d.value.replace(/,/g, ''));
     });
 
 var slices = pie(data);
@@ -23,11 +23,9 @@ var arc = d3.arc()
 // helper that returns a color based on an ID
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
-var svg = d3.select('.donut')
-    .append('svg')
-    .attr("class", "donut");
+var donutSVG = d3.select('.donut svg');
 
-var g = svg.append('g')
+var g = donutSVG.append('g')
     .attr('transform', 'translate(150, 150)');
 
 var arcGraph = g.selectAll('path.slice')
@@ -61,20 +59,13 @@ label.append("tspan")
 	.attr("dy", "1.1em")
 	.text("complete");
 
-// building a legend
-svg.append('g')
-    .attr('class', 'legend')
-    .selectAll('text')
-    .data(slices)
-    .enter()
-    .append('text')
-    .text(function (d) {
-        return d.data.value + ' hours - ' + d.data.label;
-    })
-    .attr('fill', function (d) {
-        return color(d.data.label);
-    })
-    .attr('y', function (d, i) {
-        return 20 * (i + 1);
-    })
-    .attr('x', 300);
+(function ($) {
+	$(document).ready(function () {
+		$.each(data,function(i, val){
+			var li = $('<div/>').attr('class','legend-item').appendTo('.donut-legend');
+			var percentHours = parseFloat(val.value.replace(/,/g, ''))/totalHours*100;
+			var label = $('<p/>').appendTo(li).text(percentHours.toFixed(1) + '% - '+val.label + ' (' + val.value +' hours)');;
+			$('<span/>').attr('class','square').css('background-color',color(val.label)).prependTo(label);
+		});
+	});
+})(jQuery);
