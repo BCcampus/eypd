@@ -1106,7 +1106,7 @@ function eypd_d3_array( $data ) {
 			$result[ $i ]['label'] = html_entity_decode( $k );
 			$result[ $i ]['value'] = number_format( $v['value'], 1 );
 			//custom color set in the admin is retrieved and sent back
-			$color = $wpdb->get_var( $wpdb->prepare( 'SELECT meta_value FROM %s WHERE object_id='%s' AND meta_key='category-bgcolor' LIMIT 1', EM_META_TABLE, $v['id'] ) );
+			$color = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM wp_em_meta WHERE object_id='%s' AND meta_key='category-bgcolor' LIMIT 1", $v['id'] ) );
 			$result[ $i ]['color'] = html_entity_decode( $color );
 			$i ++;
 		}
