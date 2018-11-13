@@ -1,5 +1,4 @@
 var data = donut_data;
-console.log( data);
 //Sum the event hours
 var totalHours =  d3.nest()
 	.rollup(function(g) {
