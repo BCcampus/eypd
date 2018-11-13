@@ -20,7 +20,7 @@
  *
  * @return mixed|void
  */
-function eypd_content( $page_content ) {
+add_filter( 'the_content', function ( $page_content ) {
 	global $post, $wpdb, $wp_query, $EM_Event, $EM_Location, $EM_Category;
 	if ( empty( $post ) ) {
 		return $page_content;
@@ -34,12 +34,12 @@ function eypd_content( $page_content ) {
 	$edit_bookings_page_id  = get_option( 'dbem_edit_bookings_page' );
 	$my_bookings_page_id    = get_option( 'dbem_my_bookings_page' );
 	//general defaults
-	$args         = array(
+	$args         = [
 		'owner'      => false,
 		'pagination' => 1,
-	);
+	];
 	$args['ajax'] = isset( $args['ajax'] ) ? $args['ajax'] : ( ! defined( 'EM_AJAX' ) || EM_AJAX );
-	if ( ! post_password_required() && in_array( $post->ID, array(
+	if ( ! post_password_required() && in_array( $post->ID, [
 			$events_page_id,
 			$locations_page_id,
 			$categories_page_id,
@@ -48,7 +48,7 @@ function eypd_content( $page_content ) {
 			$edit_locations_page_id,
 			$my_bookings_page_id,
 			$tags_page_id,
-		) )
+	], true )
 	) {
 		$content = apply_filters( 'em_content_pre', '', $page_content );
 		if ( empty( $content ) ) {
@@ -57,19 +57,19 @@ function eypd_content( $page_content ) {
 				if ( ! empty( $_REQUEST['calendar_day'] ) ) {
 					//Events for a specific day
 					$args = EM_Events::get_post_search( array_merge( $args, $_REQUEST ) );
-					em_locate_template( 'templates/calendar-day.php', true, array( 'args' => $args ) );
+					em_locate_template( 'templates/calendar-day.php', true, [ 'args' => $args ] );
 				} elseif ( is_object( $EM_Event ) ) {
-					em_locate_template( 'templates/event-single.php', true, array( 'args' => $args ) );
+					em_locate_template( 'templates/event-single.php', true, [ 'args' => $args ] );
 				} else {
 					// Multiple events page
 					$args['orderby'] = get_option( 'dbem_events_default_orderby' );
 					$args['order']   = get_option( 'dbem_events_default_order' );
 					if ( get_option( 'dbem_display_calendar_in_events_page' ) ) {
 						$args['long_events'] = 1;
-						em_locate_template( 'templates/events-calendar.php', true, array( 'args' => $args ) );
+						em_locate_template( 'templates/events-calendar.php', true, [ 'args' => $args ] );
 					} else {
 						//Intercept search request, if defined
-						if ( ! empty( $_REQUEST['action'] ) && ( $_REQUEST['action'] == 'search_events' || $_REQUEST['action'] == 'search_events_grouped' ) ) {
+						if ( ! empty( $_REQUEST['action'] ) && ( $_REQUEST['action'] === 'search_events' || $_REQUEST['action'] === 'search_events_grouped' ) ) {
 							$args = EM_Events::get_post_search( array_merge( $args, $_REQUEST ) );
 						}
 						if ( empty( $args['scope'] ) ) {
@@ -81,15 +81,15 @@ function eypd_content( $page_content ) {
 							echo '<div class="em-search-ajax">';
 						} //AJAX wrapper open
 						if ( get_option( 'dbem_event_list_groupby' ) ) {
-							em_locate_template( 'templates/events-list-grouped.php', true, array( 'args' => $args ) );
+							em_locate_template( 'templates/events-list-grouped.php', true, [ 'args' => $args ] );
 						} else {
-							em_locate_template( 'templates/events-list.php', true, array( 'args' => $args ) );
+							em_locate_template( 'templates/events-list.php', true, [ 'args' => $args ] );
 						}
 						if ( get_option( 'dbem_events_page_search_form' ) ) {
 							//load the search form and pass on custom arguments (from settings page)
 							$search_args = em_get_search_form_defaults();
 							echo "<div class='c-search'>";
-							em_locate_template( 'templates/events-search.php', true, array( 'args' => $search_args ) );
+							em_locate_template( 'templates/events-search.php', true, [ 'args' => $search_args ] );
 							echo '</div>';
 						}
 						if ( ! empty( $args['ajax'] ) ) {
@@ -102,10 +102,10 @@ function eypd_content( $page_content ) {
 				$args['order']   = get_option( 'dbem_locations_default_order' );
 				$args['limit']   = ! empty( $args['limit'] ) ? $args['limit'] : get_option( 'dbem_locations_default_limit' );
 				if ( EM_MS_GLOBAL && is_object( $EM_Location ) ) {
-					em_locate_template( 'templates/location-single.php', true, array( 'args' => $args ) );
+					em_locate_template( 'templates/location-single.php', true, [ 'args' => $args ] );
 				} else {
 					//Intercept search request, if defined
-					if ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'search_locations' ) {
+					if ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] === 'search_locations' ) {
 						$args = EM_Locations::get_post_search( array_merge( $args, $_REQUEST ) );
 					}
 					if ( get_option( 'dbem_locations_page_search_form' ) ) {
@@ -113,12 +113,12 @@ function eypd_content( $page_content ) {
 						$search_args = em_get_search_form_defaults();
 						//remove date and category
 						$search_args['search_categories'] = $search_args['search_scope'] = false;
-						em_locate_template( 'templates/locations-search.php', true, array( 'args' => $search_args ) );
+						em_locate_template( 'templates/locations-search.php', true, [ 'args' => $search_args ] );
 					}
 					if ( ! empty( $args['ajax'] ) ) {
 						echo '<div class="em-search-ajax">';
 					} //AJAX wrapper open
-					em_locate_template( 'templates/locations-list.php', true, array( 'args' => $args ) );
+					em_locate_template( 'templates/locations-list.php', true, [ 'args' => $args ] );
 					if ( ! empty( $args['ajax'] ) ) {
 						echo '</div>';
 					} //AJAX wrapper close
@@ -128,7 +128,7 @@ function eypd_content( $page_content ) {
 				if ( ! empty( $args['ajax'] ) ) {
 					echo '<div class="em-search-ajax">';
 				} //AJAX wrapper open
-				em_locate_template( 'templates/categories-list.php', true, array( 'args' => $args ) );
+				em_locate_template( 'templates/categories-list.php', true, [ 'args' => $args ] );
 				if ( ! empty( $args['ajax'] ) ) {
 					echo '</div>';
 				} //AJAX wrapper close
@@ -137,7 +137,7 @@ function eypd_content( $page_content ) {
 				if ( ! empty( $args['ajax'] ) ) {
 					echo '<div class="em-search-ajax">';
 				} //AJAX wrapper open
-				em_locate_template( 'templates/tags-list.php', true, array( 'args' => $args ) );
+				em_locate_template( 'templates/tags-list.php', true, [ 'args' => $args ] );
 				if ( ! empty( $args['ajax'] ) ) {
 					echo '</div>';
 				} //AJAX wrapper close
@@ -168,6 +168,4 @@ function eypd_content( $page_content ) {
 	}
 
 	return $page_content;
-}
-
-add_filter( 'the_content', 'eypd_content' );
+} );

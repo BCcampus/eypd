@@ -22,7 +22,7 @@
 
 		<div id="item-header">
 
-			<?php locate_template( array( 'members/single/member-header.php' ), true ); ?>
+			<?php locate_template( [ 'members/single/member-header.php' ], true ); ?>
 
 		</div><!-- #item-header -->
 
