@@ -1053,7 +1053,7 @@ function eypd_hours_and_categories( $ids ) {
 
 		if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
 			foreach ( $categories as $category ) {
-				array_push($cats, array( 'cat_name' => $category->name,'cat_id' => $category->term_id));
+				array_push($cats, array( 'cat_name' => $category->name,'cat_id' => $category->term_id ) );
 			}
 		}
 		foreach ( $e->event_attributes as $key => $val ) {
@@ -1106,7 +1106,7 @@ function eypd_d3_array( $data ) {
 			$result[ $i ]['label'] = html_entity_decode( $k );
 			$result[ $i ]['value'] = number_format( $v['value'], 1 );
 			//custom color set in the admin is retrieved and sent back
-			$color = $wpdb->get_var('SELECT meta_value FROM '.EM_META_TABLE." WHERE object_id='{$v['id']}' AND meta_key='category-bgcolor' LIMIT 1");
+			$color = $wpdb->get_var('SELECT meta_value FROM '.EM_META_TABLE." WHERE object_id='{$v[ 'id' ]}' AND meta_key='category-bgcolor' LIMIT 1" );
 			$result[ $i ]['color'] = html_entity_decode( $color );
 			$i ++;
 		}
