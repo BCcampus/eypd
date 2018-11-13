@@ -1,5 +1,5 @@
 var data = donut_data;
-
+console.log( data);
 //Sum the event hours
 var totalHours =  d3.nest()
 	.rollup(function(g) {
@@ -36,7 +36,12 @@ arcGraph.append('path')
     .attr('class', 'slice')
     .attr('d', arc)
     .attr('fill', function (d) {
-        return color(d.data.label);
+    	if(d.data.color){
+    		var fillColor = d.data.color;
+		}else{
+			var fillColor = '#d9edf7';
+		}
+        return fillColor;
     });
 
 arcGraph.append("text")
@@ -65,7 +70,12 @@ label.append("tspan")
 			var li = $('<div/>').attr('class','legend-item').appendTo('.donut-legend');
 			var percentHours = parseFloat(val.value.replace(/,/g, ''))/totalHours*100;
 			var label = $('<p/>').appendTo(li).text(percentHours.toFixed(1) + '% - '+val.label + ' (' + val.value +' hours)');;
-			$('<span/>').attr('class','square').css('background-color',color(val.label)).prependTo(label);
+			if(val.color){
+				var fillColor = val.color;
+			}else{
+				var fillColor = '#d9edf7';
+			}
+			$('<span/>').attr('class','square').css('background-color',fillColor).prependTo(label);
 		});
 	});
 })(jQuery);
