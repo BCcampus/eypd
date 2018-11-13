@@ -41,10 +41,8 @@ mix.copy(`${assets}/fonts`, `${dist}/fonts`)
 
 // compiled Javascript
 mix.js(`${node}/bootstrap/dist/js/bootstrap.bundle.min.js`, `${dist}/scripts`)
-    .js(`${node}/bootstrap/js/dist/tooltip.js`, `${dist}/scripts`)
+	.js(`${assets}/js/inittooltip.js`, `${dist}/scripts`)
     .js(`${assets}/js/tabs.js`, `${dist}/scripts`)
-    .js(`${assets}/js/initpopover.js`, `${dist}/scripts`)
-    .js(`${assets}/js/popover-dismiss.js`, `${dist}/scripts`)
     .js(`${assets}/js/jquery.tinyscrollbar.min.js`, `${dist}/scripts`)
     .js(`${assets}/js/events-manager.js`, `${dist}/scripts`)
     .js(`${assets}/js/markerclusterer.js`, `${dist}/scripts`)
