@@ -137,7 +137,6 @@ add_action(
 			wp_enqueue_script( 'inittooltip', $template_dir . '/dist/scripts/inittooltip.js', [ 'bootstrap-tooltip' ], null, true );
 		}
 
-
 		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery' ], null, true );
 
 		// load styling for datepicker in myEYPD profile page only
