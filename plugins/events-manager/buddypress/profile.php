@@ -91,7 +91,7 @@ if ( bp_is_my_profile() ) { ?>
 						#_EVENTDATES<br>#_EVENTTIMES
 					</td>
 					<td>
-						#_EVENTLINK<br>#_LOCATIONFULLBR
+						#_EVENTLINK<br>#_LOCATIONNAME<br>#_LOCATIONTOWN, #_LOCATIONSTATE
 					</td>
 					<td>
 						<a href="mailto:?subject=Check out the event I\'m organizing&body=' . htmlspecialchars("I'm organizing an Early Years Professional Development event and I thought you'd be interested. You can get the details on the EYPD site: #_EVENTURL. I hope to see you there!") . '">Share</a>
