@@ -128,6 +128,10 @@ add_action(
 		wp_enqueue_script( 'events-manager', $template_dir . '/dist/scripts/events-manager.js', array_values( $script_deps ), isset( $EM_VERSION ) );
 		wp_enqueue_script( 'tinyscrollbar', $template_dir . '/dist/scripts/jquery.tinyscrollbar.min.js', [ 'jquery' ], '1.0', true );
 
+		wp_enqueue_script( 'popper', $template_dir . '/dist/scripts/popper.min.js', [ 'jquery' ], null, true );
+		wp_enqueue_script( 'bootstrap-script', $template_dir . '/dist/scripts/bootstrap.min.js', [ 'popper' ], null, true );
+		wp_enqueue_style( 'bootstrap-style', $template_dir . '/dist/styles/bootstrap.min.css' );
+
 		// load popover only for users who aren't logged in
 		if ( ! is_user_logged_in() ) {
 			wp_enqueue_script( 'bootstrap-tooltip', $template_dir . '/dist/scripts/tooltip.js', [], null, true );
@@ -135,9 +139,6 @@ add_action(
 			wp_enqueue_script( 'initpopover', $template_dir . '/dist/scripts/initpopover.js', [ 'bootstrap-popover' ], null, true );
 			wp_enqueue_script( 'popover-dismiss', $template_dir . '/dist/scripts/popover-dismiss.js', [ 'initpopover' ], null, true );
 		}
-
-		wp_enqueue_script( 'bootstrap-script', $template_dir . '/dist/scripts/bootstrap.min.js', [], null, true );
-		wp_enqueue_style( 'bootstrap-style', $template_dir . '/dist/styles/bootstrap.min.css' );
 		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery' ], null, true );
 
 		// load styling for datepicker in myEYPD profile page only
@@ -786,7 +787,7 @@ add_filter(
 	'wp_nav_menu_items', function ( $nav, $args ) {
 		if ( $args->theme_location === 'main-menu' ) {
 			// adds home link to mobile only using bootstraps responsive utilities class
-			$nav = '<li class="visible-xs-block home"><a href=' . home_url() . '>Home</a></li>';
+			$nav = '<li class="d-block d-sm-none home"><a href=' . home_url() . '>Home</a></li>';
 			$nav .= '<li class="home"><a href=' . home_url() . '/events>Find Events</a></li>';
 			if ( is_user_logged_in() ) {
 				$nav .= '<li class="home"><a href=' . home_url() . '/post-event>Post an Event</a></li>';
@@ -1028,7 +1029,7 @@ function eypd_cumulative_hours( $ids ) {
 }
 
 /**
- * Returns an array of events, with number of hours and categories
+ * Returns an array of events, with number of hours and categories (name,id)
  *
  * @param $ids
  *
@@ -1052,7 +1053,7 @@ function eypd_hours_and_categories( $ids ) {
 
 		if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
 			foreach ( $categories as $category ) {
-				$cats[] = $category->name;
+				array_push( $cats, [ 'cat_name' => $category->name, 'cat_id' => $category->term_id ] );
 			}
 		}
 		foreach ( $e->event_attributes as $key => $val ) {
@@ -1069,11 +1070,14 @@ function eypd_hours_and_categories( $ids ) {
 }
 
 /**
+ * Returns an array containing name, total hours and color of each event category an individual has hours for
+ *
  * @param array $data
  *
  * @return mixed|string
  */
 function eypd_d3_array( $data ) {
+	global $wpdb;
 	$cat = $result = [];
 	$i   = 0;
 
@@ -1084,11 +1088,14 @@ function eypd_d3_array( $data ) {
 
 			// events may have more than one category, in which case
 			// the total hours need to be shared between them
-			foreach ( $event['categories'] as $name ) {
-				if ( isset( $cat[ $name ] ) ) {
-					$cat[ $name ] = $cat[ $name ] + $unit;
+			// ID of category is stored for retrieving other category information
+			foreach ( $event['categories'] as $category ) {
+				if ( isset( $cat[ $category['cat_name'] ] ) ) {
+					$cat[ $category['cat_name'] ]['value'] = $cat[ $category['cat_name'] ]['value'] + $unit;
+					$cat[ $category['cat_name'] ]['id'] = $category['cat_id'];
 				} else {
-					$cat[ $name ] = $unit;
+					$cat[ $category['cat_name'] ]['value'] = $unit;
+					$cat[ $category['cat_name'] ]['id'] = $category['cat_id'];
 				}
 			}
 			unset( $unit );
@@ -1097,7 +1104,10 @@ function eypd_d3_array( $data ) {
 
 		foreach ( $cat as $k => $v ) {
 			$result[ $i ]['label'] = html_entity_decode( $k );
-			$result[ $i ]['value'] = number_format( $v, 1 );
+			$result[ $i ]['value'] = number_format( $v['value'], 1 );
+			//custom color set in the admin is retrieved and sent back
+			$color = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM wp_em_meta WHERE object_id='%s' AND meta_key='category-bgcolor' LIMIT 1", $v['id'] ) );
+			$result[ $i ]['color'] = html_entity_decode( $color );
 			$i ++;
 		}
 	}

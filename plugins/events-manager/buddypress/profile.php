@@ -83,7 +83,7 @@ if ( bp_is_my_profile() ) { ?>
 
 	if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
 		?>
-		<h2 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?></h2>
+
 		<?php
 		$args          = [
 			'owner'         => $bp->displayed_user->id,
@@ -93,7 +93,12 @@ if ( bp_is_my_profile() ) { ?>
 			'owner'         => $bp->displayed_user->id,
 			'pagination'    => 1,
 		];
+
 		$args['limit'] = ! empty( $args['limit'] ) ? $args['limit'] : get_option( 'dbem_events_default_limit' );
+		?>
+		<h2 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?> (<?php echo EM_Events::count( $args ); ?>)</h2>
+		<p><a href="<?php echo home_url() . '/post-event'; ?>"><?php _e( 'Post a new training event ', 'events-manager' ); ?></a><?php _e( 'on the event board.', 'events-manager' ); ?></p>
+		<?php
 		if ( EM_Events::count( $args ) > 0 ) {
 			echo EM_Events::output( $args );
 		} else {
@@ -125,7 +130,6 @@ if ( bp_is_my_profile() ) { ?>
 	$no_donut = get_stylesheet_directory_uri() . '/dist/images/donut_placeholder.png';
 	echo '<h2 class="top-padding">Event summary</h2>';
 	echo ( $chart_data_json ) ? '<div class="row"><div class="donut column"><svg viewBox="0 0 300 300"></svg></div><div class="donut-legend column end"></div></div>' : "<div class='no-donut'><img alt='graphical representation of completed certificate hours' src={$no_donut}></div>";
-
 
 	/*
 	|--------------------------------------------------------------------------
