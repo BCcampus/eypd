@@ -65,8 +65,7 @@ label.append("tspan")
 			var li = $('<div/>').attr('class','legend-item').appendTo('.donut-legend');
 			$('<span/>').attr('class','square').css('background-color',color(val.label)).appendTo(li);
 			var percentHours = parseFloat(val.value.replace(/,/g, ''))/totalHours*100;
-			var label = $('<p/>').appendTo(li).text(percentHours.toFixed(1) + '% - '+val.label + ' (' + val.value +' hours)');;
-
+			$('<p/>').appendTo(li).text(percentHours.toFixed(1) + '% - '+val.label + ' (' + val.value +' hours)');
 		});
 	});
 })(jQuery);
