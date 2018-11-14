@@ -85,13 +85,28 @@ if ( bp_is_my_profile() ) { ?>
 		?>
 		
 		<?php
+		$myEventsTable = '<table>
+				<tr>
+					<td>
+						#_EVENTDATES<br>#_EVENTTIMES
+					</td>
+					<td>
+						#_EVENTLINK<br>#_LOCATIONFULLBR
+					</td>
+					<td>
+						<a href="mailto:?subject=Check out the event I\'m organizing&body=' . htmlspecialchars("I'm organizing an Early Years Professional Development event and I thought you'd be interested. You can get the details on the EYPD site: #_EVENTURL. I hope to see you there!") . '">Share</a>
+					</td>
+					<td>
+						<a href="#_EDITEVENTURL"><span class="glyphicon glyphicon-edit"></span></a>
+					</td>
+				</tr>
+			</table>';
+
+
 		$args          = [
 			'owner'         => $bp->displayed_user->id,
-			'format_header' => get_option( 'dbem_bp_events_list_format_header' ),
-			'format'        => get_option( 'dbem_bp_events_list_format' ),
-			'format_footer' => get_option( 'dbem_bp_events_list_format_footer' ),
-			'owner'         => $bp->displayed_user->id,
-			'pagination'    => 1,
+			'format'        => $myEventsTable,
+			'pagination'    => 1
 		];
 		$args['limit'] = ! empty( $args['limit'] ) ? $args['limit'] : get_option( 'dbem_events_default_limit' );
 		?>
