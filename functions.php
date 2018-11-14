@@ -941,7 +941,7 @@ function eypd_fb_opengraph() {
 		<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>"/>
 		<meta property="og:image" content="<?php echo $img_src; ?>"/>
 		<?php
-		}
+}
 }
 
 add_action( 'wp_head', 'eypd_fb_opengraph', 5 );
@@ -1097,7 +1097,7 @@ function eypd_d3_array( $data ) {
 			// ID of category is stored for retrieving other category information
 			foreach ( $event['categories'] as $category ) {
 				if ( isset( $cat[ $category['cat_name'] ] ) ) {
-					$cat[ $category['cat_name'] ]['value'] = $cat[ $category['cat_name'] ]['value']  + $unit;
+					$cat[ $category['cat_name'] ]['value'] = $cat[ $category['cat_name'] ]['value'] + $unit;
 					$cat[ $category['cat_name'] ]['id'] = $category['cat_id'];
 				} else {
 					$cat[ $category['cat_name'] ]['value'] = $unit;
