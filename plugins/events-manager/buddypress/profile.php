@@ -83,7 +83,7 @@ if ( bp_is_my_profile() ) { ?>
 
 	if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
 		?>
-		<h2 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?></h2>
+		
 		<?php
 		$args          = [
 			'owner'         => $bp->displayed_user->id,
@@ -94,6 +94,10 @@ if ( bp_is_my_profile() ) { ?>
 			'pagination'    => 1,
 		];
 		$args['limit'] = ! empty( $args['limit'] ) ? $args['limit'] : get_option( 'dbem_events_default_limit' );
+		?>
+		<h2 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?> (<?php echo EM_Events::count( $args ); ?>)</h2>
+		<p><a href="<?php echo home_url() . '/post-event'; ?>"><?php _e( 'Post a new training event ', 'events-manager' ); ?></a><?php _e( 'on the event board.', 'events-manager' ); ?></p>
+		<?php
 		if ( EM_Events::count( $args ) > 0 ) {
 			echo EM_Events::output( $args );
 		} else {
