@@ -1044,7 +1044,7 @@ function eypd_hours_and_categories( $ids ) {
 	// input is radio buttons with boolean values
 	// true means they attended (default)
 	foreach ( $ids as $id => $bool ) {
-		if ( false === $bool ) {
+		if ( false === (bool) $bool ) {
 			continue;
 		}
 		$e          = em_get_event( $id );
