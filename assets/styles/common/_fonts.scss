@@ -15,7 +15,7 @@
 // Roboto Slab
 @include font-face( 'RobotoSlab', url('../fonts/RobotoSlab-Regular.ttf'), 'truetype', 400, normal);
 
-// Bootstrap
+// Keep Glyphicons since they are already being used
 @font-face {
   font-family: 'Glyphicons';
   src: url('../fonts/glyphicons-halflings-regular.eot');

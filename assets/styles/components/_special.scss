@@ -18,19 +18,28 @@ img.wp-smiley, img.emoji {
   }
 }
 
-.professional-interests{
+.professional-interests {
   column-count: 1;
   column-gap: 1rem;
   column-rule: 1px solid $color-gray-mercury;
 }
 
-@media (max-width: $small ){
-  .professional-interests{
+@media (max-width: $small) {
+  .professional-interests {
     column-count: 1;
   }
 }
 
-.at-a-glance{
+.at-a-glance {
+  background-color: $color-blue-info;
   padding: 1.5em;
   border: 1px solid $color-blue-sail;
+}
+
+.card {
+  border: none;
+  .card-header {
+    background: transparent;
+    border:none;
+  }
 }

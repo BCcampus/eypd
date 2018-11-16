@@ -29,7 +29,7 @@ attending, and the professional development hours you have accumulated.</p></div
 |
 */
 if ( bp_is_my_profile() ) { ?>
-	<div class="bg-info at-a-glance">
+	<div class="at-a-glance">
 	<div class="certhours">
 		<?php
 		$user_hours = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
