@@ -127,15 +127,14 @@ add_action(
 		];
 		wp_enqueue_script( 'events-manager', $template_dir . '/dist/scripts/events-manager.js', array_values( $script_deps ), isset( $EM_VERSION ) );
 		wp_enqueue_script( 'tinyscrollbar', $template_dir . '/dist/scripts/jquery.tinyscrollbar.min.js', [ 'jquery' ], '1.0', true );
-
-		wp_enqueue_script( 'bootstrap-script', $template_dir . '/dist/scripts/bootstrap.js', [], null, true );
 		wp_enqueue_style( 'bootstrap-style', $template_dir . '/dist/styles/bootstrap.min.css' );
+		wp_enqueue_script( 'bootstrap-script', $template_dir . '/dist/scripts/bootstrap.bundle.js', [ 'jquery' ], null, true );
 		wp_enqueue_style( 'fontawesome-style', $template_dir . '/dist/styles/fontawesome.min.css' );
-
+		
 		// load popover only for users who aren't logged in
 		if ( ! is_user_logged_in() ) {
-			wp_enqueue_script( 'bootstrap-tooltip', $template_dir . '/dist/scripts/tooltip.js', [], null, true );
-			wp_enqueue_script( 'inittooltip', $template_dir . '/dist/scripts/inittooltip.js', [ 'bootstrap-tooltip' ], null, true );
+			wp_enqueue_script( 'init-tooltip', $template_dir . '/dist/scripts/inittooltip.js', [ 'bootstrap-script' ], null, true );
+
 		}
 
 		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery' ], null, true );
