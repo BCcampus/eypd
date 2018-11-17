@@ -85,7 +85,7 @@ if ( bp_is_my_profile() ) { ?>
 		?>
 		
 		<?php
-		$myEventsTable = '<table>
+		$my_events_table = '<table>
 				<tr>
 					<td>
 						#_EVENTDATES<br>#_EVENTTIMES
@@ -105,7 +105,7 @@ if ( bp_is_my_profile() ) { ?>
 
 		$args          = [
 			'owner'         => $bp->displayed_user->id,
-			'format'        => $myEventsTable,
+			'format'        => $my_events_table,
 			'pagination'    => 1,
 		];
 		$args['limit'] = ! empty( $args['limit'] ) ? $args['limit'] : get_option( 'dbem_events_default_limit' );
