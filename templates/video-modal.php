@@ -7,8 +7,10 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button class="close" type="button" data-dismiss="modal">×</button>
 				<h4 class="modal-title">EYPD Overview</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
 			<div class="modal-body vid">
 				<iframe src="https://player.vimeo.com/video/211567638" width=100% height="360" frameborder="0"
