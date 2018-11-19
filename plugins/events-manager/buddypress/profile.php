@@ -83,17 +83,36 @@ if ( bp_is_my_profile() ) { ?>
 
 	if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
 		?>
-		<h2 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?></h2>
+		
 		<?php
+		$my_events_table = '<table>
+				<tr>
+					<td>
+						#_EVENTDATES<br>#_EVENTTIMES
+					</td>
+					<td>
+						#_EVENTLINK<br>#_LOCATIONNAME<br>#_LOCATIONTOWN, #_LOCATIONSTATE
+					</td>
+					<td>
+						<a href="mailto:?subject=Check out the event I\'m organizing&body=' . htmlspecialchars( "I'm organizing an Early Years Professional Development event and I thought you'd be interested. You can get the details on the EYPD site: #_EVENTURL. I hope to see you there!" ) . '">Share</a>
+					</td>
+					<td>
+						<a href="#_EDITEVENTURL"><span class="glyphicon glyphicon-edit"></span></a>
+					</td>
+				</tr>
+			</table>';
+
+
 		$args          = [
 			'owner'         => $bp->displayed_user->id,
-			'format_header' => get_option( 'dbem_bp_events_list_format_header' ),
-			'format'        => get_option( 'dbem_bp_events_list_format' ),
-			'format_footer' => get_option( 'dbem_bp_events_list_format_footer' ),
-			'owner'         => $bp->displayed_user->id,
+			'format'        => $my_events_table,
 			'pagination'    => 1,
 		];
 		$args['limit'] = ! empty( $args['limit'] ) ? $args['limit'] : get_option( 'dbem_events_default_limit' );
+		?>
+		<h2 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?> (<?php echo EM_Events::count( $args ); ?>)</h2>
+		<p><a href="<?php echo home_url() . '/post-event'; ?>"><?php _e( 'Post a new training event ', 'events-manager' ); ?></a><?php _e( 'on the event board.', 'events-manager' ); ?></p>
+		<?php
 		if ( EM_Events::count( $args ) > 0 ) {
 			echo EM_Events::output( $args );
 		} else {

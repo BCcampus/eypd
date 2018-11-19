@@ -920,11 +920,13 @@ function eypd_fb_opengraph() {
 		<meta property="og:url" content="<?php echo the_permalink(); ?>"/>
 		<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>"/>
 		<meta property="og:image" content="<?php echo $img_src; ?>"/>
-		<?php  }
+		<?php
+	}
 	if ( is_page() ) {
 		if ( has_post_thumbnail( $post->ID ) ) {
 			$img_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
-		} ?>
+		}
+		?>
 			<meta property="og:title" content="<?php echo the_title(); ?>"/>
 			<meta property="og:description" content="<?php echo get_bloginfo( 'description' ); ?>"/>
 			<meta property="og:type" content="page"/>
@@ -938,7 +940,8 @@ function eypd_fb_opengraph() {
 		<meta property="og:url" content="<?php echo get_bloginfo( 'url' ); ?>"/>
 		<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>"/>
 		<meta property="og:image" content="<?php echo $img_src; ?>"/>
-	<?php }
+		<?php
+}
 }
 
 add_action( 'wp_head', 'eypd_fb_opengraph', 5 );
