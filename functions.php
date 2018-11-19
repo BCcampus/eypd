@@ -870,7 +870,7 @@ function eypd_validate_attributes() {
 		$EM_Event->add_error( sprintf( __( '%s is required.', 'early-years' ), __( 'Professional Development Certificate', 'early-years' ) ) );
 	}
 
-	if ( empty( $EM_Event->event_attributes['Registration Fee'] ) ) {
+	if ( !isset( $EM_Event->event_attributes['Registration Fee'] ) ) {
 		$EM_Event->add_error( sprintf( __( '%s is required.', 'early-years' ), __( 'Registration Fee', 'early-years' ) ) );
 	}
 
