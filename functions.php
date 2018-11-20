@@ -35,7 +35,6 @@ add_filter( /**
 			'jquery-ui-position',
 			'jquery-ui-draggable',
 			'jquery-ui-resizable',
-			'jquery-ui-mouse',
 			'jquery-ui-menu',
 			'jquery-ui-sortable',
 			'jquery-ui-datepicker',
