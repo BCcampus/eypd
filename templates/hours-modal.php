@@ -21,13 +21,13 @@
 						<input id="event_start_date" placeholder="Select Date" name="event_start_date"/>
 						<label for="event_hours">Hours</label>
 						<input class="event_hours" type="text" placeholder="Duration of event" name="event_hours"
-						       size="50" value=""/>
+							   size="50" value=""/>
 						<?php if ( get_option( 'dbem_categories_enabled' ) ) { ?>
 							<label for="event_categories">Categories</label>
 							<select name="event_categories[]" multiple size="10" id="event_categories">
 								<?php $cats = eypd_get_event_categories();
 								foreach ( $cats as $cat ) { ?>
-									<option value="<?= $cat['name'] ?>"><?= $cat['name'] ?></option>
+									<option value="<?php echo $cat['name'] ?>"><?php echo $cat['name'] ?></option>
 								<?php } ?>
 							</select>
 						<?php } ?>

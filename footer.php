@@ -62,7 +62,7 @@ if ( is_page( 'Sign Up' ) ) {
 	get_template_part( 'templates/roles-modal' );
 }
 if ( bp_is_my_profile() ) {
-get_template_part( 'templates/hours-modal' );
+	get_template_part( 'templates/hours-modal' );
 }
 get_template_part( 'templates/video-modal' );
 ?>

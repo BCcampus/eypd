@@ -1720,12 +1720,12 @@ if ( bp_is_my_profile() ) {
 			$user_value = get_user_meta( $user_id, 'eypd_user_event' );
 
 			// The new value shouldn't match the stored value
-			if ( $user_value != $new_value ) {
-				$response = update_user_meta( $user_id, 'eypd_user_event', $new_value );
-				// send back the new value
-				wp_send_json_success( $response );
-			}
+		if ( $user_value != $new_value ) {
+			$response = update_user_meta( $user_id, 'eypd_user_event', $new_value );
+			// send back the new value
+			wp_send_json_success( $response );
 		}
+	}
 
 	if ( is_admin() ) {
 		add_action( 'wp_ajax_add_event', 'eypd_add_user_event' );

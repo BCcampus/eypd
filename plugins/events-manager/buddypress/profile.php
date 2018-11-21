@@ -346,21 +346,21 @@ if ( bp_is_my_profile() ) { ?>
 											$user_submitted = [
 												'event_name'        => 'User submitted event',
 												'event_start_date' => '2018-4-12',
-												'event_id'        => '09'
+												'event_id'        => '09',
 											];
 
 											// add user submitted events to $user_events array as an object
 											if ( $user_submitted ) {
-												$obj = (object)[];
+												$obj = (object) [];
 												foreach ( $user_submitted as $key => $value ) {
 													$obj->$key = $value;
 												}
 												$user_events[] = &$obj;
 												$wtf  = $obj->event_id;
 											}
-                      /*
-                        Removed to resolve conflict but commented out just incase needed. Can be removed if this works without it
-                        foreach ( $EM_Bookings
+											/*
+											Removed to resolve conflict but commented out just incase needed. Can be removed if this works without it
+											foreach ( $EM_Bookings
 
 											as $EM_Booking ) {
 												// skip over if it's not in the past
@@ -369,12 +369,12 @@ if ( bp_is_my_profile() ) { ?>
 												}
 												$EM_Event = $EM_Booking->get_event();
 												$event_id = $past_ids[ $count ]; ?>
-                      */
+											*/
 											// if user submitted events exist, add to past array
 											if ( $user_events ) {
 												$past_ids_temp = [];
 												// add user events to $past array
-												foreach ($user_events as $event) {
+												foreach ( $user_events as $event ) {
 													$past_ids_temp = $event;
 												}
 												// add new ids
@@ -382,20 +382,20 @@ if ( bp_is_my_profile() ) { ?>
 											}
 
 											// sort by date
-											usort($past, function($a, $b) {
-												return strtotime($a->event_start_date) - strtotime($b->event_start_date);
+											usort($past, function( $a, $b ) {
+												return strtotime( $a->event_start_date ) - strtotime( $b->event_start_date );
 											});
 
 											// Loop through all past events
 											foreach ( $past as $event ) {
 												// get the hours for each event
-											($event->{'event_attributes'}['Professional Development Certificate Credit Hours']) ? $hours = $event->{'event_attributes'}['Professional Development Certificate Credit Hours'] : $hours = 0;
-											($event->guid)? $guid = '<a href="' . $event->guid . '">' . $event->event_name .'</a>' : $guid = $event->event_name;
+												($event->{'event_attributes'}['Professional Development Certificate Credit Hours']) ? $hours = $event->{'event_attributes'}['Professional Development Certificate Credit Hours'] : $hours = 0;
+												($event->guid)? $guid = '<a href="' . $event->guid . '">' . $event->event_name . '</a>' : $guid = $event->event_name;
 												?>
 											<tr>
 												<td><?php echo $event->event_start_date . ' - ' . $event->event_end_date . '<br/>' . $event->start_time ?></td>
 												<td><?php echo $guid;?>
-                                                </td>
+												</td>
 												<td>
 													<?php echo $hours ?>
 												</td>
