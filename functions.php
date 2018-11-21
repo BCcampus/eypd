@@ -1713,7 +1713,7 @@ if ( bp_is_my_profile() ) {
 		} else {
 		 */
 			// get submitted form values
-			$form_data = $_POST['formdata'];
+			//$form_data = $_POST['formdata'];
 			// get the user ID
 			$user_id = get_current_user_id();
 			// get existing values
