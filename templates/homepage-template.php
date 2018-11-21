@@ -17,66 +17,66 @@ infinity_get_header();
 
 ?>
 <div class="row">
-    <div class="c-banner">
-        <div class="center">
-            <img class="eypd_logo"
-                 src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-final.svg"
-                 alt="EYPD logo">
-            <img class="eypd_logo_text"
-                 src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-final-text.svg"
-                 alt="EYPD logo text">
-        </div>
-    </div>
+	<div class="c-banner">
+		<div class="center">
+			<img class="eypd_logo"
+				 src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-final.svg"
+				 alt="EYPD logo">
+			<img class="eypd_logo_text"
+				 src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logo-final-text.svg"
+				 alt="EYPD logo text">
+		</div>
+	</div>
 </div>
 <div class="c-search">
-    <h2 class="text-blue text-center">Search for training events</h2>
-    <p class="text-center">Fill in one or more of the fields below</p>
+	<h2 class="text-blue text-center">Search for training events</h2>
+	<p class="text-center">Fill in one or more of the fields below</p>
 	<?php echo do_shortcode( '[events_search]' ); ?>
 </div>
 <div class="c-map row">
-    <h2 class="text-blue text-center">Find training events near you</h2>
-    <div class="six columns">
+	<h2 class="text-blue text-center">Find training events near you</h2>
+	<div class="six columns">
 
-        <!-- tabs start -->
-        <div id="tabs" class="ui-tabs ui-corner-all ui-widget ui-widget-content">
+		<!-- tabs start -->
+		<div id="tabs" class="ui-tabs ui-corner-all ui-widget ui-widget-content">
 
-            <ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
-                <li role="tab" tabindex="1"><a
-                            href="#tabs-1"
-                            role="presentation"
-                            tabindex="-1"
-                            class="ui-tabs-anchor"
-                            id="ui-id-1">Upcoming Events</a>
-                </li>
-                <li role="tab" tabindex="2" aria-controls="tabs-2"><a href="#tabs-2" role="presentation" tabindex="-1"
-                                                                      class="ui-tabs-anchor" id="ui-id-2">Recently
-                        Posted</a></li>
+			<ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+				<li role="tab" tabindex="1"><a
+							href="#tabs-1"
+							role="presentation"
+							tabindex="-1"
+							class="ui-tabs-anchor"
+							id="ui-id-1">Upcoming Events</a>
+				</li>
+				<li role="tab" tabindex="2" aria-controls="tabs-2"><a href="#tabs-2" role="presentation" tabindex="-1"
+																	  class="ui-tabs-anchor" id="ui-id-2">Recently
+						Posted</a></li>
 
-            </ul>
-            <div id="tabs-1">
+			</ul>
+			<div id="tabs-1">
 				<?php
 				$events_list = '[events_list scope="after-today" limit="4"]';
 				echo do_shortcode( $events_list );
 				?>
-            </div>
-            <div id="tabs-2">
+			</div>
+			<div id="tabs-2">
 				<?php
 				// documentation http://wp-events-plugin.com/documentation/event-search-attributes/event-location-grouping-ordering/
 				$events_recent = '[events_list orderby="event_date_created" order="DESC" groupby="location_id" groupby_orderby="event_date_created" groupby_order="DESC" limit="4"]';
 				echo do_shortcode( $events_recent );
 				?>
-            </div>
-        </div>
-        <!-- tabs end -->
+			</div>
+		</div>
+		<!-- tabs end -->
 
-    </div>
-    <div class="ten columns">
+	</div>
+	<div class="ten columns">
 		<?php
 		infinity_load_template( 'templates/google-map.php' );
 		?>
-        <h2 class="text-center"><a class="text-gray" href="events"><?php eypd_display_count_events(); ?> Training Events
-                Currently Posted</a></h2>
-    </div>
+		<h2 class="text-center"><a class="text-gray" href="events"><?php eypd_display_count_events(); ?> Training Events
+				Currently Posted</a></h2>
+	</div>
 </div>
 <div id="content" role="main" class="sixteen columns">
 	<?php
@@ -84,7 +84,7 @@ infinity_get_header();
 	do_action( 'open_home' );
 	?>
 
-    <h2 class="text-blue text-center">Explore the professional learning showcase</h2>
+	<h2 class="text-blue text-center">Explore the professional learning showcase</h2>
 	<?php infinity_load_template( 'templates/featured-stories.php' ); ?>
 
 	<?php

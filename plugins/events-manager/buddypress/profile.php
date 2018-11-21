@@ -48,12 +48,12 @@ if ( bp_is_my_profile() ) { ?>
 	<!-- countdown to certificate expiry -->
 	<?php
 	// save new expiry date
-	if ( isset( $_POST['expiry-date'] ) ) {
+	if ( isset( $_POST['expiry-date'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'wpnonce_eypd_countdown' ) ) {
 		$newdate = $_POST['expiry-date'];
 		// Update/Create User Meta
 		update_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', $newdate );
 	}
-	//get expiry date
+	// get expiry date
 	$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
 		?>
 		<form id="eypd_countdown" class="eypd-countdown" action=""
@@ -64,6 +64,7 @@ if ( bp_is_my_profile() ) { ?>
 					echo $cert_expires;
 } else { ?>Select date...<?php } ?>" name="expiry-date"/>
 				<input class="right" type="submit" value="Save">
+				<input type="hidden" name="_wpnonce" value="<?php echo wp_create_nonce( 'wpnonce_eypd_countdown' ); ?>"/>
 				<div id="certcoutdown"><p>calculating...</p></div>
 			</div>
 		</form>
@@ -82,17 +83,36 @@ if ( bp_is_my_profile() ) { ?>
 
 	if ( user_can( $bp->displayed_user->id, 'edit_events' ) ) {
 		?>
-		<h2 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?></h2>
+		
 		<?php
+		$my_events_table = '<table>
+				<tr>
+					<td>
+						#_EVENTDATES<br>#_EVENTTIMES
+					</td>
+					<td>
+						#_EVENTLINK<br>#_LOCATIONNAME<br>#_LOCATIONTOWN, #_LOCATIONSTATE
+					</td>
+					<td>
+						<a href="mailto:?subject=Check out the event I\'m organizing&body=' . htmlspecialchars( "I'm organizing an Early Years Professional Development event and I thought you'd be interested. You can get the details on the EYPD site: #_EVENTURL. I hope to see you there!" ) . '">Share</a>
+					</td>
+					<td>
+						<a href="#_EDITEVENTURL"><span class="glyphicon glyphicon-edit"></span></a>
+					</td>
+				</tr>
+			</table>';
+
+
 		$args          = [
 			'owner'         => $bp->displayed_user->id,
-			'format_header' => get_option( 'dbem_bp_events_list_format_header' ),
-			'format'        => get_option( 'dbem_bp_events_list_format' ),
-			'format_footer' => get_option( 'dbem_bp_events_list_format_footer' ),
-			'owner'         => $bp->displayed_user->id,
+			'format'        => $my_events_table,
 			'pagination'    => 1,
 		];
 		$args['limit'] = ! empty( $args['limit'] ) ? $args['limit'] : get_option( 'dbem_events_default_limit' );
+		?>
+		<h2 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?> (<?php echo EM_Events::count( $args ); ?>)</h2>
+		<p><a href="<?php echo home_url() . '/post-event'; ?>"><?php _e( 'Post a new training event ', 'events-manager' ); ?></a><?php _e( 'on the event board.', 'events-manager' ); ?></p>
+		<?php
 		if ( EM_Events::count( $args ) > 0 ) {
 			echo EM_Events::output( $args );
 		} else {
@@ -123,14 +143,15 @@ if ( bp_is_my_profile() ) { ?>
 	wp_localize_script( 'donut', 'donut_data', $chart_data_json );
 	$no_donut = get_stylesheet_directory_uri() . '/dist/images/donut_placeholder.png';
 	echo '<h2 class="top-padding">Event summary</h2>';
-	echo ( $chart_data_json ) ? '<div class="donut"></div>' : "<div class='no-donut'><img alt='graphical representation of completed certificate hours' src={$no_donut}></div>";
+	echo ( $chart_data_json ) ? '<div class="row"><div class="donut column"><svg viewBox="0 0 300 300"></svg></div><div class="donut-legend column end"></div></div>' : "<div class='no-donut'><img alt='graphical representation of completed certificate hours' src={$no_donut}></div>";
+
 
 	/*
 	|--------------------------------------------------------------------------
 	| Training
 	|--------------------------------------------------------------------------
 	|
-	|
+	| training data
 	|
 	|
 	*/
@@ -308,9 +329,9 @@ if ( bp_is_my_profile() ) { ?>
 												<th class='event-hours'
 													scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
 												<th class='event-attendance'
-													scope='col'><?php _e( 'Attended (' . $attended_count . ')', 'events-manager' ); ?></th>
+													scope='col'><?php echo 'Attended'; ?></th>
 												<th class='event-attendance'
-													scope='col'><?php _e( 'Did Not Attend (' . ( $past_count - $attended_count ) . ')', 'events-manager' ); ?></th>
+													scope='col'><?php echo 'Did Not Attend'; ?></th>
 											</tr>
 											</thead>
 											<tbody>
@@ -337,7 +358,18 @@ if ( bp_is_my_profile() ) { ?>
 												$user_events[] = &$obj;
 												$wtf  = $obj->event_id;
 											}
+                      /*
+                        Removed to resolve conflict but commented out just incase needed. Can be removed if this works without it
+                        foreach ( $EM_Bookings
 
+											as $EM_Booking ) {
+												// skip over if it's not in the past
+												if ( ! in_array( $EM_Booking->event_id, $past_ids, false ) ) {
+													continue;
+												}
+												$EM_Event = $EM_Booking->get_event();
+												$event_id = $past_ids[ $count ]; ?>
+                      */
 											// if user submitted events exist, add to past array
 											if ( $user_events ) {
 												$past_ids_temp = [];
