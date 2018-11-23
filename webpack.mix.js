@@ -35,15 +35,11 @@ mix.browserSync({
 
 // Assets
 mix.copy(`${assets}/fonts`, `${dist}/fonts`)
-    .copy(`${node}/bootstrap/dist/css/bootstrap.min.css`, `${dist}/styles`)
-    .copy(`${assets}/images`, `${dist}/images`)
+	.copy(`${node}/font-awesome/fonts`, `${dist}/fonts`)
+	.copy(`${assets}/images`, `${dist}/images`)
+	.copy(`${node}/bootstrap/dist/css/bootstrap.min.css`, `${dist}/styles`)
     .copy(`${node}/d3/dist/d3.min.js`, `${dist}/scripts`)
-	.copy(`${node}/@fortawesome/fontawesome-free/css/fontawesome.min.css`, `${dist}/styles`)
-	.copy(`${node}/@fortawesome/fontawesome-free/webfonts/fa-solid-900.eot`, `${dist}/fonts`)
-	.copy(`${node}/@fortawesome/fontawesome-free/webfonts/fa-solid-900.svg`, `${dist}/fonts`)
-	.copy(`${node}/@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf`, `${dist}/fonts`)
-	.copy(`${node}/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff`, `${dist}/fonts`)
-	.copy(`${node}/@fortawesome/fontawesome-free/webfonts/fa-solid-900.woff2`, `${dist}/fonts`)
+
 // compiled Javascript
 mix.js(`${node}/bootstrap/dist/js/bootstrap.bundle.js`, `${dist}/scripts`)
 	.js(`${assets}/js/inittooltip.js`, `${dist}/scripts`)
