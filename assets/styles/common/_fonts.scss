@@ -15,13 +15,9 @@
 // Roboto Slab
 @include font-face( 'RobotoSlab', url('../fonts/RobotoSlab-Regular.ttf'), 'truetype', 400, normal);
 
-// Keep Glyphicons since they are already being used
 @font-face {
-  font-family: 'Glyphicons';
-  src: url('../fonts/glyphicons-halflings-regular.eot');
-  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
-  url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'),
-  url('../fonts/glyphicons-halflings-regular.woff') format('woff'),
-  url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'),
-  url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
-}
+  font-family: 'FontAwesome';
+  font-style: normal;
+  font-weight: 900;
+  src: url("../fonts/fa-solid-900.eot");
+  src: url("../fonts/fa-solid-900.eot?#iefix") format("embedded-opentype"), url("../fonts/fa-solid-900.woff2") format("woff2"), url("../fonts/fa-solid-900.woff") format("woff"), url("../fonts/fa-solid-900.ttf") format("truetype"), url("../fonts/fa-solid-900.svg#fontawesome") format("svg"); }
