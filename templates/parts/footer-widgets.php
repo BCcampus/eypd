@@ -13,7 +13,7 @@
  */
 ?>
 <?php if ( is_active_sidebar( 'Footer Left' ) || is_active_sidebar( 'Footer Middle' ) || is_active_sidebar( 'Footer Right' ) ) : ?>
-	<div class="footer-widgets row-fluid">
+	<div class="footer-widgets  d-flex flex-row flex-wrap">
 		<?php if ( is_active_sidebar( 'Footer Left' ) ) : ?>
 			<!-- footer widgets -->
 			<div class="col-sm-2 col-sm-offset-1" id="footer-widget-left">

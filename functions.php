@@ -127,18 +127,15 @@ add_action(
 		];
 		wp_enqueue_script( 'events-manager', $template_dir . '/dist/scripts/events-manager.js', array_values( $script_deps ), isset( $EM_VERSION ) );
 		wp_enqueue_script( 'tinyscrollbar', $template_dir . '/dist/scripts/jquery.tinyscrollbar.min.js', [ 'jquery' ], '1.0', true );
+		wp_enqueue_style( 'bootstrap-style', $template_dir . '/dist/styles/bootstrap.min.css' );
+		wp_enqueue_script( 'bootstrap-script', $template_dir . '/dist/scripts/bootstrap.bundle.js', [ 'jquery' ], null, true );
 
 		// load popover only for users who aren't logged in
 		if ( ! is_user_logged_in() ) {
-			wp_enqueue_script( 'bootstrap-tooltip', $template_dir . '/dist/scripts/tooltip.js', [], null, true );
-			wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', [ 'bootstrap-tooltip' ], null, true );
-			wp_enqueue_script( 'initpopover', $template_dir . '/dist/scripts/initpopover.js', [ 'bootstrap-popover' ], null, true );
-			wp_enqueue_script( 'popover-dismiss', $template_dir . '/dist/scripts/popover-dismiss.js', [ 'initpopover' ], null, true );
-		}
+			wp_enqueue_script( 'init-tooltip', $template_dir . '/dist/scripts/inittooltip.js', [ 'bootstrap-script' ], null, true );
 
-		wp_enqueue_script( 'bootstrap-script', $template_dir . '/dist/scripts/bootstrap.min.js', [], null, true );
-		wp_enqueue_style( 'bootstrap-style', $template_dir . '/dist/styles/bootstrap.min.css' );
-		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery' ], null, true );
+		}
+		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery,bootstrap-script' ], null, true );
 
 		// load styling for datepicker in myEYPD profile page only
 		if ( function_exists( 'bp_is_my_profile' ) ) {
@@ -786,15 +783,15 @@ add_filter(
 	'wp_nav_menu_items', function ( $nav, $args ) {
 		if ( $args->theme_location === 'main-menu' ) {
 			// adds home link to mobile only using bootstraps responsive utilities class
-			$nav = '<li class="visible-xs-block home"><a href=' . home_url() . '>Home</a></li>';
+			$nav = '<li class="d-block d-sm-none home"><a href=' . home_url() . '>Home</a></li>';
 			$nav .= '<li class="home"><a href=' . home_url() . '/events>Find Events</a></li>';
 			if ( is_user_logged_in() ) {
 				$nav .= '<li class="home"><a href=' . home_url() . '/post-event>Post an Event</a></li>';
 				$nav .= '<li class="home"><a href=' . home_url() . '/edit-events>Edit Events</a></li>';
 				$nav .= '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
 			} else {
-				//add popover with a message, and login and sign-up links
-				$popover = '<li class="home"><a href="#" data-container="body"  role="button"  data-toggle="popover" data-placement="bottom" data-html="true" data-original-title="" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to ';
+				//add tooltip with a message, and login and sign-up links
+				$popover = '<li class="home"><a href="#" data-toggle="tooltip" data-placement="bottom" data-container="body" data-trigger="click focus" data-html="true" data-title="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to ';
 				$nav     .= $popover . 'post events.">Post an Event</a></li>';
 				$nav     .= $popover . 'edit your events.">Edit Event</a></li>';
 				$nav     .= $popover . ' view your events."><i>my</i>EYPD</a></li>';
