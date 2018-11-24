@@ -388,7 +388,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 6.7;
+	$eypd_version        = 7.1;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -484,6 +484,22 @@ function eypd_run_once() {
 
 	$format_event_list_footer = '</tbody></table>';
 
+	$format_cat_list_header = '<table cellpadding="0" cellspacing="0" class="category-table" >
+   
+    <tbody>';
+
+	$format_cat_list = '<tr>
+					<td>
+						#_EVENTDATES<br>#_EVENTTIMES
+					</td>
+					<td>
+						{has_location}#_EVENTLINK<br>#_LOCATIONNAME<br>#_LOCATIONTOWN, #_LOCATIONSTATE{/has_location}
+					</td>
+					<td>#_ATT{Registration Space}</td>
+				</tr>';
+
+	$format_cat_list_footer = '</tbody></table>';
+
 	if ( $current_version < $eypd_version ) {
 
 		update_option( 'dbem_placeholders_custom', $default_attributes );
@@ -498,6 +514,9 @@ function eypd_run_once() {
 		update_option( 'dbem_event_list_item_format', $format_event_list );
 		update_option( 'dbem_event_list_item_format_header', $format_event_list_header );
 		update_option( 'dbem_event_list_item_format_footer', $format_event_list_footer );
+		update_option( 'dbem_category_event_list_item_format', $format_cat_list );
+		update_option( 'dbem_category_event_list_item_header_format', $format_cat_list_header );
+		update_option( 'dbem_category_event_list_item_footer_format', $format_cat_list_footer );
 		update_option( 'dbem_single_event_format', $single_event_format );
 		update_option( 'dbem_location_event_list_limit', 20 );
 
