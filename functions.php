@@ -35,7 +35,6 @@ add_filter( /**
 			'jquery-ui-position',
 			'jquery-ui-draggable',
 			'jquery-ui-resizable',
-			'jquery-ui-mouse',
 			'jquery-ui-menu',
 			'jquery-ui-sortable',
 			'jquery-ui-datepicker',
@@ -1028,7 +1027,7 @@ function eypd_cumulative_hours( $ids ) {
 }
 
 /**
- * Returns an array of events, with number of hours and categories
+ * Returns an array of events, with number of hours and categories (name,id)
  *
  * @param $ids
  *
@@ -1052,7 +1051,11 @@ function eypd_hours_and_categories( $ids ) {
 
 		if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
 			foreach ( $categories as $category ) {
-				$cats[] = $category->name;
+				array_push( $cats, [
+					'cat_name' => $category->name,
+					'cat_id' => $category->term_id,
+				] );
+
 			}
 		}
 		foreach ( $e->event_attributes as $key => $val ) {
@@ -1069,11 +1072,14 @@ function eypd_hours_and_categories( $ids ) {
 }
 
 /**
+ * Returns an array containing name, total hours and color of each event category an individual has hours for
+ *
  * @param array $data
  *
  * @return mixed|string
  */
 function eypd_d3_array( $data ) {
+	global $wpdb;
 	$cat = $result = [];
 	$i   = 0;
 
@@ -1084,11 +1090,14 @@ function eypd_d3_array( $data ) {
 
 			// events may have more than one category, in which case
 			// the total hours need to be shared between them
-			foreach ( $event['categories'] as $name ) {
-				if ( isset( $cat[ $name ] ) ) {
-					$cat[ $name ] = $cat[ $name ] + $unit;
+			// ID of category is stored for retrieving other category information
+			foreach ( $event['categories'] as $category ) {
+				if ( isset( $cat[ $category['cat_name'] ] ) ) {
+					$cat[ $category['cat_name'] ]['value'] = $cat[ $category['cat_name'] ]['value'] + $unit;
+					$cat[ $category['cat_name'] ]['id'] = $category['cat_id'];
 				} else {
-					$cat[ $name ] = $unit;
+					$cat[ $category['cat_name'] ]['value'] = $unit;
+					$cat[ $category['cat_name'] ]['id'] = $category['cat_id'];
 				}
 			}
 			unset( $unit );
@@ -1097,7 +1106,9 @@ function eypd_d3_array( $data ) {
 
 		foreach ( $cat as $k => $v ) {
 			$result[ $i ]['label'] = html_entity_decode( $k );
-			$result[ $i ]['value'] = number_format( $v, 1 );
+			$result[ $i ]['value'] = number_format( $v['value'], 1 );
+			$color = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM " . EM_META_TABLE . " WHERE object_id='%s' AND meta_key='category-bgcolor' LIMIT 1", $v['id'] ) ); // @codingStandardsIgnoreLine
+			$result[ $i ]['color'] = html_entity_decode( $color );
 			$i ++;
 		}
 	}
