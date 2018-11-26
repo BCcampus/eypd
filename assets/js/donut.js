@@ -1,7 +1,7 @@
 var data = donut_data;
 //Sum the event hours
-var totalHours =  d3.nest()
-	.rollup(function(g) {
+var totalHours = d3.nest()
+	.rollup(function (g) {
 		return d3.format(".1f")(d3.sum(g, function (d) {
 			return parseFloat(d.value.replace(/,/g, ''));
 		}));
@@ -74,8 +74,8 @@ label.append("tspan")
 			}
 			$('<span/>').attr('class', 'square').css('background-color', fillColor).prependTo(li);
 			var percentHours = parseFloat(val.value.replace(/,/g, '')) / totalHours * 100;
-			var hours =  parseFloat(val.value);
-			$('<p/>').appendTo(li).text(percentHours.toFixed(1) + '% - '+val.label + ' (' + hours.toFixed(1) +' hours)');
+			var hours = parseFloat(val.value);
+			$('<p/>').appendTo(li).text(percentHours.toFixed(1) + '% - ' + val.label + ' (' + hours.toFixed(1) + ' hours)');
 		});
 	});
 })(jQuery);
