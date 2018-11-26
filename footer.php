@@ -31,10 +31,10 @@ do_action( 'close_main_wrap' );
 		?>
 
 		<div id="powered-by">
-			<div id="copyright-info" class="column ten">
+			<div id="copyright-info" class="col-sm-8 col-md-9">
 				<?php echo infinity_option_get( 'infinity-core-options.footer-text' ); ?>
 			</div>
-			<div id="footer-info" class="column six">
+			<div id="footer-info" class="col-sm-4 col-md-3">
 				<?php
 				wp_nav_menu( [ 'theme_location' => 'copyright-menu', 'container_class' => 'copyright-menu' ] );
 				// Load Footer Menu only if it's enabled
