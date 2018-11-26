@@ -1016,7 +1016,7 @@ function eypd_cumulative_hours( $ids ) {
 	// input is radio buttons with boolean values
 	// true means they attended (default)
 	foreach ( $ids as $id => $bool ) {
-		if ( false === $bool ) {
+		if ( false === (bool) $bool ) {
 			continue;
 		}
 		$e = em_get_event( $id );
@@ -1079,6 +1079,7 @@ function eypd_hours_and_categories( $ids ) {
 function eypd_d3_array( $data ) {
 	$cat = $result = [];
 	$i   = 0;
+	$total_hours = 0;
 
 	if ( is_array( $data ) ) {
 		foreach ( $data as $event ) {
@@ -1097,10 +1098,13 @@ function eypd_d3_array( $data ) {
 			unset( $unit );
 
 		}
+		if ( 0 === strcmp( 'Professional Development Certificate Credit Hours', $key ) ) {
+			$total = $total + intval( $event['hours'] );
+		}
 
 		foreach ( $cat as $k => $v ) {
 			$result[ $i ]['label'] = html_entity_decode( $k );
-			$result[ $i ]['value'] = number_format( $v, 1 );
+			$result[ $i ]['value'] = number_format( $v, 8 );
 			$i ++;
 		}
 	}

@@ -1,9 +1,8 @@
 var data = donut_data;
-
 //Sum the event hours
 var totalHours =  d3.nest()
 	.rollup(function(g) {
-		return d3.format(".2f")(d3.sum(g, function (d) {
+		return d3.format(".0f")(d3.sum(g, function (d) {
 			return parseFloat(d.value.replace(/,/g, ''));
 		}));
 	})
@@ -65,7 +64,8 @@ label.append("tspan")
 			var li = $('<div/>').attr('class','legend-item').appendTo('.donut-legend');
 			$('<span/>').attr('class','square').css('background-color',color(val.label)).appendTo(li);
 			var percentHours = parseFloat(val.value.replace(/,/g, ''))/totalHours*100;
-			$('<p/>').appendTo(li).text(percentHours.toFixed(1) + '% - '+val.label + ' (' + val.value +' hours)');
+			var hours =  parseFloat(val.value);
+			$('<p/>').appendTo(li).text(percentHours.toFixed(1) + '% - '+val.label + ' (' + hours.toFixed(2) +' hours)');
 		});
 	});
 })(jQuery);
