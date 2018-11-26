@@ -793,7 +793,8 @@ function eypd_bp_nav() {
 
 }
 
-add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
+// Commenting out 2018-11-26 to restore BP functionality
+//add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
 
 
 // Filter wp_nav_menu() to add pop-overs to links in header menu
