@@ -57,15 +57,15 @@ if ( bp_is_my_profile() ) { ?>
 		$cert_expires = get_user_meta( $bp->displayed_user->id, 'eypd_cert_expire', true );
 		?>
 		<form id="eypd_countdown" class="eypd-countdown" action=""
-		      method="post">
+			  method="post">
 			<div class="certexpire">
 				<label for="expiry-date">Certificate Expiration</label>
 				<input id="expiry-date" value="<?php if ( $cert_expires ) {
 					echo $cert_expires;
-				} else { ?>Select date...<?php } ?>" name="expiry-date"/>
+} else { ?>Select date...<?php } ?>" name="expiry-date"/>
 				<input class="right" type="submit" value="Save">
 				<input type="hidden" name="_wpnonce"
-				       value="<?php echo wp_create_nonce( 'wpnonce_eypd_countdown' ); ?>"/>
+					   value="<?php echo wp_create_nonce( 'wpnonce_eypd_countdown' ); ?>"/>
 				<div id="certcoutdown"><p>calculating...</p></div>
 			</div>
 		</form>
@@ -211,7 +211,7 @@ if ( bp_is_my_profile() ) { ?>
 				if ( isset( $future_ids ) && count( $future_ids ) > 0 ) { ?>
 
 					<table cellpadding="0" cellspacing="0"
-					       class="events-table">
+						   class="events-table">
 						<thead>
 						<tr>
 							<th class="event-time" width="150">Date/Time
@@ -222,7 +222,7 @@ if ( bp_is_my_profile() ) { ?>
 							<th>Register</th>
 							<?php if ( is_user_logged_in() ) {
 								echo '<th class="event-delete">Delete this event from my profile</th>';
-							}
+}
 							?>
 							<th class="event-ical" width="*">Add to
 								Calendar
@@ -255,8 +255,8 @@ if ( bp_is_my_profile() ) { ?>
 									if ( ! in_array( $EM_Booking->booking_status, [
 											2,
 											3,
-										] ) && get_option( 'dbem_bookings_user_cancellation' ) && $EM_Event->get_bookings()
-									                                                                       ->has_open_time()
+									] ) && get_option( 'dbem_bookings_user_cancellation' ) && $EM_Event->get_bookings()
+																										   ->has_open_time()
 									) {
 										$cancel_url  = em_add_get_params( $_SERVER['REQUEST_URI'], [
 											'action'     => 'booking_cancel',
@@ -267,7 +267,7 @@ if ( bp_is_my_profile() ) { ?>
 									}
 									echo apply_filters( 'em_my_bookings_booking_actions', $cancel_link, $EM_Booking );
 									echo '</td>';
-								}
+}
 								?>
 								<td><?php echo $EM_Event->output( '#_EVENTICALLINK' ); ?></td>
 							</tr>
@@ -291,7 +291,7 @@ if ( bp_is_my_profile() ) { ?>
 	// Get count of events user has selected as attended
 	$user_hours_meta = get_user_meta( $bp->displayed_user->id, 'eypd_cert_hours', true );
 	$attended        = array_count_values( $user_hours_meta );
-	( $attended['1'] === NULL ) ? $attended_count = '0' : $attended_count = $attended['1'];
+	( $attended['1'] === null ) ? $attended_count = '0' : $attended_count = $attended['1'];
 
 	if ( $past_count > 0 ) { ?>
 		<a name="completed"></a>
@@ -315,29 +315,29 @@ if ( bp_is_my_profile() ) { ?>
 				</div>
 
 				<div id="collapseTwo" class="collapse"
-				     aria-labelledby="headingTwo"
-				     data-parent="#accordion">
+					 aria-labelledby="headingTwo"
+					 data-parent="#accordion">
 					<div class="card-body">
 						<?php
 						if ( isset( $past_ids ) && count( $past_ids ) > 0 ) { ?>
 							<div class='table-wrap'>
 								<form id="eypd_cert_hours"
-								      class="eypd-cert-hours"
-								      action="" method="post">
+									  class="eypd-cert-hours"
+									  action="" method="post">
 									<table id='dbem-bookings-table'
-									       class='widefat post fixed'>
+										   class='widefat post fixed'>
 										<thead>
 										<tr>
 											<th class='event-time'
-											    scope='col'><?php _e( 'Date/Time', 'events-manager' ); ?></th>
+												scope='col'><?php _e( 'Date/Time', 'events-manager' ); ?></th>
 											<th class='event-description'
-											    scope='col'><?php _e( 'Event Description', 'events-manager' ); ?></th>
+												scope='col'><?php _e( 'Event Description', 'events-manager' ); ?></th>
 											<th class='event-hours'
-											    scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
+												scope='col'><?php _e( 'Certificate Hours', 'events-manager' ); ?></th>
 											<th class='event-attendance'
-											    scope='col'><?php echo 'Attended'; ?></th>
+												scope='col'><?php echo 'Attended'; ?></th>
 											<th class='event-attendance'
-											    scope='col'><?php echo 'Did Not Attend'; ?></th>
+												scope='col'><?php echo 'Did Not Attend'; ?></th>
 										</tr>
 										</thead>
 										<tbody>
@@ -350,12 +350,12 @@ if ( bp_is_my_profile() ) { ?>
 										foreach ( $EM_Bookings
 
 										as $EM_Booking ) {
-										// skip over if it's not in the past
-										if ( ! in_array( $EM_Booking->event_id, $past_ids, false ) ) {
-											continue;
-										}
-										$EM_Event = $EM_Booking->get_event();
-										$event_id = $past_ids[ $count ]; ?>
+											// skip over if it's not in the past
+											if ( ! in_array( $EM_Booking->event_id, $past_ids, false ) ) {
+												continue;
+											}
+											$EM_Event = $EM_Booking->get_event();
+											$event_id = $past_ids[ $count ]; ?>
 										<tr>
 											<td><?php echo $EM_Event->output( '#_EVENTDATES<br/>#_EVENTTIMES' ); ?></td>
 											<td><?php echo $EM_Event->output( '#_EVENTLINK
@@ -369,8 +369,8 @@ if ( bp_is_my_profile() ) { ?>
 													name=eypd_cert_hours[<?php echo $event_id; ?>]
 													value="1"
 													type='radio' <?php if ( ! isset( $user_hours[ $event_id ] ) ) {
-													$user_hours[ $event_id ] = '';
-												}
+														$user_hours[ $event_id ] = '';
+}
 												echo ( $user_hours[ $event_id ] || ! isset( $user_hours[ $event_id ] ) ) ? 'checked="checked"' : ''; ?> />
 											</td>
 
@@ -380,22 +380,22 @@ if ( bp_is_my_profile() ) { ?>
 													name=eypd_cert_hours[<?php echo $event_id; ?>]
 													value="0"
 													type='radio' <?php if ( ! isset( $user_hours[ $event_id ] ) ) {
-													$user_hours[ $event_id ] = '';
-												}
+														$user_hours[ $event_id ] = '';
+}
 												echo ( ! $user_hours[ $event_id ] ) ? 'checked="checked"' : ''; ?> />
 												<?php
 												$count ++;
 
-												}
+										}
 												?>
 										</tbody>
 									</table>
 									<input type="hidden" name="_wpnonce"
-									       value="<?php echo $nonce; ?>"/>
+										   value="<?php echo $nonce; ?>"/>
 									<input type="hidden" name="user_id"
-									       value="<?php echo $bp->displayed_user->id; ?>"/>
+										   value="<?php echo $bp->displayed_user->id; ?>"/>
 									<input type="hidden" name="action"
-									       value="eypd_cert_hours"/>
+										   value="eypd_cert_hours"/>
 									<?php
 									echo '<input class="right" type="submit" value="Calculate My Hours"/>';
 									?>
