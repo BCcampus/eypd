@@ -85,8 +85,7 @@ if ( bp_is_my_profile() ) { ?>
 		?>
 		
 		<?php
-		$my_events_table = '<table>
-				<tr>
+		$my_events_table = '<tr>
 					<td>
 						#_EVENTDATES<br>#_EVENTTIMES
 					</td>
@@ -97,10 +96,9 @@ if ( bp_is_my_profile() ) { ?>
 						<a href="mailto:?subject=Check out the event I\'m organizing&body=' . htmlspecialchars( "I'm organizing an Early Years Professional Development event and I thought you'd be interested. You can get the details on the EYPD site: #_EVENTURL. I hope to see you there!" ) . '">Share</a>
 					</td>
 					<td>
-						<a href="#_EDITEVENTURL"><span class="glyphicon glyphicon-edit"></span></a>
+						<a href="#_EDITEVENTURL"><span class="fa fa-edit"></span></a>
 					</td>
-				</tr>
-			</table>';
+				</tr>';
 
 
 		$args          = [
@@ -112,9 +110,16 @@ if ( bp_is_my_profile() ) { ?>
 		?>
 		<h2 class="top-padding"><?php _e( 'My posted events', 'events-manager' ); ?> (<?php echo EM_Events::count( $args ); ?>)</h2>
 		<p><a href="<?php echo home_url() . '/post-event'; ?>"><?php _e( 'Post a new training event ', 'events-manager' ); ?></a><?php _e( 'on the event board.', 'events-manager' ); ?></p>
+
 		<?php
 		if ( EM_Events::count( $args ) > 0 ) {
+			?>
+			<table>
+			<?php
 			echo EM_Events::output( $args );
+			?>
+			</table>
+			<?php
 		} else {
 			?>
 			<p><?php _e( 'No Events', 'events-manager' ); ?>.
