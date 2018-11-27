@@ -291,20 +291,22 @@ if ( bp_is_my_profile() ) { ?>
 
 	if ( $past_count > 0 ) { ?>
 			<a name="completed"></a>
+		<h3 class="top-padding"><?php _e( 'My Past Events ', 'events-manager' );
+			echo '<span class="text-small">(' . $attended_count . '/' . $past_count . ' attended)</span>'; ?>
+		</h3>
 			<div id="accordion">
 				<div class="card">
-					<h3 class="top-padding"><?php _e( 'My Past Events ', 'events-manager' );
-					echo '<span class="text-small">(' . $attended_count . '/' . $past_count . ' attended)</span>'; ?>
-					</h3>
+
 
 					<div class="card-header" id="headingTwo">
-						<a id="past" class="btn collapsed"
+						<a id="past"
 						   data-toggle="collapse"
+						   aria-controls="collapseTwo"
 						   data-target="#collapseTwo"
-						   aria-expanded="false" aria-controls="collapseTwo">
-							Expand to see all past events<i
-									class="glyphicon glyphicon-triangle-right"
-									aria-hidden="true"></i>
+						   aria-hidden="true"
+						   role="button"
+						   href="#">
+							Expand to see all past events <i class="fa fa-caret-right"></i>
 						</a>
 					</div>
 
