@@ -248,7 +248,8 @@ add_action( 'init', function () {
 				}
 				$location_cond = apply_filters( 'em_actions_locations_search_cond', $location_cond );
 				$term          = ( isset( $_REQUEST['term'] ) ) ? '%' . $wpdb->esc_like( wp_unslash( $_REQUEST['term'] ) ) . '%' : '%' . $wpdb->esc_like( wp_unslash( $_REQUEST['q'] ) ) . '%';
-				$results       = $wpdb->get_results( $wpdb->prepare( '
+				// @codingStandardsIgnoreStart
+				$results = $wpdb->get_results( $wpdb->prepare('
 SELECT
 location_id AS `id`,
 Concat( location_name )  AS `label`,
@@ -259,8 +260,10 @@ location_state AS `state`,
 location_region AS `region`,
 location_postcode AS `postcode`,
 location_country AS `country`
-FROM %s
-WHERE ( `location_name` LIKE %s ) AND location_status=1 %s LIMIT 10', EM_LOCATIONS_TABLE, $term, $location_cond ) );
+                  FROM ' . EM_LOCATIONS_TABLE . " 
+					WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
+				", $term) );
+				// @codingStandardsIgnoreEnd
 			}
 			echo EM_Object::json_encode( $results );
 			die();
