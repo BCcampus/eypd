@@ -71,6 +71,10 @@
   .funded {
     margin-bottom: 10px;
   }
+  #menu-contact-menu li:nth-child(4n) a{
+    background: url(../images/facebook.svg) no-repeat center left;
+    padding-left: 22px;
+  }
   #copyright-info {
     padding: 20px 0;
     text-align: left;
