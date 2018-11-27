@@ -28,7 +28,7 @@
 }
 
 #powered-by {
-  background-color:$color-neutral-20;
+  background-color: $color-neutral-20;
   border-top: 1px solid $color-gray-boulder;
   color: inherit;
   font-weight: normal;
@@ -71,7 +71,7 @@
   .funded {
     margin-bottom: 10px;
   }
-  & #copyright-info {
+  #copyright-info {
     padding: 20px 0;
     text-align: left;
     @media (max-width: $medium) {
@@ -81,20 +81,25 @@
       margin-right: 5px;
       vertical-align: top;
     }
+    small,
+    a {
+      vertical-align: bottom;
+    }
+
   }
-  & #menu-copyright-menu {
+  #menu-copyright-menu {
     text-align: right;
     @media (max-width: $medium) {
       text-align: left;
     }
   }
-  & #footer-info{
+  #footer-info {
     padding: 20px 0 10px;
     @media (max-width: $medium) {
       padding-top: 0;
     }
   }
-  & #powered-by {
+  #powered-by {
     ul li {
       display: inline;
       margin-left: 10px;
