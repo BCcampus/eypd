@@ -9,7 +9,7 @@
  * @license http://www.gnu.org/licenses/gpl.html GPLv3 or later
  */
 ?>
-<div class="top-wrap row <?php do_action( 'top_wrap_class' ); ?>">
+<div class="top-wrap flex-row <?php do_action( 'top_wrap_class' ); ?>">
 	<?php
 	// Load Top Menu only if it's enabled
 	if ( current_theme_supports( 'infinity-top-menu-setup' ) ) :
@@ -26,18 +26,18 @@
 			$heading_tag = ( is_home() || is_front_page() ) ? 'h1' : 'div';
 			?>
 			<<?php echo $heading_tag; ?> id="icext" class="icext-feature icext-header-logo">
-			<a href="<?php echo home_url( '/' ); ?>" title="<?php bloginfo('name'); ?> - <?php bloginfo('description'); ?>">
-                <picture>
-                    <source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bcid-logo.webp" type="image/webp">
-                    <source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bcid-logo.png">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bcid-logo.png" width="101" height="92" alt="BC Provincial Government">
-                </picture>
+			<a href="<?php echo home_url( '/' ); ?>" title="<?php bloginfo( 'name' ); ?> - <?php bloginfo( 'description' ); ?>">
+				<picture>
+					<source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bcid-logo.webp" type="image/webp">
+					<source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bcid-logo.png">
+					<img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bcid-logo.png" width="101" height="92" alt="BC Provincial Government">
+				</picture>
 
-                <picture>
-                    <source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logomark.webp" type="image/webp">
-                    <source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logomark.png">
-                    <img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logomark.png" width="135" height="92" alt="Early Years Professional Development">
-                </picture>
+				<picture>
+					<source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logomark.webp" type="image/webp">
+					<source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logomark.png">
+					<img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/eypd-logomark.png" width="135" height="92" alt="Early Years Professional Development">
+				</picture>
 			</a>
 		</<?php echo $heading_tag; ?>>
 		<?php

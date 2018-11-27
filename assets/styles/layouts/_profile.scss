@@ -20,10 +20,34 @@
   display: none;
 }
 
-#item-body > div.donut > svg {
-  min-width: 600px;
-  min-height: 300px;
-  width: 100%;
+#item-body div.donut > svg {
+  min-height: 200px;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+#item-body div.donut-legend {
+  .legend-item {
+    position: relative;
+  }
+  .square {
+    width: 1em;
+    height: 1em;
+    background-color: #000;
+    display: inline-block;
+    position: absolute;
+    margin-right: .5em;
+    top: 2px;
+  }
+  p {
+    margin-left: 1.5rem;
+    margin-bottom: .65rem;
+  }
+}
+
+.donut-label {
+  font-size: 14px;
+  text-anchor: middle;
 }
 
 h3 .future {
@@ -48,8 +72,8 @@ p.desc.col-md-8 {
 }
 
 .btn:active {
-  -webkit-box-shadow:none;
-          box-shadow:none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 span.text-small {

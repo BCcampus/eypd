@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * This is where the booking form is generated.
  * For non-advanced users, It's SERIOUSLY NOT recommended you edit this form directly if avoidable, as you can change booking form settings in various less obtrusive and upgrade-safe ways:
  * - check your booking form options panel in the Booking Options tab in your settings.
@@ -9,15 +9,20 @@
  * Again, even if you're an advanced user, consider NOT editing this form and using other methods instead.
  */
 
-/* @var $EM_Event EM_Event */
+/**
+ * @var $EM_Event EM_Event
+ */
 global $EM_Notices;
-//count tickets and available tickets
+
+// count tickets and available tickets
 $tickets_count = count( $EM_Event->get_bookings()->get_tickets()->tickets );
 $available_tickets_count = count( $EM_Event->get_bookings()->get_available_tickets() );
-//decide whether user can book, event is open for bookings etc.
+
+// decide whether user can book, event is open for bookings etc.
 $can_book = is_user_logged_in() || (get_option( 'dbem_bookings_anonymous' ) && ! is_user_logged_in());
 $is_open = $EM_Event->get_bookings()->is_open(); //whether there are any available tickets right now
 $show_tickets = true;
+
 //if user is logged out, check for member tickets that might be available, since we should ask them to log in instead of saying 'bookings closed'
 if ( ! $is_open && ! is_user_logged_in() && $EM_Event->get_bookings()->is_open( true ) ) {
 	$is_open = true;
@@ -54,7 +59,7 @@ if ( ! $is_open && ! is_user_logged_in() && $EM_Event->get_bookings()->is_open( 
 					do_action( 'em_booking_form_before_tickets', $EM_Event ); //do not delete
 					//Show multiple tickets form to user, or single ticket list if settings enable this
 					//If logged out, can be allowed to see this in settings witout the register form
-					em_locate_template( 'forms/bookingform/tickets-list.php',true, array( 'EM_Event' => $EM_Event ) );
+					em_locate_template( 'forms/bookingform/tickets-list.php',true, [ 'EM_Event' => $EM_Event ] );
 					do_action( 'em_booking_form_after_tickets', $EM_Event ); //do not delete
 					$show_tickets = false;
 				}
@@ -66,7 +71,7 @@ if ( ! $is_open && ! is_user_logged_in() && $EM_Event->get_bookings()->is_open( 
 							do_action( 'em_booking_form_before_tickets', $EM_Event ); //do not delete
 							//show single ticket form, only necessary to show to users able to book (or guests if enabled)
 							$EM_Ticket = $EM_Event->get_bookings()->get_available_tickets()->get_first();
-							em_locate_template( 'forms/bookingform/ticket-single.php',true, array( 'EM_Event' => $EM_Event, 'EM_Ticket' => $EM_Ticket ) );
+							em_locate_template( 'forms/bookingform/ticket-single.php',true, [ 'EM_Event' => $EM_Event, 'EM_Ticket' => $EM_Ticket ] );
 							do_action( 'em_booking_form_after_tickets', $EM_Event ); //do not delete
 						}
 						?>
@@ -77,7 +82,7 @@ if ( ! $is_open && ! is_user_logged_in() && $EM_Event->get_bookings()->is_open( 
 							do_action( 'em_booking_form_custom', $EM_Event ); //do not delete
 						} else {
 							//If you just want to modify booking form fields, you could do so here
-							em_locate_template( 'forms/bookingform/booking-fields.php',true, array( 'EM_Event' => $EM_Event ) );
+							em_locate_template( 'forms/bookingform/booking-fields.php',true, [ 'EM_Event' => $EM_Event ] );
 						}
 							do_action( 'em_booking_form_after_user_details', $EM_Event );
 						?>
@@ -98,7 +103,7 @@ if ( ! $is_open && ! is_user_logged_in() && $EM_Event->get_bookings()->is_open( 
 			<?php
 			if ( ! is_user_logged_in() && get_option( 'dbem_bookings_login_form' ) ) {
 				//User is not logged in, show login form (enabled on settings page)
-				em_locate_template( 'forms/bookingform/login.php',true, array( 'EM_Event' => $EM_Event ) );
+				em_locate_template( 'forms/bookingform/login.php',true, [ 'EM_Event' => $EM_Event ] );
 			}
 			?>
 			<br class="clear" style="clear:left;" />  
