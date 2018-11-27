@@ -1032,7 +1032,7 @@ function eypd_cumulative_hours( $ids ) {
 	// input is radio buttons with boolean values
 	// true means they attended (default)
 	foreach ( $ids as $id => $bool ) {
-		if ( false === $bool ) {
+		if ( false === (bool) $bool ) {
 			continue;
 		}
 		$e = em_get_event( $id );
@@ -1114,10 +1114,10 @@ function eypd_d3_array( $data ) {
 			foreach ( $event['categories'] as $category ) {
 				if ( isset( $cat[ $category['cat_name'] ] ) ) {
 					$cat[ $category['cat_name'] ]['value'] = $cat[ $category['cat_name'] ]['value'] + $unit;
-					$cat[ $category['cat_name'] ]['id'] = $category['cat_id'];
+					$cat[ $category['cat_name'] ]['id']    = $category['cat_id'];
 				} else {
 					$cat[ $category['cat_name'] ]['value'] = $unit;
-					$cat[ $category['cat_name'] ]['id'] = $category['cat_id'];
+					$cat[ $category['cat_name'] ]['id']    = $category['cat_id'];
 				}
 			}
 			unset( $unit );
@@ -1126,8 +1126,8 @@ function eypd_d3_array( $data ) {
 
 		foreach ( $cat as $k => $v ) {
 			$result[ $i ]['label'] = html_entity_decode( $k );
-			$result[ $i ]['value'] = number_format( $v['value'], 1 );
-			$color = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM " . EM_META_TABLE . " WHERE object_id='%s' AND meta_key='category-bgcolor' LIMIT 1", $v['id'] ) ); // @codingStandardsIgnoreLine
+			$result[ $i ]['value'] = number_format( $v['value'], 8 );
+			$color                 = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM " . EM_META_TABLE . " WHERE object_id='%s' AND meta_key='category-bgcolor' LIMIT 1", $v['id'] ) ); // @codingStandardsIgnoreLine
 			$result[ $i ]['color'] = html_entity_decode( $color );
 			$i ++;
 		}
