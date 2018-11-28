@@ -329,6 +329,19 @@ add_action( 'login_form', function () {
 	echo $html;
 } );
 
+/**
+ * Redirect user after successful login.
+ *
+ * @param string $url URL to redirect to.
+ * @param string query URL the user is coming from.
+ * @param object $user Logged user's data.
+ * @return string
+ */
+
+add_filter( 'login_redirect', function( $url, $query, $user ) {
+	return bp_core_get_user_domain( $user->ID ) . '/events/';
+}, 10, 3 );
+
 /*
 |--------------------------------------------------------------------------
 | Excerpt
