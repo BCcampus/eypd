@@ -250,7 +250,7 @@ if ( bp_is_my_profile() ) { ?>
 								if ( ! empty( $attributes['Registration Link'] ) ) {
 									$maybe_url = eypd_maybe_url( $attributes['Registration Link'] );
 								};
-								$link = ( $maybe_url ) ? "<a href='{$maybe_url}' target='_blank'>Contact Organizer <i class='fa fa-new-window'></i></a>" : "<a href='{$EM_Event->guid}'>Contact Organizer</a>";
+								$link = ( $maybe_url ) ? "<a href='{$maybe_url}' target='_blank'>Contact Organizer <i class=\"fa fa-external-link\" aria-hidden=\"true\"></i></a>" : "<a href='{$EM_Event->guid}'>Contact Organizer</a>";
 								?>
 								<td><?php echo $link; ?></td>
 								<?php if ( is_user_logged_in() ) {
