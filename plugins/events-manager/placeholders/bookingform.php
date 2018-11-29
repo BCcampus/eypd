@@ -94,27 +94,9 @@ if ( ! $is_open && ! is_user_logged_in() && $EM_Event->get_bookings()->is_open( 
 									<a class="btn btn-primary" data-toggle="modal" data-target="#bookingModal" href="#">
 										<?php echo esc_attr( get_option( 'dbem_bookings_submit_button' ) ); ?>
 									</a>
-
-									<!-- Modal -->
-									<div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel" aria-hidden="true">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h5 class="modal-title" id="exampleModalLabel"><?php echo esc_attr( get_option( 'dbem_bookings_submit_button' ) ); ?></h5>
-													<a class="close" data-dismiss="modal" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</a>
-												</div>
-												<div class="modal-body">
-													This event has happened in the past, are you sure you want to add to your events?
-												</div>
-												<div class="modal-footer">
-													<a class="btn btn-secondary" data-dismiss="modal" href="#">Close</a>
-													<input type="submit" class="em-booking-submit btn btn-primary" id="em-booking-submit" value="Save Event" />
-												</div>
-											</div>
-										</div>
-									</div>
+									<?php
+										get_template_part( 'templates/booking-modal' );
+									?>
 								<?php else : //Display normal submit button ?>
 									<input type="submit" class="em-booking-submit" id="em-booking-submit" value="<?php echo esc_attr( get_option( 'dbem_bookings_submit_button' ) ); ?>" />
 								<?php endif; ?>
