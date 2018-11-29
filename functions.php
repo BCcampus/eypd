@@ -903,7 +903,7 @@ function eypd_validate_attributes() {
 		$EM_Event->add_error( sprintf( __( '%s is required.', 'early-years' ), __( 'Registration Fee', 'early-years' ) ) );
 	}
 
-	if ( false === eypd_maybe_url( $EM_Event->event_attributes['Registration Link'] ) ) {
+	if ( ! empty( $EM_Event->event_attributes['Registration Link'] ) && false === eypd_maybe_url( $EM_Event->event_attributes['Registration Link'] ) ) {
 		$EM_Event->add_error( sprintf( __( '%s is not a valid URL.', 'early-years' ), __( 'Registration Link', 'early-years' ) ) );
 	}
 
