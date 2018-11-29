@@ -35,7 +35,6 @@ add_filter( /**
 			'jquery-ui-position',
 			'jquery-ui-draggable',
 			'jquery-ui-resizable',
-			'jquery-ui-mouse',
 			'jquery-ui-menu',
 			'jquery-ui-sortable',
 			'jquery-ui-datepicker',
@@ -128,18 +127,15 @@ add_action(
 		];
 		wp_enqueue_script( 'events-manager', $template_dir . '/dist/scripts/events-manager.js', array_values( $script_deps ), isset( $EM_VERSION ) );
 		wp_enqueue_script( 'tinyscrollbar', $template_dir . '/dist/scripts/jquery.tinyscrollbar.min.js', [ 'jquery' ], '1.0', true );
+		wp_enqueue_style( 'bootstrap-style', $template_dir . '/dist/styles/bootstrap.min.css' );
+		wp_enqueue_script( 'bootstrap-script', $template_dir . '/dist/scripts/bootstrap.bundle.js', [ 'jquery' ], null, true );
 
 		// load popover only for users who aren't logged in
 		if ( ! is_user_logged_in() ) {
-			wp_enqueue_script( 'bootstrap-tooltip', $template_dir . '/dist/scripts/tooltip.js', [], null, true );
-			wp_enqueue_script( 'bootstrap-popover', $template_dir . '/dist/scripts/popover.js', [ 'bootstrap-tooltip' ], null, true );
-			wp_enqueue_script( 'initpopover', $template_dir . '/dist/scripts/initpopover.js', [ 'bootstrap-popover' ], null, true );
-			wp_enqueue_script( 'popover-dismiss', $template_dir . '/dist/scripts/popover-dismiss.js', [ 'initpopover' ], null, true );
-		}
+			wp_enqueue_script( 'init-tooltip', $template_dir . '/dist/scripts/inittooltip.js', [ 'bootstrap-script' ], null, true );
 
-		wp_enqueue_script( 'bootstrap-script', $template_dir . '/dist/scripts/bootstrap.min.js', [], null, true );
-		wp_enqueue_style( 'bootstrap-style', $template_dir . '/dist/styles/bootstrap.min.css' );
-		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery' ], null, true );
+		}
+		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery,bootstrap-script' ], null, true );
 
 		// load styling for datepicker in myEYPD profile page only
 		if ( function_exists( 'bp_is_my_profile' ) ) {
@@ -335,6 +331,19 @@ add_action( 'login_form', function () {
 	echo $html;
 } );
 
+/**
+ * Redirect user after successful login.
+ *
+ * @param string $url URL to redirect to.
+ * @param string query URL the user is coming from.
+ * @param object $user Logged user's data.
+ * @return string
+ */
+
+add_filter( 'login_redirect', function( $url, $query, $user ) {
+	return bp_core_get_user_domain( $user->ID ) . '/events/';
+}, 10, 3 );
+
 /*
 |--------------------------------------------------------------------------
 | Excerpt
@@ -394,7 +403,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 6.7;
+	$eypd_version        = 7.1;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -490,6 +499,22 @@ function eypd_run_once() {
 
 	$format_event_list_footer = '</tbody></table>';
 
+	$format_cat_list_header = '<table cellpadding="0" cellspacing="0" class="category-table" >
+   
+    <tbody>';
+
+	$format_cat_list = '<tr>
+					<td>
+						#_EVENTDATES<br>#_EVENTTIMES
+					</td>
+					<td>
+						{has_location}#_EVENTLINK<br>#_LOCATIONNAME<br>#_LOCATIONTOWN, #_LOCATIONSTATE{/has_location}
+					</td>
+					<td>#_ATT{Registration Space}</td>
+				</tr>';
+
+	$format_cat_list_footer = '</tbody></table>';
+
 	if ( $current_version < $eypd_version ) {
 
 		update_option( 'dbem_placeholders_custom', $default_attributes );
@@ -504,6 +529,9 @@ function eypd_run_once() {
 		update_option( 'dbem_event_list_item_format', $format_event_list );
 		update_option( 'dbem_event_list_item_format_header', $format_event_list_header );
 		update_option( 'dbem_event_list_item_format_footer', $format_event_list_footer );
+		update_option( 'dbem_category_event_list_item_format', $format_cat_list );
+		update_option( 'dbem_category_event_list_item_header_format', $format_cat_list_header );
+		update_option( 'dbem_category_event_list_item_footer_format', $format_cat_list_footer );
 		update_option( 'dbem_single_event_format', $single_event_format );
 		update_option( 'dbem_location_event_list_limit', 20 );
 
@@ -780,7 +808,8 @@ function eypd_bp_nav() {
 
 }
 
-add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
+// Commenting out 2018-11-26 to restore BP functionality
+//add_action( 'bp_setup_nav', 'eypd_bp_nav', 1000 );
 
 
 // Filter wp_nav_menu() to add pop-overs to links in header menu
@@ -788,15 +817,15 @@ add_filter(
 	'wp_nav_menu_items', function ( $nav, $args ) {
 		if ( $args->theme_location === 'main-menu' ) {
 			// adds home link to mobile only using bootstraps responsive utilities class
-			$nav = '<li class="visible-xs-block home"><a href=' . home_url() . '>Home</a></li>';
+			$nav = '<li class="d-block d-sm-none home"><a href=' . home_url() . '>Home</a></li>';
 			$nav .= '<li class="home"><a href=' . home_url() . '/events>Find Events</a></li>';
 			if ( is_user_logged_in() ) {
 				$nav .= '<li class="home"><a href=' . home_url() . '/post-event>Post an Event</a></li>';
 				$nav .= '<li class="home"><a href=' . home_url() . '/edit-events>Edit Events</a></li>';
 				$nav .= '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
 			} else {
-				//add popover with a message, and login and sign-up links
-				$popover = '<li class="home"><a href="#" data-container="body"  role="button"  data-toggle="popover" data-placement="bottom" data-html="true" data-original-title="" data-content="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to ';
+				//add tooltip with a message, and login and sign-up links
+				$popover = '<li class="home"><a href="#" data-toggle="tooltip" data-placement="bottom" data-container="body" data-trigger="click focus" data-html="true" data-title="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to ';
 				$nav     .= $popover . 'post events.">Post an Event</a></li>';
 				$nav     .= $popover . 'edit your events.">Edit Event</a></li>';
 				$nav     .= $popover . ' view your events."><i>my</i>EYPD</a></li>';
@@ -872,8 +901,12 @@ function eypd_validate_attributes() {
 		$EM_Event->add_error( sprintf( __( '%s is required.', 'early-years' ), __( 'Professional Development Certificate', 'early-years' ) ) );
 	}
 
-	if ( empty( $EM_Event->event_attributes['Registration Fee'] ) ) {
+	if ( ! isset( $EM_Event->event_attributes['Registration Fee'] ) ) {
 		$EM_Event->add_error( sprintf( __( '%s is required.', 'early-years' ), __( 'Registration Fee', 'early-years' ) ) );
+	}
+
+	if ( false === eypd_maybe_url( $EM_Event->event_attributes['Registration Link'] ) ) {
+		$EM_Event->add_error( sprintf( __( '%s is not a valid URL.', 'early-years' ), __( 'Registration Link', 'early-years' ) ) );
 	}
 
 	return $EM_Event;
@@ -1018,7 +1051,7 @@ function eypd_cumulative_hours( $ids ) {
 	// input is radio buttons with boolean values
 	// true means they attended (default)
 	foreach ( $ids as $id => $bool ) {
-		if ( false === $bool ) {
+		if ( false === (bool) $bool ) {
 			continue;
 		}
 		$e = em_get_event( $id );
@@ -1033,7 +1066,7 @@ function eypd_cumulative_hours( $ids ) {
 }
 
 /**
- * Returns an array of events, with number of hours and categories
+ * Returns an array of events, with number of hours and categories (name,id)
  *
  * @param $ids
  *
@@ -1057,7 +1090,11 @@ function eypd_hours_and_categories( $ids ) {
 
 		if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
 			foreach ( $categories as $category ) {
-				$cats[] = $category->name;
+				array_push( $cats, [
+					'cat_name' => $category->name,
+					'cat_id' => $category->term_id,
+				] );
+
 			}
 		}
 		foreach ( $e->event_attributes as $key => $val ) {
@@ -1074,11 +1111,14 @@ function eypd_hours_and_categories( $ids ) {
 }
 
 /**
+ * Returns an array containing name, total hours and color of each event category an individual has hours for
+ *
  * @param array $data
  *
  * @return mixed|string
  */
 function eypd_d3_array( $data ) {
+	global $wpdb;
 	$cat = $result = [];
 	$i   = 0;
 
@@ -1089,11 +1129,14 @@ function eypd_d3_array( $data ) {
 
 			// events may have more than one category, in which case
 			// the total hours need to be shared between them
-			foreach ( $event['categories'] as $name ) {
-				if ( isset( $cat[ $name ] ) ) {
-					$cat[ $name ] = $cat[ $name ] + $unit;
+			// ID of category is stored for retrieving other category information
+			foreach ( $event['categories'] as $category ) {
+				if ( isset( $cat[ $category['cat_name'] ] ) ) {
+					$cat[ $category['cat_name'] ]['value'] = $cat[ $category['cat_name'] ]['value'] + $unit;
+					$cat[ $category['cat_name'] ]['id']    = $category['cat_id'];
 				} else {
-					$cat[ $name ] = $unit;
+					$cat[ $category['cat_name'] ]['value'] = $unit;
+					$cat[ $category['cat_name'] ]['id']    = $category['cat_id'];
 				}
 			}
 			unset( $unit );
@@ -1102,7 +1145,9 @@ function eypd_d3_array( $data ) {
 
 		foreach ( $cat as $k => $v ) {
 			$result[ $i ]['label'] = html_entity_decode( $k );
-			$result[ $i ]['value'] = number_format( $v, 1 );
+			$result[ $i ]['value'] = number_format( $v['value'], 8 );
+			$color                 = $wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM " . EM_META_TABLE . " WHERE object_id='%s' AND meta_key='category-bgcolor' LIMIT 1", $v['id'] ) ); // @codingStandardsIgnoreLine
+			$result[ $i ]['color'] = html_entity_decode( $color );
 			$i ++;
 		}
 	}

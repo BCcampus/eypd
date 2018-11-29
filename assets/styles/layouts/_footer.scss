@@ -8,7 +8,7 @@
 |
 */
 .footer-wrap {
-  background: $color-blue-sail !important;
+  background: $color-neutral-10;
   color: $color-neutral-80;
   border: none;
   box-shadow: none;
@@ -28,43 +28,82 @@
 }
 
 #powered-by {
+  background-color: $color-neutral-20;
   border-top: 1px solid $color-gray-boulder;
-  background-color: $color-neutral-00;
   color: inherit;
   font-weight: normal;
   padding-top: 0;
 }
 
 #footer {
+  padding-bottom: 0;
   .widget h4, .funded {
     color: $color-neutral-80;
     text-shadow: none;
     font-weight: bold;
     border-bottom: none;
-    margin-top: 0;
+    margin: 0;
     padding-top: 0;
   }
   .footer-widget {
     color: inherit;
     text-shadow: none;
   }
+  .footer-widgets {
+    @media (max-width: $medium) {
+      margin-bottom: 30px;
+    }
+  }
+  .widget {
+    margin: 0;
+    padding-bottom: 32px;
+  }
   ul {
     list-style: none;
     padding-left: 0;
+    li {
+      margin-bottom: 5px;
+    }
     li ul {
       margin-left: 20px;
     }
   }
-  & #copyright-info {
-    padding: $unit*2;
+  .funded {
+    margin-bottom: 10px;
+  }
+  #copyright-info {
+    padding: 20px 0;
     text-align: left;
+    @media (max-width: $medium) {
+      padding: 20px 10px;
+    }
+    img {
+      margin-right: 5px;
+      vertical-align: top;
+    }
+    small,
+    a {
+      vertical-align: bottom;
+    }
+
   }
-  & #footer-info{
-    padding:15px;
+  #menu-copyright-menu {
+    text-align: right;
+    @media (max-width: $medium) {
+      text-align: left;
+    }
   }
-  & #powered-by ul li {
-    display: inline;
-    margin-left: 20px;
+  #footer-info {
+    padding: 20px 0 10px;
+    @media (max-width: $medium) {
+      padding-top: 0;
+    }
+  }
+  #powered-by {
+    ul li {
+      display: inline;
+      margin-left: 10px;
+    }
   }
 }
 

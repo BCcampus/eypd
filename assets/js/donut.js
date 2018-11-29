@@ -1,9 +1,8 @@
 var data = donut_data;
-
 //Sum the event hours
-var totalHours =  d3.nest()
-	.rollup(function(g) {
-		return d3.format(".2f")(d3.sum(g, function (d) {
+var totalHours = d3.nest()
+	.rollup(function (g) {
+		return d3.format(".1f")(d3.sum(g, function (d) {
 			return parseFloat(d.value.replace(/,/g, ''));
 		}));
 	})
@@ -36,7 +35,12 @@ arcGraph.append('path')
 	.attr('class', 'slice')
 	.attr('d', arc)
 	.attr('fill', function (d) {
-		return color(d.data.label);
+		if (d.data.color) {
+			var fillColor = d.data.color;
+		} else {
+			var fillColor = '#d9edf7';
+		}
+		return fillColor;
 	});
 
 arcGraph.append("text")
@@ -61,11 +65,17 @@ label.append("tspan")
 
 (function ($) {
 	$(document).ready(function () {
-		$.each(data,function(i, val){
-			var li = $('<div/>').attr('class','legend-item').appendTo('.donut-legend');
-			$('<span/>').attr('class','square').css('background-color',color(val.label)).appendTo(li);
-			var percentHours = parseFloat(val.value.replace(/,/g, ''))/totalHours*100;
-			$('<p/>').appendTo(li).text(percentHours.toFixed(1) + '% - '+val.label + ' (' + val.value +' hours)');
+		$.each(data, function (i, val) {
+			var li = $('<div/>').attr('class', 'legend-item').appendTo('.donut-legend');
+			if (val.color) {
+				var fillColor = val.color;
+			} else {
+				var fillColor = '#d9edf7';
+			}
+			$('<span/>').attr('class', 'square').css('background-color', fillColor).prependTo(li);
+			var percentHours = parseFloat(val.value.replace(/,/g, '')) / totalHours * 100;
+			var hours = parseFloat(val.value);
+			$('<p/>').appendTo(li).text(percentHours.toFixed(1) + '% - ' + val.label + ' (' + hours.toFixed(1) + ' hours)');
 		});
 	});
 })(jQuery);
