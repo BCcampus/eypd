@@ -267,7 +267,7 @@ if ( bp_is_my_profile() ) { ?>
 											'booking_id' => $EM_Booking->booking_id,
 											'_wpnonce'   => $nonce,
 										] );
-										$cancel_link = '<a class="em-bookings-cancel" href="' . $cancel_url . '" onclick="if( !confirm(EM.booking_warning_cancel) ){ return false; }"><i class="fa fa-trash"></i></a>';
+										$cancel_link = '<a class="em-bookings-cancel" href="' . $cancel_url . '" onclick="if( !confirm(EM.booking_warning_cancel) ){ return false; }"><i class="fa fa-trash-o"></i></a>';
 									}
 									echo apply_filters( 'em_my_bookings_booking_actions', $cancel_link, $EM_Booking );
 									echo '</td>';
