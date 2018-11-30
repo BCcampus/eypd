@@ -90,10 +90,6 @@ if ( ! $is_open && ! is_user_logged_in() && $EM_Event->get_bookings()->is_open( 
 							<input type="image" src="<?php echo get_option( 'dbem_bookings_submit_button' ); ?>" class="em-booking-submit" id="em-booking-submit" />
 							<?php else : //Display normal submit button ?>
 								<?php if ( ! $is_open ) : //event has started display modal confirmation ?>
-									<p><?php echo get_option( 'dbem_bookings_form_msg_closed' );  ?></p>
-									<a class="btn btn-primary" data-toggle="modal" data-target="#bookingModal" href="#">
-										<?php echo esc_attr( get_option( 'dbem_bookings_submit_button' ) ); ?>
-									</a>
 									<?php
 										get_template_part( 'templates/booking-modal' );
 									?>

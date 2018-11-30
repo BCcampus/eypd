@@ -909,6 +909,30 @@ function eypd_validate_attributes() {
 
 add_action( 'em_event_validate', 'eypd_validate_attributes' );
 
+
+/**
+ * Enable user to register for an event when its expired
+ * Notes: this is a bit sketchy as it could let other events be registers
+ * solves the No spaces booked: If the user tries to make a booking without requesting any spaces. error
+ * If the booking_spaces are 0 it fails and this seems to be the condition when an event is past its end data.
+ */
+function eypd_validate_bookings() {
+	global $EM_Booking;
+
+	// bail early if not an object
+	if ( ! is_object( $EM_Booking ) ) {
+		return false;
+	}
+	if ( $EM_Booking->booking_spaces === 0 && $EM_Booking->feedback_message === '' ) {
+		$EM_Booking->errors = [];
+	}
+
+	return $EM_Booking;
+
+}
+
+add_action( 'em_booking_validate', 'eypd_validate_bookings' );
+
 /**
  * Add open graph doctype, needed to make FB posts pretty when sharing
  *
