@@ -135,6 +135,7 @@ add_action(
 
 		}
 		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery,bootstrap-script' ], null, true );
+		wp_enqueue_script( 'modal-booking', $template_dir . '/dist/scripts/modal-booking.js', [ 'jquery,bootstrap-script' ], null, true );
 
 		// load styling for datepicker in myEYPD profile page only
 		if ( function_exists( 'bp_is_my_profile' ) ) {
@@ -923,14 +924,13 @@ function eypd_validate_bookings() {
 	if ( ! is_object( $EM_Booking ) ) {
 		return false;
 	}
-	if ( $EM_Booking->booking_spaces === 0 && $EM_Booking->feedback_message === '' && !$EM_Booking->event->get_bookings()->is_open() ) {
+	if ( $EM_Booking->booking_spaces === 0 && $EM_Booking->feedback_message === '' && ! $EM_Booking->event->get_bookings()->is_open() ) {
 		$EM_Booking->errors = [];
 	}
-	
+
 	return $EM_Booking;
 
 }
-
 add_action( 'em_booking_validate', 'eypd_validate_bookings' );
 
 /**
