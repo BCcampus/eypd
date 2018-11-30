@@ -20,8 +20,8 @@
 				This event has happened in the past, are you sure you want to add to your events?
 			</div>
 			<div class="modal-footer">
-				<a class="btn btn-secondary" data-dismiss="modal" href="#">Close</a>
-				<input type="submit" class="em-booking-submit btn btn-primary" id="em-booking-submit" value="Save Event" />
+				<a class="btn btn-secondary" data-dismiss="modal" href="#" id="booking-modal-close">Close</a>
+				<input type="submit" class="em-booking-submit btn btn-primary" id="em-booking-submit" value="Save Event" data-dismiss="modal" />
 			</div>
 		</div>
 	</div>

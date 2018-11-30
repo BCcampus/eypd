@@ -134,8 +134,8 @@ add_action(
 			wp_enqueue_script( 'init-tooltip', $template_dir . '/dist/scripts/inittooltip.js', [ 'bootstrap-script' ], null, true );
 
 		}
-		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery,bootstrap-script' ], null, true );
-		wp_enqueue_script( 'modal-booking', $template_dir . '/dist/scripts/modal-booking.js', [ 'jquery,bootstrap-script' ], null, true );
+		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery', 'bootstrap-script' ], null, true );
+		wp_enqueue_script( 'modal-booking', $template_dir . '/dist/scripts/modal-booking.js', [ 'bootstrap-script' ], null, true );
 
 		// load styling for datepicker in myEYPD profile page only
 		if ( function_exists( 'bp_is_my_profile' ) ) {

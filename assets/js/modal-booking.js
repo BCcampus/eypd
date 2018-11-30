@@ -4,11 +4,8 @@
 
 (function ($) {
 	$(document).ready(function () {
-		console.log("close modal loaded");
-		$('#em-booking-submit').click(function(e) {
-			$('#bookingModal').modal('hide');
-			console.log("close modal");
-
+		$('#em-booking-submit').click(function() {
+			$('#booking-form').submit();
 		});
 	});
 })(jQuery);
