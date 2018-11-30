@@ -923,10 +923,10 @@ function eypd_validate_bookings() {
 	if ( ! is_object( $EM_Booking ) ) {
 		return false;
 	}
-	if ( $EM_Booking->booking_spaces === 0 && $EM_Booking->feedback_message === '' ) {
+	if ( $EM_Booking->booking_spaces === 0 && $EM_Booking->feedback_message === '' && !$EM_Booking->event->get_bookings()->is_open() ) {
 		$EM_Booking->errors = [];
 	}
-
+	
 	return $EM_Booking;
 
 }
