@@ -15,7 +15,15 @@
 
 <?php get_header( 'buddypress' ); ?>
 
-<div id="content" role="main" class="<?php do_action( 'content_class' ); ?>">
+<?php
+if( ! is_page() && ! $pagename === "events" ){
+	$classes = do_action( 'content_class' );
+}else{
+	$classes = 'column sixteen sidebar-left';
+}
+?>
+
+<div id="content" role="main" class="<?php echo $classes; ?>">
 	<div class="padder">
 
 		<?php do_action( 'bp_before_member_plugin_template' ); ?>
@@ -53,5 +61,10 @@
 	</div><!-- .padder -->
 </div><!-- #content -->
 
-<?php get_sidebar( 'buddypress' ); ?>
+<?php
+if( ! is_page() && ! $pagename === "events" ){
+	get_sidebar( 'buddypress' );
+}
+?>
+
 <?php get_footer( 'buddypress' ); ?>
