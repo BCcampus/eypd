@@ -9,7 +9,7 @@
 
 ?>
 <?php
-if ( is_user_logged_in() && is_admin() || bp_is_my_profile() ) : ?>
+if ( is_user_logged_in() && ( bp_is_my_profile() || is_admin() ) ) : ?>
 <div class="item-list-tabs no-ajax" id="subnav" role="navigation">
 	<ul>
 
