@@ -16,9 +16,9 @@
 <?php get_header( 'buddypress' ); ?>
 
 <?php
-if( ! is_page() && ! $pagename === "events" ){
+if ( ! is_page() && ! $pagename === 'events' ) {
 	$classes = do_action( 'content_class' );
-}else{
+} else {
 	$classes = 'column sixteen sidebar-left';
 }
 ?>
@@ -62,7 +62,7 @@ if( ! is_page() && ! $pagename === "events" ){
 </div><!-- #content -->
 
 <?php
-if( ! is_page() && ! $pagename === "events" ){
+if ( ! is_page() && ! $pagename === 'events' ) {
 	get_sidebar( 'buddypress' );
 }
 ?>
