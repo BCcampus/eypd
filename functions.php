@@ -1733,3 +1733,17 @@ function eypd_copyright_menu() {
 	register_nav_menu( 'copyright-menu',__( 'Copyright Menu' ) );
 }
 add_action( 'init', 'eypd_copyright_menu' );
+
+/*
+|--------------------------------------------------------------------------
+| Layout Overrides
+|--------------------------------------------------------------------------
+|
+|
+|
+|
+*/
+function eypd_no_sidebar_content_classes() {
+	print 'column sixteen';
+}
+add_action( 'no_sidebar_content_classes','eypd_no_sidebar_content_classes' );
