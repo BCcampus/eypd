@@ -914,12 +914,13 @@ function eypd_validate_attributes() {
 
 add_action( 'em_event_validate', 'eypd_validate_attributes' );
 
-
 /**
  * Enable user to register for an event when its expired
- * Notes: this is a bit sketchy as it could let other events be registers
- * solves the No spaces booked: If the user tries to make a booking without requesting any spaces. error
- * If the booking_spaces are 0 it fails and this seems to be the condition when an event is past its end data.
+ * Notes/Assumptions: $booking_spaces = 0 occurs when event expires
+ * $feedback_message = '' when event expires????
+ * $EM_Booking->event->get_bookings()->is_open() returns false when an event expires
+ *
+ * @return bool|mixed|void
  */
 function eypd_validate_bookings() {
 	global $EM_Booking;

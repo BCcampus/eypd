@@ -19,7 +19,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-                <p>This event has happened in the past, are you sure you want to add to your events?</p>
+				<p>This event has happened in the past, are you sure you want to add to your events?</p>
 			</div>
 			<div class="modal-footer">
 				<a class="btn btn-secondary" data-dismiss="modal" href="#" id="booking-modal-close">Close</a>
