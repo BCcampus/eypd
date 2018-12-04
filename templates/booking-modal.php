@@ -1,7 +1,9 @@
 <?php
-	/* This file has dependancies in plugins/events-manager/placeholders/bookingform.php do not include anywhere else.
-	It is here so that all Bootstrap modal functionality is a common location for future updates
-	*/
+/**
+ * This file has dependencies in plugins/events-manager/placeholders/bookingform.php
+ * Do not include anywhere else.
+ * It is here so that all Bootstrap modal functionality is a common location for future updates
+ */
 ?>
 <!-- Modal for confirmation form for adding already running events to a users myEYPD event list -->
 <a class="btn btn-primary" data-toggle="modal" data-target="#bookingModal" href="#">
@@ -17,7 +19,7 @@
 				</a>
 			</div>
 			<div class="modal-body">
-				This event has happened in the past, are you sure you want to add to your events?
+                <p>This event has happened in the past, are you sure you want to add to your events?</p>
 			</div>
 			<div class="modal-footer">
 				<a class="btn btn-secondary" data-dismiss="modal" href="#" id="booking-modal-close">Close</a>
