@@ -13,8 +13,9 @@
   display: none;
 }
 
-// hides unused booking fields in single event page
-.em-booking-form p {
+// hides unused booking fields (comments box) in single event page
+.em-booking-form-details p label,
+.em-booking-form-details p textarea {
   display: none;
 }
 
