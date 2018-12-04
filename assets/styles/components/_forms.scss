@@ -14,9 +14,16 @@
 }
 
 // hides unused booking fields (comments box) in single event page
-.em-booking-form-details p label,
-.em-booking-form-details p textarea {
-  display: none;
+.em-booking-form-details {
+  p {
+    label,
+    textarea {
+      display: none;
+    }
+    &.em-ticket-spaces{
+      display:none;
+    }
+  }
 }
 
 // Switch order of columns on Sign Up form
