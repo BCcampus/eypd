@@ -23,11 +23,10 @@
 
     &.em-ticket-spaces {
       display: none;
-
-      select.em-ticket-select {
-        display: none;
-      }
     }
+  }
+  .em-ticket-select {
+    display: none;
   }
 }
 
