@@ -31,7 +31,6 @@ add_filter( /**
 	*/
 	'script_loader_tag', function ( $tag, $handle, $src ) {
 		$defer = [
-			'jquery-migrate',
 			'jquery-ui-position',
 			'jquery-ui-draggable',
 			'jquery-ui-resizable',

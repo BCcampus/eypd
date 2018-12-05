@@ -7,8 +7,5 @@
 	$(document).ready(function () {
 		$('[data-toggle="tooltip"]').tooltip({
 		})
-		$('.auth-tooltip').on('hidden.bs.tooltip', function () {
-			console.log("test")
-		})
 	});
 })(jQuery);
