@@ -80,7 +80,6 @@ if ( ! empty( $show_add_new ) && current_user_can( 'edit_events' ) ) {
 				<input type="hidden" name="view"
 					   value="<?php echo esc_attr( $_REQUEST['view'] ); ?>"/>
 			<?php endif; ?>
-      
 			<input type="submit"
 				   value="<?php _e( 'Search Events', 'events-manager' ); ?>"
 				   class="button"/>
@@ -172,11 +171,11 @@ if ( ! empty( $show_add_new ) && current_user_can( 'edit_events' ) ) {
 						<td>
 							<div class="row-actions">
 								<?php if ( current_user_can( 'delete_events' ) ) : ?>
-									<span class="trash"><a href="<?php echo esc_url( add_query_arg( array(
+									<span class="trash"><a href="<?php echo esc_url( add_query_arg( [
 											'action'   => 'event_delete',
 											'event_id' => $EM_Event->event_id,
 											'_wpnonce' => wp_create_nonce( 'event_delete_' . $EM_Event->event_id ),
-									) ) ); ?>"
+									] ) ); ?>"
 														   class="em-event-delete"><?php _e( 'Delete', 'events-manager' ); ?></a></span>
 								<?php endif; ?>
 							</div>
