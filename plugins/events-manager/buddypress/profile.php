@@ -250,7 +250,7 @@ if ( bp_is_my_profile() ) { ?>
 								if ( ! empty( $attributes['Registration Link'] ) ) {
 									$maybe_url = eypd_maybe_url( $attributes['Registration Link'] );
 								};
-								$link = ( $maybe_url ) ? "<a href='{$maybe_url}' target='_blank'>Contact Organizer <i class='glyphicon glyphicon-new-window'></i></a>" : "<a href='{$EM_Event->guid}'>Contact Organizer</a>";
+								$link = ( $maybe_url ) ? "<a href='{$maybe_url}' target='_blank'>Contact Organizer <i class='fa fa-external-link' aria-hidden='true'></i></a>" : "<a href='{$EM_Event->guid}'>Contact Organizer</a>";
 								?>
 								<td><?php echo $link; ?></td>
 								<?php if ( is_user_logged_in() ) {
@@ -267,7 +267,7 @@ if ( bp_is_my_profile() ) { ?>
 											'booking_id' => $EM_Booking->booking_id,
 											'_wpnonce'   => $nonce,
 										] );
-										$cancel_link = '<a class="em-bookings-cancel" href="' . $cancel_url . '" onclick="if( !confirm(EM.booking_warning_cancel) ){ return false; }"><i class="glyphicon glyphicon-trash"></i></a>';
+										$cancel_link = '<a class="em-bookings-cancel" href="' . $cancel_url . '" onclick="if( !confirm(EM.booking_warning_cancel) ){ return false; }"><i class="fa fa-trash"></i></a>';
 									}
 									echo apply_filters( 'em_my_bookings_booking_actions', $cancel_link, $EM_Booking );
 									echo '</td>';

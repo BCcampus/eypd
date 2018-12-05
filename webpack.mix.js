@@ -48,6 +48,7 @@ mix.js(`${node}/bootstrap/dist/js/bootstrap.bundle.js`, `${dist}/scripts`)
     .js(`${assets}/js/events-manager.js`, `${dist}/scripts`)
     .js(`${assets}/js/markerclusterer.js`, `${dist}/scripts`)
     .js(`${assets}/js/modal-video.js`, `${dist}/scripts`)
+	.js(`${assets}/js/modal-booking.js`, `${dist}/scripts`)
     .js(`${assets}/js/accordion.js`, `${dist}/scripts`)
     .js(`${assets}/js/donut.js`, `${dist}/scripts`)
 

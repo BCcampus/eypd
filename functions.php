@@ -134,7 +134,8 @@ add_action(
 			wp_enqueue_script( 'init-tooltip', $template_dir . '/dist/scripts/inittooltip.js', [ 'bootstrap-script' ], null, true );
 
 		}
-		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery,bootstrap-script' ], null, true );
+		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery', 'bootstrap-script' ], null, true );
+		wp_enqueue_script( 'modal-booking', $template_dir . '/dist/scripts/modal-booking.js', [ 'bootstrap-script' ], null, true );
 
 		// load styling for datepicker in myEYPD profile page only
 		if ( function_exists( 'bp_is_my_profile' ) ) {
@@ -401,7 +402,7 @@ function eypd_get_provinces() {
 function eypd_run_once() {
 
 	// change eypd_version value to run it again
-	$eypd_version        = 7.1;
+	$eypd_version        = 7.3;
 	$current_version     = get_option( 'eypd_version', 0 );
 	$img_max_dimension   = 1000;
 	$img_min_dimension   = 50;
@@ -563,7 +564,7 @@ function eypd_run_once() {
 		/**
 		 * Booking submit button text
 		 */
-		update_option( 'dbem_bookings_submit_button', 'Plan to attend' );
+		update_option( 'dbem_bookings_submit_button', 'Save to myEYPD' );
 
 		/**
 		 * Booking submit success
@@ -903,11 +904,39 @@ function eypd_validate_attributes() {
 		$EM_Event->add_error( sprintf( __( '%s is required.', 'early-years' ), __( 'Registration Fee', 'early-years' ) ) );
 	}
 
+	if ( ! empty( $EM_Event->event_attributes['Registration Link'] ) && false === eypd_maybe_url( $EM_Event->event_attributes['Registration Link'] ) ) {
+		$EM_Event->add_error( sprintf( __( '%s is not a valid URL.', 'early-years' ), __( 'Registration Link', 'early-years' ) ) );
+	}
+
 	return $EM_Event;
 
 }
 
 add_action( 'em_event_validate', 'eypd_validate_attributes' );
+
+/**
+ * Enable user to register for an event when its expired
+ * Notes/Assumptions: $booking_spaces = 0 occurs when event expires
+ * $feedback_message = '' when event expires????
+ * $EM_Booking->event->get_bookings()->is_open() returns false when an event expires
+ *
+ * @return bool|mixed|void
+ */
+function eypd_validate_bookings() {
+	global $EM_Booking;
+
+	// bail early if not an object
+	if ( ! is_object( $EM_Booking ) ) {
+		return false;
+	}
+	if ( $EM_Booking->booking_spaces === 0 && $EM_Booking->feedback_message === '' && ! $EM_Booking->event->get_bookings()->is_open() ) {
+		$EM_Booking->errors = [];
+	}
+
+	return $EM_Booking;
+
+}
+add_action( 'em_booking_validate', 'eypd_validate_bookings' );
 
 /**
  * Add open graph doctype, needed to make FB posts pretty when sharing

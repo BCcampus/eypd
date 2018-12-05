@@ -13,9 +13,21 @@
   display: none;
 }
 
-// hides unused booking fields in single event page
-.em-booking-form p {
-  display: none;
+// hides unused booking fields (comments box) in single event page
+.em-booking-form-details {
+  p {
+    label,
+    textarea {
+      display: none;
+    }
+
+    &.em-ticket-spaces {
+      display: none;
+    }
+  }
+  .em-ticket-select {
+    display: none;
+  }
 }
 
 // Switch order of columns on Sign Up form
