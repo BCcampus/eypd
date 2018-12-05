@@ -12,12 +12,14 @@
  */
 
 ?>
+<?php
+	$current_component = $GLOBALS['bp']->current_component;
+	$current_action = $GLOBALS['bp']->current_action
+?>
 
 <?php get_header( 'buddypress' ); ?>
 
-
-
-<div id="content" role="main" class="<?php ( ! is_page() && ! $pagename === 'events' ) ? do_action( 'content_class' ) : do_action( 'no_sidebar_content_classes' ); ?>">
+<div id="content" role="main" class="<?php ( $current_component === 'events' && $current_action === 'profile') ? do_action( 'eypd_content_classes' ) :  do_action( 'content_class' ); ?>">
 	<div class="padder">
 
 		<?php do_action( 'bp_before_member_plugin_template' ); ?>
@@ -56,7 +58,7 @@
 </div><!-- #content -->
 
 <?php
-if ( ! is_page() && ! $pagename === 'events' ) {
+if ( $current_component !== 'events' && ! $current_action !== 'profile' ) {
 	get_sidebar( 'buddypress' );
 }
 ?>

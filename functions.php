@@ -1744,6 +1744,6 @@ add_action( 'init', 'eypd_copyright_menu' );
 |
 */
 function eypd_no_sidebar_content_classes() {
-	print 'column sixteen';
+	echo ' column sixteen';
 }
-add_action( 'no_sidebar_content_classes','eypd_no_sidebar_content_classes' );
+add_action( 'eypd_content_classes','eypd_no_sidebar_content_classes' );
