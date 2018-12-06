@@ -1784,3 +1784,17 @@ add_filter( 'excel_export_user_buddypress', function ( $default_user_buddypress 
 
 	return array_merge( $default_user_buddypress, $add_buddypress );
 } );
+
+/*
+|--------------------------------------------------------------------------
+| Layout Overrides
+|--------------------------------------------------------------------------
+|
+| currently removes the left sidebar from myEYPD page
+|
+|
+*/
+function eypd_no_sidebar_content_classes() {
+	echo ' column sixteen';
+}
+add_action( 'eypd_content_classes','eypd_no_sidebar_content_classes' );
