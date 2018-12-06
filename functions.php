@@ -1416,20 +1416,26 @@ function eypd_datepicker_countdown() {
 
 add_action( 'wp_footer', 'eypd_datepicker_countdown', 10 );
 
-
 /**
- * Fires when there is an update to the web theme version
+ * init hook
  */
-function eypd_maybe_update_editor_role() {
+add_action( 'init', function () {
+
+	/**
+	 * Add copyright menu so it be managed in wp dashboard
+	 */
+	register_nav_menu( 'copyright-menu', __( 'Copyright Menu' ) );
+
+	/**
+	 * Fires when there is an update to the web theme version
+	 */
 	$theme           = wp_get_theme();
 	$current_version = $theme->get( 'Version' );
 	$last_version    = get_option( 'eypd_theme_version' );
 	if ( version_compare( $current_version, $last_version ) > 0 ) {
 		eypd_wpcodex_set_capabilities();
 	}
-}
-
-add_action( 'init', 'eypd_maybe_update_editor_role' );
+} );
 
 /**
  * Remove capabilities from editors.
@@ -1756,9 +1762,25 @@ function eypd_widgets_init() {
 add_action( 'widgets_init', 'eypd_widgets_init' );
 
 /**
- * Add copyright menu so it be managed in wp dashboard
+ * adds theme specific data to excel export plugin
  */
-function eypd_copyright_menu() {
-	register_nav_menu( 'copyright-menu',__( 'Copyright Menu' ) );
-}
-add_action( 'init', 'eypd_copyright_menu' );
+add_filter( 'excel_export_user_metadata', function ( $default_user_metadata ) {
+	$add_eypd = [
+		'eypd_cert_expire' => 'Certificate Expiry',
+		'last_activity'    => 'Last Activity'
+	];
+
+	return array_merge( $default_user_metadata, $add_eypd );
+} );
+
+/**
+ *
+ */
+add_filter( 'excel_export_user_buddypress', function ( $default_user_buddypress ) {
+	$add_buddypress = [
+		'City/Town'                  => 'City/Town',
+		'Name of your place of Work' => 'Name of your place of Work'
+	];
+
+	return array_merge( $default_user_buddypress, $add_buddypress );
+} );
