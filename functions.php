@@ -1767,7 +1767,7 @@ add_action( 'widgets_init', 'eypd_widgets_init' );
 add_filter( 'excel_export_user_metadata', function ( $default_user_metadata ) {
 	$add_eypd = [
 		'eypd_cert_expire' => 'Certificate Expiry',
-		'last_activity'    => 'Last Activity'
+		'last_activity'    => 'Last Activity',
 	];
 
 	return array_merge( $default_user_metadata, $add_eypd );
@@ -1779,7 +1779,7 @@ add_filter( 'excel_export_user_metadata', function ( $default_user_metadata ) {
 add_filter( 'excel_export_user_buddypress', function ( $default_user_buddypress ) {
 	$add_buddypress = [
 		'City/Town'                  => 'City/Town',
-		'Name of your place of Work' => 'Name of your place of Work'
+		'Name of your place of Work' => 'Name of your place of Work',
 	];
 
 	return array_merge( $default_user_buddypress, $add_buddypress );
