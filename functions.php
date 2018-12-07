@@ -1128,6 +1128,7 @@ function eypd_hours_and_categories( $ids ) {
 				$i ++;
 			}
 		}
+		$cats = [];
 	}
 
 	return $events;
