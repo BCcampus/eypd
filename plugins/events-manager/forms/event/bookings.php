@@ -25,11 +25,11 @@ global $EM_Event, $post, $allowedposttags, $EM_Ticket, $col_count;
 		<?php
 		//get tickets here and if there are none, create a blank ticket
 		$EM_Tickets = $EM_Event->get_tickets();
-		if ( count( $EM_Tickets->tickets ) == 0 ) {
+		if ( count( $EM_Tickets->tickets ) === 0 ) {
 			$EM_Tickets->tickets[] = new EM_Ticket();
 			$delete_temp_ticket = true;
 		}
-		if ( get_option( 'dbem_bookings_tickets_single' ) && count( $EM_Tickets->tickets ) == 1 ) {
+		if ( get_option( 'dbem_bookings_tickets_single' ) && count( $EM_Tickets->tickets ) === 1 ) {
 			?>
 			<h4><?php esc_html_e( 'Ticket Options','events-manager' ); ?></h4>
 			<?php
@@ -65,9 +65,11 @@ global $EM_Event, $post, $allowedposttags, $EM_Ticket, $col_count;
 				array_unshift( $EM_Tickets->tickets, $EM_Ticket ); //prepend template ticket for JS
 				$col_count = 0;
 				foreach ( $EM_Tickets->tickets as $EM_Ticket ) {
-					/* @var $EM_Ticket EM_Ticket */
+					/**
+					 * @var $EM_Ticket EM_Ticket
+					 */
 					?>
-					<tbody id="em-ticket-<?php echo $col_count ?>" <?php if ( $col_count == 0 ) { echo 'style="display:none;"'; } ?>>
+					<tbody id="em-ticket-<?php echo $col_count ?>" <?php if ( $col_count === 0 ) { echo 'style="display:none;"'; } ?>>
 					<tr class="em-tickets-row">
 						<td class="ticket-status"><span class="<?php if ( $EM_Ticket->ticket_id && $EM_Ticket->is_available() ) { echo 'ticket_on';
 } elseif ( $EM_Ticket->ticket_id > 0 ) { echo 'ticket_off';
@@ -77,7 +79,7 @@ global $EM_Event, $post, $allowedposttags, $EM_Ticket, $col_count;
 							<div class="ticket_description"><?php echo wp_kses( $EM_Ticket->ticket_description,$allowedposttags ); ?></div>
 							<div class="ticket-actions">
 								<a href="#" class="ticket-actions-edit"><?php esc_html_e( 'Edit','events-manager' ); ?></a>
-								<?php if ( count( $EM_Ticket->get_bookings()->bookings ) == 0 ) : ?>
+								<?php if ( count( $EM_Ticket->get_bookings()->bookings ) === 0 ) : ?>
 									| <a href="<?php bloginfo( 'wpurl' ); ?>/wp-load.php" class="ticket-actions-delete"><?php esc_html_e( 'Delete','events-manager' ); ?></a>
 								<?php else : ?>
 									| <a href="<?php echo esc_url( add_query_arg( 'ticket_id', $EM_Ticket->ticket_id, $EM_Event->get_bookings_url() ) ); ?>"><?php esc_html_e( 'View Bookings','events-manager' ); ?></a>

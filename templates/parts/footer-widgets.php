@@ -13,47 +13,47 @@
  */
 ?>
 <?php if ( is_active_sidebar( 'Footer Left' ) || is_active_sidebar( 'Footer Middle' ) || is_active_sidebar( 'Footer Right' ) ) : ?>
-    <div class="footer-widgets row-fluid">
+	<div class="footer-widgets  d-flex flex-row flex-wrap">
 		<?php if ( is_active_sidebar( 'Footer Left' ) ) : ?>
-            <!-- footer widgets -->
-            <div class="col-sm-2 col-sm-offset-1" id="footer-widget-left">
+			<!-- footer widgets -->
+			<div class="col-md-2 col-sm-offset-1" id="footer-widget-left">
 				<?php
 				dynamic_sidebar( 'Footer Left' );
 				?>
-            </div>
+			</div>
 		<?php endif; ?>
 		<?php if ( is_active_sidebar( 'Footer Middle' ) ) : ?>
-            <div class="col-sm-2" id="footer-widget-middle">
+			<div class="col-md-2" id="footer-widget-middle">
 				<?php
 				dynamic_sidebar( 'Footer Middle' );
 				?>
-            </div>
+			</div>
 		<?php endif; ?>
 		<?php if ( is_active_sidebar( 'Footer Right' ) ) : ?>
-            <div class="col-sm-2" id="footer-widget-right">
+			<div class="col-md-2" id="footer-widget-right">
 				<?php
 				dynamic_sidebar( 'Footer Right' );
 				?>
-            </div>
+			</div>
 		<?php endif; ?>
-	    <?php if ( is_active_sidebar( 'sidebar-footer-last' ) ) : ?>
-		    <div class="col-sm-3" id="footer-widget-last">
-			    <?php
-			    dynamic_sidebar( 'sidebar-footer-last' );
-			    ?>
-		    </div>
-	    <?php endif; ?>
-    <div class="col-sm-3">
-	    <h4 class="funded">Funded by</h4>
-	    <picture>
-		    <source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.webp"
-		            type="image/webp">
-		    <source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.png">
-		    <img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.png" width="329"
-		         height="78" alt="BC Provincial Office for the Early Years">
-	    </picture>
+		<?php if ( is_active_sidebar( 'sidebar-footer-last' ) ) : ?>
+			<div class="col-md-3" id="footer-widget-last">
+				<?php
+				dynamic_sidebar( 'sidebar-footer-last' );
+				?>
+			</div>
+		<?php endif; ?>
+	<div class="col-md-3">
+		<h4 class="funded">Funded by</h4>
+		<picture>
+			<source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.webp"
+					type="image/webp">
+			<source srcset="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.png">
+			<img src="<?php echo get_stylesheet_directory_uri(); ?>/dist/images/bc-ministry-logo.png" width="329"
+				 height="78" alt="BC Provincial Office for the Early Years">
+		</picture>
 
-    </div>
-    </div>
+	</div>
+	</div>
 <?php endif; ?>
 <div style="clear:both;"></div>

@@ -35,22 +35,20 @@ mix.browserSync({
 
 // Assets
 mix.copy(`${assets}/fonts`, `${dist}/fonts`)
-    .copy(`${node}/bootstrap/fonts`, `${dist}/fonts`)
-    .copy(`${node}/bootstrap/dist/css/bootstrap.min.css`, `${dist}/styles`)
-    .copy(`${assets}/images`, `${dist}/images`)
+	.copy(`${node}/font-awesome/fonts`, `${dist}/fonts`)
+	.copy(`${assets}/images`, `${dist}/images`)
+	.copy(`${node}/bootstrap/dist/css/bootstrap.min.css`, `${dist}/styles`)
     .copy(`${node}/d3/dist/d3.min.js`, `${dist}/scripts`)
 
 // compiled Javascript
-mix.js(`${node}/bootstrap/dist/js/bootstrap.min.js`, `${dist}/scripts`)
-    .js(`${node}/bootstrap/js/popover.js`, `${dist}/scripts`)
-    .js(`${node}/bootstrap/js/tooltip.js`, `${dist}/scripts`)
+mix.js(`${node}/bootstrap/dist/js/bootstrap.bundle.js`, `${dist}/scripts`)
+	.js(`${assets}/js/inittooltip.js`, `${dist}/scripts`)
     .js(`${assets}/js/tabs.js`, `${dist}/scripts`)
-    .js(`${assets}/js/initpopover.js`, `${dist}/scripts`)
-    .js(`${assets}/js/popover-dismiss.js`, `${dist}/scripts`)
     .js(`${assets}/js/jquery.tinyscrollbar.min.js`, `${dist}/scripts`)
     .js(`${assets}/js/events-manager.js`, `${dist}/scripts`)
     .js(`${assets}/js/markerclusterer.js`, `${dist}/scripts`)
     .js(`${assets}/js/modal-video.js`, `${dist}/scripts`)
+	.js(`${assets}/js/modal-booking.js`, `${dist}/scripts`)
     .js(`${assets}/js/accordion.js`, `${dist}/scripts`)
     .js(`${assets}/js/donut.js`, `${dist}/scripts`)
 

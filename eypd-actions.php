@@ -1,8 +1,10 @@
 <?php
 /**
- * Performs actions on init. This works for both ajax and normal requests, the return results depends if an em_ajax flag is passed via POST or GET.
+ * Performs actions on init. This works for both ajax and normal requests, the
+ * return results depends if an em_ajax flag is passed via POST or GET.
  *
  * Modified from original events manager plugin version: 5.6.6.1
+ *
  * @author Brad Payne, Shawn DeWolfe
  * @package early-years
  * @since 0.9
@@ -13,7 +15,7 @@
  * @copyright Copyright Marcus Sykes
  */
 
-function eypd_init_actions() {
+add_action( 'init', function () {
 	global $wpdb, $EM_Notices, $EM_Event;
 
 	update_option( 'dbem_location_event_list_item_format', '<li class="category-#_EVENTPOSTID">#_EVENTLINK - #_EVENTDATES - #_EVENTTIMES</li>', true );
@@ -25,7 +27,7 @@ function eypd_init_actions() {
 	//NOTE - No EM objects are globalized at this point, as we're hitting early init mode.
 	//TODO Clean this up.... use a uniformed way of calling EM Ajax actions
 	if ( ! empty( $_REQUEST['em_ajax'] ) || ! empty( $_REQUEST['em_ajax_action'] ) ) {
-		if ( isset( $_REQUEST['em_ajax_action'] ) && $_REQUEST['em_ajax_action'] == 'get_location' ) {
+		if ( isset( $_REQUEST['em_ajax_action'] ) && $_REQUEST['em_ajax_action'] === 'get_location' ) {
 			if ( isset( $_REQUEST['id'] ) ) {
 				$EM_Location                        = new EM_Location( $_REQUEST['id'], 'location_id' );
 				$location_array                     = $EM_Location->to_array();
@@ -34,25 +36,31 @@ function eypd_init_actions() {
 			}
 			die();
 		}
-		if ( isset( $_REQUEST['em_ajax_action'] ) && $_REQUEST['em_ajax_action'] == 'delete_ticket' ) {
+		if ( isset( $_REQUEST['em_ajax_action'] ) && $_REQUEST['em_ajax_action'] === 'delete_ticket' ) {
 			if ( isset( $_REQUEST['id'] ) ) {
 				$EM_Ticket = new EM_Ticket( $_REQUEST['id'] );
 				$result    = $EM_Ticket->delete();
 				if ( $result ) {
-					$result = array( 'result' => true );
+					$result = [ 'result' => true ];
 				} else {
-					$result = array( 'result' => false, 'error' => $EM_Ticket->feedback_message );
+					$result = [
+						'result' => false,
+						'error'  => $EM_Ticket->feedback_message,
+					];
 				}
 			} else {
-				$result = array( 'result' => false, 'error' => __( 'No ticket id provided', 'events-manager' ) );
+				$result = [
+					'result' => false,
+					'error'  => __( 'No ticket id provided', 'events-manager' ),
+				];
 			}
 			echo EM_Object::json_encode( $result );
 			die();
 		}
-		if ( isset( $_REQUEST['query'] ) && $_REQUEST['query'] == 'GlobalMapData' ) {
+		if ( isset( $_REQUEST['query'] ) && $_REQUEST['query'] === 'GlobalMapData' ) {
 			$args           = [ 'eventful' => true, $_REQUEST ];
 			$EM_Locations   = EM_Locations::get( $args );
-			$json_locations = array();
+			$json_locations = [];
 			foreach ( $EM_Locations as $location_key => $EM_Location ) {
 				$json_locations[ $location_key ] = $EM_Location->to_array();
 
@@ -80,7 +88,7 @@ function eypd_init_actions() {
 	}
 
 	//Event Actions
-	if ( ! empty( $_REQUEST['action'] ) && substr( $_REQUEST['action'], 0, 5 ) == 'event' ) {
+	if ( ! empty( $_REQUEST['action'] ) && substr( $_REQUEST['action'], 0, 5 ) === 'event' ) {
 		//Load the event object, with saved event if requested
 		if ( ! empty( $_REQUEST['event_id'] ) ) {
 			$EM_Event = new EM_Event( $_REQUEST['event_id'] );
@@ -88,7 +96,7 @@ function eypd_init_actions() {
 			$EM_Event = new EM_Event();
 		}
 		//Save Event, only via BP or via [event_form]
-		if ( $_REQUEST['action'] == 'event_save' && $EM_Event->can_manage( 'edit_events', 'edit_others_events' ) ) {
+		if ( $_REQUEST['action'] === 'event_save' && $EM_Event->can_manage( 'edit_events', 'edit_others_events' ) ) {
 			//Check Nonces
 			if ( ! wp_verify_nonce( $_REQUEST['_wpnonce'], 'wpnonce_event_save' ) ) {
 				exit( 'Trying to perform an illegal action.' );
@@ -107,7 +115,7 @@ function eypd_init_actions() {
 					$EM_Notices->add_confirm( $EM_Event->output( get_option( 'dbem_events_anonymous_result_success' ) ), true );
 				}
 				$redirect = ! empty( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : em_wp_get_referer();
-				$redirect = em_add_get_params( $redirect, array( 'success' => 1 ), false, false );
+				$redirect = em_add_get_params( $redirect, [ 'success' => 1 ], false, false );
 				wp_redirect( $redirect );
 				exit();
 			} else {
@@ -115,7 +123,7 @@ function eypd_init_actions() {
 				$events_result = false;
 			}
 		}
-		if ( $_REQUEST['action'] == 'event_duplicate' && wp_verify_nonce( $_REQUEST['_wpnonce'], 'event_duplicate_' . $EM_Event->event_id ) ) {
+		if ( $_REQUEST['action'] === 'event_duplicate' && wp_verify_nonce( $_REQUEST['_wpnonce'], 'event_duplicate_' . $EM_Event->event_id ) ) {
 			$event = $EM_Event->duplicate();
 			if ( $event === false ) {
 				$EM_Notices->add_error( $EM_Event->errors, true );
@@ -126,7 +134,7 @@ function eypd_init_actions() {
 			}
 			exit();
 		}
-		if ( $_REQUEST['action'] == 'event_delete' && wp_verify_nonce( $_REQUEST['_wpnonce'], 'event_delete_' . $EM_Event->event_id ) ) {
+		if ( $_REQUEST['action'] === 'event_delete' && wp_verify_nonce( $_REQUEST['_wpnonce'], 'event_delete_' . $EM_Event->event_id ) ) {
 			//DELETE action
 			$selectedEvents = ! empty( $_REQUEST['events'] ) ? $_REQUEST['events'] : '';
 			if ( EM_Object::array_is_numeric( $selectedEvents ) ) {
@@ -144,7 +152,7 @@ function eypd_init_actions() {
 			}
 			wp_redirect( em_wp_get_referer() );
 			exit();
-		} elseif ( $_REQUEST['action'] == 'event_detach' && wp_verify_nonce( $_REQUEST['_wpnonce'], 'event_detach_' . get_current_user_id() . '_' . $EM_Event->event_id ) ) {
+		} elseif ( $_REQUEST['action'] === 'event_detach' && wp_verify_nonce( $_REQUEST['_wpnonce'], 'event_detach_' . get_current_user_id() . '_' . $EM_Event->event_id ) ) {
 			//Detach event and move on
 			if ( $EM_Event->detach() ) {
 				$EM_Notices->add_confirm( $EM_Event->feedback_message, true );
@@ -153,7 +161,7 @@ function eypd_init_actions() {
 			}
 			wp_redirect( em_wp_get_referer() );
 			exit();
-		} elseif ( $_REQUEST['action'] == 'event_attach' && ! empty( $_REQUEST['undo_id'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'event_attach_' . get_current_user_id() . '_' . $EM_Event->event_id ) ) {
+		} elseif ( $_REQUEST['action'] === 'event_attach' && ! empty( $_REQUEST['undo_id'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'], 'event_attach_' . get_current_user_id() . '_' . $EM_Event->event_id ) ) {
 			//Detach event and move on
 			if ( $EM_Event->attach( $_REQUEST['undo_id'] ) ) {
 				$EM_Notices->add_confirm( $EM_Event->feedback_message, true );
@@ -167,13 +175,16 @@ function eypd_init_actions() {
 		//AJAX Exit
 		if ( isset( $events_result ) && ! empty( $_REQUEST['em_ajax'] ) ) {
 			if ( $events_result ) {
-				$return = array( 'result' => true, 'message' => $EM_Event->feedback_message );
+				$return = [
+					'result'  => true,
+					'message' => $EM_Event->feedback_message,
+				];
 			} else {
-				$return = array(
+				$return = [
 					'result'  => false,
 					'message' => $EM_Event->feedback_message,
 					'errors'  => $EM_Event->errors,
-				);
+				];
 			}
 			echo EM_Object::json_encode( $return );
 			edit();
@@ -181,7 +192,7 @@ function eypd_init_actions() {
 	}
 
 	//Location Actions
-	if ( ! empty( $_REQUEST['action'] ) && substr( $_REQUEST['action'], 0, 8 ) == 'location' ) {
+	if ( ! empty( $_REQUEST['action'] ) && substr( $_REQUEST['action'], 0, 8 ) === 'location' ) {
 		global $EM_Location, $EM_Notices;
 		//Load the location object, with saved event if requested
 		if ( ! empty( $_REQUEST['location_id'] ) ) {
@@ -189,7 +200,7 @@ function eypd_init_actions() {
 		} else {
 			$EM_Location = new EM_Location();
 		}
-		if ( $_REQUEST['action'] == 'location_save' && $EM_Location->can_manage( 'edit_locations', 'edit_others_locations' ) ) {
+		if ( $_REQUEST['action'] === 'location_save' && $EM_Location->can_manage( 'edit_locations', 'edit_others_locations' ) ) {
 			//Check Nonces
 			em_verify_nonce( 'location_save' );
 			//Grab and validate submitted data
@@ -202,7 +213,7 @@ function eypd_init_actions() {
 				$EM_Notices->add_error( $EM_Location->get_errors() );
 				$result = false;
 			}
-		} elseif ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'location_delete' ) {
+		} elseif ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] === 'location_delete' ) {
 			//delete location
 			//get object or objects
 			if ( ! empty( $_REQUEST['locations'] ) || ! empty( $_REQUEST['location_id'] ) ) {
@@ -222,8 +233,8 @@ function eypd_init_actions() {
 					$result = false;
 				}
 			}
-		} elseif ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'locations_search' && ( ! empty( $_REQUEST['term'] ) || ! empty( $_REQUEST['q'] ) ) ) {
-			$results = array();
+		} elseif ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] === 'locations_search' && ( ! empty( $_REQUEST['term'] ) || ! empty( $_REQUEST['q'] ) ) ) {
+			$results = [];
 			if ( is_user_logged_in() || ( get_option( 'dbem_events_anonymous_submissions' ) && user_can( get_option( 'dbem_events_anonymous_user' ), 'read_others_locations' ) ) ) {
 				$location_cond = ( is_user_logged_in() && ! current_user_can( 'read_others_locations' ) ) ? 'AND location_owner=' . get_current_user_id() : '';
 				if ( ! is_user_logged_in() && get_option( 'dbem_events_anonymous_submissions' ) ) {
@@ -237,7 +248,8 @@ function eypd_init_actions() {
 				}
 				$location_cond = apply_filters( 'em_actions_locations_search_cond', $location_cond );
 				$term          = ( isset( $_REQUEST['term'] ) ) ? '%' . $wpdb->esc_like( wp_unslash( $_REQUEST['term'] ) ) . '%' : '%' . $wpdb->esc_like( wp_unslash( $_REQUEST['q'] ) ) . '%';
-				$sql           = $wpdb->prepare( '
+				// @codingStandardsIgnoreStart
+				$results = $wpdb->get_results( $wpdb->prepare('
 SELECT
 location_id AS `id`,
 Concat( location_name )  AS `label`,
@@ -248,31 +260,34 @@ location_state AS `state`,
 location_region AS `region`,
 location_postcode AS `postcode`,
 location_country AS `country`
-FROM ' . EM_LOCATIONS_TABLE . "
-WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
-", $term );
-				$results       = $wpdb->get_results( $sql );
+                  FROM ' . EM_LOCATIONS_TABLE . " 
+					WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
+				", $term) );
+				// @codingStandardsIgnoreEnd
 			}
 			echo EM_Object::json_encode( $results );
 			die();
 		}
 		if ( isset( $result ) && $result && ! empty( $_REQUEST['em_ajax'] ) ) {
-			$return = array( 'result' => true, 'message' => $EM_Location->feedback_message );
+			$return = [
+				'result'  => true,
+				'message' => $EM_Location->feedback_message,
+			];
 			echo EM_Object::json_encode( $return );
 			die();
 		} elseif ( isset( $result ) && ! $result && ! empty( $_REQUEST['em_ajax'] ) ) {
-			$return = array(
+			$return = [
 				'result'  => false,
 				'message' => $EM_Location->feedback_message,
 				'errors'  => $EM_Notices->get_errors(),
-			);
+			];
 			echo EM_Object::json_encode( $return );
 			die();
 		}
 	}
 
 	//Booking Actions
-	if ( ! empty( $_REQUEST['action'] ) && substr( $_REQUEST['action'], 0, 7 ) == 'booking' && ( is_user_logged_in() || ( $_REQUEST['action'] == 'booking_add' && get_option( 'dbem_bookings_anonymous' ) ) ) ) {
+	if ( ! empty( $_REQUEST['action'] ) && substr( $_REQUEST['action'], 0, 7 ) === 'booking' && ( is_user_logged_in() || ( $_REQUEST['action'] === 'booking_add' && get_option( 'dbem_bookings_anonymous' ) ) ) ) {
 		global $EM_Event, $EM_Booking, $EM_Person;
 		//Load the booking object, with saved booking if requested
 		$EM_Booking = ( ! empty( $_REQUEST['booking_id'] ) ) ? em_get_booking( $_REQUEST['booking_id'] ) : em_get_booking();
@@ -282,21 +297,22 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 		} elseif ( ! empty( $_REQUEST['event_id'] ) ) {
 			$EM_Event = new EM_Event( $_REQUEST['event_id'] );
 		}
-		$allowed_actions = array(
+		$allowed_actions = [
 			'bookings_approve'   => 'approve',
 			'bookings_reject'    => 'reject',
 			'bookings_unapprove' => 'unapprove',
 			'bookings_delete'    => 'delete',
-		);
+		];
 		$result          = false;
 		$feedback        = '';
-		if ( $_REQUEST['action'] == 'booking_add' ) {
+		if ( $_REQUEST['action'] === 'booking_add' ) {
 			//ADD/EDIT Booking
 			ob_start();
 			if ( ! defined( 'WP_CACHE' ) || ! WP_CACHE ) {
 				em_verify_nonce( 'booking_add' );
 			}
-			if ( ! is_user_logged_in() || get_option( 'dbem_bookings_double' ) || ! $EM_Event->get_bookings()->has_booking( get_current_user_id() ) ) {
+			if ( ! is_user_logged_in() || get_option( 'dbem_bookings_double' ) || ! $EM_Event->get_bookings()
+																							 ->has_booking( get_current_user_id() ) ) {
 				$EM_Booking->get_post();
 				$post_validation = $EM_Booking->validate();
 				do_action( 'em_booking_add', $EM_Event, $EM_Booking, $post_validation );
@@ -333,21 +349,24 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 				$EM_Notices->add_error( $feedback );
 			}
 			ob_clean();
-		} elseif ( $_REQUEST['action'] == 'booking_add_one' && is_object( $EM_Event ) && is_user_logged_in() ) {
+		} elseif ( $_REQUEST['action'] === 'booking_add_one' && is_object( $EM_Event ) && is_user_logged_in() ) {
 			//ADD/EDIT Booking
 			em_verify_nonce( 'booking_add_one' );
-			if ( ! $EM_Event->get_bookings()->has_booking( get_current_user_id() ) || get_option( 'dbem_bookings_double' ) ) {
-				$EM_Booking = em_get_booking( array(
+			if ( ! $EM_Event->get_bookings()
+							->has_booking( get_current_user_id() ) || get_option( 'dbem_bookings_double' ) ) {
+				$EM_Booking = em_get_booking( [
 					'person_id'      => get_current_user_id(),
 					'event_id'       => $EM_Event->event_id,
 					'booking_spaces' => 1,
-				) ); //new booking
-				$EM_Ticket  = $EM_Event->get_bookings()->get_tickets()->get_first();
+				] ); //new booking
+				$EM_Ticket  = $EM_Event->get_bookings()
+									   ->get_tickets()
+									   ->get_first();
 				//get first ticket in this event and book one place there. similar to getting the form values in EM_Booking::get_post_values()
-				$EM_Ticket_Booking                     = new EM_Ticket_Booking( array(
+				$EM_Ticket_Booking                     = new EM_Ticket_Booking( [
 					'ticket_id'             => $EM_Ticket->ticket_id,
 					'ticket_booking_spaces' => 1,
-				) );
+				] );
 				$EM_Booking->tickets_bookings          = new EM_Tickets_Bookings();
 				$EM_Booking->tickets_bookings->booking = $EM_Ticket_Booking->booking = $EM_Booking;
 				$EM_Booking->tickets_bookings->add( $EM_Ticket_Booking );
@@ -358,7 +377,8 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 					$feedback = $EM_Event->get_bookings()->feedback_message;
 				} else {
 					$result = false;
-					$EM_Notices->add_error( $EM_Event->get_bookings()->get_errors() );
+					$EM_Notices->add_error( $EM_Event->get_bookings()
+					->get_errors() );
 					$feedback = $EM_Event->get_bookings()->feedback_message;
 				}
 			} else {
@@ -366,7 +386,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 				$feedback = get_option( 'dbem_booking_feedback_already_booked' );
 				$EM_Notices->add_error( $feedback );
 			}
-		} elseif ( $_REQUEST['action'] == 'booking_cancel' ) {
+		} elseif ( $_REQUEST['action'] === 'booking_cancel' ) {
 			//Cancel Booking
 			em_verify_nonce( 'booking_cancel' );
 			if ( $EM_Booking->can_manage() || ( $EM_Booking->person->ID == get_current_user_id() && get_option( 'dbem_bookings_user_cancellation' ) ) ) {
@@ -395,16 +415,16 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 			$action = $allowed_actions[ $_REQUEST['action'] ];
 			//Just do it here, since we may be deleting bookings of different events.
 			if ( ! empty( $_REQUEST['bookings'] ) && EM_Object::array_is_numeric( $_REQUEST['bookings'] ) ) {
-				$results = array();
+				$results = [];
 				foreach ( $_REQUEST['bookings'] as $booking_id ) {
 					$EM_Booking = em_get_booking( $booking_id );
 					$result     = $EM_Booking->$action();
 					$results[]  = $result;
-					if ( ! in_array( false, $results ) && ! $result ) {
+					if ( ! in_array( false, $results, true ) && ! $result ) {
 						$feedback = $EM_Booking->feedback_message;
 					}
 				}
-				$result = ! in_array( false, $results );
+				$result = ! in_array( false, $results, true );
 			} elseif ( is_object( $EM_Booking ) ) {
 				$result   = $EM_Booking->$action();
 				$feedback = $EM_Booking->feedback_message;
@@ -425,7 +445,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 					$EM_Notices->add_error( $feedback );
 				}
 			}
-		} elseif ( $_REQUEST['action'] == 'booking_save' ) {
+		} elseif ( $_REQUEST['action'] === 'booking_save' ) {
 			em_verify_nonce( 'booking_save_' . $EM_Booking->booking_id );
 			do_action( 'em_booking_save', $EM_Event, $EM_Booking );
 			if ( $EM_Booking->can_manage( 'manage_bookings', 'manage_others_bookings' ) ) {
@@ -440,7 +460,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 					$feedback = $EM_Booking->feedback_message;
 				}
 			}
-		} elseif ( $_REQUEST['action'] == 'booking_set_status' ) {
+		} elseif ( $_REQUEST['action'] === 'booking_set_status' ) {
 			em_verify_nonce( 'booking_set_status_' . $EM_Booking->booking_id );
 			if ( $EM_Booking->can_manage( 'manage_bookings', 'manage_others_bookings' ) && $_REQUEST['booking_status'] != $EM_Booking->booking_status ) {
 				if ( $EM_Booking->set_status( $_REQUEST['booking_status'], false, true ) ) {
@@ -465,7 +485,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 					$feedback = $EM_Booking->feedback_message;
 				}
 			}
-		} elseif ( $_REQUEST['action'] == 'booking_resend_email' ) {
+		} elseif ( $_REQUEST['action'] === 'booking_resend_email' ) {
 			em_verify_nonce( 'booking_resend_email_' . $EM_Booking->booking_id );
 			if ( $EM_Booking->can_manage( 'manage_bookings', 'manage_others_bookings' ) ) {
 				if ( $EM_Booking->email( false, true ) ) {
@@ -483,14 +503,14 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 					$feedback = $EM_Booking->feedback_message;
 				}
 			}
-		} elseif ( $_REQUEST['action'] == 'booking_modify_person' ) {
+		} elseif ( $_REQUEST['action'] === 'booking_modify_person' ) {
 			em_verify_nonce( 'booking_modify_person_' . $EM_Booking->booking_id );
 			if ( $EM_Booking->can_manage( 'manage_bookings', 'manage_others_bookings' ) ) {
 				global $wpdb;
 				$no_user = get_option( 'dbem_bookings_registration_disable' ) && $EM_Booking->get_person()->ID == get_option( 'dbem_bookings_registration_user' );
 				if ( //save just the booking meta, avoid extra unneccesary hooks and things to go wrong
 					$no_user && $EM_Booking->get_person_post() &&
-					$wpdb->update( EM_BOOKINGS_TABLE, array( 'booking_meta' => serialize( $EM_Booking->booking_meta ) ), array( 'booking_id' => $EM_Booking->booking_id ) )
+					$wpdb->update( EM_BOOKINGS_TABLE, [ 'booking_meta' => serialize( $EM_Booking->booking_meta ) ], [ 'booking_id' => $EM_Booking->booking_id ] )
 				) {
 					$EM_Notices->add_confirm( $EM_Booking->feedback_message, true );
 					$redirect = ! empty( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : em_wp_get_referer();
@@ -503,7 +523,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 				}
 			}
 			do_action( 'em_booking_modify_person', $EM_Event, $EM_Booking );
-		} elseif ( $_REQUEST['action'] == 'bookings_add_note' && $EM_Booking->can_manage( 'manage_bookings', 'manage_others_bookings' ) ) {
+		} elseif ( $_REQUEST['action'] === 'bookings_add_note' && $EM_Booking->can_manage( 'manage_bookings', 'manage_others_bookings' ) ) {
 			em_verify_nonce( 'bookings_add_note' );
 			if ( $EM_Booking->add_note( wp_unslash( $_REQUEST['booking_note'] ) ) ) {
 				$EM_Notices->add_confirm( $EM_Booking->feedback_message, true );
@@ -516,35 +536,39 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 		}
 
 		if ( $result && defined( 'DOING_AJAX' ) ) {
-			$return = array( 'result' => true, 'message' => $feedback );
+			$return = [ 'result' => true, 'message' => $feedback ];
 			header( 'Content-Type: application/javascript; charset=UTF-8', true ); //add this for HTTP -> HTTPS requests which assume it's a cross-site request
 			echo EM_Object::json_encode( apply_filters( 'em_action_' . $_REQUEST['action'], $return, $EM_Booking ) );
 			die();
 		} elseif ( ! $result && defined( 'DOING_AJAX' ) ) {
-			$return = array( 'result' => false, 'message' => $feedback, 'errors' => $EM_Notices->get_errors() );
+			$return = [
+				'result'  => false,
+				'message' => $feedback,
+				'errors'  => $EM_Notices->get_errors(),
+			];
 			header( 'Content-Type: application/javascript; charset=UTF-8', true ); //add this for HTTP -> HTTPS requests which assume it's a cross-site request
 			echo EM_Object::json_encode( apply_filters( 'em_action_' . $_REQUEST['action'], $return, $EM_Booking ) );
 			die();
 		}
-	} elseif ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'booking_add' && ! is_user_logged_in() && ! get_option( 'dbem_bookings_anonymous' ) ) {
+	} elseif ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] === 'booking_add' && ! is_user_logged_in() && ! get_option( 'dbem_bookings_anonymous' ) ) {
 		$EM_Notices->add_error( get_option( 'dbem_booking_feedback_log_in' ) );
 		if ( ! $result && defined( 'DOING_AJAX' ) ) {
-			$return = array(
+			$return = [
 				'result'  => false,
 				'message' => $EM_Booking->feedback_message,
 				'errors'  => $EM_Notices->get_errors(),
-			);
+			];
 			echo EM_Object::json_encode( apply_filters( 'em_action_' . $_REQUEST['action'], $return, $EM_Booking ) );
 		}
 		die();
 	}
 
 	//AJAX call for searches
-	if ( ! empty( $_REQUEST['action'] ) && substr( $_REQUEST['action'], 0, 6 ) == 'search' ) {
+	if ( ! empty( $_REQUEST['action'] ) && substr( $_REQUEST['action'], 0, 6 ) === 'search' ) {
 		//default search arts
-		if ( $_REQUEST['action'] == 'search_states' ) {
-			$results = array();
-			$conds   = array();
+		if ( $_REQUEST['action'] === 'search_states' ) {
+			$results = [];
+			$conds   = [];
 			if ( ! empty( $_REQUEST['country'] ) ) {
 				$conds[] = $wpdb->prepare( "(location_country = '%s' OR location_country IS NULL )", $_REQUEST['country'] );
 			}
@@ -552,12 +576,13 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 				$conds[] = $wpdb->prepare( "( location_region = '%s' )", $_REQUEST['region'] );
 			}
 			$cond    = ( count( $conds ) > 0 ) ? 'AND ' . implode( ' AND ', $conds ) : '';
-			$results = $wpdb->get_col( 'SELECT DISTINCT location_state FROM ' . EM_LOCATIONS_TABLE . " WHERE location_state IS NOT NULL AND location_state != '' $cond ORDER BY location_state" );
+			$results = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT location_state FROM %s WHERE location_state IS NOT NULL AND location_state != '' %s ORDER BY location_state", EM_LOCATIONS_TABLE, $cond ) );
 			if ( $_REQUEST['return_html'] ) {
 				//quick shortcut for quick html form manipulation
 				ob_start();
 				?>
-                <option value=''><?php echo get_option( 'dbem_search_form_states_label' ) ?></option>
+				<option
+					value=''><?php echo get_option( 'dbem_search_form_states_label' ) ?></option>
 				<?php
 				foreach ( $results as $result ) {
 					echo "<option>{$result}</option>";
@@ -570,9 +595,9 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 				exit();
 			}
 		}
-		if ( $_REQUEST['action'] == 'search_towns' ) {
-			$results = array();
-			$conds   = array();
+		if ( $_REQUEST['action'] === 'search_towns' ) {
+			$results = [];
+			$conds   = [];
 			if ( ! empty( $_REQUEST['country'] ) ) {
 				$conds[] = $wpdb->prepare( "(location_country = '%s' OR location_country IS NULL )", $_REQUEST['country'] );
 			}
@@ -583,12 +608,13 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 				$conds[] = $wpdb->prepare( "(location_state = '%s' )", $_REQUEST['state'] );
 			}
 			$cond    = ( count( $conds ) > 0 ) ? 'AND ' . implode( ' AND ', $conds ) : '';
-			$results = $wpdb->get_col( 'SELECT DISTINCT location_town FROM ' . EM_LOCATIONS_TABLE . " WHERE location_town IS NOT NULL AND location_town != '' $cond  ORDER BY location_town" );
+			$results = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT location_town FROM %s WHERE location_town IS NOT NULL AND location_town != '' %s  ORDER BY location_town", EM_LOCATIONS_TABLE, $cond ) );
 			if ( $_REQUEST['return_html'] ) {
 				//quick shortcut for quick html form manipulation
 				ob_start();
 				?>
-                <option value=''><?php echo get_option( 'dbem_search_form_towns_label' ); ?></option>
+				<option
+					value=''><?php echo get_option( 'dbem_search_form_towns_label' ); ?></option>
 				<?php
 				foreach ( $results as $result ) {
 					echo "<option>$result</option>";
@@ -601,18 +627,19 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 				exit();
 			}
 		}
-		if ( $_REQUEST['action'] == 'search_regions' ) {
-			$results = array();
+		if ( $_REQUEST['action'] === 'search_regions' ) {
+			$results = [];
 			if ( ! empty( $_REQUEST['country'] ) ) {
 				$conds[] = $wpdb->prepare( "(location_country = '%s' )", $_REQUEST['country'] );
 			}
 			$cond    = ( count( $conds ) > 0 ) ? 'AND ' . implode( ' AND ', $conds ) : '';
-			$results = $wpdb->get_results( 'SELECT DISTINCT location_region AS value FROM ' . EM_LOCATIONS_TABLE . " WHERE location_region IS NOT NULL AND location_region != '' $cond  ORDER BY location_region" );
+			$results = $wpdb->get_results( $wpdb->prepare( "SELECT DISTINCT location_region AS value FROM %s WHERE location_region IS NOT NULL AND location_region != '' %s ORDER BY location_region", EM_LOCATIONS_TABLE, $cond ) );
 			if ( $_REQUEST['return_html'] ) {
 				//quick shortcut for quick html form manipulation
 				ob_start();
 				?>
-                <option value=''><?php echo get_option( 'dbem_search_form_regions_label' ); ?></option>
+				<option
+					value=''><?php echo get_option( 'dbem_search_form_regions_label' ); ?></option>
 				<?php
 				foreach ( $results as $result ) {
 					echo "<option>{$result->value}</option>";
@@ -653,13 +680,13 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 		}
 	}
 	//Export CSV - WIP
-	if ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'export_bookings_csv' && wp_verify_nonce( $_REQUEST['_wpnonce'], 'export_bookings_csv' ) ) {
+	if ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] === 'export_bookings_csv' && wp_verify_nonce( $_REQUEST['_wpnonce'], 'export_bookings_csv' ) ) {
 		if ( ! empty( $_REQUEST['event_id'] ) ) {
 			$EM_Event = em_get_event( $_REQUEST['event_id'] );
 		}
 		//sort out cols
 		if ( ! empty( $_REQUEST['cols'] ) && is_array( $_REQUEST['cols'] ) ) {
-			$cols = array();
+			$cols = [];
 			foreach ( $_REQUEST['cols'] as $col => $active ) {
 				if ( $active ) {
 					$cols[] = $col;
@@ -696,9 +723,12 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 		fputcsv( $handle, $EM_Bookings_Table->get_headers( true ), $delimiter );
 		while ( ! empty( $EM_Bookings->bookings ) ) {
 			foreach ( $EM_Bookings->bookings as $EM_Booking ) {
-				//Display all values
-				/* @var $EM_Booking EM_Booking */
-				/* @var $EM_Ticket_Booking EM_Ticket_Booking */
+				/**
+				 * Display all values
+				 *
+				 * @var $EM_Booking EM_Booking
+				 * @var $EM_Ticket_Booking EM_Ticket_Booking
+				 */
 				if ( $show_tickets ) {
 					foreach ( $EM_Booking->get_tickets_bookings()->tickets_bookings as $EM_Ticket_Booking ) {
 						$row = $EM_Bookings_Table->get_row_csv( $EM_Ticket_Booking );
@@ -718,7 +748,7 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 	}
 
 	// EYPD certificate hours
-	if ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] == 'eypd_cert_hours' && wp_verify_nonce( $_REQUEST['_wpnonce'], 'eypd_cert_hours' ) ) {
+	if ( ! empty( $_REQUEST['action'] ) && $_REQUEST['action'] === 'eypd_cert_hours' && wp_verify_nonce( $_REQUEST['_wpnonce'], 'eypd_cert_hours' ) ) {
 
 		if ( is_user_logged_in() ) {
 			// add the data
@@ -729,6 +759,4 @@ WHERE ( `location_name` LIKE %s ) AND location_status=1 $location_cond LIMIT 10
 		wp_redirect( em_wp_get_referer() );
 
 	}
-}
-
-add_action( 'init', 'eypd_init_actions', 10 );
+}, 10 );

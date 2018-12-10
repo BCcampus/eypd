@@ -1,7 +1,7 @@
 language: php
 php:
-- 7.0.29
 - 7.1
+- 7.2
 sudo: required
 notifications:
   email:
@@ -12,7 +12,7 @@ branches:
   - dev
   - "/\\d+\\.\\d+(\\.\\d+)?(-\\S*)?$/"
 env:
-- WP_VERSION=latest TRAVIS_NODE_VERSION="6"
+- WP_VERSION=4.9.8 TRAVIS_NODE_VERSION="6"
 cache:
   apt: true
   directories:
@@ -34,6 +34,7 @@ before_script:
 script:
 - yarn run build:production
 - vendor/bin/phpunit --configuration phpunit.xml
+- vendor/bin/phpcs --standard=phpcs.ruleset.xml .
 before_deploy:
 - export TRAVIS_PROJECT_SLUG="$(basename $TRAVIS_BUILD_DIR)"
 - curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
