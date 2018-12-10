@@ -3,13 +3,13 @@
 * [security] update bootstrap dependency
 * [fix] fix google styling
 * [enhancement] hand off colour code categories to administrators
-* [enhancement] diagram lable additions
+* [enhancement] diagram label additions
 * [enhancement] hide activity feed from unauthenticated users
 * [task] remove left nav from myEYPD page
 * [fix] input and output validation on web URL fields
 * [fix] re-enable bp navigation causing broken links
 * [fix] locations autocomplete not working
-* [ehancement] mobile display
+* [enhancement] mobile display
 * [task] redirect to mEYPD page after login
 
 = v1.0.0 (06/28/2018) =
