@@ -158,6 +158,9 @@ add_action(
 
 		if ( is_page( 'edit-events' ) || is_page( 'post-event' ) ) {
 			wp_enqueue_style( 'media-manager', $template_dir . '/dist/styles/media.css' );
+			wp_enqueue_style( 'select2-style', $template_dir . '/dist/styles/select2.min.css' );
+			wp_enqueue_script( 'select2', $template_dir . '/dist/scripts/select2.min.js', [], null, true );
+			wp_enqueue_script( 'select-multiple', $template_dir . '/dist/scripts/select-multiple.js', [ 'select2' ], null, true );
 		}
 	}, 10
 );
