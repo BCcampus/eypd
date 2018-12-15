@@ -16,12 +16,17 @@
  * @var $EM_Event EM_Event
  */
 global $EM_Event;
-$categories = EM_Categories::get( [ 'orderby' => 'name', 'hide_empty' => 0 ] );
+$categories = EM_Categories::get(
+	[
+		'orderby' => 'name',
+		'hide_empty' => 0,
+	]
+);
 if ( count( $categories ) > 0 ) : ?>
-    <div class="event-categories">
-        <!-- START Categories -->
-        <label for="event_categories"><?php _e( 'Category:', 'events-manager' ); ?><?php //echo $required; ?>  </label>
-        <select name="event_categories[]" multiple class="event-categories-select2" id="event_categories">
+	<div class="event-categories">
+		<!-- START Categories -->
+		<label for="event_categories"><?php _e( 'Category:', 'events-manager' ); ?></label>
+		<select name="event_categories[]" multiple class="event-categories-select2" id="event_categories">
 			<?php
 			$selected = $EM_Event->get_categories()->get_ids();
 			$walker   = new EM_Walker_CategoryMultiselect();
@@ -35,7 +40,8 @@ if ( count( $categories ) > 0 ) : ?>
 				'walker'       => $walker,
 			];
 			echo walk_category_dropdown_tree( $categories, 0, $args_em );
-			?></select>
-        <!-- END Categories -->
-    </div>
+			?>
+			</select>
+		<!-- END Categories -->
+	</div>
 <?php endif; ?>
