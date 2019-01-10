@@ -1782,8 +1782,8 @@ add_filter( 'excel_export_user_metadata', function ( $default_user_metadata ) {
  */
 add_filter( 'excel_export_user_buddypress', function ( $default_user_buddypress ) {
 	$add_buddypress = [
-		'City/Town'                  => 'City/Town',
 		'Name of your place of Work' => 'Name of your place of Work',
+		'City/Town'                  => 'City/Town',
 	];
 
 	return array_merge( $default_user_buddypress, $add_buddypress );
