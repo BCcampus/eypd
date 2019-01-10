@@ -1788,6 +1788,15 @@ add_filter( 'excel_export_user_buddypress', function ( $default_user_buddypress 
 	return array_merge( $default_user_buddypress, $add_buddypress );
 } );
 
+/**
+ * Enable the visual editor on bbpress
+ */
+add_filter( 'bbp_after_get_the_content_parse_args', function ( $args = [] ) {
+	$args['tinymce'] = true;
+
+	return $args;
+} );
+
 /*
 |--------------------------------------------------------------------------
 | Layout Overrides
