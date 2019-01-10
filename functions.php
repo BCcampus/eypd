@@ -1791,13 +1791,11 @@ add_filter( 'excel_export_user_buddypress', function ( $default_user_buddypress 
 /**
  * Enable the visual editor on bbpress
  */
-function eypd_enable_visual_editor( $args = [] ) {
+add_filter( 'bbp_after_get_the_content_parse_args', function ( $args = [] ) {
 	$args['tinymce'] = true;
 
 	return $args;
-}
-
-add_filter( 'bbp_after_get_the_content_parse_args', 'eypd_enable_visual_editor' );
+} );
 
 /*
 |--------------------------------------------------------------------------
