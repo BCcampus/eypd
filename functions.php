@@ -1791,7 +1791,7 @@ add_filter( 'excel_export_user_buddypress', function ( $default_user_buddypress 
 /**
  * Enable the visual editor on bbpress
  */
-function eypd_enable_visual_editor( $args = array() ) {
+function eypd_enable_visual_editor( $args = [] ) {
 	$args['tinymce'] = true;
 
 	return $args;
