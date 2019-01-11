@@ -31,34 +31,33 @@ add_filter( /**
 	*/
 	'script_loader_tag', function ( $tag, $handle, $src ) {
 		$defer = [
-		'jquery-migrate',
-		'jquery-ui-position',
-		'jquery-ui-draggable',
-		'jquery-ui-resizable',
-		'jquery-ui-menu',
-		'jquery-ui-sortable',
-		'jquery-ui-datepicker',
-		'jquery-ui-autocomplete',
-		'jquery-ui-dialog',
-		'jquery-ui-button',
-		'bp-confirm',
-		'bp-jquery-query',
-		'events-manager',
-		'jquery-mobilemenu',
-		'jquery-fitvids',
-		'modal-video',
-		'bootstrap-accordion',
-		'd3',
-		'donut',
+			'jquery-ui-position',
+			'jquery-ui-draggable',
+			'jquery-ui-resizable',
+			'jquery-ui-menu',
+			'jquery-ui-sortable',
+			'jquery-ui-datepicker',
+			'jquery-ui-autocomplete',
+			'jquery-ui-dialog',
+			'jquery-ui-button',
+			'bp-confirm',
+			'bp-jquery-query',
+			'events-manager',
+			'jquery-mobilemenu',
+			'jquery-fitvids',
+			'modal-video',
+			'bootstrap-accordion',
+			'd3',
+			'donut',
 		];
 
 		$async = [
-		'bp-jquery-cookie',
-		'dtheme-ajax-js',
-		'wp-a11y',
-		'bp-widget-members',
-		'groups_widget_groups_list-js',
-		'joyride',
+			'bp-jquery-cookie',
+			'dtheme-ajax-js',
+			'wp-a11y',
+			'bp-widget-members',
+			'groups_widget_groups_list-js',
+			'joyride',
 		];
 
 		if ( in_array( $handle, $defer, true ) ) {
@@ -114,15 +113,15 @@ add_action(
 		wp_enqueue_script( 'markerclusterer', $template_dir . '/dist/scripts/markerclusterer.js', [], false, true );
 
 		$script_deps = [
-		'jquery'                 => 'jquery',
-		'jquery-ui-core'         => 'jquery-ui-core',
-		'jquery-ui-widget'       => 'jquery-ui-widget',
-		'jquery-ui-position'     => 'jquery-ui-position',
-		'jquery-ui-sortable'     => 'jquery-ui-sortable',
-		'jquery-ui-datepicker'   => 'jquery-ui-datepicker',
-		'jquery-ui-autocomplete' => 'jquery-ui-autocomplete',
-		'jquery-ui-dialog'       => 'jquery-ui-dialog',
-		'markerclusterer'        => 'markerclusterer',
+			'jquery'                 => 'jquery',
+			'jquery-ui-core'         => 'jquery-ui-core',
+			'jquery-ui-widget'       => 'jquery-ui-widget',
+			'jquery-ui-position'     => 'jquery-ui-position',
+			'jquery-ui-sortable'     => 'jquery-ui-sortable',
+			'jquery-ui-datepicker'   => 'jquery-ui-datepicker',
+			'jquery-ui-autocomplete' => 'jquery-ui-autocomplete',
+			'jquery-ui-dialog'       => 'jquery-ui-dialog',
+			'markerclusterer'        => 'markerclusterer',
 		];
 		wp_enqueue_script( 'events-manager', $template_dir . '/dist/scripts/events-manager.js', array_values( $script_deps ), isset( $EM_VERSION ) );
 		wp_enqueue_script( 'tinyscrollbar', $template_dir . '/dist/scripts/jquery.tinyscrollbar.min.js', [ 'jquery' ], '1.0', true );
@@ -134,10 +133,7 @@ add_action(
 			wp_enqueue_script( 'init-tooltip', $template_dir . '/dist/scripts/inittooltip.js', [ 'bootstrap-script' ], null, true );
 
 		}
-		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [
-			'jquery',
-			'bootstrap-script',
-		], null, true );
+		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery', 'bootstrap-script' ], null, true );
 		wp_enqueue_script( 'modal-booking', $template_dir . '/dist/scripts/modal-booking.js', [ 'bootstrap-script' ], null, true );
 
 		// load styling for datepicker in myEYPD profile page only
@@ -346,7 +342,7 @@ add_action( 'login_form', function () {
  * @return string
  */
 
-add_filter( 'login_redirect', function ( $url, $query, $user ) {
+add_filter( 'login_redirect', function( $url, $query, $user ) {
 	return bp_core_get_user_domain( $user->ID ) . '/events/';
 }, 10, 3 );
 
@@ -621,7 +617,7 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 			'Register'                                                                                                                  => 'Sign Up',
 			'Email Address'                                                                                                             => 'Work Email Address',
 			'Registering for this site is easy. Just fill in the fields below, and we\'ll get a new account set up for you in no time.' => 'Fill in the fields below to register as an Organizer or a Learner. <b>Learner</b> — you are primarily looking for training events. <b>Organizer</b> — you are primarily posting training events on behalf of your organization.',
-			'You have successfully created your account! Please log in using the username and password you have just created.'          => '',
+			'You have successfully created your account! Please log in using the username and password you have just created.' => '',
 		];
 	}
 
@@ -831,7 +827,7 @@ add_filter(
 				$nav .= '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
 			} else {
 				//add tooltip with a message, and login and sign-up links
-				$popover = '<li class="home"><a href="#" data-toggle="tooltip" data-placement="bottom" data-container="body" data-trigger="click focus" data-html="true" data-title="Please <a href=' . wp_login_url() . '>Login</a> or <a href=' . home_url() . '/sign-up>Sign up</a> to ';
+				$popover = '<li class="home"><a href="#" data-toggle="tooltip" data-placement="bottom" data-container="body" data-trigger="click focus" data-html="true" data-title="Please <a href=\'' . wp_login_url() . '\'>Login</a> or <a href=\'' . home_url() . '/sign-up\'>Sign up</a> to ';
 				$nav     .= $popover . 'post events.">Post an Event</a></li>';
 				$nav     .= $popover . 'edit your events.">Edit Event</a></li>';
 				$nav     .= $popover . ' view your events."><i>my</i>EYPD</a></li>';
@@ -850,14 +846,14 @@ add_action(
 	'bp_setup_nav', function () {
 
 		$args = [
-		'name'                    => __( 'My Professional Interests', 'early-years' ),
-		'slug'                    => 'professional-interests',
-		'default_subnav_slug'     => 'prof-int',
-		'position'                => 50,
-		'show_for_displayed_user' => false,
-		'screen_function'         => 'eypd_custom_user_nav_item_screen',
-		'item_css_id'             => 'prof-int',
-		'site_admin_only'         => false,
+			'name'                    => __( 'My Professional Interests', 'early-years' ),
+			'slug'                    => 'professional-interests',
+			'default_subnav_slug'     => 'prof-int',
+			'position'                => 50,
+			'show_for_displayed_user' => false,
+			'screen_function'         => 'eypd_custom_user_nav_item_screen',
+			'item_css_id'             => 'prof-int',
+			'site_admin_only'         => false,
 		];
 
 		bp_core_new_nav_item( $args );
@@ -1030,13 +1026,13 @@ function eypd_profile_field_modals() {
 				$field_description = '<a href="#terms" data-toggle="modal">Terms and Conditions</a>';
 
 				return $field_description;
-				break;
+			break;
 
 			case 'Position/Role':
 				$field_description = '<a href="#role" data-toggle="modal">What’s the difference between Learner and Organizer?</a>';
 
 				return $field_description;
-				break;
+			break;
 		}
 	}
 }
@@ -1585,53 +1581,53 @@ add_action(
 			$lang_dir    = ( is_rtl() ) ? 'rtl' : 'ltr';
 
 			$manifest = [
-			'start_url'        => get_bloginfo( 'wpurl' ),
-			'short_name'       => 'EYPD',
-			'name'             => get_bloginfo( 'name' ),
-			'description'      => get_bloginfo( 'description' ),
-			'display'          => 'standalone',
-			'background_color' => $theme_color,
-			'theme_color'      => $theme_color,
-			'dir'              => $lang_dir,
-			'lang'             => get_bloginfo( 'language' ),
-			'orientation'      => 'portrait-primary',
-			'icons'            => [
-				[
-					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-48.png',
-					'sizes' => '48x48',
-					'type'  => 'image/png',
+				'start_url'        => get_bloginfo( 'wpurl' ),
+				'short_name'       => 'EYPD',
+				'name'             => get_bloginfo( 'name' ),
+				'description'      => get_bloginfo( 'description' ),
+				'display'          => 'standalone',
+				'background_color' => $theme_color,
+				'theme_color'      => $theme_color,
+				'dir'              => $lang_dir,
+				'lang'             => get_bloginfo( 'language' ),
+				'orientation'      => 'portrait-primary',
+				'icons'            => [
+					[
+						'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-48.png',
+						'sizes' => '48x48',
+						'type'  => 'image/png',
+					],
+					[
+						'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-72.png',
+						'sizes' => '72x72',
+						'type'  => 'image/png',
+					],
+					[
+						'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-96.png',
+						'sizes' => '96x96',
+						'type'  => 'image/png',
+					],
+					[
+						'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-144.png',
+						'sizes' => '144x144',
+						'type'  => 'image/png',
+					],
+					[
+						'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-168.png',
+						'sizes' => '168x168',
+						'type'  => 'image/png',
+					],
+					[
+						'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-192.png',
+						'sizes' => '192x192',
+						'type'  => 'image/png',
+					],
+					[
+						'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-512.png',
+						'sizes' => '512x512',
+						'type'  => 'image/png',
+					],
 				],
-				[
-					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-72.png',
-					'sizes' => '72x72',
-					'type'  => 'image/png',
-				],
-				[
-					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-96.png',
-					'sizes' => '96x96',
-					'type'  => 'image/png',
-				],
-				[
-					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-144.png',
-					'sizes' => '144x144',
-					'type'  => 'image/png',
-				],
-				[
-					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-168.png',
-					'sizes' => '168x168',
-					'type'  => 'image/png',
-				],
-				[
-					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-192.png',
-					'sizes' => '192x192',
-					'type'  => 'image/png',
-				],
-				[
-					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-512.png',
-					'sizes' => '512x512',
-					'type'  => 'image/png',
-				],
-			],
 			];
 
 			wp_send_json( $manifest );
@@ -1788,8 +1784,8 @@ add_filter( 'excel_export_user_metadata', function ( $default_user_metadata ) {
  */
 add_filter( 'excel_export_user_buddypress', function ( $default_user_buddypress ) {
 	$add_buddypress = [
-		'City/Town'                  => 'City/Town',
 		'Name of your place of Work' => 'Name of your place of Work',
+		'City/Town'                  => 'City/Town',
 	];
 
 	return array_merge( $default_user_buddypress, $add_buddypress );
@@ -1854,6 +1850,15 @@ ORDER BY event_start_date ASC, event_start_time ASC, event_name DESC", ''
 
 	return  $data;
 
+} );
+
+/**
+ * Enable the visual editor on bbpress
+ */
+add_filter( 'bbp_after_get_the_content_parse_args', function ( $args = [] ) {
+	$args['tinymce'] = true;
+
+	return $args;
 } );
 
 /*
