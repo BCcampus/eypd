@@ -31,34 +31,34 @@ add_filter( /**
 	*/
 	'script_loader_tag', function ( $tag, $handle, $src ) {
 		$defer = [
-			'jquery-migrate',
-			'jquery-ui-position',
-			'jquery-ui-draggable',
-			'jquery-ui-resizable',
-			'jquery-ui-menu',
-			'jquery-ui-sortable',
-			'jquery-ui-datepicker',
-			'jquery-ui-autocomplete',
-			'jquery-ui-dialog',
-			'jquery-ui-button',
-			'bp-confirm',
-			'bp-jquery-query',
-			'events-manager',
-			'jquery-mobilemenu',
-			'jquery-fitvids',
-			'modal-video',
-			'bootstrap-accordion',
-			'd3',
-			'donut',
+		'jquery-migrate',
+		'jquery-ui-position',
+		'jquery-ui-draggable',
+		'jquery-ui-resizable',
+		'jquery-ui-menu',
+		'jquery-ui-sortable',
+		'jquery-ui-datepicker',
+		'jquery-ui-autocomplete',
+		'jquery-ui-dialog',
+		'jquery-ui-button',
+		'bp-confirm',
+		'bp-jquery-query',
+		'events-manager',
+		'jquery-mobilemenu',
+		'jquery-fitvids',
+		'modal-video',
+		'bootstrap-accordion',
+		'd3',
+		'donut',
 		];
 
 		$async = [
-			'bp-jquery-cookie',
-			'dtheme-ajax-js',
-			'wp-a11y',
-			'bp-widget-members',
-			'groups_widget_groups_list-js',
-			'joyride',
+		'bp-jquery-cookie',
+		'dtheme-ajax-js',
+		'wp-a11y',
+		'bp-widget-members',
+		'groups_widget_groups_list-js',
+		'joyride',
 		];
 
 		if ( in_array( $handle, $defer, true ) ) {
@@ -114,15 +114,15 @@ add_action(
 		wp_enqueue_script( 'markerclusterer', $template_dir . '/dist/scripts/markerclusterer.js', [], false, true );
 
 		$script_deps = [
-			'jquery'                 => 'jquery',
-			'jquery-ui-core'         => 'jquery-ui-core',
-			'jquery-ui-widget'       => 'jquery-ui-widget',
-			'jquery-ui-position'     => 'jquery-ui-position',
-			'jquery-ui-sortable'     => 'jquery-ui-sortable',
-			'jquery-ui-datepicker'   => 'jquery-ui-datepicker',
-			'jquery-ui-autocomplete' => 'jquery-ui-autocomplete',
-			'jquery-ui-dialog'       => 'jquery-ui-dialog',
-			'markerclusterer'        => 'markerclusterer',
+		'jquery'                 => 'jquery',
+		'jquery-ui-core'         => 'jquery-ui-core',
+		'jquery-ui-widget'       => 'jquery-ui-widget',
+		'jquery-ui-position'     => 'jquery-ui-position',
+		'jquery-ui-sortable'     => 'jquery-ui-sortable',
+		'jquery-ui-datepicker'   => 'jquery-ui-datepicker',
+		'jquery-ui-autocomplete' => 'jquery-ui-autocomplete',
+		'jquery-ui-dialog'       => 'jquery-ui-dialog',
+		'markerclusterer'        => 'markerclusterer',
 		];
 		wp_enqueue_script( 'events-manager', $template_dir . '/dist/scripts/events-manager.js', array_values( $script_deps ), isset( $EM_VERSION ) );
 		wp_enqueue_script( 'tinyscrollbar', $template_dir . '/dist/scripts/jquery.tinyscrollbar.min.js', [ 'jquery' ], '1.0', true );
@@ -134,7 +134,10 @@ add_action(
 			wp_enqueue_script( 'init-tooltip', $template_dir . '/dist/scripts/inittooltip.js', [ 'bootstrap-script' ], null, true );
 
 		}
-		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [ 'jquery', 'bootstrap-script' ], null, true );
+		wp_enqueue_script( 'modal-video', $template_dir . '/dist/scripts/modal-video.js', [
+			'jquery',
+			'bootstrap-script',
+		], null, true );
 		wp_enqueue_script( 'modal-booking', $template_dir . '/dist/scripts/modal-booking.js', [ 'bootstrap-script' ], null, true );
 
 		// load styling for datepicker in myEYPD profile page only
@@ -339,10 +342,11 @@ add_action( 'login_form', function () {
  * @param string $url URL to redirect to.
  * @param string query URL the user is coming from.
  * @param object $user Logged user's data.
+ *
  * @return string
  */
 
-add_filter( 'login_redirect', function( $url, $query, $user ) {
+add_filter( 'login_redirect', function ( $url, $query, $user ) {
 	return bp_core_get_user_domain( $user->ID ) . '/events/';
 }, 10, 3 );
 
@@ -617,7 +621,7 @@ function eypd_terminology_modify( $translated, $original, $domain ) {
 			'Register'                                                                                                                  => 'Sign Up',
 			'Email Address'                                                                                                             => 'Work Email Address',
 			'Registering for this site is easy. Just fill in the fields below, and we\'ll get a new account set up for you in no time.' => 'Fill in the fields below to register as an Organizer or a Learner. <b>Learner</b> — you are primarily looking for training events. <b>Organizer</b> — you are primarily posting training events on behalf of your organization.',
-			'You have successfully created your account! Please log in using the username and password you have just created.' => '',
+			'You have successfully created your account! Please log in using the username and password you have just created.'          => '',
 		];
 	}
 
@@ -650,7 +654,7 @@ add_filter( 'gettext', 'eypd_howdy_message', 10, 3 );
 
 /**
  *
- * @param int   $post_id
+ * @param int $post_id
  * @param array $data
  *
  * @return array
@@ -697,7 +701,7 @@ function eypd_event_etc_output( $input = '' ) {
 /**
  * use it for two uses -- the Ajax response and the post info
  *
- * @param int  $post_id
+ * @param int $post_id
  * @param bool $ajax
  */
 function et_fetch( $post_id = - 1, $ajax = true ) {
@@ -775,7 +779,7 @@ function eypd_admin_bar_render() {
 
 		// maintain a way for admins to access the dashboard
 		if ( current_user_can( 'activate_plugins' ) ) {
-			   $url = get_admin_url();
+			$url = get_admin_url();
 			$wp_admin_bar->add_node(
 				[
 					'id'    => 'eypd_dashboard',
@@ -846,14 +850,14 @@ add_action(
 	'bp_setup_nav', function () {
 
 		$args = [
-			'name'                    => __( 'My Professional Interests', 'early-years' ),
-			'slug'                    => 'professional-interests',
-			'default_subnav_slug'     => 'prof-int',
-			'position'                => 50,
-			'show_for_displayed_user' => false,
-			'screen_function'         => 'eypd_custom_user_nav_item_screen',
-			'item_css_id'             => 'prof-int',
-			'site_admin_only'         => false,
+		'name'                    => __( 'My Professional Interests', 'early-years' ),
+		'slug'                    => 'professional-interests',
+		'default_subnav_slug'     => 'prof-int',
+		'position'                => 50,
+		'show_for_displayed_user' => false,
+		'screen_function'         => 'eypd_custom_user_nav_item_screen',
+		'item_css_id'             => 'prof-int',
+		'site_admin_only'         => false,
 		];
 
 		bp_core_new_nav_item( $args );
@@ -939,6 +943,7 @@ function eypd_validate_bookings() {
 	return $EM_Booking;
 
 }
+
 add_action( 'em_booking_validate', 'eypd_validate_bookings' );
 
 /**
@@ -988,13 +993,13 @@ function eypd_fb_opengraph() {
 			$img_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
 		}
 		?>
-			<meta property="og:title" content="<?php echo the_title(); ?>"/>
-			<meta property="og:description" content="<?php echo get_bloginfo( 'description' ); ?>"/>
-			<meta property="og:type" content="page"/>
-			<meta property="og:url" content="<?php echo get_page_link(); ?>"/>
-			<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>"/>
-			<meta property="og:image" content="<?php echo $img_src; ?>"/>
-		<?php } else { ?>
+		<meta property="og:title" content="<?php echo the_title(); ?>"/>
+		<meta property="og:description" content="<?php echo get_bloginfo( 'description' ); ?>"/>
+		<meta property="og:type" content="page"/>
+		<meta property="og:url" content="<?php echo get_page_link(); ?>"/>
+		<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>"/>
+		<meta property="og:image" content="<?php echo $img_src; ?>"/>
+	<?php } else { ?>
 		<meta property="og:title" content="<?php echo get_bloginfo( 'name' ); ?>"/>
 		<meta property="og:description" content="<?php echo get_bloginfo( 'description' ); ?>"/>
 		<meta property="og:type" content="website"/>
@@ -1025,13 +1030,13 @@ function eypd_profile_field_modals() {
 				$field_description = '<a href="#terms" data-toggle="modal">Terms and Conditions</a>';
 
 				return $field_description;
-			break;
+				break;
 
 			case 'Position/Role':
 				$field_description = '<a href="#role" data-toggle="modal">What’s the difference between Learner and Organizer?</a>';
 
 				return $field_description;
-			break;
+				break;
 		}
 	}
 }
@@ -1118,7 +1123,7 @@ function eypd_hours_and_categories( $ids ) {
 			foreach ( $categories as $category ) {
 				array_push( $cats, [
 					'cat_name' => $category->name,
-					'cat_id' => $category->term_id,
+					'cat_id'   => $category->term_id,
 				] );
 
 			}
@@ -1235,8 +1240,8 @@ add_filter( 'wp_default_editor', 'eypd_force_default_editor' );
  * Show only own items in media library panel
  */
 function eypd_my_images_only( $query ) {
-	 $user_id = get_current_user_id();
-		// exclude administrator
+	$user_id = get_current_user_id();
+	// exclude administrator
 	if ( ! current_user_can( 'administrator' ) ) {
 		$query['author'] = $user_id;
 	}
@@ -1497,7 +1502,7 @@ function eypd_wpcodex_set_capabilities() {
 function eypd_display_count_events() {
 
 	$results = '';
-	$num = '0';
+	$num     = '0';
 
 	if ( class_exists( 'EM_Events' ) ) {
 		$results = EM_Events::get(
@@ -1580,53 +1585,53 @@ add_action(
 			$lang_dir    = ( is_rtl() ) ? 'rtl' : 'ltr';
 
 			$manifest = [
-				'start_url'        => get_bloginfo( 'wpurl' ),
-				'short_name'       => 'EYPD',
-				'name'             => get_bloginfo( 'name' ),
-				'description'      => get_bloginfo( 'description' ),
-				'display'          => 'standalone',
-				'background_color' => $theme_color,
-				'theme_color'      => $theme_color,
-				'dir'              => $lang_dir,
-				'lang'             => get_bloginfo( 'language' ),
-				'orientation'      => 'portrait-primary',
-				'icons'            => [
-					[
-						'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-48.png',
-						'sizes' => '48x48',
-						'type'  => 'image/png',
-					],
-					[
-						'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-72.png',
-						'sizes' => '72x72',
-						'type'  => 'image/png',
-					],
-					[
-						'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-96.png',
-						'sizes' => '96x96',
-						'type'  => 'image/png',
-					],
-					[
-						'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-144.png',
-						'sizes' => '144x144',
-						'type'  => 'image/png',
-					],
-					[
-						'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-168.png',
-						'sizes' => '168x168',
-						'type'  => 'image/png',
-					],
-					[
-						'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-192.png',
-						'sizes' => '192x192',
-						'type'  => 'image/png',
-					],
-					[
-						'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-512.png',
-						'sizes' => '512x512',
-						'type'  => 'image/png',
-					],
+			'start_url'        => get_bloginfo( 'wpurl' ),
+			'short_name'       => 'EYPD',
+			'name'             => get_bloginfo( 'name' ),
+			'description'      => get_bloginfo( 'description' ),
+			'display'          => 'standalone',
+			'background_color' => $theme_color,
+			'theme_color'      => $theme_color,
+			'dir'              => $lang_dir,
+			'lang'             => get_bloginfo( 'language' ),
+			'orientation'      => 'portrait-primary',
+			'icons'            => [
+				[
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-48.png',
+					'sizes' => '48x48',
+					'type'  => 'image/png',
 				],
+				[
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-72.png',
+					'sizes' => '72x72',
+					'type'  => 'image/png',
+				],
+				[
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-96.png',
+					'sizes' => '96x96',
+					'type'  => 'image/png',
+				],
+				[
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-144.png',
+					'sizes' => '144x144',
+					'type'  => 'image/png',
+				],
+				[
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-168.png',
+					'sizes' => '168x168',
+					'type'  => 'image/png',
+				],
+				[
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-192.png',
+					'sizes' => '192x192',
+					'type'  => 'image/png',
+				],
+				[
+					'src'   => get_stylesheet_directory_uri() . '/dist/images/pwa/eypd-512.png',
+					'sizes' => '512x512',
+					'type'  => 'image/png',
+				],
+			],
 			];
 
 			wp_send_json( $manifest );
@@ -1754,15 +1759,16 @@ function eypd_maybe_url( $url ) {
  */
 function eypd_widgets_init() {
 	register_sidebar( [
-		'name' => __( 'Footer Last', 'early-years' ),
-		'id' => 'sidebar-footer-last',
-		'description' => __( 'The last widget in the footer', 'early-years' ),
+		'name'          => __( 'Footer Last', 'early-years' ),
+		'id'            => 'sidebar-footer-last',
+		'description'   => __( 'The last widget in the footer', 'early-years' ),
 		'before_widget' => '<article id="%1$s" class="widget %2$s">',
-		'after_widget' => '</article>',
-		'before_title' => '<h4>',
-		'after_title' => '</h4>',
+		'after_widget'  => '</article>',
+		'before_title'  => '<h4>',
+		'after_title'   => '</h4>',
 	] );
 }
+
 add_action( 'widgets_init', 'eypd_widgets_init' );
 
 /**
@@ -1789,6 +1795,67 @@ add_filter( 'excel_export_user_buddypress', function ( $default_user_buddypress 
 	return array_merge( $default_user_buddypress, $add_buddypress );
 } );
 
+/**
+ * add a custom post type to excel export
+ */
+add_filter( 'excel_export_post_types', function ( $post_types ) {
+	$add_custom = [ 'events and location' ];
+
+	return array_merge( $post_types, $add_custom );
+
+} );
+
+/**
+ *
+ */
+add_filter( 'excel_export_custom_data_headers', function ( $headers ) {
+	$headers = [
+		'events and location' => [
+			'Location ID',
+			'Event ID',
+			'Event Title',
+			'Owner',
+			'Start Date',
+			'End Date',
+			'Start Time',
+			'End Time',
+			'Event Attributes',
+			'Location Name',
+			'Event Page Link',
+			'Post Date',
+			'Category Name',
+		],
+	];
+
+	return $headers;
+} );
+
+/**
+ *
+ */
+add_filter( 'excel_export_custom_data', function ( $data ) {
+	global $wpdb;
+
+	$data = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT DISTINCT SQL_CALC_FOUND_ROWS {$wpdb->prefix}em_locations.location_id,{$wpdb->prefix}em_events.event_id,{$wpdb->prefix}em_events.event_name, {$wpdb->prefix}em_events.event_owner,{$wpdb->prefix}em_events.event_start_date,
+                {$wpdb->prefix}em_events.event_end_date,{$wpdb->prefix}em_events.event_start_time,{$wpdb->prefix}em_events.event_end_time,{$wpdb->prefix}em_events.event_attributes,{$wpdb->prefix}em_locations.location_name,
+                {$wpdb->prefix}posts.guid,{$wpdb->prefix}posts.post_date,{$wpdb->prefix}terms.name FROM {$wpdb->prefix}em_events
+LEFT JOIN {$wpdb->prefix}em_locations ON {$wpdb->prefix}em_locations.location_id={$wpdb->prefix}em_events.location_id
+LEFT JOIN {$wpdb->prefix}posts ON {$wpdb->prefix}em_events.post_id = {$wpdb->prefix}posts.ID
+LEFT JOIN {$wpdb->prefix}term_relationships ON {$wpdb->prefix}posts.ID={$wpdb->prefix}term_relationships.object_id
+LEFT JOIN {$wpdb->prefix}terms ON {$wpdb->prefix}term_relationships.term_taxonomy_id={$wpdb->prefix}terms.term_id
+WHERE (`event_status`=1)
+       AND (`recurrence`!=1 OR `recurrence` IS NULL)
+       AND (`event_private`=0 OR (`event_private`=1 AND (`group_id` IS NULL OR `group_id` = 0)) OR (`event_private`=1 AND `group_id` IN (1)))
+ORDER BY event_start_date ASC, event_start_time ASC, event_name DESC", ''
+		), ARRAY_A
+	);
+
+	return  $data;
+
+} );
+
 /*
 |--------------------------------------------------------------------------
 | Layout Overrides
@@ -1801,4 +1868,5 @@ add_filter( 'excel_export_user_buddypress', function ( $default_user_buddypress 
 function eypd_no_sidebar_content_classes() {
 	echo ' column sixteen';
 }
-add_action( 'eypd_content_classes','eypd_no_sidebar_content_classes' );
+
+add_action( 'eypd_content_classes', 'eypd_no_sidebar_content_classes' );
