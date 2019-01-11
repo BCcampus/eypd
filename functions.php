@@ -826,7 +826,7 @@ add_filter(
 				$nav .= '<li class="home"><a href="' . eypd_get_my_bookings_url() . '">' . __( '<i>my</i>EYPD' ) . '</a></li>';
 			} else {
 				//add tooltip with a message, and login and sign-up links
-				$popover = '<li class="home"><a tabindex="0" href="#" data-toggle="tooltip" data-placement="bottom" data-container="body" data-trigger="click" data-html="true" data-title="Please <a href=\'' . wp_login_url() . '\'>Login</a> or <a href=\'' . home_url() . '/sign-up\'>Sign up</a> to ';
+				$popover = '<li class="home"><a tabindex="0" href="#" data-toggle="tooltip" data-placement="bottom" data-container="body" data-trigger="focus click" data-html="true" data-title="Please <a href=\'' . wp_login_url() . '\'>Login</a> or <a href=\'' . home_url() . '/sign-up\'>Sign up</a> to ';
 				$nav     .= $popover . 'post events.">Post an Event</a></li>';
 				$nav     .= $popover . 'edit your events.">Edit Event</a></li>';
 				$nav     .= $popover . ' view your events."><i>my</i>EYPD</a></li>';
