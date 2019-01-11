@@ -1785,6 +1785,19 @@ add_filter( 'excel_export_user_buddypress', function ( $default_user_buddypress 
 	return array_merge( $default_user_buddypress, $add_buddypress );
 } );
 
+/**
+ * Enable the visual editor on bbpress
+ * Remove tinymce buttons bbpress doesn't allow
+ */
+add_filter( 'bbp_after_get_the_content_parse_args', function ( $args = [] ) {
+	$args['teeny']   = false;
+	$args['tinymce'] = [
+		'toolbar1' => 'bold, italic, blockquote, strikethrough, bullist, numlist, undo, redo, link, image',
+	];
+
+	return $args;
+} );
+
 /*
 |--------------------------------------------------------------------------
 | Layout Overrides
