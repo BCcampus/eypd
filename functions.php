@@ -338,6 +338,7 @@ add_action( 'login_form', function () {
  * @param string $url URL to redirect to.
  * @param string query URL the user is coming from.
  * @param object $user Logged user's data.
+ *
  * @return string
  */
 
@@ -649,7 +650,7 @@ add_filter( 'gettext', 'eypd_howdy_message', 10, 3 );
 
 /**
  *
- * @param int   $post_id
+ * @param int $post_id
  * @param array $data
  *
  * @return array
@@ -696,7 +697,7 @@ function eypd_event_etc_output( $input = '' ) {
 /**
  * use it for two uses -- the Ajax response and the post info
  *
- * @param int  $post_id
+ * @param int $post_id
  * @param bool $ajax
  */
 function et_fetch( $post_id = - 1, $ajax = true ) {
@@ -774,7 +775,7 @@ function eypd_admin_bar_render() {
 
 		// maintain a way for admins to access the dashboard
 		if ( current_user_can( 'activate_plugins' ) ) {
-			   $url = get_admin_url();
+			$url = get_admin_url();
 			$wp_admin_bar->add_node(
 				[
 					'id'    => 'eypd_dashboard',
@@ -938,6 +939,7 @@ function eypd_validate_bookings() {
 	return $EM_Booking;
 
 }
+
 add_action( 'em_booking_validate', 'eypd_validate_bookings' );
 
 /**
@@ -987,13 +989,13 @@ function eypd_fb_opengraph() {
 			$img_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'medium' );
 		}
 		?>
-			<meta property="og:title" content="<?php echo the_title(); ?>"/>
-			<meta property="og:description" content="<?php echo get_bloginfo( 'description' ); ?>"/>
-			<meta property="og:type" content="page"/>
-			<meta property="og:url" content="<?php echo get_page_link(); ?>"/>
-			<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>"/>
-			<meta property="og:image" content="<?php echo $img_src; ?>"/>
-		<?php } else { ?>
+		<meta property="og:title" content="<?php echo the_title(); ?>"/>
+		<meta property="og:description" content="<?php echo get_bloginfo( 'description' ); ?>"/>
+		<meta property="og:type" content="page"/>
+		<meta property="og:url" content="<?php echo get_page_link(); ?>"/>
+		<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>"/>
+		<meta property="og:image" content="<?php echo $img_src; ?>"/>
+	<?php } else { ?>
 		<meta property="og:title" content="<?php echo get_bloginfo( 'name' ); ?>"/>
 		<meta property="og:description" content="<?php echo get_bloginfo( 'description' ); ?>"/>
 		<meta property="og:type" content="website"/>
@@ -1117,7 +1119,7 @@ function eypd_hours_and_categories( $ids ) {
 			foreach ( $categories as $category ) {
 				array_push( $cats, [
 					'cat_name' => $category->name,
-					'cat_id' => $category->term_id,
+					'cat_id'   => $category->term_id,
 				] );
 
 			}
@@ -1234,8 +1236,8 @@ add_filter( 'wp_default_editor', 'eypd_force_default_editor' );
  * Show only own items in media library panel
  */
 function eypd_my_images_only( $query ) {
-	 $user_id = get_current_user_id();
-		// exclude administrator
+	$user_id = get_current_user_id();
+	// exclude administrator
 	if ( ! current_user_can( 'administrator' ) ) {
 		$query['author'] = $user_id;
 	}
@@ -1495,7 +1497,7 @@ function eypd_wpcodex_set_capabilities() {
 function eypd_display_count_events() {
 
 	$results = '';
-	$num = '0';
+	$num     = '0';
 
 	if ( class_exists( 'EM_Events' ) ) {
 		$results = EM_Events::get(
@@ -1752,15 +1754,16 @@ function eypd_maybe_url( $url ) {
  */
 function eypd_widgets_init() {
 	register_sidebar( [
-		'name' => __( 'Footer Last', 'early-years' ),
-		'id' => 'sidebar-footer-last',
-		'description' => __( 'The last widget in the footer', 'early-years' ),
+		'name'          => __( 'Footer Last', 'early-years' ),
+		'id'            => 'sidebar-footer-last',
+		'description'   => __( 'The last widget in the footer', 'early-years' ),
 		'before_widget' => '<article id="%1$s" class="widget %2$s">',
-		'after_widget' => '</article>',
-		'before_title' => '<h4>',
-		'after_title' => '</h4>',
+		'after_widget'  => '</article>',
+		'before_title'  => '<h4>',
+		'after_title'   => '</h4>',
 	] );
 }
+
 add_action( 'widgets_init', 'eypd_widgets_init' );
 
 /**
@@ -1788,6 +1791,67 @@ add_filter( 'excel_export_user_buddypress', function ( $default_user_buddypress 
 } );
 
 /**
+ * add a custom post type to excel export
+ */
+add_filter( 'excel_export_post_types', function ( $post_types ) {
+	$add_custom = [ 'events and location' ];
+
+	return array_merge( $post_types, $add_custom );
+
+} );
+
+/**
+ *
+ */
+add_filter( 'excel_export_custom_data_headers', function ( $headers ) {
+	$headers = [
+		'events and location' => [
+			'Location ID',
+			'Event ID',
+			'Event Title',
+			'Owner',
+			'Start Date',
+			'End Date',
+			'Start Time',
+			'End Time',
+			'Event Attributes',
+			'Location Name',
+			'Event Page Link',
+			'Post Date',
+			'Category Name',
+		],
+	];
+
+	return $headers;
+} );
+
+/**
+ *
+ */
+add_filter( 'excel_export_custom_data', function ( $data ) {
+	global $wpdb;
+
+	$data = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT DISTINCT SQL_CALC_FOUND_ROWS {$wpdb->prefix}em_locations.location_id,{$wpdb->prefix}em_events.event_id,{$wpdb->prefix}em_events.event_name, {$wpdb->prefix}em_events.event_owner,{$wpdb->prefix}em_events.event_start_date,
+                {$wpdb->prefix}em_events.event_end_date,{$wpdb->prefix}em_events.event_start_time,{$wpdb->prefix}em_events.event_end_time,{$wpdb->prefix}em_events.event_attributes,{$wpdb->prefix}em_locations.location_name,
+                {$wpdb->prefix}posts.guid,{$wpdb->prefix}posts.post_date,{$wpdb->prefix}terms.name FROM {$wpdb->prefix}em_events
+LEFT JOIN {$wpdb->prefix}em_locations ON {$wpdb->prefix}em_locations.location_id={$wpdb->prefix}em_events.location_id
+LEFT JOIN {$wpdb->prefix}posts ON {$wpdb->prefix}em_events.post_id = {$wpdb->prefix}posts.ID
+LEFT JOIN {$wpdb->prefix}term_relationships ON {$wpdb->prefix}posts.ID={$wpdb->prefix}term_relationships.object_id
+LEFT JOIN {$wpdb->prefix}terms ON {$wpdb->prefix}term_relationships.term_taxonomy_id={$wpdb->prefix}terms.term_id
+WHERE (`event_status`=1)
+       AND (`recurrence`!=1 OR `recurrence` IS NULL)
+       AND (`event_private`=0 OR (`event_private`=1 AND (`group_id` IS NULL OR `group_id` = 0)) OR (`event_private`=1 AND `group_id` IN (1)))
+ORDER BY event_start_date ASC, event_start_time ASC, event_name DESC", ''
+		), ARRAY_A
+	);
+
+	return  $data;
+
+} );
+
+/**
  * Enable the visual editor on bbpress
  * Remove tinymce buttons bbpress doesn't allow
  */
@@ -1812,4 +1876,5 @@ add_filter( 'bbp_after_get_the_content_parse_args', function ( $args = [] ) {
 function eypd_no_sidebar_content_classes() {
 	echo ' column sixteen';
 }
-add_action( 'eypd_content_classes','eypd_no_sidebar_content_classes' );
+
+add_action( 'eypd_content_classes', 'eypd_no_sidebar_content_classes' );
