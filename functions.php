@@ -1835,17 +1835,38 @@ add_filter( 'excel_export_custom_data', function ( $data ) {
 		$wpdb->prepare(
 			"SELECT DISTINCT SQL_CALC_FOUND_ROWS {$wpdb->prefix}em_locations.location_id,{$wpdb->prefix}em_events.event_id,{$wpdb->prefix}em_events.event_name, {$wpdb->prefix}em_events.event_owner,{$wpdb->prefix}em_events.event_start_date,
                 {$wpdb->prefix}em_events.event_end_date,{$wpdb->prefix}em_events.event_start_time,{$wpdb->prefix}em_events.event_end_time,{$wpdb->prefix}em_events.event_attributes,{$wpdb->prefix}em_locations.location_name,
-                {$wpdb->prefix}posts.guid,{$wpdb->prefix}posts.post_date,{$wpdb->prefix}terms.name FROM {$wpdb->prefix}em_events
+                {$wpdb->prefix}posts.guid,{$wpdb->prefix}posts.post_date,{$wpdb->prefix}posts.ID FROM {$wpdb->prefix}em_events
 LEFT JOIN {$wpdb->prefix}em_locations ON {$wpdb->prefix}em_locations.location_id={$wpdb->prefix}em_events.location_id
 LEFT JOIN {$wpdb->prefix}posts ON {$wpdb->prefix}em_events.post_id = {$wpdb->prefix}posts.ID
-LEFT JOIN {$wpdb->prefix}term_relationships ON {$wpdb->prefix}posts.ID={$wpdb->prefix}term_relationships.object_id
-LEFT JOIN {$wpdb->prefix}terms ON {$wpdb->prefix}term_relationships.term_taxonomy_id={$wpdb->prefix}terms.term_id
 WHERE (`event_status`=1)
        AND (`recurrence`!=1 OR `recurrence` IS NULL)
        AND (`event_private`=0 OR (`event_private`=1 AND (`group_id` IS NULL OR `group_id` = 0)) OR (`event_private`=1 AND `group_id` IN (1)))
 ORDER BY event_start_date ASC, event_start_time ASC, event_name DESC", ''
 		), ARRAY_A
 	);
+
+	if ( ! empty( $data ) ) {
+		// unserialize attribute data
+		foreach ( $data as $key => $ev ) {
+			$string = maybe_unserialize( $ev['event_attributes'] );
+			$concat = '';
+			if ( is_array( $string ) ) {
+				foreach ( $string as $k => $v ) {
+					$concat .= $k . '=' . $v . '; ';
+				}
+				$data[ $key ]['event_attributes'] = $concat;
+			} else {
+				$data[ $key ]['event_attributes'] = $string;
+			}
+
+			// get terms
+			$cats                       = wp_get_post_terms( $ev['ID'], 'event-categories', [ 'fields' => 'names' ] );
+			$cats                       = ( is_array( $cats ) ) ? implode( ',', $cats ) : $cats;
+			$data[ $key ]['categories'] = $cats;
+			unset( $data[ $key ]['ID'] );
+
+		}
+	}
 
 	return  $data;
 
