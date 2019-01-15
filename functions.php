@@ -1830,6 +1830,12 @@ add_filter( 'excel_export_custom_data_headers', function ( $headers ) {
  */
 add_filter( 'excel_export_custom_data', function ( $data ) {
 	global $wpdb;
+	$default_attributes = get_option( 'dbem_placeholders_custom' );
+	$meta_att_keys      = [];
+	if ( ! empty( $default_attributes ) ) {
+		preg_match_all( '/#_ATT\{([^}]+)\}(\{([^}]+\}?)\})?/', $default_attributes, $matches );
+		$meta_att_keys = $matches[1];
+	}
 
 	$data = $wpdb->get_results(
 		$wpdb->prepare(
@@ -1846,13 +1852,23 @@ ORDER BY event_start_date ASC, event_start_time ASC, event_name DESC", ''
 	);
 
 	if ( ! empty( $data ) ) {
-		// unserialize attribute data
 		foreach ( $data as $key => $ev ) {
 			$string = maybe_unserialize( $ev['event_attributes'] );
 			$concat = '';
-			if ( is_array( $string ) ) {
+
+			if ( is_array( $string ) ) { // check for old EM data structure
 				foreach ( $string as $k => $v ) {
 					$concat .= $k . '=' . $v . '; ';
+				}
+				$data[ $key ]['event_attributes'] = $concat;
+			} elseif ( ! empty( $meta_att_keys ) && empty( $string ) ) { // check for new EM data structure
+				$atts = get_post_meta( $ev['ID'] );
+				if ( is_array( $atts ) ) {
+					foreach ( $meta_att_keys as $meta ) {
+						if ( array_key_exists( $meta, $atts ) ) {
+							$concat .= $meta . '=' . $atts[ $meta ][0] . '; ';
+						}
+					}
 				}
 				$data[ $key ]['event_attributes'] = $concat;
 			} else {
