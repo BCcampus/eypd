@@ -1,4 +1,12 @@
 == Change Log ==
+
+= v1.2.0 (12/10/2018) =
+* [bug] tooltip regression
+* [enhancement] improved multiselect functionality
+* [enhancement] custom data integration with excel export
+* [enhancement] improved forum formatting control
+* [enhancement] updated issue templates
+
 = v1.1.0 (12/10/2018) =
 * [security] update bootstrap dependency
 * [fix] fix google styling
