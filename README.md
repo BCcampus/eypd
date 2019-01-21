@@ -32,3 +32,5 @@ Otherwise noted:
 ### Contributors ###
 - Alex Paredes
 - Shawn DeWolfe 
+- Amanda Healey
+- Brett Forsyth

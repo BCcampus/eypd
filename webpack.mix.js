@@ -39,6 +39,8 @@ mix.copy(`${assets}/fonts`, `${dist}/fonts`)
 	.copy(`${assets}/images`, `${dist}/images`)
 	.copy(`${node}/bootstrap/dist/css/bootstrap.min.css`, `${dist}/styles`)
     .copy(`${node}/d3/dist/d3.min.js`, `${dist}/scripts`)
+    .copy(`${node}/select2/dist/css/select2.min.css`, `${dist}/styles`)
+    .copy(`${node}/select2/dist/js/select2.min.js`, `${dist}/scripts`)
 
 // compiled Javascript
 mix.js(`${node}/bootstrap/dist/js/bootstrap.bundle.js`, `${dist}/scripts`)
@@ -51,6 +53,7 @@ mix.js(`${node}/bootstrap/dist/js/bootstrap.bundle.js`, `${dist}/scripts`)
 	.js(`${assets}/js/modal-booking.js`, `${dist}/scripts`)
     .js(`${assets}/js/accordion.js`, `${dist}/scripts`)
     .js(`${assets}/js/donut.js`, `${dist}/scripts`)
+    .js(`${assets}/js/select-multiple.js`, `${dist}/scripts`)
 
 // Sass
 mix.sass(`${assets}/styles/main.scss`, `${dist}/styles/main.css`)

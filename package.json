@@ -1,9 +1,15 @@
 {
   "name": "early-years",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Custom Theme for the Early Years Professional Development Project",
   "repository": "https://github.com/BCcampus/eypd.git",
   "license": "GPL-2.0",
+  "author": {
+    "name": "Brad Payne"
+  },
+  "contributors": [
+    "Maggie Casper, Alex Paredes, Amanda Healey, Brett Forsyth, Shawn DeWolfe"
+  ],
   "scripts": {
     "build": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "start": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
@@ -15,7 +21,8 @@
     "bootstrap": "^4.1.3",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
-    "popper.js": "^1.14.4"
+    "popper.js": "^1.14.4",
+    "select2": "^4.0.6-rc.1"
   },
   "devDependencies": {
     "laravel-mix": "^2.1.14",
