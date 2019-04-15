@@ -47,9 +47,11 @@ before_deploy:
 - cd $TRAVIS_BUILD_DIR
 deploy:
   provider: releases
+  skip_cleanup: true
   api_key:
     secure: K52IO18wtJkIaVZuAFNL6/ziZZIXA+9dXULfit5etQE4mEkk/0Hq52ip+b492Up+wXLqeRRw6QtvIAnu/fhf+B/4y0GXBKIwLXg8Sgl/VHRrp4rF4AiBJB4DCaBOM6PA50PYP5/MW95+6uMyNyznRW22wmCW12l8W1L3uocDKj23XfTfaCOh016wk9PKeHCRfCVMujY7Bx9/Wwr006UT+XdrdkY28wt1GjHJZBRzCONes87JglNrRBUVREm5YRxHT8nitBaVcAVV+CfqFbmOrGAqpQOTmW5J7xs1LvuPIPtpUmsxzxzDiLr9+VmIPdEf/N+tkBd1CdeHW3bCds8fqLW6IfdMaYprJg/0zecrVTcWI1PI3rkTzW/Uty4Mx+6ejiEslzjejaV5uWcnCbz7rJSd8O5KbTmXrtJ7zNv3QcA6r2uCxckWK34bdldQ0vztXUgNM5m5hg7eSQcxJoOzovHTOy8MBF7OVHTUX6nq2qY9p7JabNCp0mHyagPsuqVZ312mQizyoS6vABbYlpFXpMdm4CGTeO4beDYkXQTaSoVhJIh13/IigPkf6cy21QWpe2hVdqyDzEsYYjik0saKhUVGJfPLoj/93UPEvwPsafd/KVvUvxCa2+0uZ3fkgMbhuU5V+6y2iCmxe2gr09JyQqzFHJQ8HM1xg7HYUvjihKg=
   file: eypd-$TRAVIS_TAG.zip
   on:
-    repo: BCcampus/eypd
-    branch: dev
+  tags: true 
+  repo: BCcampus/eypd
+  branch: dev
