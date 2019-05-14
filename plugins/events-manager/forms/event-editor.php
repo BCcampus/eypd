@@ -111,6 +111,9 @@ if ( empty( $_REQUEST['success'] ) ) {
 				<?php if ( get_option( 'dbem_categories_enabled' ) ) {
 					em_locate_template( 'forms/event/categories-public.php', true );
 } ?>
+				<?php if ( get_option( 'eypd_sectors' ) ) {
+					em_locate_template( 'forms/event/sectors-public.php', true );
+} ?>
 				<?php if ( get_option( 'dbem_attributes_enabled' ) ) {
 					em_locate_template( 'forms/event/attributes-public.php', true );
 } ?>

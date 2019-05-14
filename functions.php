@@ -397,6 +397,27 @@ function eypd_get_provinces() {
 	return $provinces;
 }
 
+/**
+ * Generates the sectors options database table, if it doesn't already exist
+ */
+function eypd_sector_data() {
+	$eypd_sectors = [
+		'Aboriginal',
+		'Childcare',
+		'Child Development/Special needs',
+		'CCRR',
+		'Family Support',
+		'Government',
+		'Health',
+		'Post-Secondary',
+		'School District',
+		'Vancouver Early Years Partnership',
+		'Other',
+	];
+	update_option( 'eypd_sectors', $eypd_sectors, true );
+}
+
+add_action( 'wp_loaded', 'eypd_sector_data' );
 
 /**
  * Runs once to set up defaults
