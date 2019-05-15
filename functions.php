@@ -450,6 +450,16 @@ function eypd_sector_event_load( $EM_Event ) {
 add_action( 'em_event','eypd_sector_event_load',1,1 );
 // @codingStandardsIgnoreEnd
 
+add_filter( 'em_events_get_default_search','em_sector_get_default_search',1,2 );
+add_filter( 'em_calendar_get_default_search','em_sector_get_default_search',1,2 );
+function em_sector_get_default_search( $args, $array ) {
+	$args['sector'] = false; //registers 'sector' as an acceptable value, although set to false by default
+	if ( ! empty( $array['sector'] ) && is_numeric( $array['sector'] ) ) {
+		$args['sector'] = $array['sector'];
+	}
+	return $args;
+}
+
 /**
  * Runs once to set up defaults
  * increase variable $eypd_version to ensure it runs again
