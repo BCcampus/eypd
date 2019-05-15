@@ -436,8 +436,19 @@ function eypd_sectors_event_save( $result, $EM_Event ) {
 	}
 	return $result;
 }
-// @codingStandardsIgnoreEnd
 add_filter( 'em_event_save','eypd_sectors_event_save',1,2 );
+
+/**
+ * Make sector data available to the event when loaded
+ * @param $EM_Event
+ */
+function eypd_sector_event_load( $EM_Event ) {
+	global $wpdb;
+	$sql = $wpdb->prepare( 'SELECT meta_value FROM ' . EM_META_TABLE . " WHERE object_id=%s AND meta_key='event-sector'", $EM_Event->event_id );
+	$EM_Event->styles = $wpdb->get_col( $sql, 0 );
+}
+add_action( 'em_event','eypd_sector_event_load',1,1 );
+// @codingStandardsIgnoreEnd
 
 /**
  * Runs once to set up defaults
