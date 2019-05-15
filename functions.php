@@ -419,6 +419,26 @@ function eypd_sector_data() {
 
 add_action( 'wp_loaded', 'eypd_sector_data' );
 
+function eypd_sectors_event_save( $result, $EM_Event ) {
+	global $wpdb;
+	//First delete any old saves
+	// @codingStandardsIgnoreStart
+	$wpdb->query( 'DELETE FROM ' . EM_META_TABLE . " WHERE object_id='{$EM_Event->event_id}' AND meta_key='event-sector'" );
+	//Save new sector
+	if ( $EM_Event->event_id && ! empty( $_POST['event_sectors'] ) ) {
+		$sector = $_POST['event_sectors'];
+		foreach ( $sector as $value ) {
+			$sector_to_add = "({$EM_Event->event_id}, 'event-sector', '$value')";
+		}
+		if ( count( $sector_to_add ) > 0 ) {
+			$wpdb->query( 'INSERT INTO ' . EM_META_TABLE . ' (object_id, meta_key, meta_value) VALUES ' . $sector_to_add );
+		}
+	}
+	return $result;
+}
+// @codingStandardsIgnoreEnd
+add_filter( 'em_event_save','eypd_sectors_event_save',1,2 );
+
 /**
  * Runs once to set up defaults
  * increase variable $eypd_version to ensure it runs again
