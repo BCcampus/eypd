@@ -455,7 +455,7 @@ add_action( 'em_event','eypd_sector_event_load',1,1 );
 add_filter( 'em_events_get_default_search','em_sector_get_default_search',1,2 );
 add_filter( 'em_calendar_get_default_search','em_sector_get_default_search',1,2 );
 function em_sector_get_default_search( $args, $array ) {
-	$args['sector'] = false; //registers 'sector' as an acceptable value, although set to false by default
+	$args['sector'] = true; //registers 'sector' as an acceptable value, although set to false by default
 	if ( ! empty( $array['sector'] ) && is_numeric( $array['sector'] ) ) {
 		$args['sector'] = $array['sector'];
 	}
@@ -488,6 +488,29 @@ function em_sector_events_get_join_events_table( $join, $args ) {
 		return true;
 	}
 	return $join;
+}
+
+/**
+ * Adds sector drowpdown to search form
+ */
+add_action( 'em_template_events_search_form_footer', 'em_sector_search_form' );
+function em_sector_search_form() {
+	$em_sectors = (is_array( get_option( 'eypd_sectors' ) )) ? get_option( 'eypd_sectors' ):[];
+	?>
+	<!-- START Styles Search -->
+	<div class="em-search-field">
+		<label>
+			<span>Sector</span>
+			<select name="sector">
+				<option value=''>All Sectors</option>
+				<?php foreach ( $em_sectors as $value ) : ?>
+					<option value="<?php echo $value; ?>" <?php echo ( ! empty( $_REQUEST['sector'] ) && $_REQUEST['sector'] === $value) ? 'selected="selected"':''; ?>><?php echo $value; ?></option>
+				<?php endforeach; ?>
+			</select>
+		</label>
+	</div>
+	<!-- END Styles Search -->
+	<?php
 }
 
 /**
