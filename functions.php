@@ -448,8 +448,10 @@ function eypd_sector_event_load( $EM_Event ) {
 	$EM_Event->styles = $wpdb->get_col( $sql, 0 );
 }
 add_action( 'em_event','eypd_sector_event_load',1,1 );
-// @codingStandardsIgnoreEnd
 
+/**
+ * Add sector to accepted search parameters
+ */
 add_filter( 'em_events_get_default_search','em_sector_get_default_search',1,2 );
 add_filter( 'em_calendar_get_default_search','em_sector_get_default_search',1,2 );
 function em_sector_get_default_search( $args, $array ) {
@@ -459,6 +461,20 @@ function em_sector_get_default_search( $args, $array ) {
 	}
 	return $args;
 }
+
+/**
+ * Filter events search results based on sector value
+ */
+add_filter( 'em_events_build_sql_conditions', 'em_sector_events_build_sql_conditions',1,2 );
+function em_sector_events_build_sql_conditions( $conditions, $args ) {
+	global $wpdb;
+	if ( ! empty( $args['sector'] ) && is_numeric( $args['sector'] ) ) {
+		$sql = $wpdb->prepare( 'SELECT object_id FROM ' . EM_META_TABLE . " WHERE meta_value=%s AND meta_key='event-sector'", $args['sector'] );
+		$conditions['sector'] = "event_id IN ($sql)";
+	}
+	return $conditions;
+}
+// @codingStandardsIgnoreEnd
 
 /**
  * Runs once to set up defaults
