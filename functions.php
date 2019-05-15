@@ -477,6 +477,20 @@ function em_sector_events_build_sql_conditions( $conditions, $args ) {
 // @codingStandardsIgnoreEnd
 
 /**
+ * Support sector location related searches
+ */
+add_filter( 'em_locations_get_default_search','em_sector_get_default_search',1,2 );
+add_filter( 'em_locations_build_sql_conditions', 'em_sector_events_build_sql_conditions',1,2 );
+
+add_filter( 'em_locations_get_join_events_table', 'em_sector_events_get_join_events_table', 10, 2 );
+function em_sector_events_get_join_events_table( $join, $args ) {
+	if ( ! empty( $args['sector'] ) ) {
+		return true;
+	}
+	return $join;
+}
+
+/**
  * Runs once to set up defaults
  * increase variable $eypd_version to ensure it runs again
  */
