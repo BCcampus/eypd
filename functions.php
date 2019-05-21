@@ -1113,7 +1113,7 @@ function eypd_hours_and_categories( $ids ) {
 			continue;
 		}
 		$e          = em_get_event( $id );
-		$categories = wp_get_post_terms( $e->post_id, 'event-categories' );
+		$categories = wp_get_post_terms( $e->post_id, 'event-categories', [ 'orderby' => 'term_order' ] );
 
 		if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
 			foreach ( $categories as $category ) {
