@@ -1118,7 +1118,7 @@ function eypd_hours_and_categories( $ids ) {
 		if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
 			foreach ( $categories as $category ) {
 				// exclude service system categories
-				if ( strpos( $category, 'Service System:' ) === false ) {
+				if ( stripos( $category, 'Service System:' ) === false ) {
 					array_push( $cats, [
 						'cat_name' => $category->name,
 						'cat_id'   => $category->term_id,
