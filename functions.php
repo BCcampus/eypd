@@ -1817,6 +1817,8 @@ add_filter( 'excel_export_custom_data_headers', function ( $headers ) {
 			'Event Attributes',
 			'Location Name',
 			'Location Slug',
+			'Location City',
+			'Location Province',
 			'Event Page Link',
 			'Post Date',
 			'Category Name',
@@ -1842,7 +1844,7 @@ add_filter( 'excel_export_custom_data', function ( $data ) {
 		$wpdb->prepare(
 			"SELECT DISTINCT SQL_CALC_FOUND_ROWS {$wpdb->prefix}em_locations.location_id,{$wpdb->prefix}em_events.event_id,{$wpdb->prefix}em_events.event_name, {$wpdb->prefix}em_events.event_owner,{$wpdb->prefix}em_events.event_start_date,
                 {$wpdb->prefix}em_events.event_end_date,{$wpdb->prefix}em_events.event_start_time,{$wpdb->prefix}em_events.event_end_time,{$wpdb->prefix}em_events.event_attributes,{$wpdb->prefix}em_locations.location_name,
-                {$wpdb->prefix}em_locations.location_slug,{$wpdb->prefix}posts.guid,{$wpdb->prefix}posts.post_date,{$wpdb->prefix}posts.ID FROM {$wpdb->prefix}em_events
+                {$wpdb->prefix}em_locations.location_slug,{$wpdb->prefix}em_locations.location_town,{$wpdb->prefix}em_locations.location_state,{$wpdb->prefix}posts.guid,{$wpdb->prefix}posts.post_date,{$wpdb->prefix}posts.ID FROM {$wpdb->prefix}em_events
 LEFT JOIN {$wpdb->prefix}em_locations ON {$wpdb->prefix}em_locations.location_id={$wpdb->prefix}em_events.location_id
 LEFT JOIN {$wpdb->prefix}posts ON {$wpdb->prefix}em_events.post_id = {$wpdb->prefix}posts.ID
 WHERE (`event_status`=1)
