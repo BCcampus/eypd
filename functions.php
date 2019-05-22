@@ -1094,7 +1094,7 @@ function eypd_cumulative_hours( $ids ) {
 
 /**
  * Returns an array of events, with number of hours and categories (name,id)
- *
+ * Used for donut data
  * @param $ids
  *
  * @return array|bool
@@ -1117,11 +1117,13 @@ function eypd_hours_and_categories( $ids ) {
 
 		if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
 			foreach ( $categories as $category ) {
-				array_push( $cats, [
-					'cat_name' => $category->name,
-					'cat_id'   => $category->term_id,
-				] );
-
+				// exclude service system categories
+				if ( strpos( $category, 'Service System:' ) === false ) {
+					array_push( $cats, [
+						'cat_name' => $category->name,
+						'cat_id'   => $category->term_id,
+					] );
+				}
 			}
 		}
 		foreach ( $e->event_attributes as $key => $val ) {
@@ -1140,7 +1142,7 @@ function eypd_hours_and_categories( $ids ) {
 
 /**
  * Returns an array containing name, total hours and color of each event category an individual has hours for
- *
+ * Formatted for use with D3.js donut
  * @param array $data
  *
  * @return mixed|string
