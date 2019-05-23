@@ -1182,8 +1182,12 @@ function eypd_d3_array( $data ) {
 		}
 	}
 
-	return $result;
+	$sorter = function( $a, $b ) { return $b <=> $a;
+	};
+	usort( $result, $sorter );
+	print_r( $result );
 
+	return $result;
 }
 
 /**
