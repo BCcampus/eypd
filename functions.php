@@ -1181,11 +1181,7 @@ function eypd_d3_array( $data ) {
 			$i ++;
 		}
 	}
-
-	print_r( $result );
-
 	return $result;
-
 }
 
 /**
