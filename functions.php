@@ -1117,10 +1117,12 @@ function eypd_hours_and_categories( $ids ) {
 
 		if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
 			foreach ( $categories as $category ) {
+				if ( stripos( $category->name, 'Service System:' ) === false ) {
 					array_push( $cats, [
 						'cat_name' => $category->name,
 						'cat_id'   => $category->term_id,
 					] );
+				}
 			}
 		}
 		foreach ( $e->event_attributes as $key => $val ) {
@@ -1180,7 +1182,6 @@ function eypd_d3_array( $data ) {
 	}
 	$sorter = array_column( $result, 'value' );
 	array_multisort( $sorter, SORT_DESC, $result );
-	print_r( $result );
 
 	return $result;
 }
