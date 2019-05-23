@@ -1182,8 +1182,6 @@ function eypd_d3_array( $data ) {
 		}
 	}
 
-	$sorter = array_column( $result, 'value' );
-	array_multisort( $sorter, SORT_DESC, $result );
 	print_r( $result );
 
 	return $result;
