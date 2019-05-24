@@ -109,3 +109,31 @@ label {
   line-height: 1.5em;
 }
 
+#events-groups-li {
+  display: none
+}
+
+#bbpress-forums li.bbp-header, a.subscription-toggle, span.bbp-admin-links a, #bbpress-forums div.bbp-reply-content a, table.doctable thead tr th a {
+  color: #747474;
+}
+
+#bbp_topic_submit, #bbp_reply_submit, #bbp_forum_submit, #bbp_search_submit, #bbp_merge_topic_submit, #bbp_move_reply_submit, #bbp_user_edit_submit {
+  background: $color-brand-blue;
+  padding: .6em 1.25em .5em;
+  color: $color-neutral-00;
+  font-size: $font-size - 2;
+  text-shadow: none;
+  border: none;
+  border-radius: 3px;
+  font-family: $font-family;
+  font-weight: bold;
+  &:active,
+  &:hover,
+  &:focus {
+    background: darken($color-brand-blue, 15%);
+    outline: none;
+    box-shadow: none;
+    border: none;
+    color: $color-neutral-00;
+  }
+}

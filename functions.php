@@ -1094,7 +1094,7 @@ function eypd_cumulative_hours( $ids ) {
 
 /**
  * Returns an array of events, with number of hours and categories (name,id)
- *
+ * Used for donut data
  * @param $ids
  *
  * @return array|bool
@@ -1117,11 +1117,12 @@ function eypd_hours_and_categories( $ids ) {
 
 		if ( ! is_wp_error( $categories ) && ! empty( $categories ) ) {
 			foreach ( $categories as $category ) {
-				array_push( $cats, [
-					'cat_name' => $category->name,
-					'cat_id'   => $category->term_id,
-				] );
-
+				if ( stripos( $category->name, 'Service System:' ) === false ) {
+					array_push( $cats, [
+						'cat_name' => $category->name,
+						'cat_id'   => $category->term_id,
+					] );
+				}
 			}
 		}
 		foreach ( $e->event_attributes as $key => $val ) {
@@ -1140,7 +1141,7 @@ function eypd_hours_and_categories( $ids ) {
 
 /**
  * Returns an array containing name, total hours and color of each event category an individual has hours for
- *
+ * Formatted for use with D3.js donut
  * @param array $data
  *
  * @return mixed|string
@@ -1179,9 +1180,10 @@ function eypd_d3_array( $data ) {
 			$i ++;
 		}
 	}
+	$sorter = array_column( $result, 'value' );
+	array_multisort( $sorter, SORT_DESC, $result );
 
 	return $result;
-
 }
 
 /**
@@ -1816,6 +1818,9 @@ add_filter( 'excel_export_custom_data_headers', function ( $headers ) {
 			'End Time',
 			'Event Attributes',
 			'Location Name',
+			'Location Slug',
+			'Location City',
+			'Location Province',
 			'Event Page Link',
 			'Post Date',
 			'Category Name',
@@ -1841,7 +1846,7 @@ add_filter( 'excel_export_custom_data', function ( $data ) {
 		$wpdb->prepare(
 			"SELECT DISTINCT SQL_CALC_FOUND_ROWS {$wpdb->prefix}em_locations.location_id,{$wpdb->prefix}em_events.event_id,{$wpdb->prefix}em_events.event_name, {$wpdb->prefix}em_events.event_owner,{$wpdb->prefix}em_events.event_start_date,
                 {$wpdb->prefix}em_events.event_end_date,{$wpdb->prefix}em_events.event_start_time,{$wpdb->prefix}em_events.event_end_time,{$wpdb->prefix}em_events.event_attributes,{$wpdb->prefix}em_locations.location_name,
-                {$wpdb->prefix}posts.guid,{$wpdb->prefix}posts.post_date,{$wpdb->prefix}posts.ID FROM {$wpdb->prefix}em_events
+                {$wpdb->prefix}em_locations.location_slug,{$wpdb->prefix}em_locations.location_town,{$wpdb->prefix}em_locations.location_state,{$wpdb->prefix}posts.guid,{$wpdb->prefix}posts.post_date,{$wpdb->prefix}posts.ID FROM {$wpdb->prefix}em_events
 LEFT JOIN {$wpdb->prefix}em_locations ON {$wpdb->prefix}em_locations.location_id={$wpdb->prefix}em_events.location_id
 LEFT JOIN {$wpdb->prefix}posts ON {$wpdb->prefix}em_events.post_id = {$wpdb->prefix}posts.ID
 WHERE (`event_status`=1)
@@ -1915,3 +1920,47 @@ function eypd_no_sidebar_content_classes() {
 }
 
 add_action( 'eypd_content_classes', 'eypd_no_sidebar_content_classes' );
+
+/**
+ * Adds password confirmation field to registration page
+ */
+// @codingStandardsIgnoreStart
+
+function eypd_email_confirm() {
+	?>
+	<?php do_action( 'bp_signup_email_first_errors' ); ?>
+	<input type="text" name="signup_email_first" id="signup_email_first" class="form_field" value="<?php
+	echo empty( $_POST['signup_email_first'] )?'':$_POST['signup_email_first']; ?>" />
+	<label>Confirm Email <?php _e( '(required)', 'buddypress' ); ?></label>
+	<?php do_action( 'bp_signup_email_second_errors' ); ?>
+<?php }
+add_action( 'bp_signup_email_errors', 'eypd_email_confirm',20 );
+
+/**
+ * Validation and error messaging for email confirmation field on registration page
+ */
+
+function eypd_check_email_confirm() {
+	global $bp;
+	//buddypress for checks errors in signup_email, so we unset that error (if any) and instead check both the email fields
+	unset( $bp->signup->errors['signup_email'] );
+
+	//check if email address is correct and set an error message for the first field if any
+	$account_details = bp_core_validate_user_signup( $_POST['signup_username'], $_POST['signup_email_first'] );
+	if ( ! empty( $account_details['errors']->errors['user_email'] ) ) {
+		$bp->signup->errors['signup_email_first'] = $account_details['errors']->errors['user_email'][0];
+	}
+
+	//if first email field is not empty we check the second one
+	if ( ! empty( $_POST['signup_email_first'] ) ) {
+		//first field not empty and second field empty
+		if ( empty( $_POST['signup_email'] ) ) {
+			$bp->signup->errors['signup_email_second'] = 'Please make sure you enter your email twice';
+		} //both fields not empty but differ
+		elseif ( $_POST['signup_email'] !== $_POST['signup_email_first'] ) {
+			$bp->signup->errors['signup_email_second'] = 'The emails you entered do not match.';
+		}
+	}
+}
+add_action( 'bp_signup_validate', 'eypd_check_email_confirm' );
+// @codingStandardsIgnoreEnd
