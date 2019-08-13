@@ -870,15 +870,6 @@ function eypd_custom_user_nav_item_screen() {
 	bp_core_load_template( apply_filters( 'bp_core_template_plugin', 'members/single/plugins' ) );
 }
 
-/**
- * display content on professional interests page
- */
-function eypd_custom_screen_content() {
-
-	echo do_shortcode( '[cwp_notify_em_user_cat]' );
-
-}
-
 /*
 |--------------------------------------------------------------------------
 | Forms n' stuff

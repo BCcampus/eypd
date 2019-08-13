@@ -165,7 +165,6 @@ if ( bp_is_my_profile() ) { ?>
 	*/
 	echo '<h2 class="top-padding">Training</h2>';
 	echo '<p>Adding an event to myEYPD does not confirm your registration, nor does deleting an event cancel your registration. To officially register for a professional development event you must contact the agency responsible for the training event.</p>';
-	echo do_shortcode( '[cwp_notify]' );
 
 	$past_ids    = [];
 	$future_ids  = [];
@@ -415,24 +414,6 @@ if ( bp_is_my_profile() ) { ?>
 			</div>
 		</div>
 	<?php } // end past events
-
-
-	/*
-	|--------------------------------------------------------------------------
-	| Professional Interests
-	|--------------------------------------------------------------------------
-	|
-	|
-	|
-	|
-	*/
-	echo '<h2 class="top-padding">Professional Interests</h2><h5>I\'m interested in learning about:</h5>';
-	echo '<div class="professional-interests">';
-	echo do_shortcode( '[cwp_notify_em_cat]' );
-	$user_id     = get_current_user_id();
-	$member_link = bp_core_get_userlink( $user_id, '', true );
-	echo '</div>';
-	echo "<a href='{$member_link}professional-interests'><input class='right button c-button' type='button' value='Recommend Events'/></a>";
 
 	/*
 	|--------------------------------------------------------------------------
