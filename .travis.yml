@@ -30,10 +30,8 @@ install:
 before_script:
 - if [[ ${TRAVIS_PHP_VERSION:0:3} != "7.1" ]] && php -v | grep -q 'Xdebug'; then phpenv
   config-rm xdebug.ini; fi
-- bash bin/install-wp-tests.sh eypd_test root '' localhost $WP_VERSION
 script:
 - yarn run build:production
-- vendor/bin/phpunit --configuration phpunit.xml
 - vendor/bin/phpcs --standard=phpcs.ruleset.xml .
 before_deploy:
 - export TRAVIS_PROJECT_SLUG="$(basename $TRAVIS_BUILD_DIR)"
