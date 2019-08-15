@@ -1926,32 +1926,3 @@ function eypd_email_confirm() {
 	<?php do_action( 'bp_signup_email_second_errors' ); ?>
 <?php }
 add_action( 'bp_signup_email_errors', 'eypd_email_confirm',20 );
-
-/**
- * Validation and error messaging for email confirmation field on registration page
- */
-
-function eypd_check_email_confirm() {
-	global $bp;
-	//buddypress for checks errors in signup_email, so we unset that error (if any) and instead check both the email fields
-	unset( $bp->signup->errors['signup_email'] );
-
-	//check if email address is correct and set an error message for the first field if any
-	$account_details = bp_core_validate_user_signup( $_POST['signup_username'], $_POST['signup_email_first'] );
-	if ( ! empty( $account_details['errors']->errors['user_email'] ) ) {
-		$bp->signup->errors['signup_email_first'] = $account_details['errors']->errors['user_email'][0];
-	}
-
-	//if first email field is not empty we check the second one
-	if ( ! empty( $_POST['signup_email_first'] ) ) {
-		//first field not empty and second field empty
-		if ( empty( $_POST['signup_email'] ) ) {
-			$bp->signup->errors['signup_email_second'] = 'Please make sure you enter your email twice';
-		} //both fields not empty but differ
-		elseif ( $_POST['signup_email'] !== $_POST['signup_email_first'] ) {
-			$bp->signup->errors['signup_email_second'] = 'The emails you entered do not match.';
-		}
-	}
-}
-add_action( 'bp_signup_validate', 'eypd_check_email_confirm' );
-// @codingStandardsIgnoreEnd
