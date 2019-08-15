@@ -1911,18 +1911,3 @@ function eypd_no_sidebar_content_classes() {
 }
 
 add_action( 'eypd_content_classes', 'eypd_no_sidebar_content_classes' );
-
-/**
- * Adds password confirmation field to registration page
- */
-// @codingStandardsIgnoreStart
-
-function eypd_email_confirm() {
-	?>
-	<?php do_action( 'bp_signup_email_first_errors' ); ?>
-	<input type="text" name="signup_email_first" id="signup_email_first" class="form_field" value="<?php
-	echo empty( $_POST['signup_email_first'] )?'':$_POST['signup_email_first']; ?>" />
-	<label>Confirm Email <?php _e( '(required)', 'buddypress' ); ?></label>
-	<?php do_action( 'bp_signup_email_second_errors' ); ?>
-<?php }
-add_action( 'bp_signup_email_errors', 'eypd_email_confirm',20 );
