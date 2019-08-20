@@ -51,7 +51,7 @@ a.em-button {
   }
 }
 
-// remove evil edit hand
-a.post-edit-link {
+// remove evil edit hand and user avatar
+a.post-edit-link, .author-avatar {
   display: none;
 }
